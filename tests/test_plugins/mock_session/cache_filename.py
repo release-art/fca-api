@@ -9,7 +9,13 @@ import typing
 from typing import Any
 from urllib.parse import parse_qs, urlparse
 
+import pytest
+
 logger = logging.getLogger(__name__)
+
+
+def get_current_fixture() -> pytest.fixtures.FixtureRequest:
+    1 / 0
 
 
 def make(method: typing.Literal["GET", "POST"], url: str, headers: dict, **kwargs: Any) -> pathlib.PurePath:

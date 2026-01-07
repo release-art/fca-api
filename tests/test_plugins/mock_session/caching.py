@@ -80,7 +80,7 @@ class CachingFinancialServicesRegisterApiSession(FinancialServicesRegisterApiSes
             }
 
             with cache_file.open("w") as f:
-                json.dump(cache_data, f, indent=2)
+                json.dump(cache_data, f, indent=2, sort_keys=True)
 
         except Exception:
             # If caching fails, continue with the response anyway
