@@ -1,12 +1,9 @@
 SHELL := /bin/bash
 
-REPO := https://github.com/sr-murthy/financial-services-register-api
-
-PACKAGE_NAME := financial-services-register-api
+PACKAGE_NAME := fca-api
 BRANCH := $(shell git rev-parse --abbrev-ref HEAD)
 HEAD := $(shell git rev-parse --short=8 HEAD)
-PACKAGE_VERSION := $(shell grep __version__ src/financial_services_register_api/__version__.py | cut -d '=' -f 2 | xargs)
-
+PACKAGE_VERSION := $(shell grep __version__ src/fca_api/__version__.py | cut -d '=' -f 2 | xargs)
 PROJECT_ROOT := $(PWD)
 
 TESTS_ROOT := $(PROJECT_ROOT)/tests
@@ -18,22 +15,10 @@ TESTS_ROOT := $(PROJECT_ROOT)/tests
 # Make everything (possible)
 all:
 
-# Git
-git_stage:
-	@echo "\n$(PACKAGE_NAME)[$(BRANCH)@$(HEAD)]: Staging new, modified, deleted and/or renamed files in Git\n"
-	git status -uno | grep modified | tr -s ' ' | cut -d ' ' -f 2 | xargs git add && \
-	git status -uno | grep deleted | tr -s ' ' | cut -d ' ' -f 2 | xargs git add -A && \
-	git status -uno
-
 # Housekeeping
 clean:
 	@echo "\n$(PACKAGE_NAME)[$(BRANCH)@$(HEAD)]: Deleting all temporary files\n"
 	rm -fr docs/_build/* .pytest_cache *.pyc *__pycache__* ./dist/* ./build/* *.egg-info*
-
-# A simple version check for the installed package (local, sdist or wheel)
-version_check:
-	@echo "\n$(PACKAGE_NAME)[$(BRANCH)@$(HEAD)]: Checking installed package version (if it is installed)\n"
-	python3 -c "import os; os.chdir('src/fs_register_api_client'); from __version__ import __version__; print(__version__); os.chdir('../')"
 
 version_extract:
 	echo "$(PACKAGE_VERSION)"

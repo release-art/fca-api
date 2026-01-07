@@ -5,15 +5,12 @@
 [![License: MPL
 2.0](https://img.shields.io/badge/License-MPL_2.0-brightgreen.svg)](https://opensource.org/licenses/MPL-2.0)
 [![PyPI version](https://img.shields.io/pypi/v/fca-api?logo=python&color=41bb13)](https://pypi.org/project/fca-api)
-![PyPI Downloads](https://static.pepy.tech/badge/fca-api)
 
 </div>
 
 # fca-api
 
 A lightweight async Python client library for the UK [Financial Services Register](https://register.fca.org.uk/s/) [RESTful API](https://register.fca.org.uk/Developer/s/).
-
-The [PyPI package](https://pypi.org/project/fca-api) is currently at version `0.0.0`.
 
 > [!NOTE]
 > This is an async fork of the excellent [`financial-services-register-api` package](https://github.com/sr-murthy/financial-services-register-api).
