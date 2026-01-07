@@ -9,10 +9,9 @@ import typing
 from typing import Any
 from urllib.parse import parse_qs, urlparse
 
-
-
 logger = logging.getLogger(__name__)
 G_CUR_TEST_PREFIX: typing.Optional[pathlib.PurePath] = None
+
 
 def make(method: typing.Literal["GET", "POST"], url: str, headers: dict, **kwargs: Any) -> pathlib.PurePath:
     """Generate a cache filename based on the request parameters.
@@ -60,9 +59,7 @@ def make(method: typing.Literal["GET", "POST"], url: str, headers: dict, **kwarg
     name_prefix = re.sub(r"[^\w\-_]", "_", name_prefix)
 
     # Build human-readable filename components
-    filename_parts = [
-        name_prefix
-    ]
+    filename_parts = [name_prefix]
 
     # Add method
     filename_parts.append(method.lower())
@@ -94,12 +91,12 @@ def make(method: typing.Literal["GET", "POST"], url: str, headers: dict, **kwarg
     cache_key_data = {
         "url": str(url),
         "params": kwargs.get("params"),
-        "headers": dict(headers) | {
+        "headers": dict(headers)
+        | {
             # Remove any headers that may vary between requests
             "user-agent": "test",
             "connection": "close",
             "accept-encoding": "gzip, deflate, br",
-            "user-agent": "test",
             "x-auth-email": "unknown",
             "x-auth-key": "unknown",
         },

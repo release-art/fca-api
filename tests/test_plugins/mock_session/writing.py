@@ -2,9 +2,9 @@
 
 from __future__ import annotations
 
+import base64
 import json
 import pathlib
-import base64
 from typing import Any
 
 import httpx
@@ -61,7 +61,6 @@ class CachingFinancialServicesRegisterApiSession(FinancialServicesRegisterApiSes
         }
         # Perform the actual HTTP request
         response = await super().get(url, **kwargs)
-        
 
         # Cache the response
         cache_file = self.cache_dir / cache_filename.make("GET", url, logged_request_headers, **kwargs)
@@ -71,7 +70,7 @@ class CachingFinancialServicesRegisterApiSession(FinancialServicesRegisterApiSes
         cache_data = {
             "status_code": response.status_code,
             "headers": dict(response.headers),
-            "content": base64.b64encode(response.content).decode('ascii'),
+            "content": base64.b64encode(response.content).decode("ascii"),
             "url": str(response.url),
             "request": {
                 "url": str(url),

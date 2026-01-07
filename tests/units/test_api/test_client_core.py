@@ -11,7 +11,7 @@ from financial_services_register_api.const import (
     FINANCIAL_SERVICES_REGISTER_API_CONSTANTS as API_CONSTANTS,
 )
 from financial_services_register_api.exc import (
-    FinancialServicesRegisterApiRequestException,
+    FinancialServicesRegisterApiRequestError,
 )
 
 
@@ -27,13 +27,10 @@ class TestFinancialServicesRegisterApiClientCore:
 
     @pytest.mark.asyncio
     async def test_common_search_raises_on_request_error(self, test_client, mocker):
-        mock_api_session_get = mocker.patch.object(
-            test_client._api_session,
-            "get"
-        )
+        mock_api_session_get = mocker.patch.object(test_client._api_session, "get")
         mock_api_session_get.side_effect = httpx.RequestError("test RequestError")
 
-        with pytest.raises(FinancialServicesRegisterApiRequestException):
+        with pytest.raises(FinancialServicesRegisterApiRequestError):
             await test_client.common_search("exceptional resource", "firm")
 
     @pytest.mark.asyncio

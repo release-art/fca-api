@@ -2,9 +2,9 @@
 
 from __future__ import annotations
 
+import base64
 import json
 import pathlib
-import base64
 from typing import Any
 
 import httpx
@@ -95,9 +95,7 @@ class MockFinancialServicesRegisterApiSession(FinancialServicesRegisterApiSessio
 
         response = httpx.Response(
             status_code=cache_data["status_code"],
-            headers=cache_data["headers"] | {
-                "content-encoding": "none"
-            },
+            headers=cache_data["headers"] | {"content-encoding": "none"},
             content=base64.b64decode(cache_data["content"]),
             request=request,
         )

@@ -6,8 +6,8 @@ import pytest
 
 # -- Internal libraries --
 from financial_services_register_api.exc import (
-    FinancialServicesRegisterApiRequestException,
-    FinancialServicesRegisterApiResponseException,
+    FinancialServicesRegisterApiRequestError,
+    FinancialServicesRegisterApiResponseError,
 )
 
 
@@ -18,14 +18,14 @@ class TestSearchFunctionality:
             await test_client._search_ref_number("resource_name", "incorrect_resource_type")
 
     @pytest.mark.asyncio
-    @pytest.mark.parametrize("resource_name, resource_type", [("exceptional search", "firm"), ("exceptional search", "individual"), ("exceptional search", "fund")])
+    @pytest.mark.parametrize(
+        "resource_name, resource_type",
+        [("exceptional search", "firm"), ("exceptional search", "individual"), ("exceptional search", "fund")],
+    )
     async def test_search_ref_number_raises_on_request_error(self, test_client, mocker, resource_name, resource_type):
-        mocker.patch.object(
-            test_client._api_session, "get",
-            side_effect=httpx.RequestError("test RequestError")
-        )
+        mocker.patch.object(test_client._api_session, "get", side_effect=httpx.RequestError("test RequestError"))
 
-        with pytest.raises(FinancialServicesRegisterApiRequestException):
+        with pytest.raises(FinancialServicesRegisterApiRequestError):
             await test_client._search_ref_number(resource_name, resource_type)
 
     @pytest.mark.asyncio
@@ -34,7 +34,7 @@ class TestSearchFunctionality:
             "financial_services_register_api.api.FinancialServicesRegisterApiClient.common_search",
             return_value=mocker.MagicMock(ok=False),
         )
-        with pytest.raises(FinancialServicesRegisterApiRequestException):
+        with pytest.raises(FinancialServicesRegisterApiRequestError):
             await test_client._search_ref_number("exceptional search", "firm")
             await test_client._search_ref_number("exceptional search", "individual")
             await test_client._search_ref_number("exceptional search", "fund")
@@ -42,7 +42,7 @@ class TestSearchFunctionality:
     @pytest.mark.asyncio
     @pytest.mark.parametrize("resource_type", ["firm", "individual", "fund"])
     async def test_search_raises_on_empty_response(self, test_client, resource_type):
-        with pytest.raises(FinancialServicesRegisterApiRequestException):
+        with pytest.raises(FinancialServicesRegisterApiRequestError):
             await test_client._search_ref_number("bad search", resource_type)
 
     @pytest.mark.asyncio
@@ -63,14 +63,14 @@ class TestSearchFunctionality:
 
         assert await test_client._api_session.get() == mock_response
 
-        with pytest.raises(FinancialServicesRegisterApiResponseException):
+        with pytest.raises(FinancialServicesRegisterApiResponseError):
             await test_client._search_ref_number("bad response", resource_type)
 
     @pytest.mark.asyncio
     @pytest.mark.parametrize("resource_type", ["firm", "individual", "fund"])
     async def test_search_ref_number_raises_on_nonexistent_resource(self, test_client, resource_type):
         # Covers the case of a failed FRN search for an incorrectly specified firm
-        with pytest.raises(FinancialServicesRegisterApiRequestException):
+        with pytest.raises(FinancialServicesRegisterApiRequestError):
             await test_client._search_ref_number("nonexistent123 search string potato", resource_type)
 
     @pytest.mark.asyncio
@@ -176,7 +176,7 @@ class TestSearchFunctionality:
     @pytest.mark.asyncio
     async def test_search_absent_prn(self, test_client):
         # Covers the case of a successful PRN search for existing, unique funds
-        with pytest.raises(FinancialServicesRegisterApiRequestException):
+        with pytest.raises(FinancialServicesRegisterApiRequestError):
             await test_client.search_prn("non existent fund akjsdhfgkasdhfo")
 
     @pytest.mark.asyncio

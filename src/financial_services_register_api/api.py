@@ -22,8 +22,8 @@ from financial_services_register_api.const import (
     FINANCIAL_SERVICES_REGISTER_API_CONSTANTS as API_CONSTANTS,
 )
 from financial_services_register_api.exc import (
-    FinancialServicesRegisterApiRequestException,
-    FinancialServicesRegisterApiResponseException,
+    FinancialServicesRegisterApiRequestError,
+    FinancialServicesRegisterApiResponseError,
 )
 
 
@@ -367,7 +367,7 @@ class FinancialServicesRegisterApiClient:
             response = await self.api_session.get(url)
             return FinancialServicesRegisterApiResponse(response)
         except httpx.RequestError as e:
-            raise FinancialServicesRegisterApiRequestException(e)
+            raise FinancialServicesRegisterApiRequestError(e)
 
     async def _search_ref_number(self, resource_name: str, resource_type: str, /) -> str | list[dict[str, str]]:
         """:py:class:`str` or :py:class:`list`: A private base handler for public search methods for unique firm, individual and product reference numbers.
@@ -426,7 +426,7 @@ class FinancialServicesRegisterApiClient:
 
         try:
             res = await self.common_search(resource_name, resource_type)
-        except FinancialServicesRegisterApiRequestException:
+        except FinancialServicesRegisterApiRequestError:
             raise
 
         if res.ok and res.data:
@@ -434,7 +434,7 @@ class FinancialServicesRegisterApiClient:
                 try:
                     return res.data[0]["Reference Number"]
                 except KeyError:
-                    raise FinancialServicesRegisterApiResponseException(
+                    raise FinancialServicesRegisterApiResponseError(
                         "Unexpected response data structure from the API for "
                         f'{resource_type} search by name "{resource_name}"! '
                         "Please check the API developer documentation at "
@@ -443,12 +443,12 @@ class FinancialServicesRegisterApiClient:
             if len(res.data) > 1:
                 return res.data
         elif not res.ok:
-            raise FinancialServicesRegisterApiRequestException(
+            raise FinancialServicesRegisterApiRequestError(
                 f"API search request failed for an unknown reason: "
                 f"{res.reason_phrase}. Please check the search parameters and try again."
             )
         elif not res.data:
-            raise FinancialServicesRegisterApiRequestException(
+            raise FinancialServicesRegisterApiRequestError(
                 "No data found in the API response. Please check the search parameters and try again."
             )
 
@@ -588,7 +588,7 @@ class FinancialServicesRegisterApiClient:
             response = await self.api_session.get(url)
             return FinancialServicesRegisterApiResponse(response)
         except httpx.RequestError as e:
-            raise FinancialServicesRegisterApiRequestException(e)
+            raise FinancialServicesRegisterApiRequestError(e)
 
     async def get_firm(self, frn: str) -> FinancialServicesRegisterApiResponse:
         """:py:class:`~financial_services_register_api.api.FinancialServicesRegisterApiResponse`: Returns a response containing firm details, given its firm reference number (FRN)

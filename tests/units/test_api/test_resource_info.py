@@ -6,7 +6,7 @@ import pytest
 
 # -- Internal libraries --
 from financial_services_register_api.exc import (
-    FinancialServicesRegisterApiRequestException,
+    FinancialServicesRegisterApiRequestError,
 )
 
 
@@ -29,25 +29,27 @@ class TestResourceInfoFunctionality:
             )
 
     @pytest.mark.asyncio
-    @pytest.mark.parametrize("resource_ref_number, resource_type", [("test_frn", "firm"), ("test_prn", "fund"), ("test_irn", "individual")])
-    async def test_get_resource_info_raises_on_request_error(self, test_client, mocker, resource_ref_number, resource_type):
-        mocker.patch.object(
-            test_client._api_session, "get",
-            side_effect=httpx.RequestError("test RequestError")
-        )
+    @pytest.mark.parametrize(
+        "resource_ref_number, resource_type", [("test_frn", "firm"), ("test_prn", "fund"), ("test_irn", "individual")]
+    )
+    async def test_get_resource_info_raises_on_request_error(
+        self, test_client, mocker, resource_ref_number, resource_type
+    ):
+        mocker.patch.object(test_client._api_session, "get", side_effect=httpx.RequestError("test RequestError"))
 
-        with pytest.raises(FinancialServicesRegisterApiRequestException):
+        with pytest.raises(FinancialServicesRegisterApiRequestError):
             await test_client._get_resource_info(resource_ref_number, resource_type)
 
     @pytest.mark.asyncio
-    @pytest.mark.parametrize("resource_ref_number, resource_type", [("test_frn", "firm"), ("test_prn", "fund"), ("test_irn", "individual")])
-    async def test_get_resource_info_raises_on_request_error_with_modifiers(self, test_client, mocker, resource_ref_number, resource_type):
-        mocker.patch.object(
-            test_client._api_session, "get",
-            side_effect=httpx.RequestError("test RequestError")
-        )
+    @pytest.mark.parametrize(
+        "resource_ref_number, resource_type", [("test_frn", "firm"), ("test_prn", "fund"), ("test_irn", "individual")]
+    )
+    async def test_get_resource_info_raises_on_request_error_with_modifiers(
+        self, test_client, mocker, resource_ref_number, resource_type
+    ):
+        mocker.patch.object(test_client._api_session, "get", side_effect=httpx.RequestError("test RequestError"))
 
-        with pytest.raises(FinancialServicesRegisterApiRequestException):
+        with pytest.raises(FinancialServicesRegisterApiRequestError):
             await test_client._get_resource_info(
                 resource_ref_number,
                 resource_type,

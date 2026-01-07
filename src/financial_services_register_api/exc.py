@@ -1,31 +1,22 @@
 __all__ = [
-    "FinancialServicesRegisterApiClientException",
-    "FinancialServicesRegisterApiException",
-    "FinancialServicesRegisterApiRequestException",
-    "FinancialServicesRegisterApiResponseException",
+    "FinancialServicesRegisterApiClientError",
+    "FinancialServicesRegisterApiError",
+    "FinancialServicesRegisterApiRequestError",
+    "FinancialServicesRegisterApiResponseError",
 ]
 
 
-# -- IMPORTS --
-
-# -- Standard libraries --
-
-# -- 3rd party libraries --
-
-# -- Internal libraries --
-
-
-class FinancialServicesRegisterApiException(Exception):
+class FinancialServicesRegisterApiError(Exception):
     """Base class for all API exceptions."""
 
 
-class FinancialServicesRegisterApiRequestException(FinancialServicesRegisterApiException):
+class FinancialServicesRegisterApiRequestError(FinancialServicesRegisterApiError):
     """Base class all API request exceptions."""
 
 
-class FinancialServicesRegisterApiResponseException(FinancialServicesRegisterApiException):
+class FinancialServicesRegisterApiResponseError(FinancialServicesRegisterApiError):
     """Base class all API response exceptions."""
 
 
-class FinancialServicesRegisterApiClientException(FinancialServicesRegisterApiException):
+class FinancialServicesRegisterApiClientError(FinancialServicesRegisterApiError):
     """Base class for an API client exceptions."""
