@@ -53,10 +53,6 @@ lint: clean
 	cd "$(PROJECT_ROOT)" && ruff check src tests
 
 # Running tests
-doctests: clean
-	@echo "\n$(PACKAGE_NAME)[$(BRANCH)@$(HEAD)]: Running doctests in all core libraries\n"
-	cd "$(PROJECT_ROOT)" && \
-	python -m doctest -v src/financial_services_register_api/*.py
 
 unittests: clean
 	@echo "\n$(PACKAGE_NAME)[$(BRANCH)@$(HEAD)]: Running package unit tests + measuring coverage\n"

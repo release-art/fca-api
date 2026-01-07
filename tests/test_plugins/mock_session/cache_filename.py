@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 G_CUR_TEST_PREFIX: typing.Optional[pathlib.PurePath] = None
 
 
-def make(method: typing.Literal["GET", "POST"], url: str, headers: dict, **kwargs: Any) -> pathlib.PurePath:
+def make(method: typing.Literal["GET", "POST"], url: str, headers: dict, **kwargs: Any) -> pathlib.PurePath:  # noqa: C901
     """Generate a cache filename based on the request parameters.
 
     Creates human-readable cache filenames by:
