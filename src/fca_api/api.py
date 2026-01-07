@@ -19,7 +19,7 @@ import httpx
 
 # -- Internal libraries --
 from fca_api.const import (
-    fca_api_CONSTANTS as API_CONSTANTS,
+    FINANCIAL_SERVICES_REGISTER_API_CONSTANTS as API_CONSTANTS,
 )
 from fca_api.exc import (
     FinancialServicesRegisterApiRequestError,
