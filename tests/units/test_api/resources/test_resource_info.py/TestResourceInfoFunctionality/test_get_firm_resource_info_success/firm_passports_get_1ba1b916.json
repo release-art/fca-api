@@ -1,0 +1,32 @@
+{
+  "content": "eyJTdGF0dXMiOiJGU1ItQVBJLTAyLTA3LTAwIiwiUmVzdWx0SW5mbyI6eyJwYWdlIjoiMSIsInBlcl9wYWdlIjoiMjAiLCJ0b3RhbF9jb3VudCI6IjEifSwiTWVzc2FnZSI6Ik9rLiBGaXJtIFBhc3Nwb3J0IGZvdW5kIiwiRGF0YSI6W3siUGFzc3BvcnRzIjpbeyJQYXNzcG9ydERpcmVjdGlvbiI6IlBhc3Nwb3J0aW5nIE91dCIsIlBlcm1pc3Npb25zIjoiaHR0cHM6Ly9yZWdpc3Rlci5mY2Eub3JnLnVrL3NlcnZpY2VzL1YwLjEvRmlybS8xMTM4NDkvUGFzc3BvcnRzL0dJQlJBTFRBUi9QZXJtaXNzaW9uIiwiQ291bnRyeSI6IkdJQlJBTFRBUiJ9XX1dfQ==",
+  "headers": {
+    "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
+    "cf-cache-status": "DYNAMIC",
+    "cf-ray": "9ba4cada0b9893da-LHR",
+    "connection": "keep-alive",
+    "content-encoding": "gzip",
+    "content-type": "application/json;charset=UTF-8",
+    "date": "Wed, 07 Jan 2026 16:22:10 GMT",
+    "server": "cloudflare",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Thu, 07-Jan-2027 16:22:10 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Thu, 07-Jan-2027 16:22:10 GMT; Max-Age=31536000; secure",
+    "strict-transport-security": "max-age=63072000; includeSubDomains",
+    "transfer-encoding": "chunked",
+    "vary": "Accept-Encoding",
+    "x-content-type-options": "nosniff"
+  },
+  "request": {
+    "headers": {
+      "accept": "application/json",
+      "accept-encoding": "gzip, deflate",
+      "connection": "keep-alive",
+      "user-agent": "python-httpx/0.28.1",
+      "x-auth-email": "user@example.com",
+      "x-auth-key": "00617470e8144a09"
+    },
+    "params": null,
+    "url": "https://register.fca.org.uk/services/V0.1/Firm/113849/Passports"
+  },
+  "status_code": 200,
+  "url": "https://register.fca.org.uk/services/V0.1/Firm/113849/Passports"
+}

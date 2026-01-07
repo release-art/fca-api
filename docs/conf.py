@@ -28,8 +28,8 @@ sys.path.insert(0, os.path.abspath('.'))
 sys.path.insert(0, os.path.dirname(os.path.abspath('.')))
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath('.')), 'src'))
 
-import financial_services_register_api
-from financial_services_register_api.__version__ import __version__
+import fca_api
+from fca_api.__version__ import __version__
 
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
@@ -43,7 +43,7 @@ github_url = 'https://github.com'
 github_repo = f'{github_url}/sr-murty/financial-services-register-api'
 github_version = 'main'
 pypi_project = 'https://pypi.org/project/financial-services-register-api/'
-project = financial_services_register_api.__name__
+project = fca_api.__name__
 release = __version__
 
 # -- General configuration ---------------------------------------------------

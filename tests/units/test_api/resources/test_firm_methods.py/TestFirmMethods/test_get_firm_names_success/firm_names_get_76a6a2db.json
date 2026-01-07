@@ -1,0 +1,32 @@
+{
+  "content": "eyJTdGF0dXMiOiJGU1ItQVBJLTAyLTA0LTAwIiwiUmVzdWx0SW5mbyI6eyJwYWdlIjoiMSIsInBlcl9wYWdlIjoiMTAiLCJ0b3RhbF9jb3VudCI6IjMifSwiTWVzc2FnZSI6Ik9rLiBGb3VuZCBUcmFkaW5nIE5hbWVzIG9yIEJyYW5kIE5hbWVzIiwiRGF0YSI6W3siQ3VycmVudCBOYW1lcyI6W3siRWZmZWN0aXZlIEZyb20iOiIwOS8wOS8yMDExIiwiU3RhdHVzIjoiVHJhZGluZyIsIk5hbWUiOiJIaXNjb3gifSx7IkVmZmVjdGl2ZSBGcm9tIjoiMDEvMDEvMTk5NyIsIlN0YXR1cyI6IlJlZ2lzdGVyZWQiLCJOYW1lIjoiSGlzY294IEluc3VyYW5jZSBDb21wYW55IExpbWl0ZWQifV19LHsiUHJldmlvdXMgTmFtZXMiOlt7IkVmZmVjdGl2ZSBUbyI6IjMxLzEyLzE5OTYiLCJFZmZlY3RpdmUgRnJvbSI6IjAzLzExLzE5NjYiLCJTdGF0dXMiOiJSZWdpc3RlcmVkIiwiTmFtZSI6IkVjb25vbWljIEluc3VyYW5jZSBDb21wYW55IExpbWl0ZWQifV19XX0=",
+  "headers": {
+    "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
+    "cf-cache-status": "DYNAMIC",
+    "cf-ray": "9ba4ca2509667dcc-LHR",
+    "connection": "keep-alive",
+    "content-encoding": "gzip",
+    "content-type": "application/json;charset=UTF-8",
+    "date": "Wed, 07 Jan 2026 16:21:41 GMT",
+    "server": "cloudflare",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Thu, 07-Jan-2027 16:21:41 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Thu, 07-Jan-2027 16:21:41 GMT; Max-Age=31536000; secure",
+    "strict-transport-security": "max-age=63072000; includeSubDomains",
+    "transfer-encoding": "chunked",
+    "vary": "Accept-Encoding",
+    "x-content-type-options": "nosniff"
+  },
+  "request": {
+    "headers": {
+      "accept": "application/json",
+      "accept-encoding": "gzip, deflate",
+      "connection": "keep-alive",
+      "user-agent": "python-httpx/0.28.1",
+      "x-auth-email": "user@example.com",
+      "x-auth-key": "00617470e8144a09"
+    },
+    "params": null,
+    "url": "https://register.fca.org.uk/services/V0.1/Firm/113849/Names"
+  },
+  "status_code": 200,
+  "url": "https://register.fca.org.uk/services/V0.1/Firm/113849/Names"
+}

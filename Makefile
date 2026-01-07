@@ -43,10 +43,14 @@ update_deps:
 	@echo "\n$(PACKAGE_NAME)[$(BRANCH)@$(HEAD)]: Update all development dependencies, including documentation and production dependencies\n"
 	pdm self update && pdm update -v --dev --no-editable --no-self --update-all && pdm export -v -f requirements --dev -o docs/requirements.txt
 
+autoformat: clean
+	@echo "\n$(PACKAGE_NAME)[$(BRANCH)@$(HEAD)]: Autoformatting source code with Black\n"
+	cd "$(PROJECT_ROOT)" && ruff format src tests && ruff check src tests --fix
+
 # Linting
 lint: clean
 	@echo "\n$(PACKAGE_NAME)[$(BRANCH)@$(HEAD)]: Linting source code with Ruff\n"
-	cd "$(PROJECT_ROOT)" && ruff check src
+	cd "$(PROJECT_ROOT)" && ruff check src tests
 
 # Running tests
 doctests: clean
@@ -65,6 +69,7 @@ unittests: clean
 				--cov=src \
 				--cov-report=term-missing:skip-covered \
 				-ra \
+				-x \
 				--tb=native \
 				--verbosity=3 \
 				tests/units

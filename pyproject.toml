@@ -8,15 +8,16 @@
 #
 #     https://packaging.python.org/en/latest/tutorials/packaging-projects/
 #
-name = "financial-services-register-api"
-description = "Python client library for the UK Financial Services Register RESTful API"
+name = "fca-api"
+description = "Python client library for the UK Financial Services (FCA) Register RESTful API"
 
 authors = [
+    {name = "I. Orlovs", email = "ilja@release.art"},
     {name = "S. R. Murthy", email = "s.murthy@tutanota.com"},
 ]
 
 maintainers = [
-  {name = "S. R. Murthy", email = "s.murthy@tutanota.com"}
+  {name = "I. Orlovs", email = "ilja@release.art"}
 ]
 
 dynamic = ["version"]
@@ -26,13 +27,14 @@ requires-python = ">=3.11"
 license = {file = "LICENSE"}
 
 dependencies = [
-    "requests",
+    "httpx>=0.28.1",
 ]
 
 readme = "README.md"
 
 keywords = [
     "financial conduct authority",
+    "FCA",
     "financial data",
     "financial regulation",
     "financial services register",
@@ -50,7 +52,7 @@ classifiers = [
         "Programming Language :: Python :: 3.11",
         "Programming Language :: Python :: 3.12",
         "Programming Language :: Python :: 3.13",
-        "Development Status :: 5 - Production/Stable",
+        "Development Status :: 4 - Beta",
         "Operating System :: POSIX :: Linux",
         "Operating System :: MacOS",
         "Operating System :: Microsoft :: Windows",
@@ -60,8 +62,6 @@ classifiers = [
 user = [
     "jupyter",
 ]
-
-[project.scripts]
 
 [build-system]
 requires = ["pdm-backend"]
@@ -84,7 +84,7 @@ distribution = true
 [tool.pdm.build]
 package-dir = "src"
 includes = [
-    "src/financial_services_register_api",
+    "src/fca_api",
 ]
 # File patterns to exclude, the paths are relative to the project root.
 excludes = [
@@ -120,14 +120,6 @@ docs = [
     "numpydoc>=1.5.0",
     "sphinx-design>=0.5.0",
 ]
-dev = [
-    "pytest",
-    "pytest-cov",
-    "coverage",
-    "ipython",
-    "ipdb",
-    "virtualenv",
-]
 lint = [
     "ruff",
 ]
@@ -137,6 +129,52 @@ test = [
     "pytest-cov",
 ]
 
+[tool.ruff]
+target-version = "py313"
+lint.select = [
+    # https://beta.ruff.rs/docs/rules/
+    "A", # do not shadow bultins - TODO
+    "B",  # flake8-bugbear
+    "C",
+    "E",
+    "F",
+    "I",  # isort
+    "W",  # pycodestyle
+    "N",  # pep8 naming
+    "C4", # list comprehensions
+    "T20", # print()
+    "PTH", # use-pathlib - todo
+]
+lint.ignore = ["N802", "F841"]
+line-length = 120
+
+[tool.ruff.format]
+line-ending = "lf"
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = [
+    # imported but unused
+    "F401",
+    # E402 Module level import not at top of file
+    "E402",
+]
+
+"bin/**/*.py" = [
+    # print()
+    "T201",
+]
+
+"main.py" = [
+    "B008" # the typer.Option() as default arg
+]
+
+[tool.ruff.lint.isort]
+order-by-type = true
+combine-as-imports = true
+force-wrap-aliases = true
+known-first-party = ["fca_api"]
+forced-separate = ["tests"]
+
 [tool.pdm.scripts]
 lint = {shell = "make lint", help = "Lint source with Ruff"}
 doctests = {shell = "make doctests", help = "Run doctests"}
@@ -144,7 +182,7 @@ unittests = {shell = "make unittests", help = "Run unit tests & measure coverage
 
 [tool.pdm.version]
 source = "file"
-path = "src/financial_services_register_api/__version__.py"
+path = "src/fca_api/__version__.py"
 
 # For ``pytest`` configuration, including TOML-specific configuration see:
 #
@@ -204,3 +242,12 @@ show_missing = true
 skip_covered = true
 skip_empty = true
 sort = "Name"
+
+[dependency-groups]
+dev = [
+    "pytest",
+    "pytest-cov",
+    "virtualenv",
+    "pytest-asyncio>=1.3.0",
+    "pytest-mock>=3.15.1",
+]
