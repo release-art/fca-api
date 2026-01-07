@@ -34,15 +34,15 @@ from fca_api.__version__ import __version__
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-author = 'S. R. Murthy'
-copyright = f'S. R. Murthy, {datetime.now().year}'
+author = 'I. Orlovs'
+copyright = f'I. Orlovs, {datetime.now().year}'
 description = """
-              Lightweight Python client for the UK Financial Services Register RESTful API.
+              Lightweight async Python client for the UK Financial Services Register RESTful API.
               """
 github_url = 'https://github.com'
-github_repo = f'{github_url}/sr-murty/financial-services-register-api'
+github_repo = f'{github_url}/release-art/fca-api'
 github_version = 'main'
-pypi_project = 'https://pypi.org/project/financial-services-register-api/'
+pypi_project = 'https://pypi.org/project/fca-api/'
 project = fca_api.__name__
 release = __version__
 
@@ -69,8 +69,8 @@ rst_epilog = f"""
 .. |project|                replace:: **{project}**
 .. |project_description|    replace:: {description}
 .. |release|                replace:: **{release}**
-.. |github_release_target|  replace:: https://github.com/sr-murthy/financial-services-register-api/releases/tag/{release}
-.. |pypi_release_target|    replace:: https://pypi.org/project/financial-services-register-api/{release}
+.. |github_release_target|  replace:: https://github.com/release-art/fca-api/releases/tag/{release}
+.. |pypi_release_target|    replace:: https://pypi.org/project/fca-api/{release}
 """
 
 # Publish author(s)
@@ -144,9 +144,9 @@ exclude_patterns = ['_build',
 pygments_style = 'sphinx'
 
 # A list of prefixes that are ignored when creating the module index. (new in Sphinx 0.6)
-modindex_common_prefix = ["financial_services_register_api."]
+modindex_common_prefix = ["fca_api."]
 
-doctest_global_setup = "import financial_services_register_api"
+doctest_global_setup = "import fca_api"
 
 # If this is True, the ``todo`` and ``todolist`` extension directives
 # produce output, else they produce nothing. The default is ``False``.
@@ -194,7 +194,7 @@ html_static_path = ['_static']
 #     https://sphinx-design.readthedocs.io/en/latest/badges_buttons.html#fontawesome-icons
 #
 html_css_files = [
-    'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css',
+    'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css',
 ]
 
 # Timestamp format for the last page updated time

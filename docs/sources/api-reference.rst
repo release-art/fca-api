@@ -15,6 +15,6 @@ API Reference
    :name: api_reference_mastertoc
    :caption: Contents:
 
-   financial_services_register_api/constants
-   financial_services_register_api/exceptions
-   financial_services_register_api/api
+   fca_api/const
+   fca_api/exc
+   fca_api/api

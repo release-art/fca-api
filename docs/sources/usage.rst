@@ -6,21 +6,21 @@
 Usage
 =====
 
-The API client class is :py:class:`~financial_services_register_api.api.FinancialServicesRegisterApiClient`. Import it, and create an instance using the signup email, which is the API username, and the API key:
+The API client class is :py:class:`~fca_api.api.FinancialServicesRegisterApiClient`. Import it, and create an instance using the signup email, which is the API username, and the API key:
 
 .. code:: python
 
-   >>> from financial_services_register_api.api import FinancialServicesRegisterApiClient
+   >>> from fca_api.api import FinancialServicesRegisterApiClient
    >>> client = FinancialServicesRegisterApiClient('<signup email>', '<API key>')
    >>> client
-   <financial_services_register_api.api.FinancialServicesRegisterApiClient at 0x113c10800>
+   <fca_api.api.FinancialServicesRegisterApiClient at 0x113c10800>
 
-Each client instance maintains its own API session state (:py:class:`~financial_services_register_api.api.FinancialServicesRegisterApiSession`):
+Each client instance maintains its own API session state (:py:class:`~fca_api.api.FinancialServicesRegisterApiSession`):
 
 .. code:: python
 
    >>> client.api_session
-   <financial_services_register_api.api.FinancialServicesRegisterApiSession at 0x113392060>
+   <fca_api.api.FinancialServicesRegisterApiSession at 0x113392060>
 
 storing the API username (signup email) and API key. These, and also the API version, are available as properties:
 
@@ -33,16 +33,16 @@ storing the API username (signup email) and API key. These, and also the API ver
    >>> client.api_version
    'V0.1'
 
-Almost all public client methods return :py:class:`~financial_services_register_api.api.FinancialServicesRegisterApiResponse` objects, which have four properties specific to the API:
+Almost all public client methods return :py:class:`~fca_api.api.FinancialServicesRegisterApiResponse` objects, which have four properties specific to the API:
 
-- :py:attr:`~financial_services_register_api.api.FinancialServicesRegisterApiResponse.status` - an API-specific status indicator for the
+- :py:attr:`~fca_api.api.FinancialServicesRegisterApiResponse.status` - an API-specific status indicator for the
   request
-- :py:attr:`~financial_services_register_api.api.FinancialServicesRegisterApiResponse.message` - an API-specific status message for the
+- :py:attr:`~fca_api.api.FinancialServicesRegisterApiResponse.message` - an API-specific status message for the
   request
-- :py:attr:`~financial_services_register_api.api.FinancialServicesRegisterApiResponse.data` - the response data
-- :py:attr:`~financial_services_register_api.api.FinancialServicesRegisterApiResponse.resultinfo` - pagination information for the response data
+- :py:attr:`~fca_api.api.FinancialServicesRegisterApiResponse.data` - the response data
+- :py:attr:`~fca_api.api.FinancialServicesRegisterApiResponse.resultinfo` - pagination information for the response data
 
-As :py:class:`~financial_services_register_api.api.FinancialServicesRegisterApiResponse` is a subclass of :py:class:`requests.Response`, request information can be obtained from the :py:attr:`requests.Response.request` attribute, e.g.
+As :py:class:`~fca_api.api.FinancialServicesRegisterApiResponse` is a subclass of :py:class:`requests.Response`, request information can be obtained from the :py:attr:`requests.Response.request` attribute, e.g.
 
 .. code:: python
 
@@ -59,7 +59,7 @@ As :py:class:`~financial_services_register_api.api.FinancialServicesRegisterApiR
 Common Search
 =============
 
-The common search endpoint can be used via the :py:meth:`~financial_services_register_api.api.FinancialServicesRegisterApiClient.common_search()` method to make generic queries for firms, individuals, or funds. It requires two arguments, a resource name (or name substring) to search for, and a resource type which must be one of the following strings: ``"firm"``, ``"individual"``, or ``"fund"``. The method then calls the common search endpoint with a URL-encoded string of the form below:
+The common search endpoint can be used via the :py:meth:`~fca_api.api.FinancialServicesRegisterApiClient.common_search()` method to make generic queries for firms, individuals, or funds. It requires two arguments, a resource name (or name substring) to search for, and a resource type which must be one of the following strings: ``"firm"``, ``"individual"``, or ``"fund"``. The method then calls the common search endpoint with a URL-encoded string of the form below:
 
 .. code:: bash
 
@@ -118,7 +118,7 @@ Here are some further examples of common search for firms, individuals and funds
      'Type of business or Individual': 'Collective investment scheme',
      'Name': 'Jupiter Asia Pacific Income Fund (IRL)'}]
 
-The response data as stored in the :py:attr:`~financial_services_register_api.api.FinancialServicesRegisterApiResponse.data` property might be non-empty or empty depending on whether the combination of query and resource type is valid, e.g.:
+The response data as stored in the :py:attr:`~fca_api.api.FinancialServicesRegisterApiResponse.data` property might be non-empty or empty depending on whether the combination of query and resource type is valid, e.g.:
 
 .. code:: python
 
@@ -130,7 +130,7 @@ The response data as stored in the :py:attr:`~financial_services_register_api.ap
 Regulated Markets
 -----------------
 
-The client implements a `regulated markets <https://www.handbook.fca.org.uk/handbook/glossary/G978.html?date=2007-01-20>`_ search endpoint via the :py:meth:`~financial_services_register_api.api.FinancialServicesRegisterApiClient.get_regulated_markets` method:
+The client implements a `regulated markets <https://www.handbook.fca.org.uk/handbook/glossary/G978.html?date=2007-01-20>`_ search endpoint via the :py:meth:`~fca_api.api.FinancialServicesRegisterApiClient.get_regulated_markets` method:
 
 .. code:: python
 
@@ -174,11 +174,11 @@ Searching for FRNs, IRNs and PRNs
 
 Generally, firm reference numbers (FRN), individual reference numbers (IRN), and product reference numbers (PRN), may not be known in advance. These can be found via the following client search methods, which return strings in the case of unique matches, or a JSON arrays of matching records if there are non-unique matches:
 
-- :py:meth:`~financial_services_register_api.api.FinancialServicesRegisterApiClient.search_frn()` - case-insensitive search for FRNs
-- :py:meth:`~financial_services_register_api.api.FinancialServicesRegisterApiClient.search_irn()` - case-insensitive search for IRNs
-- :py:meth:`~financial_services_register_api.api.FinancialServicesRegisterApiClient.search_prn()` - case-insensitive search for PRNs
+- :py:meth:`~fca_api.api.FinancialServicesRegisterApiClient.search_frn()` - case-insensitive search for FRNs
+- :py:meth:`~fca_api.api.FinancialServicesRegisterApiClient.search_irn()` - case-insensitive search for IRNs
+- :py:meth:`~fca_api.api.FinancialServicesRegisterApiClient.search_prn()` - case-insensitive search for PRNs
 
-These methods do not directly raise any exceptions, but may indirectly incur the following exceptions: a :py:class:`~financial_services_register_api.exceptions.FinancialServicesRegisterApiRequestException` in the case of bad searches, or a :py:class:`~financial_services_register_api.exceptions.FinancialServicesRegisterApiResponseException` in the case of non-standard or malformed responses with possibly no data.
+These methods do not directly raise any exceptions, but may indirectly incur the following exceptions: a :py:class:`~fca_api.exceptions.FinancialServicesRegisterApiRequestException` in the case of bad searches, or a :py:class:`~fca_api.exceptions.FinancialServicesRegisterApiResponseException` in the case of non-standard or malformed responses with possibly no data.
 
 FRNs, IRNs, and PRNs are associated with unique firms, individuals, and funds, respectively, in the Register, whether current or past. The more precise the name substring the more likely is an exact, unique result. Some examples are given below for each type of search, starting with FRNs:
 
@@ -206,14 +206,14 @@ Imprecise or inadequality specified names in the search can produce non-unique m
      'Name': 'Hiscox MGA Ltd (Postcode: EC2N 4BQ)'}
    ]
 
-Searches for non-existent firms will trigger an :py:class:`~financial_services_register_api.exceptions.FinancialServicesRegisterApiRequestException` indicating that no data found in the Register for the given name:
+Searches for non-existent firms will trigger an :py:class:`~fca_api.exceptions.FinancialServicesRegisterApiRequestException` indicating that no data found in the Register for the given name:
 
 .. code:: python
 
    >>> client.search_frn('a nonexistent firm')
    Traceback (most recent call last):
    ...
-   financial_services_register_api.api.FinancialServicesRegisterApiResponseException: No data found in FSR API response. Please check the search parameters and try again.
+   fca_api.api.FinancialServicesRegisterApiResponseException: No data found in FSR API response. Please check the search parameters and try again.
 
 A few examples are given below of IRN searches.
 
@@ -239,7 +239,7 @@ A few examples are given below of IRN searches.
    >>> client.search_irn('a nonexistent individual')
    Traceback (most recent call last):
    ...
-   financial_services_register_api.api.FinancialServicesRegisterApiResponseException: No data found in FSR API response. Please check the search parameters and try again.
+   fca_api.api.FinancialServicesRegisterApiResponseException: No data found in FSR API response. Please check the search parameters and try again.
 
 A few examples are given below of PRN searches.
 
@@ -265,7 +265,7 @@ A few examples are given below of PRN searches.
    >>> client.search_prn('a nonexistent fund')
    Traceback (most recent call last):
    ...
-   financial_services_register_api.api.FinancialServicesRegisterApiResponseException: No data found in FSR API response. Please check the search parameters and try again.
+   fca_api.api.FinancialServicesRegisterApiResponseException: No data found in FSR API response. Please check the search parameters and try again.
 
 .. _usage.firms:
 
@@ -284,81 +284,81 @@ Client methods for firm-specific requests, the associated API endpoints, resourc
      - Request Method
      - Resource Parameters
      - Return
-   * - :py:meth:`~financial_services_register_api.api.FinancialServicesRegisterApiClient.get_firm()`
+   * - :py:meth:`~fca_api.api.FinancialServicesRegisterApiClient.get_firm()`
      - ``/V0.1/Firm/{FRN}``
      - ``GET``
      - FRN (str)
-     - :py:class:`~financial_services_register_api.api.FinancialServicesRegisterApiResponse`
-   * - :py:meth:`~financial_services_register_api.api.FinancialServicesRegisterApiClient.get_firm_addresses()`
+     - :py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`
+   * - :py:meth:`~fca_api.api.FinancialServicesRegisterApiClient.get_firm_addresses()`
      - ``/V0.1/Firm/{FRN}/Address``
      - ``GET``
      - FRN (str)
-     - :py:class:`~financial_services_register_api.api.FinancialServicesRegisterApiResponse`
-   * - :py:meth:`~financial_services_register_api.api.FinancialServicesRegisterApiClient.get_firm_appointed_representatives()`
+     - :py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`
+   * - :py:meth:`~fca_api.api.FinancialServicesRegisterApiClient.get_firm_appointed_representatives()`
      - ``/V0.1/Firm/{FRN}/AR``
      - ``GET``
      - FRN (str)
-     - :py:class:`~financial_services_register_api.api.FinancialServicesRegisterApiResponse`
-   * - :py:meth:`~financial_services_register_api.api.FinancialServicesRegisterApiClient.get_firm_controlled_functions()`
+     - :py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`
+   * - :py:meth:`~fca_api.api.FinancialServicesRegisterApiClient.get_firm_controlled_functions()`
      - ``/V0.1/Firm/{FRN}/CF``
      - ``GET``
      - FRN (str)
-     - :py:class:`~financial_services_register_api.api.FinancialServicesRegisterApiResponse`
-   * - :py:meth:`~financial_services_register_api.api.FinancialServicesRegisterApiClient.get_firm_disciplinary_history()`
+     - :py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`
+   * - :py:meth:`~fca_api.api.FinancialServicesRegisterApiClient.get_firm_disciplinary_history()`
      - ``/V0.1/Firm/{FRN}/DisciplinaryHistory``
      - ``GET``
      - FRN (str)
-     - :py:class:`~financial_services_register_api.api.FinancialServicesRegisterApiResponse`
-   * - :py:meth:`~financial_services_register_api.api.FinancialServicesRegisterApiClient.get_firm_exclusions()`
+     - :py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`
+   * - :py:meth:`~fca_api.api.FinancialServicesRegisterApiClient.get_firm_exclusions()`
      - ``/V0.1/Firm/{FRN}/Exclusions``
      - ``GET``
      - FRN (str)
-     - :py:class:`~financial_services_register_api.api.FinancialServicesRegisterApiResponse`
-   * - :py:meth:`~financial_services_register_api.api.FinancialServicesRegisterApiClient.get_firm_individuals()`
+     - :py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`
+   * - :py:meth:`~fca_api.api.FinancialServicesRegisterApiClient.get_firm_individuals()`
      - ``/V0.1/Firm/{FRN}/Individuals``
      - ``GET``
      - FRN (str)
-     - :py:class:`~financial_services_register_api.api.FinancialServicesRegisterApiResponse`
-   * - :py:meth:`~financial_services_register_api.api.FinancialServicesRegisterApiClient.get_firm_names()`
+     - :py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`
+   * - :py:meth:`~fca_api.api.FinancialServicesRegisterApiClient.get_firm_names()`
      - ``/V0.1/Firm/{FRN}/Names``
      - ``GET``
      - FRN (str)
-     - :py:class:`~financial_services_register_api.api.FinancialServicesRegisterApiResponse`
-   * - :py:meth:`~financial_services_register_api.api.FinancialServicesRegisterApiClient.get_firm_passports()`
+     - :py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`
+   * - :py:meth:`~fca_api.api.FinancialServicesRegisterApiClient.get_firm_passports()`
      - ``/V0.1/Firm/{FRN}/Passports``
      - ``GET``
      - FRN (str)
-     - :py:class:`~financial_services_register_api.api.FinancialServicesRegisterApiResponse`
-   * - :py:meth:`~financial_services_register_api.api.FinancialServicesRegisterApiClient.get_firm_passport_permissions()`
+     - :py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`
+   * - :py:meth:`~fca_api.api.FinancialServicesRegisterApiClient.get_firm_passport_permissions()`
      - ``/V0.1/Firm/{FRN}/Passports/{Country}/Permission``
      - ``GET``
      - FRN (str), Country (str)
-     - :py:class:`~financial_services_register_api.api.FinancialServicesRegisterApiResponse`
-   * - :py:meth:`~financial_services_register_api.api.FinancialServicesRegisterApiClient.get_firm_permissions()`
+     - :py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`
+   * - :py:meth:`~fca_api.api.FinancialServicesRegisterApiClient.get_firm_permissions()`
      - ``/V0.1/Firm/{FRN}/Permissions``
      - ``GET``
      - FRN (str)
-     - :py:class:`~financial_services_register_api.api.FinancialServicesRegisterApiResponse`
-   * - :py:meth:`~financial_services_register_api.api.FinancialServicesRegisterApiClient.get_firm_regulators()`
+     - :py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`
+   * - :py:meth:`~fca_api.api.FinancialServicesRegisterApiClient.get_firm_regulators()`
      - ``/V0.1/Firm/{FRN}/Regulators``
      - ``GET``
      - FRN (str)
-     - :py:class:`~financial_services_register_api.api.FinancialServicesRegisterApiResponse`
-   * - :py:meth:`~financial_services_register_api.api.FinancialServicesRegisterApiClient.get_firm_requirements()`
+     - :py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`
+   * - :py:meth:`~fca_api.api.FinancialServicesRegisterApiClient.get_firm_requirements()`
      - ``/V0.1/Firm/{FRN}/Requirements``
      - ``GET``
      - FRN (str)
-     - :py:class:`~financial_services_register_api.api.FinancialServicesRegisterApiResponse`
-   * - :py:meth:`~financial_services_register_api.api.FinancialServicesRegisterApiClient.get_firm_requirement_investment_types()`
+     - :py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`
+   * - :py:meth:`~fca_api.api.FinancialServicesRegisterApiClient.get_firm_requirement_investment_types()`
      - ``/V0.1/Firm/{FRN}/Requirements/{ReqRef}/InvestmentTypes``
      - ``GET``
      - FRN (str), Requirement Reference (str)
-     - :py:class:`~financial_services_register_api.api.FinancialServicesRegisterApiResponse`
-   * - :py:meth:`~financial_services_register_api.api.FinancialServicesRegisterApiClient.get_firm_waivers()`
+     - :py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`
+   * - :py:meth:`~fca_api.api.FinancialServicesRegisterApiClient.get_firm_waivers()`
      - ``/V0.1/Firm/{FRN}/Waiver``
      - ``GET``
      - FRN (str)
-     - :py:class:`~financial_services_register_api.api.FinancialServicesRegisterApiResponse`
+     - :py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`
 
 Examples are given below for each request type for Barclays Bank Plc (FRN #122702).
 
@@ -632,21 +632,21 @@ Client methods for individual-specific requests, the associated API endpoints, r
      - Request Method
      - Parameters
      - Return
-   * - :py:meth:`~financial_services_register_api.api.FinancialServicesRegisterApiClient.get_individual()`
+   * - :py:meth:`~fca_api.api.FinancialServicesRegisterApiClient.get_individual()`
      - ``/V0.1/Individuals/{IRN}``
      - ``GET``
      - IRN (str)
-     - :py:class:`~financial_services_register_api.api.FinancialServicesRegisterApiResponse`
-   * - :py:meth:`~financial_services_register_api.api.FinancialServicesRegisterApiClient.get_individual_controlled_functions()`
+     - :py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`
+   * - :py:meth:`~fca_api.api.FinancialServicesRegisterApiClient.get_individual_controlled_functions()`
      - ``/V0.1/Individuals/{IRN}/CF``
      - ``GET``
      - IRN (str)
-     - :py:class:`~financial_services_register_api.api.FinancialServicesRegisterApiResponse`
-   * - :py:meth:`~financial_services_register_api.api.FinancialServicesRegisterApiClient.get_individual_disciplinary_history()`
+     - :py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`
+   * - :py:meth:`~fca_api.api.FinancialServicesRegisterApiClient.get_individual_disciplinary_history()`
      - ``/V0.1/Individuals/{IRN}/DisciplinaryHistory``
      - ``GET``
      - IRN (str)
-     - :py:class:`~financial_services_register_api.api.FinancialServicesRegisterApiResponse`
+     - :py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`
 
 Some examples are given below for each type of request for a specific, existing individual, Mark Carney (IRN #MXC29012).
 
@@ -719,21 +719,21 @@ Client methods for fund-specific requests, the associated API endpoints, resourc
      - Request Method
      - Parameters
      - Return
-   * - :py:meth:`~financial_services_register_api.api.FinancialServicesRegisterApiClient.get_fund()`
+   * - :py:meth:`~fca_api.api.FinancialServicesRegisterApiClient.get_fund()`
      - ``/V0.1/CIS/{PRN}``
      - ``GET``
      - PRN (str)
-     - :py:class:`~financial_services_register_api.api.FinancialServicesRegisterApiResponse`
-   * - :py:meth:`~financial_services_register_api.api.FinancialServicesRegisterApiClient.get_fund_names()`
+     - :py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`
+   * - :py:meth:`~fca_api.api.FinancialServicesRegisterApiClient.get_fund_names()`
      - ``/V0.1/CIS/{PRN}/Names``
      - ``GET``
      - PRN (str)
-     - :py:class:`~financial_services_register_api.api.FinancialServicesRegisterApiResponse`
-   * - :py:meth:`~financial_services_register_api.api.FinancialServicesRegisterApiClient.get_fund_subfunds()`
+     - :py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`
+   * - :py:meth:`~fca_api.api.FinancialServicesRegisterApiClient.get_fund_subfunds()`
      - ``/V0.1/CIS/{PRN}/Subfund``
      - ``GET``
      - PRN (str)
-     - :py:class:`~financial_services_register_api.api.FinancialServicesRegisterApiResponse`
+     - :py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`
 
 Some examples are given below for each type of request for a specific, existing fund, abrdn Multi-Asset Fund (PRN #185045).
 
