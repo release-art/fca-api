@@ -13,14 +13,14 @@ from financial_services_register_api.exceptions import (
 
 class TestSearchFunctionality:
     @pytest.mark.asyncio
-    async def test_financial_services_register_api_client___search_ref_number__resource_type_incorrect__value_error_raised(
+    async def test_search_ref_number_rejects_invalid_resource_type(
         self, test_client
     ):
         with pytest.raises(ValueError):
             await test_client._search_ref_number("resource_name", "incorrect_resource_type")
 
     @pytest.mark.asyncio
-    async def test_financial_services_register_api_client___search_ref_number__exceptional_request__api_request_exception_raised(
+    async def test_search_ref_number_raises_on_request_error(
         self, test_client, mocker
     ):
         mock_api_session_get = mocker.patch(
@@ -34,7 +34,7 @@ class TestSearchFunctionality:
             await test_client._search_ref_number("exceptional search", "fund")
 
     @pytest.mark.asyncio
-    async def test_financial_services_register_api_client___search_ref_number__response_not_ok__api_request_exception_raised(
+    async def test_search_ref_number_raises_on_bad_response(
         self, test_client, mocker
     ):
         mocker.patch(
@@ -81,7 +81,7 @@ class TestSearchFunctionality:
             await test_client._search_ref_number("bad response", resource_type)
 
     @pytest.mark.asyncio
-    async def test_financial_services_register_api_client___search_ref_number__incorrectly_specified_resource__no_fs_register_data__api_response_exception_raised(
+    async def test_search_ref_number_raises_on_nonexistent_resource(
         self, test_client
     ):
         # Covers the case of a failed FRN search for an incorrectly specified firm
@@ -97,7 +97,7 @@ class TestSearchFunctionality:
             await test_client._search_ref_number("a nonexistent fund", "fund")
 
     @pytest.mark.asyncio
-    async def test_financial_services_register_api_client___search_ref_number__inadequately_specified_resource__nonunique_fs_register_data__api_response_exception_raised(
+    async def test_search_ref_number_returns_multiple_matches(
         self, test_client
     ):
         # Covers the case of an FRN search based on an inadequately specified firm
@@ -119,7 +119,7 @@ class TestSearchFunctionality:
         assert all(isinstance(rec, dict) for rec in recv_recs)
 
     @pytest.mark.asyncio
-    async def test_financial_services_register_api_client___search_ref_number__correctly_and_adequately_specced_resource__unique_fs_register_data__response_returned_ok(
+    async def test_search_ref_number_returns_unique_match(
         self, test_client
     ):
         # Covers the case of a successful FRN search for an existing firm
@@ -138,7 +138,7 @@ class TestSearchFunctionality:
         assert recv_prn
 
     @pytest.mark.asyncio
-    async def test_financial_services_register_api_client___search_frn__correctly_and_adequately_specced_firm__unique_fs_register_data__response_returned_ok(
+    async def test_search_frn_returns_unique_firm(
         self, test_client
     ):
         # Covers the case of a successful FRN search for existing, unique firms
@@ -155,7 +155,7 @@ class TestSearchFunctionality:
         assert recv_frn
 
     @pytest.mark.asyncio
-    async def test_financial_services_register_api_client___search_frn__inadequately_specced_firm__json_array_of_matching_records__response_returned_ok(
+    async def test_search_frn_returns_multiple_firms(
         self, test_client
     ):
         # Covers the case of a successful FRN search for existing, unique firms
@@ -168,7 +168,7 @@ class TestSearchFunctionality:
         assert all(isinstance(rec, dict) for rec in recv_recs)
 
     @pytest.mark.asyncio
-    async def test_financial_services_register_api_client___search_irn__correctly_and_adequately_specced_individual__unique_fs_register_data__response_returned_ok(
+    async def test_search_irn_returns_unique_individual(
         self, test_client
     ):
         # Covers the case of a successful IRN search for existing, unique individuals
@@ -181,7 +181,7 @@ class TestSearchFunctionality:
         assert recv_irn
 
     @pytest.mark.asyncio
-    async def test_financial_services_register_api_client___search_irn__inadequately_specced_individual__json_array_of_matching_records__response_returned_ok(
+    async def test_search_irn_returns_multiple_individuals(
         self, test_client
     ):
         # Covers the case of an IRN search based on an inadequately specified individual
@@ -191,7 +191,7 @@ class TestSearchFunctionality:
         assert all(isinstance(rec, dict) for rec in recv_recs)
 
     @pytest.mark.asyncio
-    async def test_financial_services_register_api_client___search_prn__correctly_and_adequately_specced_fund__unique_fs_register_data__response_returned_ok(
+    async def test_search_prn_returns_unique_fund(
         self, test_client
     ):
         # Covers the case of a successful PRN search for existing, unique funds
@@ -204,7 +204,7 @@ class TestSearchFunctionality:
         assert recv_prn
 
     @pytest.mark.asyncio
-    async def test_financial_services_register_api_client___search_prn__inadequately_specced_fund__json_array_of_matching_records__response_returned_ok(
+    async def test_search_prn_returns_multiple_funds(
         self, test_client
     ):
         # Covers the case of an PRN search based on an inadequately specified fund

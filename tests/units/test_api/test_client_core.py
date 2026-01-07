@@ -17,7 +17,7 @@ from financial_services_register_api.exceptions import (
 
 class TestFinancialServicesRegisterApiClientCore:
     @pytest.mark.asyncio
-    async def test_financial_services_register_api_client____init__(self, test_client, test_api_username, test_api_key):
+    async def test_client_init_sets_credentials(self, test_client, test_api_username, test_api_key):
         assert test_client.api_session.api_username == test_api_username
         assert test_client.api_session.api_key == test_api_key
         assert test_client.api_session.headers["ACCEPT"] == "application/json"
@@ -26,7 +26,7 @@ class TestFinancialServicesRegisterApiClientCore:
         assert test_client.api_version == API_CONSTANTS.API_VERSION.value
 
     @pytest.mark.asyncio
-    async def test_financial_services_register_api_client__common_search__api_request_exception_raised(
+    async def test_common_search_raises_on_request_error(
         self, test_client, mocker
     ):
         mock_api_session_get = mocker.patch(
@@ -38,7 +38,7 @@ class TestFinancialServicesRegisterApiClientCore:
             await test_client.common_search("exceptional resource", "firm")
 
     @pytest.mark.asyncio
-    async def test_financial_services_register_api_client__common_search__no_api_request_exception(self, test_client):
+    async def test_common_search_success(self, test_client):
         recv_response = await test_client.common_search("hastings direct", "firm")
         assert recv_response.ok
         assert recv_response.data

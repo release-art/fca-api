@@ -12,14 +12,14 @@ from financial_services_register_api.exceptions import (
 
 class TestResourceInfoFunctionality:
     @pytest.mark.asyncio
-    async def test_financial_services_register_api_client___get_resource_info__invalid_resource_type__no_modifiers__value_error_raised(
+    async def test_get_resource_info_rejects_invalid_type(
         self, test_client
     ):
         with pytest.raises(ValueError):
             await test_client._get_resource_info("test_ref_number", "invalid resource type")
 
     @pytest.mark.asyncio
-    async def test_financial_services_register_api_client___get_resource_info__invalid_resource_type__modifiers__value_error_raised(
+    async def test_get_resource_info_rejects_invalid_type_with_modifiers(
         self, test_client
     ):
         with pytest.raises(ValueError):
@@ -33,7 +33,7 @@ class TestResourceInfoFunctionality:
             )
 
     @pytest.mark.asyncio
-    async def test_financial_services_register_api_client___get_resource_info__no_modifiers__request_exception_raised(
+    async def test_get_resource_info_raises_on_request_error(
         self, test_client, mocker
     ):
         mock_api_session_get = mocker.patch(
@@ -47,7 +47,7 @@ class TestResourceInfoFunctionality:
             await test_client._get_resource_info("test_irn", "individual")
 
     @pytest.mark.asyncio
-    async def test_financial_services_register_api_client___get_resource_info__modifiers__request_exception_raised(
+    async def test_get_resource_info_raises_on_request_error_with_modifiers(
         self, test_client, mocker
     ):
         mock_api_session_get = mocker.patch(
@@ -82,7 +82,7 @@ class TestResourceInfoFunctionality:
             )
 
     @pytest.mark.asyncio
-    async def test_financial_services_register_api_client___get_resource_info__firm(self, test_client):
+    async def test_get_firm_resource_info_success(self, test_client):
         # Covers the case of a request for an existing firm which is
         # Hiscox Insurance Company Limited with the FRN 113849
         recv_response = await test_client._get_resource_info("113849", "firm")
@@ -128,7 +128,7 @@ class TestResourceInfoFunctionality:
                 assert not recv_response.data
 
     @pytest.mark.asyncio
-    async def test_financial_services_register_api_client___get_resource_info__fund(self, test_client):
+    async def test_get_fund_resource_info_success(self, test_client):
         # Covers the case of a request for an existing fund which is
         # 'Jupiter Asia Pacific Income Fund (IRL)' with the PRN 1006826
         recv_response = await test_client._get_resource_info("1006826", "fund")
@@ -155,7 +155,7 @@ class TestResourceInfoFunctionality:
             assert not recv_response.data
 
     @pytest.mark.asyncio
-    async def test_financial_services_register_api_client___get_resource_info__individual(self, test_client):
+    async def test_get_individual_resource_info_success(self, test_client):
         # Covers the case of a request for an existing individual
         # 'Mark Carney'(IRN 'MXC29012')
         recv_response = await test_client._get_resource_info("MXC29012", "individual")

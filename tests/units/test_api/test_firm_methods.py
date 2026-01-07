@@ -10,7 +10,7 @@ import pytest
 
 class TestFirmMethods:
     @pytest.mark.asyncio
-    async def test_financial_services_register_api_client__get_firm(self, test_client):
+    async def test_get_firm_success(self, test_client):
         # Covers the case of a request for the firm details of
         # an existing firm, Hiscox Insurance Company Limited (FRN 113849)
         recv_response = await test_client.get_firm("113849")
@@ -25,7 +25,7 @@ class TestFirmMethods:
         assert not recv_response.data
 
     @pytest.mark.asyncio
-    async def test_financial_services_register_api_client__get_firm_names(self, test_client):
+    async def test_get_firm_names_success(self, test_client):
         # Covers the case of a request for an existing firm which is
         # Hiscox Insurance Company Limited (FRN 113849)
         recv_response = await test_client.get_firm_names("113849")
@@ -41,7 +41,7 @@ class TestFirmMethods:
         assert not recv_response.data
 
     @pytest.mark.asyncio
-    async def test_financial_services_register_api_client__get_firm_addresses(self, test_client):
+    async def test_get_firm_addresses_success(self, test_client):
         # Covers the case of a request for an existing firm which is
         # Hiscox Insurance Company Limited (FRN 113849)
         recv_response = await test_client.get_firm_addresses("113849")
@@ -55,7 +55,7 @@ class TestFirmMethods:
         assert not recv_response.data
 
     @pytest.mark.asyncio
-    async def test_financial_services_register_api_client__get_firm_controlled_functions(self, test_client):
+    async def test_get_firm_controlled_functions_success(self, test_client):
         # Covers the case of a request for an existing firm which is
         # Hiscox Insurance Company Limited (FRN 113849)
         recv_response = await test_client.get_firm_controlled_functions("113849")
@@ -69,7 +69,7 @@ class TestFirmMethods:
         assert not recv_response.data
 
     @pytest.mark.asyncio
-    async def test_financial_services_register_api_client__get_firm_individuals(self, test_client):
+    async def test_get_firm_individuals_success(self, test_client):
         # Covers the case of a request for an existing firm which is
         # Hiscox Insurance Company Limited (FRN 113849)
         recv_response = await test_client.get_firm_individuals("113849")
@@ -83,7 +83,7 @@ class TestFirmMethods:
         assert not recv_response.data
 
     @pytest.mark.asyncio
-    async def test_financial_services_register_api_client__get_firm_permissions(self, test_client):
+    async def test_get_firm_permissions_success(self, test_client):
         # Covers the case of a request for an existing firm which is
         # Hiscox Insurance Company Limited (FRN 113849)
         recv_response = await test_client.get_firm_permissions("113849")
@@ -97,7 +97,7 @@ class TestFirmMethods:
         assert not recv_response.data
 
     @pytest.mark.asyncio
-    async def test_financial_services_register_api_client__get_firm_requirements(self, test_client):
+    async def test_get_firm_requirements_success(self, test_client):
         # Covers the case of a request for an existing firm which is
         # Hiscox Insurance Company Limited (FRN 113849)
         recv_response = await test_client.get_firm_requirements("113849")
@@ -111,7 +111,7 @@ class TestFirmMethods:
         assert not recv_response.data
 
     @pytest.mark.asyncio
-    async def test_financial_services_register_api_client__get_firm_requirement_investment_types(self, test_client):
+    async def test_get_firm_requirement_investment_types_success(self, test_client):
         # Covers the case of a request for an existing firm which is
         # Barclays Bank Plc (FRN 122702)
         recv_response = await test_client.get_firm_requirement_investment_types("122702", "OR-0262545")
@@ -130,7 +130,7 @@ class TestFirmMethods:
         assert not recv_response.data
 
     @pytest.mark.asyncio
-    async def test_financial_services_register_api_client__get_firm_regulators(self, test_client):
+    async def test_get_firm_regulators_success(self, test_client):
         # Covers the case of a request for an existing firm which is
         # Hiscox Insurance Company Limited (FRN 113849)
         recv_response = await test_client.get_firm_regulators("113849")
@@ -144,7 +144,7 @@ class TestFirmMethods:
         assert not recv_response.data
 
     @pytest.mark.asyncio
-    async def test_financial_services_register_api_client__get_firm_passports(self, test_client):
+    async def test_get_firm_passports_success(self, test_client):
         # Covers the case of a request for an existing firm which is
         # Hiscox Insurance Company Limited (FRN 113849)
         recv_response = await test_client.get_firm_passports("113849")
@@ -158,7 +158,7 @@ class TestFirmMethods:
         assert not recv_response.data
 
     @pytest.mark.asyncio
-    async def test_financial_services_register_api_client__get_firm_passport_permissions(self, test_client):
+    async def test_get_firm_passport_permissions_success(self, test_client):
         # Covers the case of a request for an existing firm which is
         # Hiscox Insurance Company Limited (FRN 113849)
         recv_response = await test_client.get_firm_passport_permissions("113849", "Gibraltar")
@@ -177,7 +177,7 @@ class TestFirmMethods:
         assert not recv_response.data
 
     @pytest.mark.asyncio
-    async def test_financial_services_register_api_client__get_firm_waivers(self, test_client):
+    async def test_get_firm_waivers_success(self, test_client):
         # Covers the case of a request for an existing firm which is
         # Hiscox Insurance Company Limited (FRN 113849)
         recv_response = await test_client.get_firm_waivers("113849")
@@ -195,7 +195,7 @@ class TestFirmMethods:
         assert not recv_response.data
 
     @pytest.mark.asyncio
-    async def test_financial_services_register_api_client__get_firm_exclusions(self, test_client):
+    async def test_get_firm_exclusions_success(self, test_client):
         # Covers the case of a request for an existing firm which is
         # Barclays Bank Plc (FRN 122702)
         recv_response = await test_client.get_firm_exclusions("122702")
@@ -214,7 +214,7 @@ class TestFirmMethods:
         assert not recv_response.data
 
     @pytest.mark.asyncio
-    async def test_financial_services_register_api_client__get_firm_disciplinary_history(self, test_client):
+    async def test_get_firm_disciplinary_history_success(self, test_client):
         # Covers the case of a request for an existing firm which is
         # Barclays Bank Plc (FRN 122702)
         recv_response = await test_client.get_firm_disciplinary_history("122702")
@@ -233,7 +233,7 @@ class TestFirmMethods:
         assert not recv_response.data
 
     @pytest.mark.asyncio
-    async def test_financial_services_register_api_client__get_firm_appointed_representatives(self, test_client):
+    async def test_get_firm_appointed_representatives_success(self, test_client):
         # Covers the case of a request for an existing firm which is
         # Hiscox Insurance Company Limited (FRN 113849)
         recv_response = await test_client.get_firm_appointed_representatives("113849")

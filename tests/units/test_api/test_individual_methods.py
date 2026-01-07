@@ -10,7 +10,7 @@ import pytest
 
 class TestIndividualMethods:
     @pytest.mark.asyncio
-    async def test_financial_services_register_api_client__get_individual(self, test_client):
+    async def test_get_individual_success(self, test_client):
         # Covers the case of a request for the details of an
         # existing individual, 'Mark Carney' (IRN 'MXC29012')
         recv_response = await test_client.get_individual("MXC29012")
@@ -24,7 +24,7 @@ class TestIndividualMethods:
         assert not recv_response.data
 
     @pytest.mark.asyncio
-    async def test_financial_services_register_api_client__get_individual_controlled_functions(self, test_client):
+    async def test_get_individual_controlled_functions_success(self, test_client):
         # Covers the case of a request for an existing individual -
         # 'Mark Carney' (IRN 'MXC29012')
         recv_response = await test_client.get_individual_controlled_functions("MXC29012")
@@ -38,7 +38,7 @@ class TestIndividualMethods:
         assert not recv_response.data
 
     @pytest.mark.asyncio
-    async def test_financial_services_register_api_client__get_individual_disciplinary_history(self, test_client):
+    async def test_get_individual_disciplinary_history_success(self, test_client):
         # Covers the case of a request for an existing individual with -
         # disciplinary history, 'Leigh Mackey' (IRN 'LXM01328')
         recv_response = await test_client.get_individual_disciplinary_history("LXM01328")
