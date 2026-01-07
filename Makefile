@@ -57,7 +57,7 @@ doctests: clean
 unittests: clean
 	@echo "\n$(PACKAGE_NAME)[$(BRANCH)@$(HEAD)]: Running package unit tests + measuring coverage\n"
 	cd "$(PROJECT_ROOT)" && \
-	python3 -m pytest \
+	pdm run python3 -m pytest \
 				--cache-clear \
 				--capture=no \
 				--code-highlight=yes \

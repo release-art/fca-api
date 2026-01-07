@@ -17,17 +17,18 @@ from financial_services_register_api.api import FinancialServicesRegisterApiSess
 from financial_services_register_api.constants import FINANCIAL_SERVICES_REGISTER_API_CONSTANTS as API_CONSTANTS
 from financial_services_register_api.exceptions import FinancialServicesRegisterApiRequestException, FinancialServicesRegisterApiResponseException
 
+@pytest.fixture
+def test_session(test_api_username, test_api_key):
+    return FinancialServicesRegisterApiSession(test_api_username, test_api_key)
 
-class _TestFinancialServicesRegisterApi:
+@pytest.fixture
+def test_client(test_api_username, test_api_key):
+    return FinancialServicesRegisterApiClient(test_api_username, test_api_key)
 
-    _api_username = os.environ['API_USERNAME']
-    _api_key = os.environ['API_KEY']
 
+class TestFinancialServicesRegisterApiSession:
 
-class TestFinancialServicesRegisterApiSession(_TestFinancialServicesRegisterApi):
-
-    def test_fs_register_api_session(self):
-        test_session = FinancialServicesRegisterApiSession(self._api_username, self._api_key)
+    def test_fs_register_api_session(self, test_session):
 
         assert test_session.api_username == self._api_username
         assert test_session.api_key == self._api_key
@@ -38,10 +39,9 @@ class TestFinancialServicesRegisterApiSession(_TestFinancialServicesRegisterApi)
         }
 
 
-class TestFinancialServicesRegisterApiClient(_TestFinancialServicesRegisterApi):
+class TestFinancialServicesRegisterApiClient:
 
-    def test_financial_services_register_api_client____init__(self):
-        test_client = FinancialServicesRegisterApiClient(self._api_username, self._api_key)
+    def test_financial_services_register_api_client____init__(self, test_client):
 
         assert test_client.api_session.api_username == self._api_username
         assert test_client.api_session.api_key == self._api_key
@@ -52,8 +52,7 @@ class TestFinancialServicesRegisterApiClient(_TestFinancialServicesRegisterApi):
         }
         assert test_client.api_version == API_CONSTANTS.API_VERSION.value
 
-    def test_financial_services_register_api_client__common_search__api_request_exception_raised(self):
-        test_client = FinancialServicesRegisterApiClient(self._api_username, self._api_key)
+    def test_financial_services_register_api_client__common_search__api_request_exception_raised(self, test_client):
 
         with mock.patch('financial_services_register_api.api.FinancialServicesRegisterApiSession.get') as mock_api_session_get:
             mock_api_session_get.side_effect = requests.RequestException('test RequestException')
@@ -61,8 +60,7 @@ class TestFinancialServicesRegisterApiClient(_TestFinancialServicesRegisterApi):
             with pytest.raises(FinancialServicesRegisterApiRequestException):
                 test_client.common_search('exceptional resource', 'firm')
 
-    def test_financial_services_register_api_client__common_search__no_api_request_exception(self):
-        test_client = FinancialServicesRegisterApiClient(self._api_username, self._api_key)
+    def test_financial_services_register_api_client__common_search__no_api_request_exception(self, test_client):
 
         recv_response = test_client.common_search('hastings direct', 'firm')
         assert recv_response.ok
@@ -109,14 +107,12 @@ class TestFinancialServicesRegisterApiClient(_TestFinancialServicesRegisterApi):
         assert recv_response.message == 'No search result found'
         assert not recv_response.resultinfo
 
-    def test_financial_services_register_api_client___search_ref_number__resource_type_incorrect__value_error_raised(self):
-        test_client = FinancialServicesRegisterApiClient(self._api_username, self._api_key)
+    def test_financial_services_register_api_client___search_ref_number__resource_type_incorrect__value_error_raised(self, test_client):
 
         with pytest.raises(ValueError):
             test_client._search_ref_number('resource_name', 'incorrect_resource_type')
 
-    def test_financial_services_register_api_client___search_ref_number__exceptional_request__api_request_exception_raised(self):
-        test_client = FinancialServicesRegisterApiClient(self._api_username, self._api_key)
+    def test_financial_services_register_api_client___search_ref_number__exceptional_request__api_request_exception_raised(self, test_client):
 
         with mock.patch('financial_services_register_api.api.FinancialServicesRegisterApiSession.get') as mock_api_session_get:
             mock_api_session_get.side_effect = requests.RequestException('test RequestException')
@@ -126,8 +122,7 @@ class TestFinancialServicesRegisterApiClient(_TestFinancialServicesRegisterApi):
                 test_client._search_ref_number('exceptional search', 'individual')
                 test_client._search_ref_number('exceptional search', 'fund')
 
-    def test_financial_services_register_api_client___search_ref_number__response_not_ok__api_request_exception_raised(self):
-        test_client = FinancialServicesRegisterApiClient(self._api_username, self._api_key)
+    def test_financial_services_register_api_client___search_ref_number__response_not_ok__api_request_exception_raised(self, test_client):
 
         with mock.patch('financial_services_register_api.api.FinancialServicesRegisterApiClient.common_search', return_value=mock.MagicMock(ok=False)):
             with pytest.raises(FinancialServicesRegisterApiRequestException):
@@ -135,8 +130,7 @@ class TestFinancialServicesRegisterApiClient(_TestFinancialServicesRegisterApi):
                 test_client._search_ref_number('exceptional search', 'individual')
                 test_client._search_ref_number('exceptional search', 'fund')
 
-    def test_financial_services_register_api_client___search_ref_number__no_fs_register_data_in_response__api_request_exception_raised(self):
-        test_client = FinancialServicesRegisterApiClient(self._api_username, self._api_key)
+    def test_financial_services_register_api_client___search_ref_number__no_fs_register_data_in_response__api_request_exception_raised(self, test_client):
 
         with mock.patch('financial_services_register_api.api.FinancialServicesRegisterApiSession.get') as mock_api_session_get:
             mock_response = mock.create_autospec(requests.Response)
@@ -148,8 +142,7 @@ class TestFinancialServicesRegisterApiClient(_TestFinancialServicesRegisterApi):
                 test_client._search_ref_number('bad search', 'individual')
                 test_client._search_ref_number('bad search', 'fund')
 
-    def test_financial_services_register_api_client___search_ref_number__fs_register_data_with_key_error__api_request_exception_raised(self):
-        test_client = FinancialServicesRegisterApiClient(self._api_username, self._api_key)
+    def test_financial_services_register_api_client___search_ref_number__fs_register_data_with_key_error__api_request_exception_raised(self, test_client):
 
         with mock.patch('financial_services_register_api.api.FinancialServicesRegisterApiSession.get') as mock_api_session_get:
             mock_response = mock.create_autospec(requests.Response)
@@ -161,8 +154,7 @@ class TestFinancialServicesRegisterApiClient(_TestFinancialServicesRegisterApi):
                 test_client._search_ref_number('bad response', 'individual')
                 test_client._search_ref_number('bad response', 'fund')
 
-    def test_financial_services_register_api_client___search_ref_number__incorrectly_specified_resource__no_fs_register_data__api_response_exception_raised(self):
-        test_client = FinancialServicesRegisterApiClient(self._api_username, self._api_key)
+    def test_financial_services_register_api_client___search_ref_number__incorrectly_specified_resource__no_fs_register_data__api_response_exception_raised(self, test_client):
 
         # Covers the case of a failed FRN search for an incorrectly specified firm
         with pytest.raises(FinancialServicesRegisterApiRequestException):
@@ -176,8 +168,7 @@ class TestFinancialServicesRegisterApiClient(_TestFinancialServicesRegisterApi):
         with pytest.raises(FinancialServicesRegisterApiRequestException):
             test_client._search_ref_number('a nonexistent fund', 'fund')
 
-    def test_financial_services_register_api_client___search_ref_number__inadequately_specified_resource__nonunique_fs_register_data__api_response_exception_raised(self):
-        test_client = FinancialServicesRegisterApiClient(self._api_username, self._api_key)
+    def test_financial_services_register_api_client___search_ref_number__inadequately_specified_resource__nonunique_fs_register_data__api_response_exception_raised(self, test_client):
 
         # Covers the case of an FRN search based on an inadequately specified firm
         # that produces multiple results
@@ -197,8 +188,7 @@ class TestFinancialServicesRegisterApiClient(_TestFinancialServicesRegisterApi):
         assert isinstance(recv_recs, list)
         assert all(isinstance(rec, dict) for rec in recv_recs)
 
-    def test_financial_services_register_api_client___search_ref_number__correctly_and_adequately_specced_resource__unique_fs_register_data__response_returned_ok(self):
-        test_client = FinancialServicesRegisterApiClient(self._api_username, self._api_key)
+    def test_financial_services_register_api_client___search_ref_number__correctly_and_adequately_specced_resource__unique_fs_register_data__response_returned_ok(self, test_client):
 
         # Covers the case of a successful FRN search for an existing firm
         recv_frn = test_client._search_ref_number('hiscox insurance company', 'firm')
@@ -215,8 +205,7 @@ class TestFinancialServicesRegisterApiClient(_TestFinancialServicesRegisterApi):
         assert isinstance(recv_prn, str)
         assert recv_prn
 
-    def test_financial_services_register_api_client___search_frn__correctly_and_adequately_specced_firm__unique_fs_register_data__response_returned_ok(self):
-        test_client = FinancialServicesRegisterApiClient(self._api_username, self._api_key)
+    def test_financial_services_register_api_client___search_frn__correctly_and_adequately_specced_firm__unique_fs_register_data__response_returned_ok(self, test_client):
 
         # Covers the case of a successful FRN search for existing, unique firms
         recv_frn = test_client.search_frn('hiscox insurance company')
@@ -231,8 +220,7 @@ class TestFinancialServicesRegisterApiClient(_TestFinancialServicesRegisterApi):
         assert isinstance(recv_frn, str)
         assert recv_frn
 
-    def test_financial_services_register_api_client___search_frn__inadequately_specced_firm__json_array_of_matching_records__response_returned_ok(self):
-        test_client = FinancialServicesRegisterApiClient(self._api_username, self._api_key)
+    def test_financial_services_register_api_client___search_frn__inadequately_specced_firm__json_array_of_matching_records__response_returned_ok(self, test_client):
 
         # Covers the case of a successful FRN search for existing, unique firms
         recv_recs = test_client._search_ref_number('hsbc', 'firm')
@@ -243,20 +231,17 @@ class TestFinancialServicesRegisterApiClient(_TestFinancialServicesRegisterApi):
         assert isinstance(recv_recs, list)
         assert all(isinstance(rec, dict) for rec in recv_recs)
 
-    def test_financial_services_register_api_client___get_resource_info__invalid_resource_type__no_modifiers__value_error_raised(self):
-        test_client = FinancialServicesRegisterApiClient(self._api_username, self._api_key)
+    def test_financial_services_register_api_client___get_resource_info__invalid_resource_type__no_modifiers__value_error_raised(self, test_client):
 
         with pytest.raises(ValueError):
             test_client._get_resource_info('test_ref_number', 'invalid resource type')
 
-    def test_financial_services_register_api_client___get_resource_info__invalid_resource_type__modifiers__value_error_raised(self):
-        test_client = FinancialServicesRegisterApiClient(self._api_username, self._api_key)
+    def test_financial_services_register_api_client___get_resource_info__invalid_resource_type__modifiers__value_error_raised(self, test_client):
 
         with pytest.raises(ValueError):
             test_client._get_resource_info('test_ref_number', 'invalid resource type', modifiers=('test_modifier1', 'test_modifier2',))
 
-    def test_financial_services_register_api_client___get_resource_info__no_modifiers__request_exception_raised(self):
-        test_client = FinancialServicesRegisterApiClient(self._api_username, self._api_key)
+    def test_financial_services_register_api_client___get_resource_info__no_modifiers__request_exception_raised(self, test_client):
 
         with mock.patch('financial_services_register_api.api.FinancialServicesRegisterApiSession.get') as mock_api_session_get:
             mock_api_session_get.side_effect = requests.RequestException('test RequestException')
@@ -266,8 +251,7 @@ class TestFinancialServicesRegisterApiClient(_TestFinancialServicesRegisterApi):
                 test_client._get_resource_info('test_prn', 'fund')
                 test_client._get_resource_info('test_irn', 'individual')
 
-    def test_financial_services_register_api_client___get_resource_info__modifiers__request_exception_raised(self):
-        test_client = FinancialServicesRegisterApiClient(self._api_username, self._api_key)
+    def test_financial_services_register_api_client___get_resource_info__modifiers__request_exception_raised(self, test_client):
 
         with mock.patch('financial_services_register_api.api.FinancialServicesRegisterApiSession.get') as mock_api_session_get:
             mock_api_session_get.side_effect = requests.RequestException('test RequestException')
@@ -277,8 +261,7 @@ class TestFinancialServicesRegisterApiClient(_TestFinancialServicesRegisterApi):
                 test_client._get_resource_info('test_prn', 'fund', modifiers=('test_modifier1', 'test_modifier2',))
                 test_client._get_resource_info('test_irn', 'individual', modifiers=('test_modifier1', 'test_modifier2',))
 
-    def test_financial_services_register_api_client___get_resource_info__firm(self):
-        test_client = FinancialServicesRegisterApiClient(self._api_username, self._api_key)
+    def test_financial_services_register_api_client___get_resource_info__firm(self, test_client):
 
         # Covers the case of a request for an existing firm which is
         # Hiscox Insurance Company Limited with the FRN 113849
@@ -464,8 +447,7 @@ class TestFinancialServicesRegisterApiClient(_TestFinancialServicesRegisterApi):
         assert not recv_response.data['PreviousAppointedRepresentatives']
         assert not recv_response.data['CurrentAppointedRepresentatives']
 
-    def test_financial_services_register_api_client___get_resource_info__fund(self):
-        test_client = FinancialServicesRegisterApiClient(self._api_username, self._api_key)
+    def test_financial_services_register_api_client___get_resource_info__fund(self, test_client):
 
         # Covers the case of a request for an existing fund which is
         # 'Jupiter Asia Pacific Income Fund (IRL)' with the PRN 1006826
@@ -516,8 +498,7 @@ class TestFinancialServicesRegisterApiClient(_TestFinancialServicesRegisterApi):
         assert recv_response.ok
         assert not recv_response.data
 
-    def test_financial_services_register_api_client___get_resource_info__individual(self):
-        test_client = FinancialServicesRegisterApiClient(self._api_username, self._api_key)
+    def test_financial_services_register_api_client___get_resource_info__individual(self, test_client):
 
         # Covers the case of a request for an existing individual
         # 'Mark Carney'(IRN 'MXC29012')
@@ -561,8 +542,7 @@ class TestFinancialServicesRegisterApiClient(_TestFinancialServicesRegisterApi):
         assert recv_response.ok
         assert not recv_response.data
 
-    def test_financial_services_register_api_client__get_firm(self):
-        test_client = FinancialServicesRegisterApiClient(self._api_username, self._api_key)
+    def test_financial_services_register_api_client__get_firm(self, test_client):
 
         # Covers the case of a request for the firm details of
         # an existing firm, Hiscox Insurance Company Limited (FRN 113849)
@@ -577,8 +557,7 @@ class TestFinancialServicesRegisterApiClient(_TestFinancialServicesRegisterApi):
         assert recv_response.ok
         assert not recv_response.data
 
-    def test_financial_services_register_api_client__get_firm_names(self):
-        test_client = FinancialServicesRegisterApiClient(self._api_username, self._api_key)
+    def test_financial_services_register_api_client__get_firm_names(self, test_client):
 
         # Covers the case of a request for an existing firm which is
         # Hiscox Insurance Company Limited (FRN 113849)
@@ -594,8 +573,7 @@ class TestFinancialServicesRegisterApiClient(_TestFinancialServicesRegisterApi):
         assert recv_response.ok
         assert not recv_response.data
 
-    def test_financial_services_register_api_client__get_firm_addresses(self):
-        test_client = FinancialServicesRegisterApiClient(self._api_username, self._api_key)
+    def test_financial_services_register_api_client__get_firm_addresses(self, test_client):
 
         # Covers the case of a request for an existing firm which is
         # Hiscox Insurance Company Limited (FRN 113849)
@@ -609,8 +587,7 @@ class TestFinancialServicesRegisterApiClient(_TestFinancialServicesRegisterApi):
         assert recv_response.ok
         assert not recv_response.data
 
-    def test_financial_services_register_api_client__get_firm_controlled_functions(self):
-        test_client = FinancialServicesRegisterApiClient(self._api_username, self._api_key)
+    def test_financial_services_register_api_client__get_firm_controlled_functions(self, test_client):
 
         # Covers the case of a request for an existing firm which is
         # Hiscox Insurance Company Limited (FRN 113849)
@@ -624,8 +601,7 @@ class TestFinancialServicesRegisterApiClient(_TestFinancialServicesRegisterApi):
         assert recv_response.ok
         assert not recv_response.data
 
-    def test_financial_services_register_api_client__get_firm_individuals(self):
-        test_client = FinancialServicesRegisterApiClient(self._api_username, self._api_key)
+    def test_financial_services_register_api_client__get_firm_individuals(self, test_client):
 
         # Covers the case of a request for an existing firm which is
         # Hiscox Insurance Company Limited (FRN 113849)
@@ -639,8 +615,7 @@ class TestFinancialServicesRegisterApiClient(_TestFinancialServicesRegisterApi):
         assert recv_response.ok
         assert not recv_response.data
 
-    def test_financial_services_register_api_client__get_firm_permissions(self):
-        test_client = FinancialServicesRegisterApiClient(self._api_username, self._api_key)
+    def test_financial_services_register_api_client__get_firm_permissions(self, test_client):
 
         # Covers the case of a request for an existing firm which is
         # Hiscox Insurance Company Limited (FRN 113849)
@@ -654,8 +629,7 @@ class TestFinancialServicesRegisterApiClient(_TestFinancialServicesRegisterApi):
         assert recv_response.ok
         assert not recv_response.data
 
-    def test_financial_services_register_api_client__get_firm_requirements(self):
-        test_client = FinancialServicesRegisterApiClient(self._api_username, self._api_key)
+    def test_financial_services_register_api_client__get_firm_requirements(self, test_client):
 
         # Covers the case of a request for an existing firm which is
         # Hiscox Insurance Company Limited (FRN 113849)
@@ -669,8 +643,7 @@ class TestFinancialServicesRegisterApiClient(_TestFinancialServicesRegisterApi):
         assert recv_response.ok
         assert not recv_response.data
 
-    def test_financial_services_register_api_client__get_firm_requirement_investment_types(self):
-        test_client = FinancialServicesRegisterApiClient(self._api_username, self._api_key)
+    def test_financial_services_register_api_client__get_firm_requirement_investment_types(self, test_client):
 
         # Covers the case of a request for an existing firm which is
         # Barclays Bank Plc (FRN 122702)
@@ -690,8 +663,7 @@ class TestFinancialServicesRegisterApiClient(_TestFinancialServicesRegisterApi):
         assert recv_response.ok
         assert not recv_response.data
 
-    def test_financial_services_register_api_client__get_firm_regulators(self):
-        test_client = FinancialServicesRegisterApiClient(self._api_username, self._api_key)
+    def test_financial_services_register_api_client__get_firm_regulators(self, test_client):
 
         # Covers the case of a request for an existing firm which is
         # Hiscox Insurance Company Limited (FRN 113849)
@@ -705,8 +677,7 @@ class TestFinancialServicesRegisterApiClient(_TestFinancialServicesRegisterApi):
         assert recv_response.ok
         assert not recv_response.data
 
-    def test_financial_services_register_api_client__get_firm_passports(self):
-        test_client = FinancialServicesRegisterApiClient(self._api_username, self._api_key)
+    def test_financial_services_register_api_client__get_firm_passports(self, test_client):
 
         # Covers the case of a request for an existing firm which is
         # Hiscox Insurance Company Limited (FRN 113849)
@@ -720,8 +691,7 @@ class TestFinancialServicesRegisterApiClient(_TestFinancialServicesRegisterApi):
         assert recv_response.ok
         assert not recv_response.data
 
-    def test_financial_services_register_api_client__get_firm_passport_permissions(self):
-        test_client = FinancialServicesRegisterApiClient(self._api_username, self._api_key)
+    def test_financial_services_register_api_client__get_firm_passport_permissions(self, test_client):
 
         # Covers the case of a request for an existing firm which is
         # Hiscox Insurance Company Limited (FRN 113849)
@@ -741,8 +711,7 @@ class TestFinancialServicesRegisterApiClient(_TestFinancialServicesRegisterApi):
         assert recv_response.ok
         assert not recv_response.data
 
-    def test_financial_services_register_api_client__get_firm_waivers(self):
-        test_client = FinancialServicesRegisterApiClient(self._api_username, self._api_key)
+    def test_financial_services_register_api_client__get_firm_waivers(self, test_client):
 
         # Covers the case of a request for an existing firm which is
         # Hiscox Insurance Company Limited (FRN 113849)
@@ -759,8 +728,7 @@ class TestFinancialServicesRegisterApiClient(_TestFinancialServicesRegisterApi):
         assert recv_response.ok
         assert not recv_response.data
 
-    def test_financial_services_register_api_client__get_firm_exclusions(self):
-        test_client = FinancialServicesRegisterApiClient(self._api_username, self._api_key)
+    def test_financial_services_register_api_client__get_firm_exclusions(self, test_client):
 
         # Covers the case of a request for an existing firm which is
         # Barclays Bank Plc (FRN 122702)
@@ -780,8 +748,7 @@ class TestFinancialServicesRegisterApiClient(_TestFinancialServicesRegisterApi):
         assert recv_response.ok
         assert not recv_response.data
 
-    def test_financial_services_register_api_client__get_firm_disciplinary_history(self):
-        test_client = FinancialServicesRegisterApiClient(self._api_username, self._api_key)
+    def test_financial_services_register_api_client__get_firm_disciplinary_history(self, test_client):
 
         # Covers the case of a request for an existing firm which is
         # Barclays Bank Plc (FRN 122702)
@@ -801,8 +768,7 @@ class TestFinancialServicesRegisterApiClient(_TestFinancialServicesRegisterApi):
         assert recv_response.ok
         assert not recv_response.data
 
-    def test_financial_services_register_api_client__get_firm_appointed_representatives(self):
-        test_client = FinancialServicesRegisterApiClient(self._api_username, self._api_key)
+    def test_financial_services_register_api_client__get_firm_appointed_representatives(self, test_client):
 
         # Covers the case of a request for an existing firm which is
         # Hiscox Insurance Company Limited (FRN 113849)
@@ -823,8 +789,7 @@ class TestFinancialServicesRegisterApiClient(_TestFinancialServicesRegisterApi):
             recv_response.data['CurrentAppointedRepresentatives']
         ])
 
-    def test_financial_services_register_api_client___search_irn__correctly_and_adequately_specced_individual__unique_fs_register_data__response_returned_ok(self):
-        test_client = FinancialServicesRegisterApiClient(self._api_username, self._api_key)
+    def test_financial_services_register_api_client___search_irn__correctly_and_adequately_specced_individual__unique_fs_register_data__response_returned_ok(self, test_client):
 
         # Covers the case of a successful IRN search for existing, unique individuals
         recv_irn = test_client.search_irn('mark carney')
@@ -839,16 +804,14 @@ class TestFinancialServicesRegisterApiClient(_TestFinancialServicesRegisterApi):
         assert isinstance(recv_irn, str)
         assert recv_irn
 
-    def test_financial_services_register_api_client___search_irn__inadequately_specced_individual__json_array_of_matching_records__response_returned_ok(self):
-        test_client = FinancialServicesRegisterApiClient(self._api_username, self._api_key)
+    def test_financial_services_register_api_client___search_irn__inadequately_specced_individual__json_array_of_matching_records__response_returned_ok(self, test_client):
 
         # Covers the case of a successful IRN search for existing, unique individuals
         recv_recs = test_client.search_irn('john smith')
         assert isinstance(recv_recs, list)
         assert (isinstance(rec, dict) for rec in recv_recs)
 
-    def test_financial_services_register_api_client__get_individual(self):
-        test_client = FinancialServicesRegisterApiClient(self._api_username, self._api_key)
+    def test_financial_services_register_api_client__get_individual(self, test_client):
 
         # Covers the case of a request for the details of an
         # existing individual, 'Mark Carney' (IRN 'MXC29012')
@@ -862,8 +825,7 @@ class TestFinancialServicesRegisterApiClient(_TestFinancialServicesRegisterApi):
         assert recv_response.ok
         assert not recv_response.data
 
-    def test_financial_services_register_api_client__get_individual_controlled_functions(self):
-        test_client = FinancialServicesRegisterApiClient(self._api_username, self._api_key)
+    def test_financial_services_register_api_client__get_individual_controlled_functions(self, test_client):
 
         # Covers the case of a request for an existing individual -
         # 'Mark Carney' (IRN 'MXC29012')
@@ -877,8 +839,7 @@ class TestFinancialServicesRegisterApiClient(_TestFinancialServicesRegisterApi):
         assert recv_response.ok
         assert not recv_response.data
 
-    def test_financial_services_register_api_client__get_individual_disciplinary_history(self):
-        test_client = FinancialServicesRegisterApiClient(self._api_username, self._api_key)
+    def test_financial_services_register_api_client__get_individual_disciplinary_history(self, test_client):
 
         # Covers the case of a request for an existing individual with -
         # disciplinary history, 'Leigh Mackey' (IRN 'LXM01328')
@@ -892,8 +853,7 @@ class TestFinancialServicesRegisterApiClient(_TestFinancialServicesRegisterApi):
         assert recv_response.ok
         assert not recv_response.data
 
-    def test_financial_services_register_api_client___search_prn__correctly_and_adequately_specced_fund__unique_fs_register_data__response_returned_ok(self):
-        test_client = FinancialServicesRegisterApiClient(self._api_username, self._api_key)
+    def test_financial_services_register_api_client___search_prn__correctly_and_adequately_specced_fund__unique_fs_register_data__response_returned_ok(self, test_client):
 
         # Covers the case of a successful PRN search for existing, unique funds
         recv_prn = test_client.search_prn('jupiter asia pacific income')
@@ -908,16 +868,14 @@ class TestFinancialServicesRegisterApiClient(_TestFinancialServicesRegisterApi):
         assert isinstance(recv_prn, str)
         assert recv_prn
 
-    def test_financial_services_register_api_client___search_prn__inadequately_specced_fund__json_array_of_matching_records__response_returned_ok(self):
-        test_client = FinancialServicesRegisterApiClient(self._api_username, self._api_key)
+    def test_financial_services_register_api_client___search_prn__inadequately_specced_fund__json_array_of_matching_records__response_returned_ok(self, test_client):
 
         # Covers the case of a successful PRN search for existing, unique funds
         recv_recs = test_client.search_prn('jupiter')
         assert isinstance(recv_recs, list)
         assert all(isinstance(rec, dict) for rec in recv_recs)
 
-    def test_financial_services_register_api_client__get_fund(self):
-        test_client = FinancialServicesRegisterApiClient(self._api_username, self._api_key)
+    def test_financial_services_register_api_client__get_fund(self, test_client):
 
         # Covers the case of a request for the details of an
         # existing fund, 'Jupiter Asia Pacific Income Fund (IRL)' (PRN '635641')
@@ -933,8 +891,7 @@ class TestFinancialServicesRegisterApiClient(_TestFinancialServicesRegisterApi):
         assert recv_response.ok
         assert not recv_response.data
 
-    def test_financial_services_register_api_client__get_fund_names(self):
-        test_client = FinancialServicesRegisterApiClient(self._api_username, self._api_key)
+    def test_financial_services_register_api_client__get_fund_names(self, test_client):
 
         # Covers the case of a request for the alternate/secondary names
         # details of existing fund with PRN 185045
@@ -954,8 +911,7 @@ class TestFinancialServicesRegisterApiClient(_TestFinancialServicesRegisterApi):
         assert recv_response.ok
         assert not recv_response.data
 
-    def test_financial_services_register_api_client__get_fund_subfunds(self):
-        test_client = FinancialServicesRegisterApiClient(self._api_username, self._api_key)
+    def test_financial_services_register_api_client__get_fund_subfunds(self, test_client):
 
         # Covers the case of a request for the subfund details of an
         # existing fund with PRN 185045
@@ -975,8 +931,7 @@ class TestFinancialServicesRegisterApiClient(_TestFinancialServicesRegisterApi):
         assert recv_response.ok
         assert not recv_response.data
 
-    def test_financial_services_register_api_client__get_regulated_markets(self):
-        test_client = FinancialServicesRegisterApiClient(self._api_username, self._api_key)
+    def test_financial_services_register_api_client__get_regulated_markets(self, test_client):
 
         # Covers the regulated markets API endpoint, which ATM returns a
         # list of markets regulated by UK and/or EU/EEA financial legislation.
