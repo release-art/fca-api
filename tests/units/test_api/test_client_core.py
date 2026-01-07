@@ -26,9 +26,7 @@ class TestFinancialServicesRegisterApiClientCore:
         assert test_client.api_version == API_CONSTANTS.API_VERSION.value
 
     @pytest.mark.asyncio
-    async def test_common_search_raises_on_request_error(
-        self, test_client, mocker
-    ):
+    async def test_common_search_raises_on_request_error(self, test_client, mocker):
         mock_api_session_get = mocker.patch(
             "financial_services_register_api.api.FinancialServicesRegisterApiSession.get"
         )

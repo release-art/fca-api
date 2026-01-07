@@ -12,16 +12,12 @@ from financial_services_register_api.exceptions import (
 
 class TestResourceInfoFunctionality:
     @pytest.mark.asyncio
-    async def test_get_resource_info_rejects_invalid_type(
-        self, test_client
-    ):
+    async def test_get_resource_info_rejects_invalid_type(self, test_client):
         with pytest.raises(ValueError):
             await test_client._get_resource_info("test_ref_number", "invalid resource type")
 
     @pytest.mark.asyncio
-    async def test_get_resource_info_rejects_invalid_type_with_modifiers(
-        self, test_client
-    ):
+    async def test_get_resource_info_rejects_invalid_type_with_modifiers(self, test_client):
         with pytest.raises(ValueError):
             await test_client._get_resource_info(
                 "test_ref_number",
@@ -33,9 +29,7 @@ class TestResourceInfoFunctionality:
             )
 
     @pytest.mark.asyncio
-    async def test_get_resource_info_raises_on_request_error(
-        self, test_client, mocker
-    ):
+    async def test_get_resource_info_raises_on_request_error(self, test_client, mocker):
         mock_api_session_get = mocker.patch(
             "financial_services_register_api.api.FinancialServicesRegisterApiSession.get"
         )
@@ -47,9 +41,7 @@ class TestResourceInfoFunctionality:
             await test_client._get_resource_info("test_irn", "individual")
 
     @pytest.mark.asyncio
-    async def test_get_resource_info_raises_on_request_error_with_modifiers(
-        self, test_client, mocker
-    ):
+    async def test_get_resource_info_raises_on_request_error_with_modifiers(self, test_client, mocker):
         mock_api_session_get = mocker.patch(
             "financial_services_register_api.api.FinancialServicesRegisterApiSession.get"
         )
