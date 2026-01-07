@@ -1,8 +1,8 @@
 # -- IMPORTS --
 
 # -- 3rd party libraries --
-import pytest
 import httpx
+import pytest
 
 # -- Internal libraries --
 from financial_services_register_api.exceptions import (
@@ -16,9 +16,7 @@ class TestResourceInfoFunctionality:
         self, test_client
     ):
         with pytest.raises(ValueError):
-            await test_client._get_resource_info(
-                "test_ref_number", "invalid resource type"
-            )
+            await test_client._get_resource_info("test_ref_number", "invalid resource type")
 
     @pytest.mark.asyncio
     async def test_financial_services_register_api_client___get_resource_info__invalid_resource_type__modifiers__value_error_raised(
@@ -84,18 +82,13 @@ class TestResourceInfoFunctionality:
             )
 
     @pytest.mark.asyncio
-    async def test_financial_services_register_api_client___get_resource_info__firm(
-        self, test_client
-    ):
+    async def test_financial_services_register_api_client___get_resource_info__firm(self, test_client):
         # Covers the case of a request for an existing firm which is
         # Hiscox Insurance Company Limited with the FRN 113849
         recv_response = await test_client._get_resource_info("113849", "firm")
         assert recv_response.ok
         assert recv_response.data
-        assert (
-            recv_response.data[0]["Organisation Name"]
-            == "Hiscox Insurance Company Limited"
-        )
+        assert recv_response.data[0]["Organisation Name"] == "Hiscox Insurance Company Limited"
 
         # Covers the case of a request for an non-existent firm given by
         # a non-existent FRN 1234567890
@@ -121,15 +114,11 @@ class TestResourceInfoFunctionality:
 
         for modifier in modifiers_to_test:
             # Test with existing firm
-            recv_response = await test_client._get_resource_info(
-                "113849", "firm", modifiers=modifier
-            )
+            recv_response = await test_client._get_resource_info("113849", "firm", modifiers=modifier)
             assert recv_response.ok
 
             # Test with non-existent firm
-            recv_response = await test_client._get_resource_info(
-                "1234567890", "firm", modifiers=modifier
-            )
+            recv_response = await test_client._get_resource_info("1234567890", "firm", modifiers=modifier)
             assert recv_response.ok
             if modifier[0] == "AR":
                 # Special case for appointed representatives
@@ -139,9 +128,7 @@ class TestResourceInfoFunctionality:
                 assert not recv_response.data
 
     @pytest.mark.asyncio
-    async def test_financial_services_register_api_client___get_resource_info__fund(
-        self, test_client
-    ):
+    async def test_financial_services_register_api_client___get_resource_info__fund(self, test_client):
         # Covers the case of a request for an existing fund which is
         # 'Jupiter Asia Pacific Income Fund (IRL)' with the PRN 1006826
         recv_response = await test_client._get_resource_info("1006826", "fund")
@@ -159,22 +146,16 @@ class TestResourceInfoFunctionality:
 
         for modifier in fund_modifiers:
             # Test with existing fund
-            recv_response = await test_client._get_resource_info(
-                "185045", "fund", modifiers=modifier
-            )
+            recv_response = await test_client._get_resource_info("185045", "fund", modifiers=modifier)
             assert recv_response.ok
 
             # Test with non-existent fund
-            recv_response = await test_client._get_resource_info(
-                "1234567890", "fund", modifiers=modifier
-            )
+            recv_response = await test_client._get_resource_info("1234567890", "fund", modifiers=modifier)
             assert recv_response.ok
             assert not recv_response.data
 
     @pytest.mark.asyncio
-    async def test_financial_services_register_api_client___get_resource_info__individual(
-        self, test_client
-    ):
+    async def test_financial_services_register_api_client___get_resource_info__individual(self, test_client):
         # Covers the case of a request for an existing individual
         # 'Mark Carney'(IRN 'MXC29012')
         recv_response = await test_client._get_resource_info("MXC29012", "individual")
@@ -192,14 +173,10 @@ class TestResourceInfoFunctionality:
 
         for modifier in individual_modifiers:
             # Test with existing individual
-            recv_response = await test_client._get_resource_info(
-                "MXC29012", "individual", modifiers=modifier
-            )
+            recv_response = await test_client._get_resource_info("MXC29012", "individual", modifiers=modifier)
             assert recv_response.ok
 
             # Test with non-existent individual
-            recv_response = await test_client._get_resource_info(
-                "1234567890", "individual", modifiers=modifier
-            )
+            recv_response = await test_client._get_resource_info("1234567890", "individual", modifiers=modifier)
             assert recv_response.ok
             assert not recv_response.data

@@ -1,0 +1,32 @@
+{
+  "status_code": 200,
+  "headers": {
+    "date": "Wed, 07 Jan 2026 14:12:01 GMT",
+    "content-type": "application/json;charset=UTF-8",
+    "transfer-encoding": "chunked",
+    "connection": "keep-alive",
+    "content-encoding": "gzip",
+    "cf-ray": "9ba40c2f3b00417f-LHR",
+    "cf-cache-status": "DYNAMIC",
+    "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Thu, 07-Jan-2027 14:12:00 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Thu, 07-Jan-2027 14:12:00 GMT; Max-Age=31536000; secure",
+    "strict-transport-security": "max-age=63072000; includeSubDomains",
+    "vary": "Accept-Encoding",
+    "x-content-type-options": "nosniff",
+    "server": "cloudflare"
+  },
+  "content": "{\"Status\":\"FSR-API-05-03-00\",\"ResultInfo\":{\"Previous\":\"https://register.fca.org.uk/services/V0.1/CIS/185045/Subfund?pgnp=0\",\"Next\":\"https://register.fca.org.uk/services/V0.1/CIS/185045/Subfund?pgnp=2\",\"page\":\"1\",\"per_page\":\"20\",\"total_count\":\"30\"},\"Message\":\"Ok. Product Subfund Found\",\"Data\":[{\"URL\":\"https://register.fca.org.uk/services/apexrest/V0.1/CIS/185045\",\"Sub-Fund Type\":\"Other\",\"Name\":\"abrdn (AAM) UK Smaller Companies Fund\"},{\"URL\":\"https://register.fca.org.uk/services/apexrest/V0.1/CIS/185045\",\"Sub-Fund Type\":\"Other\",\"Name\":\"abrdn American Equity Fund\"},{\"URL\":\"https://register.fca.org.uk/services/apexrest/V0.1/CIS/185045\",\"Sub-Fund Type\":\"Other\",\"Name\":\"abrdn Asia Pacific and Japan Equity Fund\"},{\"URL\":\"https://register.fca.org.uk/services/apexrest/V0.1/CIS/185045\",\"Sub-Fund Type\":\"Other\",\"Name\":\"abrdn Asia Pacific Equity Fund\"},{\"URL\":\"https://register.fca.org.uk/services/apexrest/V0.1/CIS/185045\",\"Sub-Fund Type\":\"Other\",\"Name\":\"abrdn China A Share Equity Fund\"},{\"URL\":\"https://register.fca.org.uk/services/apexrest/V0.1/CIS/185045\",\"Sub-Fund Type\":\"Other\",\"Name\":\"abrdn Diversified Growth and Income Fund\"},{\"URL\":\"https://register.fca.org.uk/services/apexrest/V0.1/CIS/185045\",\"Sub-Fund Type\":\"Other\",\"Name\":\"abrdn Emerging Markets Equity Fund\"},{\"URL\":\"https://register.fca.org.uk/services/apexrest/V0.1/CIS/185045\",\"Sub-Fund Type\":\"Other\",\"Name\":\"abrdn Europe ex UK Equity Fund\"},{\"URL\":\"https://register.fca.org.uk/services/apexrest/V0.1/CIS/185045\",\"Sub-Fund Type\":\"Other\",\"Name\":\"abrdn European Real Estate Share Fund\"},{\"URL\":\"https://register.fca.org.uk/services/apexrest/V0.1/CIS/185045\",\"Sub-Fund Type\":\"Other\",\"Name\":\"abrdn European Smaller Companies Fund\"},{\"URL\":\"https://register.fca.org.uk/services/apexrest/V0.1/CIS/185045\",\"Sub-Fund Type\":\"Other\",\"Name\":\"abrdn Global Equity Fund\"},{\"URL\":\"https://register.fca.org.uk/services/apexrest/V0.1/CIS/185045\",\"Sub-Fund Type\":\"Other\",\"Name\":\"abrdn Global Sustainable Equity Fund\"},{\"URL\":\"https://register.fca.org.uk/services/apexrest/V0.1/CIS/185045\",\"Sub-Fund Type\":\"Other\",\"Name\":\"abrdn Japanese Equity Fund\"},{\"URL\":\"https://register.fca.org.uk/services/apexrest/V0.1/CIS/185045\",\"Sub-Fund Type\":\"Other\",\"Name\":\"abrdn Latin American Equity Fund\"},{\"URL\":\"https://register.fca.org.uk/services/apexrest/V0.1/CIS/185045\",\"Sub-Fund Type\":\"Other\",\"Name\":\"abrdn Multi-Asset Fund\"},{\"URL\":\"https://register.fca.org.uk/services/apexrest/V0.1/CIS/185045\",\"Sub-Fund Type\":\"Other\",\"Name\":\"abrdn Sterling Inflation-Linked Bond Fund\"},{\"URL\":\"https://register.fca.org.uk/services/apexrest/V0.1/CIS/185045\",\"Sub-Fund Type\":\"Other\",\"Name\":\"abrdn Sterling Money Market Fund\"},{\"URL\":\"https://register.fca.org.uk/services/apexrest/V0.1/CIS/185045\",\"Sub-Fund Type\":\"Other\",\"Name\":\"abrdn Sterling Short Term Government Bond Fund\"},{\"URL\":\"https://register.fca.org.uk/services/apexrest/V0.1/CIS/185045\",\"Sub-Fund Type\":\"Other\",\"Name\":\"abrdn Strategic Bond Fund\"},{\"URL\":\"https://register.fca.org.uk/services/apexrest/V0.1/CIS/185045\",\"Sub-Fund Type\":\"Other\",\"Name\":\"abrdn UK Equity Fund\"}]}",
+  "url": "https://register.fca.org.uk/services/V0.1/CIS/185045/Subfund",
+  "request": {
+    "url": "https://register.fca.org.uk/services/V0.1/CIS/185045/Subfund",
+    "params": null,
+    "headers": {
+      "accept-encoding": "gzip, deflate",
+      "connection": "keep-alive",
+      "user-agent": "python-httpx/0.28.1",
+      "accept": "application/json",
+      "x-auth-email": "user@example.com",
+      "x-auth-key": "00617470e8144a09"
+    }
+  }
+}

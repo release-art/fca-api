@@ -1,0 +1,32 @@
+{
+  "status_code": 200,
+  "headers": {
+    "date": "Wed, 07 Jan 2026 14:11:21 GMT",
+    "content-type": "application/json;charset=UTF-8",
+    "transfer-encoding": "chunked",
+    "connection": "keep-alive",
+    "content-encoding": "gzip",
+    "cf-ray": "9ba40b3398314179-LHR",
+    "cf-cache-status": "DYNAMIC",
+    "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Thu, 07-Jan-2027 14:11:20 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Thu, 07-Jan-2027 14:11:20 GMT; Max-Age=31536000; secure",
+    "strict-transport-security": "max-age=63072000; includeSubDomains",
+    "vary": "Accept-Encoding",
+    "x-content-type-options": "nosniff",
+    "server": "cloudflare"
+  },
+  "content": "{\"Status\":\"FSR-API-04-01-00\",\"ResultInfo\":{\"page\":\"1\",\"per_page\":\"20\",\"total_count\":\"3\"},\"Message\":\"Ok. Search successful\",\"Data\":[{\"URL\":\"https://register.fca.org.uk/services/V0.1/Firm/969197\",\"Status\":\"Authorised\",\"Reference Number\":\"969197\",\"Type of business or Individual\":\"Firm\",\"Name\":\"Hastings Financial Services Limited (Postcode: TN39 3LW)\"},{\"URL\":\"https://register.fca.org.uk/services/V0.1/Firm/311492\",\"Status\":\"Authorised\",\"Reference Number\":\"311492\",\"Type of business or Individual\":\"Firm\",\"Name\":\"Hastings Insurance Services Limited (Postcode: TN39 3LW)\"},{\"URL\":\"https://register.fca.org.uk/services/V0.1/Firm/536726\",\"Status\":\"Authorised\",\"Reference Number\":\"536726\",\"Type of business or Individual\":\"Firm\",\"Name\":\"I Go 4 Ltd. (Postcode: PE3 8BG)\"}]}",
+  "url": "https://register.fca.org.uk/services/V0.1/Search?q=hastings+direct&type=firm",
+  "request": {
+    "url": "https://register.fca.org.uk/services/V0.1/Search?q=hastings+direct&type=firm",
+    "params": null,
+    "headers": {
+      "accept-encoding": "gzip, deflate",
+      "connection": "keep-alive",
+      "user-agent": "python-httpx/0.28.1",
+      "accept": "application/json",
+      "x-auth-email": "user@example.com",
+      "x-auth-key": "00617470e8144a09"
+    }
+  }
+}

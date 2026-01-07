@@ -1,8 +1,8 @@
 # -- IMPORTS --
 
 # -- 3rd party libraries --
-import pytest
 import httpx
+import pytest
 
 # -- Internal libraries --
 from financial_services_register_api.exceptions import (
@@ -17,9 +17,7 @@ class TestSearchFunctionality:
         self, test_client
     ):
         with pytest.raises(ValueError):
-            await test_client._search_ref_number(
-                "resource_name", "incorrect_resource_type"
-            )
+            await test_client._search_ref_number("resource_name", "incorrect_resource_type")
 
     @pytest.mark.asyncio
     async def test_financial_services_register_api_client___search_ref_number__exceptional_request__api_request_exception_raised(
@@ -49,38 +47,38 @@ class TestSearchFunctionality:
             await test_client._search_ref_number("exceptional search", "fund")
 
     @pytest.mark.asyncio
+    @pytest.mark.parametrize("resource_type", ["firm", "individual", "fund"])
     async def test_financial_services_register_api_client___search_ref_number__no_fs_register_data_in_response__api_request_exception_raised(
-        self, test_client, mocker
+        self, test_client, resource_type
     ):
-        mock_api_session_get = mocker.patch(
-            "financial_services_register_api.api.FinancialServicesRegisterApiSession.get"
-        )
-        mock_response = mocker.create_autospec(httpx.Response)
-        mock_response.json = mocker.MagicMock(name="json", return_value=dict())
-        mock_api_session_get.return_value = mock_response
-
         with pytest.raises(FinancialServicesRegisterApiRequestException):
-            await test_client._search_ref_number("bad search", "firm")
-            await test_client._search_ref_number("bad search", "individual")
-            await test_client._search_ref_number("bad search", "fund")
+            await test_client._search_ref_number("bad search", resource_type)
 
     @pytest.mark.asyncio
+    @pytest.mark.parametrize("resource_type", ["firm", "individual", "fund"])
     async def test_financial_services_register_api_client___search_ref_number__fs_register_data_with_key_error__api_request_exception_raised(
-        self, test_client, mocker
+        self, test_client, mocker, resource_type
     ):
-        mock_api_session_get = mocker.patch(
-            "financial_services_register_api.api.FinancialServicesRegisterApiSession.get"
-        )
+        # mock_api_session_get = mocker.patch.object(
+        #     test_client._api_session, "get"
+        # )
         mock_response = mocker.create_autospec(httpx.Response)
         mock_response.json = mocker.MagicMock(
-            name="json", return_value={"Data": [{"not a Reference Number": None}]}
+            name="json",
+            return_value={"Data": [{"not a Reference Number": None}]},
         )
-        mock_api_session_get.return_value = mock_response
+        mock_response.status_code = 200
+        # mock_api_session_get = mocker.AsyncMock(return_value=mock_response)
+        mocker.patch.object(
+            test_client._api_session,
+            "get",
+            mocker.AsyncMock(return_value=mock_response),
+        )
+
+        assert await test_client._api_session.get() == mock_response
 
         with pytest.raises(FinancialServicesRegisterApiResponseException):
-            await test_client._search_ref_number("bad response", "firm")
-            await test_client._search_ref_number("bad response", "individual")
-            await test_client._search_ref_number("bad response", "fund")
+            await test_client._search_ref_number("bad response", resource_type)
 
     @pytest.mark.asyncio
     async def test_financial_services_register_api_client___search_ref_number__incorrectly_specified_resource__no_fs_register_data__api_response_exception_raised(
@@ -88,15 +86,11 @@ class TestSearchFunctionality:
     ):
         # Covers the case of a failed FRN search for an incorrectly specified firm
         with pytest.raises(FinancialServicesRegisterApiRequestException):
-            await test_client._search_ref_number(
-                "nonexistent123 insurance company", "firm"
-            )
+            await test_client._search_ref_number("nonexistent123 insurance company", "firm")
 
         # Covers the case of a failed IRN search for an incorrectly specified individual
         with pytest.raises(FinancialServicesRegisterApiRequestException):
-            await test_client._search_ref_number(
-                "a nonexistent individual", "individual"
-            )
+            await test_client._search_ref_number("a nonexistent individual", "individual")
 
         # Covers the case of a failed PRN search for an incorrectly specified firm
         with pytest.raises(FinancialServicesRegisterApiRequestException):
@@ -129,9 +123,7 @@ class TestSearchFunctionality:
         self, test_client
     ):
         # Covers the case of a successful FRN search for an existing firm
-        recv_frn = await test_client._search_ref_number(
-            "hiscox insurance company", "firm"
-        )
+        recv_frn = await test_client._search_ref_number("hiscox insurance company", "firm")
         assert isinstance(recv_frn, str)
         assert recv_frn
 
@@ -141,9 +133,7 @@ class TestSearchFunctionality:
         assert recv_irn
 
         # Covers the case of a successful PRN search for an existing fund
-        recv_prn = await test_client._search_ref_number(
-            "jupiter asia pacific income", "fund"
-        )
+        recv_prn = await test_client._search_ref_number("jupiter asia pacific income", "fund")
         assert isinstance(recv_prn, str)
         assert recv_prn
 
@@ -183,11 +173,11 @@ class TestSearchFunctionality:
     ):
         # Covers the case of a successful IRN search for existing, unique individuals
         recv_irn = await test_client.search_irn("mark carney")
-        assert isinstance(recv_irn, str)
+        assert isinstance(recv_irn, list)
         assert recv_irn
 
         recv_irn = await test_client.search_irn("andrew bailey")
-        assert isinstance(recv_irn, str)
+        assert isinstance(recv_irn, list)
         assert recv_irn
 
     @pytest.mark.asyncio

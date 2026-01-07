@@ -13,9 +13,7 @@ from financial_services_register_api.constants import (
 class TestFinancialServicesRegisterApiConstants:
     def test_fsr_api_constants(self):
         assert API_CONSTANTS.API_VERSION.value == "V0.1"
-        assert (
-            API_CONSTANTS.BASEURL.value == "https://register.fca.org.uk/services/V0.1"
-        )
+        assert API_CONSTANTS.BASEURL.value == "https://register.fca.org.uk/services/V0.1"
         assert API_CONSTANTS.RESOURCE_TYPES.value == {
             "firm": {"type_name": "firm", "endpoint_base": "Firm"},
             "fund": {"type_name": "fund", "endpoint_base": "CIS"},

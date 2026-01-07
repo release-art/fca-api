@@ -26,9 +26,7 @@ class TestFundMethods:
         assert not recv_response.data
 
     @pytest.mark.asyncio
-    async def test_financial_services_register_api_client__get_fund_names(
-        self, test_client
-    ):
+    async def test_financial_services_register_api_client__get_fund_names(self, test_client):
         # Covers the case of a request for the alternate/secondary names
         # details of existing fund with PRN 185045
         recv_response = await test_client.get_fund_names("185045")
@@ -48,9 +46,7 @@ class TestFundMethods:
         assert not recv_response.data
 
     @pytest.mark.asyncio
-    async def test_financial_services_register_api_client__get_fund_subfunds(
-        self, test_client
-    ):
+    async def test_financial_services_register_api_client__get_fund_subfunds(self, test_client):
         # Covers the case of a request for the subfund details of an
         # existing fund with PRN 185045
         recv_response = await test_client.get_fund_subfunds("185045")

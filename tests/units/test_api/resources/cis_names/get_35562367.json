@@ -1,0 +1,32 @@
+{
+  "status_code": 200,
+  "headers": {
+    "date": "Wed, 07 Jan 2026 14:12:01 GMT",
+    "content-type": "application/json;charset=UTF-8",
+    "transfer-encoding": "chunked",
+    "connection": "keep-alive",
+    "content-encoding": "gzip",
+    "cf-ray": "9ba40c352fe7417f-LHR",
+    "cf-cache-status": "DYNAMIC",
+    "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Thu, 07-Jan-2027 14:12:01 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Thu, 07-Jan-2027 14:12:01 GMT; Max-Age=31536000; secure",
+    "strict-transport-security": "max-age=63072000; includeSubDomains",
+    "vary": "Accept-Encoding",
+    "x-content-type-options": "nosniff",
+    "server": "cloudflare"
+  },
+  "content": "{\"Status\":\"FSR-API-05-02-00\",\"ResultInfo\":{\"page\":\"1\",\"per_page\":\"1\",\"total_count\":\"2\"},\"Message\":\"Ok. Product Other Name Found\",\"Data\":[{\"Effective To\":\"22/08/2019\",\"Effective From\":\"23/12/1997\",\"Product Other Name\":\"ABERDEEN INVESTMENT FUNDS ICVC\"},{\"Effective To\":\"01/08/2022\",\"Effective From\":\"23/12/1997\",\"Product Other Name\":\"Aberdeen Standard OEIC I\"}]}",
+  "url": "https://register.fca.org.uk/services/V0.1/CIS/185045/Names",
+  "request": {
+    "url": "https://register.fca.org.uk/services/V0.1/CIS/185045/Names",
+    "params": null,
+    "headers": {
+      "accept-encoding": "gzip, deflate",
+      "connection": "keep-alive",
+      "user-agent": "python-httpx/0.28.1",
+      "accept": "application/json",
+      "x-auth-email": "user@example.com",
+      "x-auth-key": "00617470e8144a09"
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "status_code": 200,
+  "headers": {
+    "date": "Wed, 07 Jan 2026 14:01:17 GMT",
+    "content-type": "application/json;charset=UTF-8",
+    "transfer-encoding": "chunked",
+    "connection": "keep-alive",
+    "content-encoding": "gzip",
+    "cf-ray": "9ba3fc79a97b83df-LHR",
+    "cf-cache-status": "DYNAMIC",
+    "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Thu, 07-Jan-2027 14:01:17 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Thu, 07-Jan-2027 14:01:17 GMT; Max-Age=31536000; secure",
+    "strict-transport-security": "max-age=63072000; includeSubDomains",
+    "vary": "Accept-Encoding",
+    "x-content-type-options": "nosniff",
+    "server": "cloudflare"
+  },
+  "content": "{\"Status\":\"FSR-API-04-01-00\",\"ResultInfo\":{\"Next\":\"https://register.fca.org.uk/services/V0.1/Search?q=andrew bailey&type=individual&pgnp=2\",\"page\":\"1\",\"per_page\":\"20\",\"total_count\":\"28\"},\"Message\":\"Ok. Search successful\",\"Data\":[{\"URL\":\"https://register.fca.org.uk/services/V0.1/Individuals/ANB01051\",\"Status\":\"Regulatory approval no longer required\",\"Reference Number\":\"ANB01051\",\"Type of business or Individual\":\"Individual\",\"Name\":\"Andrew Bailey\"},{\"URL\":\"https://register.fca.org.uk/services/V0.1/Individuals/AXB04287\",\"Status\":\"Active\",\"Reference Number\":\"AXB04287\",\"Type of business or Individual\":\"Individual\",\"Name\":\"Andrew Bailey\"},{\"URL\":\"https://register.fca.org.uk/services/V0.1/Individuals/AXB00749\",\"Status\":\"Regulatory approval no longer required\",\"Reference Number\":\"AXB00749\",\"Type of business or Individual\":\"Individual\",\"Name\":\"Andrew Bailey\"},{\"URL\":\"https://register.fca.org.uk/services/V0.1/Individuals/AXB04075\",\"Status\":\"Active\",\"Reference Number\":\"AXB04075\",\"Type of business or Individual\":\"Individual\",\"Name\":\"Andrew Bailey\"},{\"URL\":\"https://register.fca.org.uk/services/V0.1/Individuals/AXB03714\",\"Status\":\"Active\",\"Reference Number\":\"AXB03714\",\"Type of business or Individual\":\"Individual\",\"Name\":\"Andrew Bailey\"},{\"URL\":\"https://register.fca.org.uk/services/V0.1/Individuals/AXB01867\",\"Status\":\"Regulatory approval no longer required\",\"Reference Number\":\"AXB01867\",\"Type of business or Individual\":\"Individual\",\"Name\":\"Andrew Bailey\"},{\"URL\":\"https://register.fca.org.uk/services/V0.1/Individuals/RAB01358\",\"Status\":\"Active\",\"Reference Number\":\"RAB01358\",\"Type of business or Individual\":\"Individual\",\"Name\":\"Ross Andrew Bailey\"},{\"URL\":\"https://register.fca.org.uk/services/V0.1/Individuals/IAB01058\",\"Status\":\"Active\",\"Reference Number\":\"IAB01058\",\"Type of business or Individual\":\"Individual\",\"Name\":\"Iain Andrew Bailey\"},{\"URL\":\"https://register.fca.org.uk/services/V0.1/Individuals/ABC01035\",\"Status\":\"Active\",\"Reference Number\":\"ABC01035\",\"Type of business or Individual\":\"Individual\",\"Name\":\"Andrew Bailey Thomas Cade\"},{\"URL\":\"https://register.fca.org.uk/services/V0.1/Individuals/PAB00141\",\"Status\":\"Active\",\"Reference Number\":\"PAB00141\",\"Type of business or Individual\":\"Individual\",\"Name\":\"Philip Andrew Bailey\"},{\"URL\":\"https://register.fca.org.uk/services/V0.1/Individuals/JXB00659\",\"Status\":\"Regulatory approval no longer required\",\"Reference Number\":\"JXB00659\",\"Type of business or Individual\":\"Individual\",\"Name\":\"James Andrew Bailey\"},{\"URL\":\"https://register.fca.org.uk/services/V0.1/Individuals/PAB00088\",\"Status\":\"Active\",\"Reference Number\":\"PAB00088\",\"Type of business or Individual\":\"Individual\",\"Name\":\"Paul Andrew Bailey\"},{\"URL\":\"https://register.fca.org.uk/services/V0.1/Individuals/AXB00042\",\"Status\":\"Active\",\"Reference Number\":\"AXB00042\",\"Type of business or Individual\":\"Individual\",\"Name\":\"Andrew Edward Bailey\"},{\"URL\":\"https://register.fca.org.uk/services/V0.1/Individuals/AJB00150\",\"Status\":\"Active\",\"Reference Number\":\"AJB00150\",\"Type of business or Individual\":\"Individual\",\"Name\":\"Andrew John Bailey\"},{\"URL\":\"https://register.fca.org.uk/services/V0.1/Individuals/AXB00295\",\"Status\":\"Regulatory approval no longer required\",\"Reference Number\":\"AXB00295\",\"Type of business or Individual\":\"Individual\",\"Name\":\"Andrew Robert Bailey\"},{\"URL\":\"https://register.fca.org.uk/services/V0.1/Individuals/AJB01550\",\"Status\":\"Regulatory approval no longer required\",\"Reference Number\":\"AJB01550\",\"Type of business or Individual\":\"Individual\",\"Name\":\"Andrew James Bailey\"},{\"URL\":\"https://register.fca.org.uk/services/V0.1/Individuals/RAB01341\",\"Status\":\"Regulatory approval no longer required\",\"Reference Number\":\"RAB01341\",\"Type of business or Individual\":\"Individual\",\"Name\":\"Robert Andrew Bailey\"},{\"URL\":\"https://register.fca.org.uk/services/V0.1/Individuals/AJB01267\",\"Status\":\"Regulatory approval no longer required\",\"Reference Number\":\"AJB01267\",\"Type of business or Individual\":\"Individual\",\"Name\":\"Andrew John Bailey\"},{\"URL\":\"https://register.fca.org.uk/services/V0.1/Individuals/ALB01128\",\"Status\":\"Regulatory approval no longer required\",\"Reference Number\":\"ALB01128\",\"Type of business or Individual\":\"Individual\",\"Name\":\"Andrew Leslie Bailey\"},{\"URL\":\"https://register.fca.org.uk/services/V0.1/Individuals/SAB01342\",\"Status\":\"Regulatory approval no longer required\",\"Reference Number\":\"SAB01342\",\"Type of business or Individual\":\"Individual\",\"Name\":\"Sean Andrew Bailey\"}]}",
+  "url": "https://register.fca.org.uk/services/V0.1/Search?q=andrew+bailey&type=individual",
+  "request": {
+    "url": "https://register.fca.org.uk/services/V0.1/Search?q=andrew+bailey&type=individual",
+    "params": null,
+    "headers": {
+      "accept-encoding": "gzip, deflate",
+      "connection": "keep-alive",
+      "user-agent": "python-httpx/0.28.1",
+      "accept": "application/json",
+      "x-auth-email": "user@example.com",
+      "x-auth-key": "00617470e8144a09"
+    }
+  }
+}

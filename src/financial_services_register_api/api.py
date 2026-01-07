@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-
 __all__ = [
     "FinancialServicesRegisterApiClient",
     "FinancialServicesRegisterApiResponse",
@@ -12,7 +11,7 @@ __all__ = [
 
 # -- Standard libraries --
 
-from typing import Literal
+from typing import Literal, Union
 from urllib.parse import urlencode
 
 # -- 3rd party libraries --
@@ -229,31 +228,51 @@ class FinancialServicesRegisterApiClient:
     #: All instances must have this private attribute to store API session state
     _api_session: FinancialServicesRegisterApiSession
 
-    def __init__(self, api_username: str, api_key: str) -> None:
-        """Initialiser requiring the API username and key.
+    def __init__(
+        self,
+        api_username_or_session: Union[str, FinancialServicesRegisterApiSession],
+        api_key: str = None,
+    ) -> None:
+        """Initialiser accepting either API credentials or a pre-configured session.
 
         Parameters
         ----------
-        api_username : str
-            The API username, which will be the email used to sign up on the
-            developer portal:
+        api_username_or_session : str or FinancialServicesRegisterApiSession
+            Either the API username (email used for API registration) when using
+            separate credentials, or a pre-configured FinancialServicesRegisterApiSession
+            instance.
 
-            https://register.fca.org.uk/Developer/s/
-
-        api_key : str
-            The API key obtained from the registration profile on the developer
-            portal.
+        api_key : str, optional
+            The API key from the developer portal. Required when api_username_or_session
+            is a string (username). Ignored when api_username_or_session is a session instance.
 
         Examples
         --------
+        Using separate credentials (original behavior):
+
         >>> import os; from financial_services_register_api.constants import FINANCIAL_SERVICES_REGISTER_API_CONSTANTS as API_CONSTANTS
         >>> client = FinancialServicesRegisterApiClient(os.environ['API_USERNAME'], os.environ['API_KEY'])
         >>> assert client.api_session.api_username == os.environ['API_USERNAME']
         >>> assert client.api_session.api_key == os.environ['API_KEY']
         >>> assert client.api_session.headers == {'ACCEPT': 'application/json', 'X-AUTH-EMAIL': os.environ['API_USERNAME'], 'X-AUTH-KEY': os.environ['API_KEY']}
         >>> assert client.api_version == API_CONSTANTS.API_VERSION.value
+
+        Using a pre-configured session:
+
+        >>> import os
+        >>> session = FinancialServicesRegisterApiSession(os.environ['API_USERNAME'], os.environ['API_KEY'])
+        >>> client = FinancialServicesRegisterApiClient(session)
+        >>> assert client.api_session is session
+        >>> assert client.api_version == API_CONSTANTS.API_VERSION.value
         """
-        self._api_session = FinancialServicesRegisterApiSession(api_username, api_key)
+        if isinstance(api_username_or_session, FinancialServicesRegisterApiSession):
+            # Using pre-configured session
+            self._api_session = api_username_or_session
+        else:
+            # Using separate credentials
+            if api_key is None:
+                raise ValueError("api_key must be provided when api_username_or_session is a string")
+            self._api_session = FinancialServicesRegisterApiSession(api_username_or_session, api_key)
 
     @property
     def api_session(self) -> FinancialServicesRegisterApiSession:
@@ -344,16 +363,13 @@ class FinancialServicesRegisterApiClient:
         """
         search_str = urlencode({"q": resource_name, "type": resource_type})
         url = f"{API_CONSTANTS.BASEURL.value}/Search?{search_str}"
-
         try:
             response = await self.api_session.get(url)
             return FinancialServicesRegisterApiResponse(response)
         except httpx.RequestError as e:
             raise FinancialServicesRegisterApiRequestException(e)
 
-    async def _search_ref_number(
-        self, resource_name: str, resource_type: str, /
-    ) -> str | list[dict[str, str]]:
+    async def _search_ref_number(self, resource_name: str, resource_type: str, /) -> str | list[dict[str, str]]:
         """:py:class:`str` or :py:class:`list`: A private base handler for public search methods for unique firm, individual and product reference numbers.
 
         .. note::
@@ -406,10 +422,7 @@ class FinancialServicesRegisterApiClient:
             no data was found for the given resource type and name.
         """
         if resource_type not in API_CONSTANTS.RESOURCE_TYPES.value:
-            raise ValueError(
-                'Resource type must be one of the strings ``"firm"``, '
-                '``"fund"``, or ``"individual"``'
-            )
+            raise ValueError('Resource type must be one of the strings ``"firm"``, ``"fund"``, or ``"individual"``')
 
         try:
             res = await self.common_search(resource_name, resource_type)
@@ -436,8 +449,7 @@ class FinancialServicesRegisterApiClient:
             )
         elif not res.data:
             raise FinancialServicesRegisterApiRequestException(
-                "No data found in the API response. Please check the search "
-                "parameters and try again."
+                "No data found in the API response. Please check the search parameters and try again."
             )
 
     async def search_frn(self, firm_name: str) -> str | list[dict[str, str]]:
@@ -481,9 +493,7 @@ class FinancialServicesRegisterApiClient:
         ...
         financial_services_register_api.exceptions.FinancialServicesRegisterApiRequestException: No data found in the API response. Please check the search parameters and try again.
         """
-        return await self._search_ref_number(
-            firm_name, API_CONSTANTS.RESOURCE_TYPES.value["firm"]["type_name"]
-        )
+        return await self._search_ref_number(firm_name, API_CONSTANTS.RESOURCE_TYPES.value["firm"]["type_name"])
 
     async def _get_resource_info(
         self, resource_ref_number: str, resource_type: str, modifiers: tuple[str] = None
@@ -565,22 +575,11 @@ class FinancialServicesRegisterApiClient:
             the response if the resource ref. number isn't found.
         """
         if resource_type not in API_CONSTANTS.RESOURCE_TYPES.value:
-            raise ValueError(
-                'Resource type must be one of the strings ``"firm"``, '
-                '``"fund"``, or ``"individual"``'
-            )
+            raise ValueError('Resource type must be one of the strings ``"firm"``, ``"fund"``, or ``"individual"``')
 
-        resource_endpoint_base = API_CONSTANTS.RESOURCE_TYPES.value[resource_type][
-            "endpoint_base"
-        ]
+        resource_endpoint_base = API_CONSTANTS.RESOURCE_TYPES.value[resource_type]["endpoint_base"]
 
-        url = (
-            f"{API_CONSTANTS.BASEURL.value}"
-            "/"
-            f"{resource_endpoint_base}"
-            "/"
-            f"{resource_ref_number}"
-        )
+        url = f"{API_CONSTANTS.BASEURL.value}/{resource_endpoint_base}/{resource_ref_number}"
 
         if modifiers:
             url += f"/{'/'.join(modifiers)}"
@@ -624,9 +623,7 @@ class FinancialServicesRegisterApiClient:
         >>> res = await client.get_firm('1234567890')
         >>> assert not res.data
         """
-        return await self._get_resource_info(
-            frn, API_CONSTANTS.RESOURCE_TYPES.value["firm"]["type_name"]
-        )
+        return await self._get_resource_info(frn, API_CONSTANTS.RESOURCE_TYPES.value["firm"]["type_name"])
 
     async def get_firm_names(self, frn: str) -> FinancialServicesRegisterApiResponse:
         """:py:class:`~financial_services_register_api.api.FinancialServicesRegisterApiResponse`: Returns a response containing the alternative or secondary trading name details of a firm, given its firm reference number (FRN).
@@ -668,9 +665,7 @@ class FinancialServicesRegisterApiClient:
             modifiers=("Names",),
         )
 
-    async def get_firm_addresses(
-        self, frn: str
-    ) -> FinancialServicesRegisterApiResponse:
+    async def get_firm_addresses(self, frn: str) -> FinancialServicesRegisterApiResponse:
         """:py:class:`~financial_services_register_api.api.FinancialServicesRegisterApiResponse`: Returns a response containing the address details of a firm, given its firm reference number (FRN).
 
         Handler for the firm address details API endpoint:
@@ -709,9 +704,7 @@ class FinancialServicesRegisterApiClient:
             modifiers=("Address",),
         )
 
-    async def get_firm_controlled_functions(
-        self, frn: str
-    ) -> FinancialServicesRegisterApiResponse:
+    async def get_firm_controlled_functions(self, frn: str) -> FinancialServicesRegisterApiResponse:
         """:py:class:`~financial_services_register_api.api.FinancialServicesRegisterApiResponse`: Returns a response containing the controlled functions associated with a firm ,given its firm reference number (FRN).
 
         Handler for the firm controlled functions API endpoint:
@@ -750,9 +743,7 @@ class FinancialServicesRegisterApiClient:
             modifiers=("CF",),
         )
 
-    async def get_firm_individuals(
-        self, frn: str
-    ) -> FinancialServicesRegisterApiResponse:
+    async def get_firm_individuals(self, frn: str) -> FinancialServicesRegisterApiResponse:
         """:py:class:`~financial_services_register_api.api.FinancialServicesRegisterApiResponse`: Returns a response containing the individuals associated with a firm, given its firm reference number (FRN).
 
         Handler for the firm individuals API endpoint:
@@ -791,9 +782,7 @@ class FinancialServicesRegisterApiClient:
             modifiers=("Individuals",),
         )
 
-    async def get_firm_permissions(
-        self, frn: str
-    ) -> FinancialServicesRegisterApiResponse:
+    async def get_firm_permissions(self, frn: str) -> FinancialServicesRegisterApiResponse:
         """:py:class:`~financial_services_register_api.api.FinancialServicesRegisterApiResponse`: Returns a response containing the permissions associated with a firm, given its firm reference number (FRN).
 
         Handler for the firm permissions API endpoint:
@@ -832,9 +821,7 @@ class FinancialServicesRegisterApiClient:
             modifiers=("Permissions",),
         )
 
-    async def get_firm_requirements(
-        self, frn: str
-    ) -> FinancialServicesRegisterApiResponse:
+    async def get_firm_requirements(self, frn: str) -> FinancialServicesRegisterApiResponse:
         """:py:class:`~financial_services_register_api.api.FinancialServicesRegisterApiResponse`: Returns a response containing the requirements associated with a firm, given its firm reference number (FRN).
 
         Handler for the firm requirements API endpoint:
@@ -915,9 +902,7 @@ class FinancialServicesRegisterApiClient:
             modifiers=("Requirements", req_ref, "InvestmentTypes"),
         )
 
-    async def get_firm_regulators(
-        self, frn: str
-    ) -> FinancialServicesRegisterApiResponse:
+    async def get_firm_regulators(self, frn: str) -> FinancialServicesRegisterApiResponse:
         """:py:class:`~financial_services_register_api.api.FinancialServicesRegisterApiResponse`: Returns a response containing the regulators associated with a firm, given its firm reference number (FRN).
 
         Handler for the firm regulators API endpoint:
@@ -956,9 +941,7 @@ class FinancialServicesRegisterApiClient:
             modifiers=("Regulators",),
         )
 
-    async def get_firm_passports(
-        self, frn: str
-    ) -> FinancialServicesRegisterApiResponse:
+    async def get_firm_passports(self, frn: str) -> FinancialServicesRegisterApiResponse:
         """:py:class:`~financial_services_register_api.api.FinancialServicesRegisterApiResponse`: Returns a response containing the passports associated with a firm, given its firm reference number (FRN).
 
         Handler for the firm passports API endpoint:
@@ -997,9 +980,7 @@ class FinancialServicesRegisterApiClient:
             modifiers=("Passports",),
         )
 
-    async def get_firm_passport_permissions(
-        self, frn: str, country: str
-    ) -> FinancialServicesRegisterApiResponse:
+    async def get_firm_passport_permissions(self, frn: str, country: str) -> FinancialServicesRegisterApiResponse:
         """:py:class:`~financial_services_register_api.api.FinancialServicesRegisterApiResponse`: Returns a response containing country-specific passport permissions for a firm and a country, given its firm reference number (FRN) and country name.
 
         Handler for the firm passport permissions API endpoint:
@@ -1078,9 +1059,7 @@ class FinancialServicesRegisterApiClient:
             modifiers=("Waivers",),
         )
 
-    async def get_firm_exclusions(
-        self, frn: str
-    ) -> FinancialServicesRegisterApiResponse:
+    async def get_firm_exclusions(self, frn: str) -> FinancialServicesRegisterApiResponse:
         """:py:class:`~financial_services_register_api.api.FinancialServicesRegisterApiResponse`: Returns a response containing any exclusions applying to a firm, given its firm reference number (FRN).
 
         Handler for the firm exclusions API endpoint:
@@ -1119,9 +1098,7 @@ class FinancialServicesRegisterApiClient:
             modifiers=("Exclusions",),
         )
 
-    async def get_firm_disciplinary_history(
-        self, frn: str
-    ) -> FinancialServicesRegisterApiResponse:
+    async def get_firm_disciplinary_history(self, frn: str) -> FinancialServicesRegisterApiResponse:
         """:py:class:`~financial_services_register_api.api.FinancialServicesRegisterApiResponse`: Returns a response containing the disciplinary history of a firm, given its firm reference number (FRN).
 
         Handler for the firm disciplinary history API endpoint:
@@ -1160,9 +1137,7 @@ class FinancialServicesRegisterApiClient:
             modifiers=("DisciplinaryHistory",),
         )
 
-    async def get_firm_appointed_representatives(
-        self, frn: str
-    ) -> FinancialServicesRegisterApiResponse:
+    async def get_firm_appointed_representatives(self, frn: str) -> FinancialServicesRegisterApiResponse:
         """:py:class:`~financial_services_register_api.api.FinancialServicesRegisterApiResponse`: Returns a response containing information on the appointed representatives of a firm, given its firm reference number (FRN).
 
         Handler for the firm appointed representatives API endpoint:
@@ -1280,13 +1255,9 @@ class FinancialServicesRegisterApiClient:
         >>> res = await client.get_individual('1234567890')
         >>> assert not res.data
         """
-        return await self._get_resource_info(
-            irn, API_CONSTANTS.RESOURCE_TYPES.value["individual"]["type_name"]
-        )
+        return await self._get_resource_info(irn, API_CONSTANTS.RESOURCE_TYPES.value["individual"]["type_name"])
 
-    async def get_individual_controlled_functions(
-        self, irn: str
-    ) -> FinancialServicesRegisterApiResponse:
+    async def get_individual_controlled_functions(self, irn: str) -> FinancialServicesRegisterApiResponse:
         """:py:class:`~financial_services_register_api.api.FinancialServicesRegisterApiResponse` : Returns a response containing the controlled functions associated with an individual, given their individual reference number (FRN).
 
         Handler for the individual controlled functions API endpoint:
@@ -1325,9 +1296,7 @@ class FinancialServicesRegisterApiClient:
             modifiers=("CF",),
         )
 
-    async def get_individual_disciplinary_history(
-        self, irn: str
-    ) -> FinancialServicesRegisterApiResponse:
+    async def get_individual_disciplinary_history(self, irn: str) -> FinancialServicesRegisterApiResponse:
         """:py:class:`~financial_services_register_api.api.FinancialServicesRegisterApiResponse` : Returns a response containing the disciplinary history of an individual, given their individual reference number (FRN).
 
         Handler for the individual disciplinary history API endpoint:
@@ -1405,9 +1374,7 @@ class FinancialServicesRegisterApiClient:
         ...
         financial_services_register_api.exceptions.FinancialServicesRegisterApiRequestException: No data found in the API response. Please check the search parameters and try again.
         """
-        return await self._search_ref_number(
-            fund_name, API_CONSTANTS.RESOURCE_TYPES.value["fund"]["type_name"]
-        )
+        return await self._search_ref_number(fund_name, API_CONSTANTS.RESOURCE_TYPES.value["fund"]["type_name"])
 
     async def get_fund(self, prn: str) -> FinancialServicesRegisterApiResponse:
         """:py:class:`~financial_services_register_api.api.FinancialServicesRegisterApiResponse` : Returns a response containing fund (or collective investment scheme (CIS)) details, given its product reference number (PRN)
@@ -1441,9 +1408,7 @@ class FinancialServicesRegisterApiClient:
         ... except AssertionError:
         ...     pass
         """
-        return await self._get_resource_info(
-            prn, API_CONSTANTS.RESOURCE_TYPES.value["fund"]["type_name"]
-        )
+        return await self._get_resource_info(prn, API_CONSTANTS.RESOURCE_TYPES.value["fund"]["type_name"])
 
     async def get_fund_names(self, prn: str) -> FinancialServicesRegisterApiResponse:
         """:py:class:`~financial_services_register_api.api.FinancialServicesRegisterApiResponse` : Returns a response containing the alternative or secondary trading name details of a fund (or collective investment scheme (CIS)), given its product reference number (PRN).
