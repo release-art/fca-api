@@ -1,3 +1,1 @@
-from . import __version__
-
-from . import (api, constants, exceptions)
+from . import __version__, const, exc, api
