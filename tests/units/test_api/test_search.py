@@ -5,7 +5,7 @@ import httpx
 import pytest
 
 # -- Internal libraries --
-from financial_services_register_api.exceptions import (
+from financial_services_register_api.exc import (
     FinancialServicesRegisterApiRequestException,
     FinancialServicesRegisterApiResponseException,
 )

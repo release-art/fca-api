@@ -10,11 +10,12 @@ from typing import Any
 from urllib.parse import parse_qs, urlparse
 
 import pytest
+from _pytest.fixtures import FixtureRequest
 
 logger = logging.getLogger(__name__)
 
 
-def get_current_fixture() -> pytest.fixtures.FixtureRequest:
+def get_current_fixture() -> FixtureRequest:
     1 / 0
 
 
