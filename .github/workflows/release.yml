@@ -40,6 +40,8 @@ jobs:
     # Bump version in the PR that targets the "main" branch
     steps:
       - uses: actions/checkout@v6
+        with:
+          persist-credentials: true
       - name: Set up Python
         uses: actions/setup-python@v6
       - name: Install dependencies
@@ -51,4 +53,7 @@ jobs:
           git config --global user.email "github+actions@gmail.com"
           git config --global user.name "Actions"
           pdm bump patch
-          git push --follow-tags
+      - uses: stefanzweifel/git-auto-commit-action@v7
+        with:
+          commit_message: "Bump version for next release"
+          create_branch: false
