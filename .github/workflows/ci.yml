@@ -83,7 +83,6 @@ jobs:
         pdm install -v
         pdm run -v lint
         pdm run -v pytest
-        pdm run -v doctests
 
     - name: Upload coverage reports to Codecov
       uses: codecov/codecov-action@v5

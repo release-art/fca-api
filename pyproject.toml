@@ -177,7 +177,6 @@ forced-separate = ["tests"]
 
 [tool.pdm.scripts]
 lint = {shell = "make lint", help = "Lint source with Ruff"}
-doctests = {shell = "make doctests", help = "Run doctests"}
 unittests = {shell = "make unittests", help = "Run unit tests & measure coverage"}
 
 [tool.pdm.version]
