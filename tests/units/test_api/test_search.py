@@ -1,7 +1,6 @@
 # -- IMPORTS --
 
 # -- Standard libraries --
-import os
 import unittest.mock as mock
 
 # -- 3rd party libraries --
@@ -9,9 +8,6 @@ import pytest
 import httpx
 
 # -- Internal libraries --
-from financial_services_register_api.constants import (
-    FINANCIAL_SERVICES_REGISTER_API_CONSTANTS as API_CONSTANTS,
-)
 from financial_services_register_api.exceptions import (
     FinancialServicesRegisterApiRequestException,
     FinancialServicesRegisterApiResponseException,
@@ -216,9 +212,7 @@ class TestSearchFunctionality:
         assert isinstance(recv_prn, str)
         assert recv_prn
 
-        recv_prn = await test_client.search_prn(
-            "abrdn uk smaller companies growth"
-        )
+        recv_prn = await test_client.search_prn("abrdn uk smaller companies growth")
         assert isinstance(recv_prn, str)
         assert recv_prn
 

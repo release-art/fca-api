@@ -1,7 +1,6 @@
 # -- IMPORTS --
 
 # -- Standard libraries --
-import os
 import unittest.mock as mock
 
 # -- 3rd party libraries --
@@ -14,7 +13,6 @@ from financial_services_register_api.constants import (
 )
 from financial_services_register_api.exceptions import (
     FinancialServicesRegisterApiRequestException,
-    FinancialServicesRegisterApiResponseException,
 )
 
 

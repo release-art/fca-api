@@ -5,6 +5,7 @@ from financial_services_register_api.api import (
     FinancialServicesRegisterApiClient,
 )
 
+
 @pytest.fixture
 async def test_session(test_api_username, test_api_key):
     session = FinancialServicesRegisterApiSession(test_api_username, test_api_key)
