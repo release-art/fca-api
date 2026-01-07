@@ -9,15 +9,10 @@ import typing
 from typing import Any
 from urllib.parse import parse_qs, urlparse
 
-import pytest
-from _pytest.fixtures import FixtureRequest
+
 
 logger = logging.getLogger(__name__)
-
-
-def get_current_fixture() -> FixtureRequest:
-    1 / 0
-
+G_CUR_TEST_PREFIX: typing.Optional[pathlib.PurePath] = None
 
 def make(method: typing.Literal["GET", "POST"], url: str, headers: dict, **kwargs: Any) -> pathlib.PurePath:
     """Generate a cache filename based on the request parameters.
@@ -48,24 +43,26 @@ def make(method: typing.Literal["GET", "POST"], url: str, headers: dict, **kwarg
     path_parts = [part for part in parsed_url.path.split("/") if part]
 
     # Use the last path segment as directory name, or 'root' if no path
-    directory_parts = []
+    name_parts = []
     if path_parts:
         for part in reversed(path_parts):
             if not part.isdigit():
-                directory_parts.insert(0, part)
-                if len(directory_parts) >= 2:
+                name_parts.insert(0, part)
+                if len(name_parts) >= 2:
                     break
 
-    if not directory_parts:
-        directory_parts.append("root")
+    if not name_parts:
+        name_parts.append("root")
 
-    directory = "_".join(directory_parts).lower()
+    name_prefix = "_".join(name_parts).lower()
 
     # Clean directory name (remove special characters)
-    directory = re.sub(r"[^\w\-_]", "_", directory)
+    name_prefix = re.sub(r"[^\w\-_]", "_", name_prefix)
 
     # Build human-readable filename components
-    filename_parts = []
+    filename_parts = [
+        name_prefix
+    ]
 
     # Add method
     filename_parts.append(method.lower())
@@ -106,6 +103,7 @@ def make(method: typing.Literal["GET", "POST"], url: str, headers: dict, **kwarg
     # Combine into final filename
     final_filename = f"{base_filename}_{cache_hash}.json"
 
-    out = pathlib.PurePath(directory) / final_filename
+    assert G_CUR_TEST_PREFIX is not None, "G_CUR_TEST_PREFIX must be set before calling make()"
+    out = G_CUR_TEST_PREFIX / final_filename
     logger.info(f"Generated cache filename: {out}")
     return out

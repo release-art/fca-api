@@ -1,0 +1,32 @@
+{
+  "content": "{\"Status\":\"FSR-API-03-02-00\",\"ResultInfo\":{\"page\":\"\",\"per_page\":\"\",\"total_count\":\"9\"},\"Message\":\"Ok. Indiv CF Found\",\"Data\":[{\"Previous\":{\"(5)Appointed representative dealing with clients for which they require qualification\":{\"Customer Engagement Method\":\"Face To Face; Telephone; Online\",\"End Date\":\"05/04/2022\",\"Suspension / Restriction End Date\":\"\",\"Suspension / Restriction Start Date\":\"\",\"Restriction\":\"\",\"Effective Date\":\"23/10/2020\",\"Firm Name\":\"HL Partnership Limited\",\"Name\":\"Appointed representative dealing with clients for which they require qualification\",\"URL\":\"https://register.fca.org.uk/services/V0.1/Firm/303397\"},\"(4)Appointed representative dealing with clients for which they require qualification\":{\"Customer Engagement Method\":\"Face To Face; Telephone; Online\",\"End Date\":\"22/08/2023\",\"Suspension / Restriction End Date\":\"\",\"Suspension / Restriction Start Date\":\"\",\"Restriction\":\"\",\"Effective Date\":\"05/04/2022\",\"Firm Name\":\"New Leaf Distribution Limited\",\"Name\":\"Appointed representative dealing with clients for which they require qualification\",\"URL\":\"https://register.fca.org.uk/services/V0.1/Firm/460421\"},\"(3)CF1 Director (AR)\":{\"Customer Engagement Method\":\"\",\"End Date\":\"29/11/2023\",\"Suspension / Restriction End Date\":\"\",\"Suspension / Restriction Start Date\":\"\",\"Restriction\":\"\",\"Effective Date\":\"30/03/2022\",\"Firm Name\":\"New Leaf Distribution Limited\",\"Name\":\"CF1 Director (AR)\",\"URL\":\"https://register.fca.org.uk/services/V0.1/Firm/460421\"},\"(2)[FCA CF] Functions requiring qualifications\":{\"Customer Engagement Method\":\"Face To Face; Telephone\",\"End Date\":\"06/11/2020\",\"Suspension / Restriction End Date\":\"\",\"Suspension / Restriction Start Date\":\"\",\"Restriction\":\"\",\"Effective Date\":\"03/02/2020\",\"Firm Name\":\"Willson Grange Limited\",\"Name\":\"[FCA CF] Functions requiring qualifications\",\"URL\":\"https://register.fca.org.uk/services/V0.1/Firm/593803\"},\"(1)[FCA CF] Functions requiring qualifications\":{\"Customer Engagement Method\":\"Face To Face; Telephone\",\"End Date\":\"31/01/2020\",\"Suspension / Restriction End Date\":\"\",\"Suspension / Restriction Start Date\":\"\",\"Restriction\":\"\",\"Effective Date\":\"07/03/2016\",\"Firm Name\":\"TSB Bank plc\",\"Name\":\"[FCA CF] Functions requiring qualifications\",\"URL\":\"https://register.fca.org.uk/services/V0.1/Firm/191240\"}},\"Current\":{\"(4)CPD21 - Advising or arranging equity release transactions\":{\"Customer Engagement Method\":\"\",\"Suspension / Restriction End Date\":\"\",\"Suspension / Restriction Start Date\":\"\",\"Restriction\":\"\",\"Effective Date\":\"\",\"Firm Name\":\"Echo Finance Limited\",\"Name\":\"CPD21 - Advising or arranging equity release transactions\",\"URL\":\"https://register.fca.org.uk/services/V0.1/Firm/570073\"},\"(3)CPD20 - Advising or arranging regulated mortgage contracts\":{\"Customer Engagement Method\":\"\",\"Suspension / Restriction End Date\":\"\",\"Suspension / Restriction Start Date\":\"\",\"Restriction\":\"\",\"Effective Date\":\"\",\"Firm Name\":\"Echo Finance Limited\",\"Name\":\"CPD20 - Advising or arranging regulated mortgage contracts\",\"URL\":\"https://register.fca.org.uk/services/V0.1/Firm/570073\"},\"(2)[FCA CF] Functions requiring qualifications\":{\"Customer Engagement Method\":\"\",\"Suspension / Restriction End Date\":\"\",\"Suspension / Restriction Start Date\":\"\",\"Restriction\":\"\",\"Effective Date\":\"02/10/2023\",\"Firm Name\":\"Echo Finance Limited\",\"Name\":\"[FCA CF] Functions requiring qualifications\",\"URL\":\"https://register.fca.org.uk/services/V0.1/Firm/570073\"},\"(1)The London Institute of Banking and Finance (LIBF) - formerly known as IFS\":{\"Customer Engagement Method\":\"\",\"Suspension / Restriction End Date\":\"\",\"Suspension / Restriction Start Date\":\"\",\"Restriction\":\"\",\"Effective Date\":\"\",\"Firm Name\":\"Echo Finance Limited\",\"Name\":\"The London Institute of Banking and Finance (LIBF) - formerly known as IFS\",\"URL\":\"https://register.fca.org.uk/services/V0.1/Firm/570073\"}}}]}",
+  "headers": {
+    "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
+    "cf-cache-status": "DYNAMIC",
+    "cf-ray": "9ba4998bff827068-LHR",
+    "connection": "keep-alive",
+    "content-encoding": "gzip",
+    "content-type": "application/json;charset=UTF-8",
+    "date": "Wed, 07 Jan 2026 15:48:31 GMT",
+    "server": "cloudflare",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Thu, 07-Jan-2027 15:48:30 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Thu, 07-Jan-2027 15:48:30 GMT; Max-Age=31536000; secure",
+    "strict-transport-security": "max-age=63072000; includeSubDomains",
+    "transfer-encoding": "chunked",
+    "vary": "Accept-Encoding",
+    "x-content-type-options": "nosniff"
+  },
+  "request": {
+    "headers": {
+      "accept": "application/json",
+      "accept-encoding": "gzip, deflate",
+      "connection": "keep-alive",
+      "user-agent": "python-httpx/0.28.1",
+      "x-auth-email": "user@example.com",
+      "x-auth-key": "00617470e8144a09"
+    },
+    "params": null,
+    "url": "https://register.fca.org.uk/services/V0.1/Individuals/MXC29012/CF"
+  },
+  "status_code": 200,
+  "url": "https://register.fca.org.uk/services/V0.1/Individuals/MXC29012/CF"
+}
