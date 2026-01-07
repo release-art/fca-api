@@ -6,7 +6,7 @@
     "transfer-encoding": "chunked",
     "connection": "keep-alive",
     "content-encoding": "gzip",
-    "cf-ray": "9ba439ffac02958a-LHR",
+    "cf-ray": "9ba43a022c43ba61-LHR",
     "cf-cache-status": "DYNAMIC",
     "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
     "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Thu, 07-Jan-2027 14:43:17 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Thu, 07-Jan-2027 14:43:17 GMT; Max-Age=31536000; secure",
@@ -15,10 +15,10 @@
     "x-content-type-options": "nosniff",
     "server": "cloudflare"
   },
-  "content": "{\"Status\":\"FSR-API-04-01-00\",\"ResultInfo\":{\"page\":\"1\",\"per_page\":\"20\",\"total_count\":\"1\"},\"Message\":\"Ok. Search successful\",\"Data\":[{\"URL\":\"https://register.fca.org.uk/services/V0.1/CIS/1044298\",\"Status\":\"Recognised\",\"Reference Number\":\"1044298\",\"Type of business or Individual\":\"Collective investment scheme\",\"Name\":\"Jupiter Asia Pacific Income Fund (IRL)\"}]}",
-  "url": "https://register.fca.org.uk/services/V0.1/Search?q=jupiter+asia+pacific+income&type=fund",
+  "content": "{\"Status\":\"FSR-API-04-01-00\",\"ResultInfo\":{\"page\":\"1\",\"per_page\":\"20\",\"total_count\":\"1\"},\"Message\":\"Ok. Search successful\",\"Data\":[{\"URL\":\"https://register.fca.org.uk/services/V0.1/CIS/936982\",\"Status\":\"Authorised\",\"Reference Number\":\"936982\",\"Type of business or Individual\":\"Collective investment scheme\",\"Name\":\"abrdn ACS I\"}]}",
+  "url": "https://register.fca.org.uk/services/V0.1/Search?q=abrdn+ACS+I&type=fund",
   "request": {
-    "url": "https://register.fca.org.uk/services/V0.1/Search?q=jupiter+asia+pacific+income&type=fund",
+    "url": "https://register.fca.org.uk/services/V0.1/Search?q=abrdn+ACS+I&type=fund",
     "params": null,
     "headers": {
       "accept-encoding": "gzip, deflate",

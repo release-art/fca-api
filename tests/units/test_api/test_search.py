@@ -152,14 +152,19 @@ class TestSearchFunctionality:
         assert all(isinstance(rec, dict) for rec in recv_recs)
 
     @pytest.mark.asyncio
-    async def test_search_irn_returns_unique_individual(self, test_client):
+    @pytest.mark.parametrize(
+        "search_value, return_type",
+        [
+            ("Mark Carney", str),
+            ("andrew bailey", list),
+            ("MXC29012", str),
+        ],
+    )
+    async def test_search_irn_returns_unique_individual(self, test_client, search_value, return_type):
         # Covers the case of a successful IRN search for existing, unique individuals
-        recv_irn = await test_client.search_irn("mark carney")
-        assert isinstance(recv_irn, list)
-        assert recv_irn
-
-        recv_irn = await test_client.search_irn("andrew bailey")
-        assert isinstance(recv_irn, list)
+        recv_irn = await test_client.search_irn(search_value)
+        print(recv_irn)
+        assert isinstance(recv_irn, return_type)
         assert recv_irn
 
     @pytest.mark.asyncio
@@ -171,15 +176,24 @@ class TestSearchFunctionality:
         assert all(isinstance(rec, dict) for rec in recv_recs)
 
     @pytest.mark.asyncio
-    async def test_search_prn_returns_unique_fund(self, test_client):
+    @pytest.mark.parametrize(
+        "search_value",
+        [
+            "jupiter asia pacific income",
+            "abrdn ACS I",
+        ],
+    )
+    async def test_search_prn_returns_unique_fund(self, test_client, search_value):
         # Covers the case of a successful PRN search for existing, unique funds
-        recv_prn = await test_client.search_prn("jupiter asia pacific income")
+        recv_prn = await test_client.search_prn(search_value)
         assert isinstance(recv_prn, str)
         assert recv_prn
 
-        recv_prn = await test_client.search_prn("abrdn uk smaller companies growth")
-        assert isinstance(recv_prn, str)
-        assert recv_prn
+    @pytest.mark.asyncio
+    async def test_search_absent_prn(self, test_client):
+        # Covers the case of a successful PRN search for existing, unique funds
+        with pytest.raises(FinancialServicesRegisterApiRequestException):
+            await test_client.search_prn("non existent fund akjsdhfgkasdhfo")
 
     @pytest.mark.asyncio
     async def test_search_prn_returns_multiple_funds(self, test_client):

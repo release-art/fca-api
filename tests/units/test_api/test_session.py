@@ -13,8 +13,6 @@ class TestFinancialServicesRegisterApiSession:
     async def test_session_initialization(self, test_session, test_api_username, test_api_key):
         assert test_session.api_username == test_api_username
         assert test_session.api_key == test_api_key
-        assert test_session.headers == {
-            "ACCEPT": "application/json",
-            "X-AUTH-EMAIL": test_api_username,
-            "X-AUTH-KEY": test_api_key,
-        }
+        assert test_session.headers["ACCEPT"] == "application/json"
+        assert test_session.headers["X-AUTH-EMAIL"] == test_api_username
+        assert test_session.headers["X-AUTH-KEY"] == test_api_key

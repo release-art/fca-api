@@ -1,15 +1,15 @@
 {
   "status_code": 200,
   "headers": {
-    "date": "Wed, 07 Jan 2026 14:12:03 GMT",
+    "date": "Wed, 07 Jan 2026 14:42:54 GMT",
     "content-type": "application/json;charset=UTF-8",
     "transfer-encoding": "chunked",
     "connection": "keep-alive",
     "content-encoding": "gzip",
-    "cf-ray": "9ba40c3f9aa9634c-LHR",
+    "cf-ray": "9ba4396d9987d1b8-LHR",
     "cf-cache-status": "DYNAMIC",
     "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
-    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Thu, 07-Jan-2027 14:12:03 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Thu, 07-Jan-2027 14:12:03 GMT; Max-Age=31536000; secure",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Thu, 07-Jan-2027 14:42:53 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Thu, 07-Jan-2027 14:42:53 GMT; Max-Age=31536000; secure",
     "strict-transport-security": "max-age=63072000; includeSubDomains",
     "vary": "Accept-Encoding",
     "x-content-type-options": "nosniff",
