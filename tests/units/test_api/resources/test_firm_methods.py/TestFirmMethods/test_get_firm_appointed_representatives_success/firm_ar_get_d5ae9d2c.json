@@ -1,0 +1,32 @@
+{
+  "content": "eyJTdGF0dXMiOiJGU1ItQVBJLTA1LTA0LTAwIiwiUmVzdWx0SW5mbyI6eyJwYWdlIjoiMSIsInBlcl9wYWdlIjoiMTAiLCJ0b3RhbF9jb3VudCI6IjYifSwiTWVzc2FnZSI6Ik9rLiBBcHBvaW50ZWQgUmVwcmVzZW50YXRpdmUgRm91bmQiLCJEYXRhIjp7IlByZXZpb3VzQXBwb2ludGVkUmVwcmVzZW50YXRpdmVzIjpbeyJVUkwiOiJodHRwczovL3JlZ2lzdGVyLmZjYS5vcmcudWsvc2VydmljZXMvVjAuMS9GaXJtLzQwNzQ4OSIsIlRlcm1pbmF0aW9uIERhdGUiOiIxNi8wOS8yMDA4IiwiUmVjb3JkU3ViVHlwZSI6IkZ1bGwiLCJQcmluY2lwYWwgRlJOIjoiMTEzODQ5IiwiUHJpbmNpcGFsIEZpcm0gTmFtZSI6Ikhpc2NveCBJbnN1cmFuY2UgQ29tcGFueSBMaW1pdGVkIiwiRWZmZWN0aXZlIERhdGUiOiIxNC8wMS8yMDA1IiwiRUVBIFRpZWQgQWdlbnQiOiJmYWxzZSIsIlRpZWQgQWdlbnQiOiJmYWxzZSIsIltOb3RpblVzZV0gSW5zdXJhbmNlIERpc3RyaWJ1dGlvbiI6InRydWUiLCJGUk4iOiI0MDc0ODkiLCJOYW1lIjoiSG9vZCBHcm91cCBBZG1pbmlzdHJhdGlvbiBMdGQifSx7IlVSTCI6Imh0dHBzOi8vcmVnaXN0ZXIuZmNhLm9yZy51ay9zZXJ2aWNlcy9WMC4xL0Zpcm0vNDAzNTI3IiwiVGVybWluYXRpb24gRGF0ZSI6IjMwLzEyLzIwMDgiLCJSZWNvcmRTdWJUeXBlIjoiRnVsbCIsIlByaW5jaXBhbCBGUk4iOiIxMTM4NDkiLCJQcmluY2lwYWwgRmlybSBOYW1lIjoiSGlzY294IEluc3VyYW5jZSBDb21wYW55IExpbWl0ZWQiLCJFZmZlY3RpdmUgRGF0ZSI6IjE0LzAxLzIwMDUiLCJFRUEgVGllZCBBZ2VudCI6ImZhbHNlIiwiVGllZCBBZ2VudCI6ImZhbHNlIiwiW05vdGluVXNlXSBJbnN1cmFuY2UgRGlzdHJpYnV0aW9uIjoidHJ1ZSIsIkZSTiI6IjQwMzUyNyIsIk5hbWUiOiJJbnN0aXR1dGUgb2YgRGlyZWN0b3JzIn0seyJVUkwiOiJodHRwczovL3JlZ2lzdGVyLmZjYS5vcmcudWsvc2VydmljZXMvVjAuMS9GaXJtLzQwMzUzMyIsIlRlcm1pbmF0aW9uIERhdGUiOiIyOS8xMi8yMDA4IiwiUmVjb3JkU3ViVHlwZSI6IkZ1bGwiLCJQcmluY2lwYWwgRlJOIjoiMTEzODQ5IiwiUHJpbmNpcGFsIEZpcm0gTmFtZSI6Ikhpc2NveCBJbnN1cmFuY2UgQ29tcGFueSBMaW1pdGVkIiwiRWZmZWN0aXZlIERhdGUiOiIxNy8wOC8yMDA2IiwiRUVBIFRpZWQgQWdlbnQiOiJmYWxzZSIsIlRpZWQgQWdlbnQiOiJmYWxzZSIsIltOb3RpblVzZV0gSW5zdXJhbmNlIERpc3RyaWJ1dGlvbiI6InRydWUiLCJGUk4iOiI0MDM1MzMiLCJOYW1lIjoiUm95YWwgSW5zdGl0dXRpb24gb2YgQ2hhcnRlcmVkIFN1cnZleW9ycyJ9LHsiVVJMIjoiaHR0cHM6Ly9yZWdpc3Rlci5mY2Eub3JnLnVrL3NlcnZpY2VzL1YwLjEvRmlybS80MTc1MDEiLCJUZXJtaW5hdGlvbiBEYXRlIjoiMDcvMDEvMjAwOSIsIlJlY29yZFN1YlR5cGUiOiJGdWxsIiwiUHJpbmNpcGFsIEZSTiI6IjExMzg0OSIsIlByaW5jaXBhbCBGaXJtIE5hbWUiOiJIaXNjb3ggSW5zdXJhbmNlIENvbXBhbnkgTGltaXRlZCIsIkVmZmVjdGl2ZSBEYXRlIjoiMTQvMDEvMjAwNSIsIkVFQSBUaWVkIEFnZW50IjoiZmFsc2UiLCJUaWVkIEFnZW50IjoiZmFsc2UiLCJbTm90aW5Vc2VdIEluc3VyYW5jZSBEaXN0cmlidXRpb24iOiJ0cnVlIiwiRlJOIjoiNDE3NTAxIiwiTmFtZSI6IlRoZSBMYXcgU29jaWV0eSJ9LHsiVVJMIjoiaHR0cHM6Ly9yZWdpc3Rlci5mY2Eub3JnLnVrL3NlcnZpY2VzL1YwLjEvRmlybS80MDMzMDAiLCJUZXJtaW5hdGlvbiBEYXRlIjoiMzEvMTAvMjAwNSIsIlJlY29yZFN1YlR5cGUiOiJGdWxsIiwiUHJpbmNpcGFsIEZSTiI6IjExMzg0OSIsIlByaW5jaXBhbCBGaXJtIE5hbWUiOiJIaXNjb3ggSW5zdXJhbmNlIENvbXBhbnkgTGltaXRlZCIsIkVmZmVjdGl2ZSBEYXRlIjoiMTQvMDEvMjAwNSIsIkVFQSBUaWVkIEFnZW50IjoiZmFsc2UiLCJUaWVkIEFnZW50IjoiZmFsc2UiLCJbTm90aW5Vc2VdIEluc3VyYW5jZSBEaXN0cmlidXRpb24iOiJ0cnVlIiwiRlJOIjoiNDAzMzAwIiwiTmFtZSI6IlRocmVlIExpb25zIFVuZGVyd3JpdGluZyBMdGQifSx7IlVSTCI6Imh0dHBzOi8vcmVnaXN0ZXIuZmNhLm9yZy51ay9zZXJ2aWNlcy9WMC4xL0Zpcm0vNDA0NTkzIiwiVGVybWluYXRpb24gRGF0ZSI6IjIxLzEwLzIwMDgiLCJSZWNvcmRTdWJUeXBlIjoiSW50cm9kdWNlciIsIlByaW5jaXBhbCBGUk4iOiIxMTM4NDkiLCJQcmluY2lwYWwgRmlybSBOYW1lIjoiSGlzY294IEluc3VyYW5jZSBDb21wYW55IExpbWl0ZWQiLCJFZmZlY3RpdmUgRGF0ZSI6IjE4LzAxLzIwMDUiLCJFRUEgVGllZCBBZ2VudCI6ImZhbHNlIiwiVGllZCBBZ2VudCI6ImZhbHNlIiwiW05vdGluVXNlXSBJbnN1cmFuY2UgRGlzdHJpYnV0aW9uIjoiZmFsc2UiLCJGUk4iOiI0MDQ1OTMiLCJOYW1lIjoiVGltZXMgTmV3c3BhcGVycyBMaW1pdGVkIn1dLCJDdXJyZW50QXBwb2ludGVkUmVwcmVzZW50YXRpdmVzIjpudWxsfX0=",
+  "headers": {
+    "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
+    "cf-cache-status": "DYNAMIC",
+    "cf-ray": "9ba4ca7aacda5f1b-LHR",
+    "connection": "keep-alive",
+    "content-encoding": "gzip",
+    "content-type": "application/json;charset=UTF-8",
+    "date": "Wed, 07 Jan 2026 16:21:55 GMT",
+    "server": "cloudflare",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Thu, 07-Jan-2027 16:21:55 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Thu, 07-Jan-2027 16:21:55 GMT; Max-Age=31536000; secure",
+    "strict-transport-security": "max-age=63072000; includeSubDomains",
+    "transfer-encoding": "chunked",
+    "vary": "Accept-Encoding",
+    "x-content-type-options": "nosniff"
+  },
+  "request": {
+    "headers": {
+      "accept": "application/json",
+      "accept-encoding": "gzip, deflate",
+      "connection": "keep-alive",
+      "user-agent": "python-httpx/0.28.1",
+      "x-auth-email": "user@example.com",
+      "x-auth-key": "00617470e8144a09"
+    },
+    "params": null,
+    "url": "https://register.fca.org.uk/services/V0.1/Firm/113849/AR"
+  },
+  "status_code": 200,
+  "url": "https://register.fca.org.uk/services/V0.1/Firm/113849/AR"
+}

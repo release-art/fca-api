@@ -27,8 +27,9 @@ class TestFinancialServicesRegisterApiClientCore:
 
     @pytest.mark.asyncio
     async def test_common_search_raises_on_request_error(self, test_client, mocker):
-        mock_api_session_get = mocker.patch(
-            "financial_services_register_api.api.FinancialServicesRegisterApiSession.get"
+        mock_api_session_get = mocker.patch.object(
+            test_client._api_session,
+            "get"
         )
         mock_api_session_get.side_effect = httpx.RequestError("test RequestError")
 

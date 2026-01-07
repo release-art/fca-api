@@ -1,0 +1,32 @@
+{
+  "content": "eyJTdGF0dXMiOiJGU1ItQVBJLTAzLTAzLTAwIiwiUmVzdWx0SW5mbyI6eyJwYWdlIjoiMSIsInBlcl9wYWdlIjoiMTAiLCJ0b3RhbF9jb3VudCI6IjEifSwiTWVzc2FnZSI6Ik9rLiBEaXNjaXBsaW5hcnkgaGlzdG9yeSBpbmZvcm1hdGlvbiBmb3VuZCIsIkRhdGEiOlt7IlR5cGVvZkRlc2NyaXB0aW9uIjoiT24gMzEgT2N0b2JlciAyMDI0LCBNciBNYWNrZXkgc2lnbmVkIGEgU2V0dGxlbWVudCBBZ3JlZW1lbnQgd2l0aCB0aGUgRkNBIHdoaWNoIGhhcyBiYW5uZWQgTXIgTWFja2V5IGZyb20gd29ya2luZyBpbiBmaW5hbmNpYWwgc2VydmljZXMgYW5kIGZpbmVkIGhpbSDCozEuMW0gZm9yIGFjdGluZyB3aXRob3V0IGludGVncml0eS4gTXIgTWFja2V5IHdhcyB0aGUgZXhlY3V0aXZlIGRpcmVjdG9yIHdpdGggc29sZSBtYW5hZ2VtZW50IGNvbnRyb2wgb2YgSW5zcGlyZSwgYW4gaW5zdXJhbmNlIGJyb2tlcmFnZSBjb21wYW55LCBpbiB0aGUgY29uc3RydWN0aW9uIHNlY3Rvci4gQmV0d2VlbiAyMDE2IGFuZCBPY3RvYmVyIDIwMjAsIE1yIE1hY2tleSB1c2VkIGluc3VyZXIgcHJlbWlhIHRvIGZ1bmQgSW5zcGlyZeKAmXMgb3BlcmF0aW5nIGNvc3RzIGFuZCB0byBwYXkgZm9yIHBlcnNvbmFsIGxpdmluZyBleHBlbnNlcyBpbnN0ZWFkIG9mIHBheWluZyBpbnN1cmVycy4gTXIgTWFja2V5IGFjY2VwdHMgdGhhdCwgZHVlIHRvIGhpcyBhY3Rpb25zLCBJbnNwaXJlIG93ZXMgaW5zdXJlcnMgb3ZlciDCozY2MCwwMDAuIEVzdGltYXRlcyBvZiB0aGlzIGFtb3VudCBieSBJbnNwaXJl4oCZcyBsaXF1aWRhdG9yIGFyZSBzaWduaWZpY2FudGx5IGhpZ2hlciBhbmQgc3VnZ2VzdCBhIHNob3J0ZmFsbCBvZiBvdmVyIMKjMi4ybS4gSW4gYWRkaXRpb24sIE1yIE1hY2tleSBoYXMgbm90IGJlZW4gdHJ1dGhmdWwgdG8gdGhlIEZDQSwgYWRtaXR0aW5nIEluc3BpcmUgZmFpbGVkIHRvIGNhcnJ5IG91dCBjbGllbnQgYXNzZXQgYXVkaXRzIHdoZW4gc3VibWl0dGluZyByZWd1bGF0b3J5IHJlcG9ydHMgZGVzcGl0ZSBzdGF0aW5nIGluIHZhcmlvdXMgRkNBIHJldHVybnMgdGhhdCBpdCBoYWQgZG9uZSBzby4gQXMgYSByZXN1bHQgb2YgaGlzIGNvbmR1Y3QsIHRoZSBGQ0EgaGFzIGZvdW5kIHRoYXQgTXIgTWFja2V5IGhhcyBmYWlsZWQgdG8gYWN0IHdpdGggaW50ZWdyaXR5IChicmVhY2ggb2YgUHJpbmNpcGxlIDEgb2YgQVBFUi8gSW5kaXZpZHVhbCBDb25kdWN0IFJ1bGUgMSBvZiBDT0NPTikgYW5kIGZhaWxlZCB0byBkZWFsIGluIGFuIG9wZW4gYW5kIGNvb3BlcmF0aXZlIHdheSB3aXRoIHRoZSBBdXRob3JpdHkgKGJyZWFjaCBvZiBQcmluY2lwbGUgNCBvZiBBUEVSL0luZGl2aWR1YWwgQ29uZHVjdCBSdWxlIDMgb2YgQ09DT04pLiBodHRwczovL3d3dy5mY2Eub3JnLnVrL3B1YmxpY2F0aW9uL2ZpbmFsLW5vdGljZXMvbGVpZ2gtbWFja2V5LTIwMjQucGRmIiwiVHlwZW9mQWN0aW9uIjoiUHJvaGliaXRpb24iLCJFbmZvcmNlbWVudFR5cGUiOiJGU01BIiwiQWN0aW9uRWZmZWN0aXZlRnJvbSI6IjExLzExLzIwMjQifV19",
+  "headers": {
+    "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
+    "cf-cache-status": "DYNAMIC",
+    "cf-ray": "9ba4caa5bfbbf662-LHR",
+    "connection": "keep-alive",
+    "content-encoding": "gzip",
+    "content-type": "application/json;charset=UTF-8",
+    "date": "Wed, 07 Jan 2026 16:22:02 GMT",
+    "server": "cloudflare",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Thu, 07-Jan-2027 16:22:01 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Thu, 07-Jan-2027 16:22:01 GMT; Max-Age=31536000; secure",
+    "strict-transport-security": "max-age=63072000; includeSubDomains",
+    "transfer-encoding": "chunked",
+    "vary": "Accept-Encoding",
+    "x-content-type-options": "nosniff"
+  },
+  "request": {
+    "headers": {
+      "accept": "application/json",
+      "accept-encoding": "gzip, deflate",
+      "connection": "keep-alive",
+      "user-agent": "python-httpx/0.28.1",
+      "x-auth-email": "user@example.com",
+      "x-auth-key": "00617470e8144a09"
+    },
+    "params": null,
+    "url": "https://register.fca.org.uk/services/V0.1/Individuals/LXM01328/DisciplinaryHistory"
+  },
+  "status_code": 200,
+  "url": "https://register.fca.org.uk/services/V0.1/Individuals/LXM01328/DisciplinaryHistory"
+}

@@ -3,7 +3,7 @@
 import pytest
 import pathlib
 
-from . import cache_filename, caching, mock
+from . import cache_filename, writing, reading
 
 @pytest.hookimpl(tryfirst=True, hookwrapper=True)
 def pytest_runtest_setup(item):
@@ -19,10 +19,10 @@ def pytest_runtest_setup(item):
     yield
 
 @pytest.fixture
-def caching_session_subclass():
-    return caching.CachingFinancialServicesRegisterApiSession
+def cache_writing_session_subclass():
+    return writing.CachingFinancialServicesRegisterApiSession
 
 
 @pytest.fixture
-def mock_session_subclass():
-    return mock.MockFinancialServicesRegisterApiSession
+def cache_reading_session_subclass():
+    return reading.MockFinancialServicesRegisterApiSession

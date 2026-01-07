@@ -29,44 +29,28 @@ class TestResourceInfoFunctionality:
             )
 
     @pytest.mark.asyncio
-    async def test_get_resource_info_raises_on_request_error(self, test_client, mocker):
-        mock_api_session_get = mocker.patch(
-            "financial_services_register_api.api.FinancialServicesRegisterApiSession.get"
+    @pytest.mark.parametrize("resource_ref_number, resource_type", [("test_frn", "firm"), ("test_prn", "fund"), ("test_irn", "individual")])
+    async def test_get_resource_info_raises_on_request_error(self, test_client, mocker, resource_ref_number, resource_type):
+        mocker.patch.object(
+            test_client._api_session, "get",
+            side_effect=httpx.RequestError("test RequestError")
         )
-        mock_api_session_get.side_effect = httpx.RequestError("test RequestError")
 
         with pytest.raises(FinancialServicesRegisterApiRequestException):
-            await test_client._get_resource_info("test_frn", "firm")
-            await test_client._get_resource_info("test_prn", "fund")
-            await test_client._get_resource_info("test_irn", "individual")
+            await test_client._get_resource_info(resource_ref_number, resource_type)
 
     @pytest.mark.asyncio
-    async def test_get_resource_info_raises_on_request_error_with_modifiers(self, test_client, mocker):
-        mock_api_session_get = mocker.patch(
-            "financial_services_register_api.api.FinancialServicesRegisterApiSession.get"
+    @pytest.mark.parametrize("resource_ref_number, resource_type", [("test_frn", "firm"), ("test_prn", "fund"), ("test_irn", "individual")])
+    async def test_get_resource_info_raises_on_request_error_with_modifiers(self, test_client, mocker, resource_ref_number, resource_type):
+        mocker.patch.object(
+            test_client._api_session, "get",
+            side_effect=httpx.RequestError("test RequestError")
         )
-        mock_api_session_get.side_effect = httpx.RequestError("test RequestError")
 
         with pytest.raises(FinancialServicesRegisterApiRequestException):
             await test_client._get_resource_info(
-                "test_frn",
-                "firm",
-                modifiers=(
-                    "test_modifier1",
-                    "test_modifier2",
-                ),
-            )
-            await test_client._get_resource_info(
-                "test_prn",
-                "fund",
-                modifiers=(
-                    "test_modifier1",
-                    "test_modifier2",
-                ),
-            )
-            await test_client._get_resource_info(
-                "test_irn",
-                "individual",
+                resource_ref_number,
+                resource_type,
                 modifiers=(
                     "test_modifier1",
                     "test_modifier2",

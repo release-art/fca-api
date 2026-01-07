@@ -1,0 +1,32 @@
+{
+  "content": "eyJTdGF0dXMiOiJGU1ItQVBJLTAyLTEwLTAwIiwiUmVzdWx0SW5mbyI6eyJwYWdlIjoiMSIsInBlcl9wYWdlIjoiMTAiLCJ0b3RhbF9jb3VudCI6IjEifSwiTWVzc2FnZSI6Ik9rLiBFeGNsdXNpb25zIGluZm9ybWF0aW9uIGZvdW5kIiwiRGF0YSI6W3siUFNEMl9FeGNsdXNpb25fVHlwZSI6IkxpbWl0ZWQgTmV0d29yayBFeGNsdXNpb24iLCJQYXJ0aWN1bGFyX0V4Y2x1c2lvbl9yZWxpZWRfdXBvbiI6IjIoaykoaWlpKSDigJMgbWF5IGJlIHVzZWQgb25seSB0byBhY3F1aXJlIGEgdmVyeSBsaW1pdGVkIHJhbmdlIG9mIGdvb2RzIG9yIHNlcnZpY2VzIiwiRGVzY3JpcHRpb25fb2Zfc2VydmljZXMiOiJQcmVjaXNpb24gcGF5IFZpcnR1YWwgUHJlcGFpZCAtIERWTEEgU2VydmljZSJ9XX0=",
+  "headers": {
+    "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
+    "cf-cache-status": "DYNAMIC",
+    "cf-ray": "9ba4ca682abcc70d-LHR",
+    "connection": "keep-alive",
+    "content-encoding": "gzip",
+    "content-type": "application/json;charset=UTF-8",
+    "date": "Wed, 07 Jan 2026 16:21:52 GMT",
+    "server": "cloudflare",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Thu, 07-Jan-2027 16:21:52 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Thu, 07-Jan-2027 16:21:52 GMT; Max-Age=31536000; secure",
+    "strict-transport-security": "max-age=63072000; includeSubDomains",
+    "transfer-encoding": "chunked",
+    "vary": "Accept-Encoding",
+    "x-content-type-options": "nosniff"
+  },
+  "request": {
+    "headers": {
+      "accept": "application/json",
+      "accept-encoding": "gzip, deflate",
+      "connection": "keep-alive",
+      "user-agent": "python-httpx/0.28.1",
+      "x-auth-email": "user@example.com",
+      "x-auth-key": "00617470e8144a09"
+    },
+    "params": null,
+    "url": "https://register.fca.org.uk/services/V0.1/Firm/122702/Exclusions"
+  },
+  "status_code": 200,
+  "url": "https://register.fca.org.uk/services/V0.1/Firm/122702/Exclusions"
+}

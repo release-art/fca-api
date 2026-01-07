@@ -94,7 +94,15 @@ def make(method: typing.Literal["GET", "POST"], url: str, headers: dict, **kwarg
     cache_key_data = {
         "url": str(url),
         "params": kwargs.get("params"),
-        "headers": dict(headers),
+        "headers": dict(headers) | {
+            # Remove any headers that may vary between requests
+            "user-agent": "test",
+            "connection": "close",
+            "accept-encoding": "gzip, deflate, br",
+            "user-agent": "test",
+            "x-auth-email": "unknown",
+            "x-auth-key": "unknown",
+        },
         "method": method,
     }
     cache_key = json.dumps(cache_key_data, sort_keys=True)

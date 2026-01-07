@@ -18,16 +18,15 @@ class TestSearchFunctionality:
             await test_client._search_ref_number("resource_name", "incorrect_resource_type")
 
     @pytest.mark.asyncio
-    async def test_search_ref_number_raises_on_request_error(self, test_client, mocker):
-        mock_api_session_get = mocker.patch(
-            "financial_services_register_api.api.FinancialServicesRegisterApiSession.get"
+    @pytest.mark.parametrize("resource_name, resource_type", [("exceptional search", "firm"), ("exceptional search", "individual"), ("exceptional search", "fund")])
+    async def test_search_ref_number_raises_on_request_error(self, test_client, mocker, resource_name, resource_type):
+        mocker.patch.object(
+            test_client._api_session, "get",
+            side_effect=httpx.RequestError("test RequestError")
         )
-        mock_api_session_get.side_effect = httpx.RequestError("test RequestError")
 
         with pytest.raises(FinancialServicesRegisterApiRequestException):
-            await test_client._search_ref_number("exceptional search", "firm")
-            await test_client._search_ref_number("exceptional search", "individual")
-            await test_client._search_ref_number("exceptional search", "fund")
+            await test_client._search_ref_number(resource_name, resource_type)
 
     @pytest.mark.asyncio
     async def test_search_ref_number_raises_on_bad_response(self, test_client, mocker):
@@ -49,9 +48,6 @@ class TestSearchFunctionality:
     @pytest.mark.asyncio
     @pytest.mark.parametrize("resource_type", ["firm", "individual", "fund"])
     async def test_search_raises_on_malformed_response(self, test_client, mocker, resource_type):
-        # mock_api_session_get = mocker.patch.object(
-        #     test_client._api_session, "get"
-        # )
         mock_response = mocker.create_autospec(httpx.Response)
         mock_response.json = mocker.MagicMock(
             name="json",
@@ -71,18 +67,11 @@ class TestSearchFunctionality:
             await test_client._search_ref_number("bad response", resource_type)
 
     @pytest.mark.asyncio
-    async def test_search_ref_number_raises_on_nonexistent_resource(self, test_client):
+    @pytest.mark.parametrize("resource_type", ["firm", "individual", "fund"])
+    async def test_search_ref_number_raises_on_nonexistent_resource(self, test_client, resource_type):
         # Covers the case of a failed FRN search for an incorrectly specified firm
         with pytest.raises(FinancialServicesRegisterApiRequestException):
-            await test_client._search_ref_number("nonexistent123 insurance company", "firm")
-
-        # Covers the case of a failed IRN search for an incorrectly specified individual
-        with pytest.raises(FinancialServicesRegisterApiRequestException):
-            await test_client._search_ref_number("a nonexistent individual", "individual")
-
-        # Covers the case of a failed PRN search for an incorrectly specified firm
-        with pytest.raises(FinancialServicesRegisterApiRequestException):
-            await test_client._search_ref_number("a nonexistent fund", "fund")
+            await test_client._search_ref_number("nonexistent123 search string potato", resource_type)
 
     @pytest.mark.asyncio
     async def test_search_ref_number_returns_multiple_matches(self, test_client):

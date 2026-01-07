@@ -24,9 +24,18 @@ async def test_session(test_api_username, test_api_key):
 
 
 @pytest_asyncio.fixture
-async def test_client(test_api_username, test_api_key, caching_session_subclass, test_resources_path):
+async def test_client(test_api_username, test_api_key, cache_reading_session_subclass, test_resources_path):
     client = FinancialServicesRegisterApiClient(
-        caching_session_subclass(test_api_username, test_api_key, cache_dir=test_resources_path)
+        cache_reading_session_subclass(test_api_username, test_api_key, cache_dir=test_resources_path)
     )
     yield client
     await client.api_session.aclose()
+
+
+# @pytest_asyncio.fixture
+# async def test_client(test_api_username, test_api_key, cache_writing_session_subclass, test_resources_path):
+#     client = FinancialServicesRegisterApiClient(
+#         cache_writing_session_subclass(test_api_username, test_api_key, cache_dir=test_resources_path)
+#     )
+#     yield client
+#     await client.api_session.aclose()
