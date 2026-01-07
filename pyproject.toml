@@ -26,13 +26,14 @@ requires-python = ">=3.11"
 license = {file = "LICENSE"}
 
 dependencies = [
-    "requests",
+    "httpx>=0.28.1",
 ]
 
 readme = "README.md"
 
 keywords = [
     "financial conduct authority",
+    "FCA",
     "financial data",
     "financial regulation",
     "financial services register",
@@ -60,8 +61,6 @@ classifiers = [
 user = [
     "jupyter",
 ]
-
-[project.scripts]
 
 [build-system]
 requires = ["pdm-backend"]
