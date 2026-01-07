@@ -1,8 +1,5 @@
 # -- IMPORTS --
 
-# -- Standard libraries --
-import unittest.mock as mock
-
 # -- 3rd party libraries --
 import pytest
 import httpx
@@ -26,64 +23,64 @@ class TestSearchFunctionality:
 
     @pytest.mark.asyncio
     async def test_financial_services_register_api_client___search_ref_number__exceptional_request__api_request_exception_raised(
-        self, test_client
+        self, test_client, mocker
     ):
-        with mock.patch(
+        mock_api_session_get = mocker.patch(
             "financial_services_register_api.api.FinancialServicesRegisterApiSession.get"
-        ) as mock_api_session_get:
-            mock_api_session_get.side_effect = httpx.RequestError("test RequestError")
+        )
+        mock_api_session_get.side_effect = httpx.RequestError("test RequestError")
 
-            with pytest.raises(FinancialServicesRegisterApiRequestException):
-                await test_client._search_ref_number("exceptional search", "firm")
-                await test_client._search_ref_number("exceptional search", "individual")
-                await test_client._search_ref_number("exceptional search", "fund")
+        with pytest.raises(FinancialServicesRegisterApiRequestException):
+            await test_client._search_ref_number("exceptional search", "firm")
+            await test_client._search_ref_number("exceptional search", "individual")
+            await test_client._search_ref_number("exceptional search", "fund")
 
     @pytest.mark.asyncio
     async def test_financial_services_register_api_client___search_ref_number__response_not_ok__api_request_exception_raised(
-        self, test_client
+        self, test_client, mocker
     ):
-        with mock.patch(
+        mocker.patch(
             "financial_services_register_api.api.FinancialServicesRegisterApiClient.common_search",
-            return_value=mock.MagicMock(ok=False),
-        ):
-            with pytest.raises(FinancialServicesRegisterApiRequestException):
-                await test_client._search_ref_number("exceptional search", "firm")
-                await test_client._search_ref_number("exceptional search", "individual")
-                await test_client._search_ref_number("exceptional search", "fund")
+            return_value=mocker.MagicMock(ok=False),
+        )
+        with pytest.raises(FinancialServicesRegisterApiRequestException):
+            await test_client._search_ref_number("exceptional search", "firm")
+            await test_client._search_ref_number("exceptional search", "individual")
+            await test_client._search_ref_number("exceptional search", "fund")
 
     @pytest.mark.asyncio
     async def test_financial_services_register_api_client___search_ref_number__no_fs_register_data_in_response__api_request_exception_raised(
-        self, test_client
+        self, test_client, mocker
     ):
-        with mock.patch(
+        mock_api_session_get = mocker.patch(
             "financial_services_register_api.api.FinancialServicesRegisterApiSession.get"
-        ) as mock_api_session_get:
-            mock_response = mock.create_autospec(httpx.Response)
-            mock_response.json = mock.MagicMock(name="json", return_value=dict())
-            mock_api_session_get.return_value = mock_response
+        )
+        mock_response = mocker.create_autospec(httpx.Response)
+        mock_response.json = mocker.MagicMock(name="json", return_value=dict())
+        mock_api_session_get.return_value = mock_response
 
-            with pytest.raises(FinancialServicesRegisterApiRequestException):
-                await test_client._search_ref_number("bad search", "firm")
-                await test_client._search_ref_number("bad search", "individual")
-                await test_client._search_ref_number("bad search", "fund")
+        with pytest.raises(FinancialServicesRegisterApiRequestException):
+            await test_client._search_ref_number("bad search", "firm")
+            await test_client._search_ref_number("bad search", "individual")
+            await test_client._search_ref_number("bad search", "fund")
 
     @pytest.mark.asyncio
     async def test_financial_services_register_api_client___search_ref_number__fs_register_data_with_key_error__api_request_exception_raised(
-        self, test_client
+        self, test_client, mocker
     ):
-        with mock.patch(
+        mock_api_session_get = mocker.patch(
             "financial_services_register_api.api.FinancialServicesRegisterApiSession.get"
-        ) as mock_api_session_get:
-            mock_response = mock.create_autospec(httpx.Response)
-            mock_response.json = mock.MagicMock(
-                name="json", return_value={"Data": [{"not a Reference Number": None}]}
-            )
-            mock_api_session_get.return_value = mock_response
+        )
+        mock_response = mocker.create_autospec(httpx.Response)
+        mock_response.json = mocker.MagicMock(
+            name="json", return_value={"Data": [{"not a Reference Number": None}]}
+        )
+        mock_api_session_get.return_value = mock_response
 
-            with pytest.raises(FinancialServicesRegisterApiResponseException):
-                await test_client._search_ref_number("bad response", "firm")
-                await test_client._search_ref_number("bad response", "individual")
-                await test_client._search_ref_number("bad response", "fund")
+        with pytest.raises(FinancialServicesRegisterApiResponseException):
+            await test_client._search_ref_number("bad response", "firm")
+            await test_client._search_ref_number("bad response", "individual")
+            await test_client._search_ref_number("bad response", "fund")
 
     @pytest.mark.asyncio
     async def test_financial_services_register_api_client___search_ref_number__incorrectly_specified_resource__no_fs_register_data__api_response_exception_raised(

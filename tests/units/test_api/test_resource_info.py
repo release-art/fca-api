@@ -1,8 +1,5 @@
 # -- IMPORTS --
 
-# -- Standard libraries --
-import unittest.mock as mock
-
 # -- 3rd party libraries --
 import pytest
 import httpx
@@ -39,52 +36,52 @@ class TestResourceInfoFunctionality:
 
     @pytest.mark.asyncio
     async def test_financial_services_register_api_client___get_resource_info__no_modifiers__request_exception_raised(
-        self, test_client
+        self, test_client, mocker
     ):
-        with mock.patch(
+        mock_api_session_get = mocker.patch(
             "financial_services_register_api.api.FinancialServicesRegisterApiSession.get"
-        ) as mock_api_session_get:
-            mock_api_session_get.side_effect = httpx.RequestError("test RequestError")
+        )
+        mock_api_session_get.side_effect = httpx.RequestError("test RequestError")
 
-            with pytest.raises(FinancialServicesRegisterApiRequestException):
-                await test_client._get_resource_info("test_frn", "firm")
-                await test_client._get_resource_info("test_prn", "fund")
-                await test_client._get_resource_info("test_irn", "individual")
+        with pytest.raises(FinancialServicesRegisterApiRequestException):
+            await test_client._get_resource_info("test_frn", "firm")
+            await test_client._get_resource_info("test_prn", "fund")
+            await test_client._get_resource_info("test_irn", "individual")
 
     @pytest.mark.asyncio
     async def test_financial_services_register_api_client___get_resource_info__modifiers__request_exception_raised(
-        self, test_client
+        self, test_client, mocker
     ):
-        with mock.patch(
+        mock_api_session_get = mocker.patch(
             "financial_services_register_api.api.FinancialServicesRegisterApiSession.get"
-        ) as mock_api_session_get:
-            mock_api_session_get.side_effect = httpx.RequestError("test RequestError")
+        )
+        mock_api_session_get.side_effect = httpx.RequestError("test RequestError")
 
-            with pytest.raises(FinancialServicesRegisterApiRequestException):
-                await test_client._get_resource_info(
-                    "test_frn",
-                    "firm",
-                    modifiers=(
-                        "test_modifier1",
-                        "test_modifier2",
-                    ),
-                )
-                await test_client._get_resource_info(
-                    "test_prn",
-                    "fund",
-                    modifiers=(
-                        "test_modifier1",
-                        "test_modifier2",
-                    ),
-                )
-                await test_client._get_resource_info(
-                    "test_irn",
-                    "individual",
-                    modifiers=(
-                        "test_modifier1",
-                        "test_modifier2",
-                    ),
-                )
+        with pytest.raises(FinancialServicesRegisterApiRequestException):
+            await test_client._get_resource_info(
+                "test_frn",
+                "firm",
+                modifiers=(
+                    "test_modifier1",
+                    "test_modifier2",
+                ),
+            )
+            await test_client._get_resource_info(
+                "test_prn",
+                "fund",
+                modifiers=(
+                    "test_modifier1",
+                    "test_modifier2",
+                ),
+            )
+            await test_client._get_resource_info(
+                "test_irn",
+                "individual",
+                modifiers=(
+                    "test_modifier1",
+                    "test_modifier2",
+                ),
+            )
 
     @pytest.mark.asyncio
     async def test_financial_services_register_api_client___get_resource_info__firm(

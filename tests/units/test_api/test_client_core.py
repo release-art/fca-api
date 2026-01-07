@@ -1,8 +1,5 @@
 # -- IMPORTS --
 
-# -- Standard libraries --
-import unittest.mock as mock
-
 # -- 3rd party libraries --
 import pytest
 import httpx
@@ -32,15 +29,15 @@ class TestFinancialServicesRegisterApiClientCore:
 
     @pytest.mark.asyncio
     async def test_financial_services_register_api_client__common_search__api_request_exception_raised(
-        self, test_client
+        self, test_client, mocker
     ):
-        with mock.patch(
+        mock_api_session_get = mocker.patch(
             "financial_services_register_api.api.FinancialServicesRegisterApiSession.get"
-        ) as mock_api_session_get:
-            mock_api_session_get.side_effect = httpx.RequestError("test RequestError")
+        )
+        mock_api_session_get.side_effect = httpx.RequestError("test RequestError")
 
-            with pytest.raises(FinancialServicesRegisterApiRequestException):
-                await test_client.common_search("exceptional resource", "firm")
+        with pytest.raises(FinancialServicesRegisterApiRequestException):
+            await test_client.common_search("exceptional resource", "firm")
 
     @pytest.mark.asyncio
     async def test_financial_services_register_api_client__common_search__no_api_request_exception(
