@@ -5,7 +5,7 @@
 groups = ["default", "build", "dev", "docs", "lint", "test", "user"]
 strategy = ["inherit_metadata"]
 lock_version = "4.5.0"
-content_hash = "sha256:dd9a7deeeee10a32fb001c4a9b1de5cada16e0f947fc25ca5cbd42343839bb4e"
+content_hash = "sha256:b83c1e351f2d6e6c2802f239256e8e5f732148fd7e6cc3c2b6fc218b89991988"
 
 [[metadata.targets]]
 requires_python = ">=3.11"
@@ -3241,6 +3241,22 @@ files = [
 ]
 
 [[package]]
+name = "sphinx-rtd-theme"
+version = "3.0.2"
+requires_python = ">=3.8"
+summary = "Read the Docs theme for Sphinx"
+groups = ["docs"]
+dependencies = [
+    "docutils<0.22,>0.18",
+    "sphinx<9,>=6",
+    "sphinxcontrib-jquery<5,>=4",
+]
+files = [
+    {file = "sphinx_rtd_theme-3.0.2-py2.py3-none-any.whl", hash = "sha256:422ccc750c3a3a311de4ae327e82affdaf59eb695ba4936538552f3b00f4ee13"},
+    {file = "sphinx_rtd_theme-3.0.2.tar.gz", hash = "sha256:b7457bc25dda723b20b086a670b9953c859eab60a2a03ee8eb2bb23e176e5f85"},
+]
+
+[[package]]
 name = "sphinxcontrib-applehelp"
 version = "2.0.0"
 requires_python = ">=3.9"
@@ -3271,6 +3287,20 @@ groups = ["docs"]
 files = [
     {file = "sphinxcontrib_htmlhelp-2.1.0-py3-none-any.whl", hash = "sha256:166759820b47002d22914d64a075ce08f4c46818e17cfc9470a9786b759b19f8"},
     {file = "sphinxcontrib_htmlhelp-2.1.0.tar.gz", hash = "sha256:c9e2916ace8aad64cc13a0d233ee22317f2b9025b9cf3295249fa985cc7082e9"},
+]
+
+[[package]]
+name = "sphinxcontrib-jquery"
+version = "4.1"
+requires_python = ">=2.7"
+summary = "Extension to include jQuery on newer Sphinx releases"
+groups = ["docs"]
+dependencies = [
+    "Sphinx>=1.8",
+]
+files = [
+    {file = "sphinxcontrib-jquery-4.1.tar.gz", hash = "sha256:1620739f04e36a2c779f1a131a2dfd49b2fd07351bf1968ced074365933abc7a"},
+    {file = "sphinxcontrib_jquery-4.1-py2.py3-none-any.whl", hash = "sha256:f936030d7d0147dd026a4f2b5a57343d233f1fc7b363f68b3d4f1cb0993878ae"},
 ]
 
 [[package]]
