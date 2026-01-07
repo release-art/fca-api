@@ -42,17 +42,13 @@ class TestSearchFunctionality:
 
     @pytest.mark.asyncio
     @pytest.mark.parametrize("resource_type", ["firm", "individual", "fund"])
-    async def test_financial_services_register_api_client___search_ref_number__no_fs_register_data_in_response__api_request_exception_raised(
-        self, test_client, resource_type
-    ):
+    async def test_search_raises_on_empty_response(self, test_client, resource_type):
         with pytest.raises(FinancialServicesRegisterApiRequestException):
             await test_client._search_ref_number("bad search", resource_type)
 
     @pytest.mark.asyncio
     @pytest.mark.parametrize("resource_type", ["firm", "individual", "fund"])
-    async def test_financial_services_register_api_client___search_ref_number__fs_register_data_with_key_error__api_request_exception_raised(
-        self, test_client, mocker, resource_type
-    ):
+    async def test_search_raises_on_malformed_response(self, test_client, mocker, resource_type):
         # mock_api_session_get = mocker.patch.object(
         #     test_client._api_session, "get"
         # )
@@ -163,7 +159,6 @@ class TestSearchFunctionality:
     async def test_search_irn_returns_unique_individual(self, test_client, search_value, return_type):
         # Covers the case of a successful IRN search for existing, unique individuals
         recv_irn = await test_client.search_irn(search_value)
-        print(recv_irn)
         assert isinstance(recv_irn, return_type)
         assert recv_irn
 

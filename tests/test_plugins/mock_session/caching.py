@@ -79,7 +79,7 @@ class CachingFinancialServicesRegisterApiSession(FinancialServicesRegisterApiSes
                 },
             }
 
-            with open(cache_file, "w") as f:
+            with cache_file.open("w") as f:
                 json.dump(cache_data, f, indent=2)
 
         except Exception:

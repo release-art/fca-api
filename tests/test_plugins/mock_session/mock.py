@@ -85,7 +85,7 @@ class MockFinancialServicesRegisterApiSession(FinancialServicesRegisterApiSessio
             )
 
         # Load cached response data
-        with open(cache_file) as f:
+        with cache_file.open("r") as f:
             cache_data = json.load(f)
 
         # Create a mock HTTP response
