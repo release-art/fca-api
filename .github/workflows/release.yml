@@ -38,6 +38,10 @@ jobs:
     needs: publish
     runs-on: ubuntu-latest
     # Bump version in the PR that targets the "main" branch
+    permissions:
+      # Give the default GITHUB_TOKEN write permission to commit and push the
+      # added or changed files to the repository.
+      contents: write
     steps:
       - uses: actions/checkout@v6
         with:
