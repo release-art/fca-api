@@ -9,7 +9,7 @@ from typing import Any
 
 import httpx
 
-from financial_services_register_api.api import FinancialServicesRegisterApiSession
+from fca_api.api import FinancialServicesRegisterApiSession
 
 from . import cache_filename
 

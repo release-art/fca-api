@@ -18,10 +18,10 @@ from urllib.parse import urlencode
 import httpx
 
 # -- Internal libraries --
-from financial_services_register_api.const import (
+from fca_api.const import (
     FINANCIAL_SERVICES_REGISTER_API_CONSTANTS as API_CONSTANTS,
 )
-from financial_services_register_api.exc import (
+from fca_api.exc import (
     FinancialServicesRegisterApiRequestError,
     FinancialServicesRegisterApiResponseError,
 )

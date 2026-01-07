@@ -8,15 +8,16 @@
 #
 #     https://packaging.python.org/en/latest/tutorials/packaging-projects/
 #
-name = "financial-services-register-api"
-description = "Python client library for the UK Financial Services Register RESTful API"
+name = "fca-api"
+description = "Python client library for the UK Financial Services (FCA) Register RESTful API"
 
 authors = [
+    {name = "I. Orlovs", email = "ilja@release.art"},
     {name = "S. R. Murthy", email = "s.murthy@tutanota.com"},
 ]
 
 maintainers = [
-  {name = "S. R. Murthy", email = "s.murthy@tutanota.com"}
+  {name = "I. Orlovs", email = "ilja@release.art"}
 ]
 
 dynamic = ["version"]

@@ -5,7 +5,7 @@ import httpx
 import pytest
 
 # -- Internal libraries --
-from financial_services_register_api.exc import (
+from fca_api.exc import (
     FinancialServicesRegisterApiRequestError,
     FinancialServicesRegisterApiResponseError,
 )
@@ -31,7 +31,7 @@ class TestSearchFunctionality:
     @pytest.mark.asyncio
     async def test_search_ref_number_raises_on_bad_response(self, test_client, mocker):
         mocker.patch(
-            "financial_services_register_api.api.FinancialServicesRegisterApiClient.common_search",
+            "fca_api.api.FinancialServicesRegisterApiClient.common_search",
             return_value=mocker.MagicMock(ok=False),
         )
         with pytest.raises(FinancialServicesRegisterApiRequestError):

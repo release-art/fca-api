@@ -3,7 +3,7 @@ import pathlib
 import pytest
 import pytest_asyncio
 
-from financial_services_register_api.api import (
+from fca_api.api import (
     FinancialServicesRegisterApiClient,
     FinancialServicesRegisterApiSession,
 )
