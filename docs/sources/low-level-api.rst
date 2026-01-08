@@ -1,9 +1,5 @@
-.. meta::
-
-   :google-site-verification: 3F2Jbz15v4TUv5j0vDJAA-mSyHmYIJq0okBoro3-WMY
-
 =================================================
-Understanding the Financial Services Register API
+Understanding the HTTP API
 =================================================
 
 The package functionality reflects the current version (``V0.1``) of the `Financial Services Register <https://www.fca.org.uk/firms/financial-services-register>`_ `API <https://register.fca.org.uk/Developer/s/>`_. The API is documented but access requires registration.

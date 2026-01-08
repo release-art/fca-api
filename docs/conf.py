@@ -1,48 +1,42 @@
-# -- IMPORTS --
-
-# -- Standard libraries --
-import importlib
-import json
-import os
 import sys
+import pathlib
+import tomllib
 
 from datetime import datetime
 
-# -- 3rd party libraries --
-
-# -- Internal libraries --
-
-
-# Configuration file for the Sphinx documentation builder.
-#
-# For the full list of built-in configuration values, see the documentation:
-# https://www.sphinx-doc.org/en/master/usage/configuration.html
 
 # -- Path setup --------------------------------------------------------------
+
+THIS_DIR = pathlib.Path(__file__).parent.resolve()
+PROJECT_ROOT = THIS_DIR.parent.resolve()
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
-sys.path.insert(0, os.path.abspath('.'))
-sys.path.insert(0, os.path.dirname(os.path.abspath('.')))
-sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath('.')), 'src'))
+for path in (THIS_DIR, PROJECT_ROOT, PROJECT_ROOT / 'src'):
+    sys.path.insert(0, str(path.resolve()))
 
 import fca_api
 from fca_api.__version__ import __version__
 
+with open(PROJECT_ROOT / 'pyproject.toml', 'rb') as f:
+    pyproject_data = tomllib.load(f)
+
+# import pprint
+# pprint.pprint(pyproject_data)
+
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-author = 'S. R. Murthy'
-copyright = f'S. R. Murthy, {datetime.now().year}'
-description = """
-              Lightweight Python client for the UK Financial Services Register RESTful API.
-              """
+author = pyproject_data['project']['authors'][0]['name']
+copyright = f'{author}, {datetime.now().year}'
+description = pyproject_data['project']['description']
 github_url = 'https://github.com'
-github_repo = f'{github_url}/sr-murty/financial-services-register-api'
+github_repo = pyproject_data['project']['urls']['Repository']
 github_version = 'main'
-pypi_project = 'https://pypi.org/project/financial-services-register-api/'
+
+pypi_project = 'https://pypi.org/project/fca-api/'
 project = fca_api.__name__
 release = __version__
 
@@ -65,12 +59,12 @@ primary_domain = None
 rst_epilog = f"""
 .. |author|                 replace:: **{author}**
 .. |copyright|              replace:: **{copyright}**
-.. |docs_url|               replace:: ''
+.. |docs_url|               replace:: { pyproject_data['project']['urls']['Documentation'] }
 .. |project|                replace:: **{project}**
 .. |project_description|    replace:: {description}
 .. |release|                replace:: **{release}**
-.. |github_release_target|  replace:: https://github.com/sr-murthy/financial-services-register-api/releases/tag/{release}
-.. |pypi_release_target|    replace:: https://pypi.org/project/financial-services-register-api/{release}
+.. |github_release_target|  replace:: https://github.com/release-art/fca-api/releases/tag/{release}
+.. |pypi_release_target|    replace:: https://pypi.org/project/fca-api/{release}
 """
 
 # Publish author(s)
@@ -78,28 +72,23 @@ show_authors = True
 
 # Sphinx extensions: not all of these are used or required, but they are still
 # listed here if requirements change.
-extensions = ['jupyter_sphinx',
-              'matplotlib.sphinxext.plot_directive',
-              'myst_parser',
-              'nb2plots',
-              'numpydoc',
-              'sphinx.ext.autodoc',
-              #'sphinx.ext.autosectionlabel',
-              #'sphinx.ext.autosummary',
-              'sphinx.ext.coverage',
-              'sphinx.ext.doctest',
-              'sphinx.ext.duration',
-              'sphinx.ext.extlinks',
-              'sphinx.ext.graphviz',
-              'sphinx.ext.inheritance_diagram',
-              'sphinx.ext.intersphinx',
-              #'sphinx.ext.linkcode',
-              'sphinx.ext.mathjax',
-              'sphinx.ext.napoleon',
-              'sphinx.ext.todo',
-              'sphinx.ext.viewcode',
-              'sphinx_copybutton',
-              'sphinx_design',]
+extensions = [
+    'myst_parser',
+    'sphinx.ext.autodoc',
+    'sphinx.ext.coverage',
+    'sphinx.ext.doctest',
+    'sphinx.ext.duration',
+    'sphinx.ext.extlinks',
+    'sphinx.ext.graphviz',
+    'sphinx.ext.inheritance_diagram',
+    'sphinx.ext.intersphinx',
+    'sphinx.ext.mathjax',
+    'sphinx.ext.napoleon',
+    'sphinx.ext.todo',
+    'sphinx.ext.viewcode',
+    'sphinx_copybutton',
+    'sphinx_design',
+]
 
 # Autodoc settings -
 #     For more on all available autodoc defaults see
@@ -113,13 +102,6 @@ autodoc_default_options = {
 
 # Sphinx autodoc autosummary settings
 autosummary_generate = False
-
-# Numpydoc settings
-numpydoc_show_class_members = True
-numpydoc_show_inherited_class_members = False
-numpydoc_class_members_toctree = False
-numpydoc_attributes_as_param_list = False
-numpydoc_xref_param_type = False
 
 # Intersphinx mappings to reference external documentation domains - none required.
 intersphinx_mapping = {}
@@ -144,9 +126,9 @@ exclude_patterns = ['_build',
 pygments_style = 'sphinx'
 
 # A list of prefixes that are ignored when creating the module index. (new in Sphinx 0.6)
-modindex_common_prefix = ["financial_services_register_api."]
+modindex_common_prefix = ["fca_api."]
 
-doctest_global_setup = "import financial_services_register_api"
+doctest_global_setup = "import fca_api"
 
 # If this is True, the ``todo`` and ``todolist`` extension directives
 # produce output, else they produce nothing. The default is ``False``.
@@ -158,29 +140,42 @@ todo_include_todos = True
 html_context = {
     'authors': author,
     'copyright': copyright,
-    'default_mode': 'dark',
-    'display_github': True,
-    'github_url': 'https://github.com',
-    'github_user': 'sr-murthy',
-    'github_repo': 'financial-services-register-api',
-    'github_version': 'main',
-    'doc_path': 'docs',
-    'conf_path': 'docs/conf.py',
+    'default_mode': 'auto',
+    'doc_path': 'doc',
+    'conf_path': 'doc/conf.py',
     'project': project,
     'project_description': description,
     'release': release,
-    'release_target': f'https://github.com/sr-murthy/financial-services-register-api/releases/tag/{release}'
 }
 
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
 # General (non-theme) HTML output options
-html_baseurl = 'https://financial-services-register-api.readthedocs.io'
+html_baseurl = 'https://docs.release.art/fca-api/'
 
 # HTML theme options
-html_theme = 'furo'
-html_theme_options = {}
+html_theme = 'pydata_sphinx_theme'
+html_theme_options = {
+    "icon_links": [
+        {
+            # Label for this link
+            "name": "GitHub",
+            # URL where the link will redirect
+            "url": github_repo,  # required
+            # Icon class (if "type": "fontawesome"), or path to local image (if "type": "local")
+            "icon": "fa-brands fa-github",
+            # The type of image to be used (see below for details)
+            "type": "fontawesome",
+        },
+        {
+            "name": "PyPI",
+            "url": pypi_project,
+            "icon": "fa-brands fa-python",
+            "type": "fontawesome",
+        }
+   ]
+}
 
 #html_logo = '_static/logo.png'
 
@@ -194,7 +189,7 @@ html_static_path = ['_static']
 #     https://sphinx-design.readthedocs.io/en/latest/badges_buttons.html#fontawesome-icons
 #
 html_css_files = [
-    'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css',
+    'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css',
 ]
 
 # Timestamp format for the last page updated time
@@ -207,4 +202,4 @@ html_show_sourcelink = True
 html_copy_source = True
 
 # Output file base name for HTML help builder - use the project name
-htmlhelp_basename = 'financial-services-register-api'
+htmlhelp_basename = 'fca-api'
