@@ -69,7 +69,7 @@ build-backend = "pdm.backend"
 [project.urls]
 Homepage = "https://docs.release.art/fca-api/"
 Documentation = "https://docs.release.art/fca-api/"
-Repository = "https://github.com/release-art/fca-api
+Repository = "https://github.com/release-art/fca-api"
 
 # For working with PDM, including configuration and usage see:
 #
