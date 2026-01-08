@@ -4,6 +4,7 @@ __all__ = [
 ]
 
 
+import contextlib
 import typing
 from typing import Literal, Union
 from urllib.parse import urlencode
@@ -16,6 +17,14 @@ from fca_api.const import (
 from fca_api.exc import (
     FinancialServicesRegisterApiRequestError,
 )
+
+
+@contextlib.asynccontextmanager
+async def _noop_limiter() -> typing.AsyncGenerator[None, None]:
+    yield None
+
+
+LimiterContextT = typing.Callable[[], typing.AsyncContextManager[None]]
 
 
 class FinancialServicesRegisterApiResponse(httpx.Response):
@@ -98,6 +107,7 @@ class FinancialServicesRegisterApiClient:
 
     #: All instances must have this private attribute to store API session state
     _api_session: httpx.AsyncClient
+    _api_limiter: LimiterContextT
 
     def __init__(
         self,
@@ -105,6 +115,7 @@ class FinancialServicesRegisterApiClient:
             typing.Tuple[str, str],
             httpx.AsyncClient,
         ],
+        api_limiter: typing.Optional[LimiterContextT] = None,
     ) -> None:
         """Initialiser accepting either API credentials or a pre-configured
         session.
@@ -116,6 +127,12 @@ class FinancialServicesRegisterApiClient:
                 Supports two forms:
                 1. A tuple of (api_username: str, api_key: str)
                 2. An instance of httpx.Client (with correct headers set)
+            api_limiter: Function returning async context, optional
+                An optional asynchronous callable to be used as a rate limiter
+                for API calls. If not provided, no rate limiting is applied.
+
+                Suggested package:
+                    https://pypi.org/project/asyncio-throttle/
         """
         if isinstance(credentials, httpx.AsyncClient):
             self._api_session = credentials
@@ -134,6 +151,10 @@ class FinancialServicesRegisterApiClient:
                 "or an instance of httpx.AsyncClient."
                 f"Got {type(credentials)} instead."
             )
+        if api_limiter is None:
+            self._api_limiter = _noop_limiter
+        else:
+            self._api_limiter = api_limiter
 
     @property
     def api_session(self) -> httpx.AsyncClient:
@@ -204,7 +225,8 @@ class FinancialServicesRegisterApiClient:
         search_str = urlencode({"q": resource_name, "type": resource_type})
         url = f"{API_CONSTANTS.BASEURL.value}/Search?{search_str}"
         try:
-            response = await self.api_session.get(url)
+            async with self._api_limiter():
+                response = await self.api_session.get(url)
             return FinancialServicesRegisterApiResponse(response)
         except httpx.RequestError as e:
             raise FinancialServicesRegisterApiRequestError(e) from None
@@ -403,7 +425,8 @@ class FinancialServicesRegisterApiClient:
             url += f"/{'/'.join(modifiers)}"
 
         try:
-            response = await self.api_session.get(url)
+            async with self._api_limiter():
+                response = await self.api_session.get(url)
             return FinancialServicesRegisterApiResponse(response)
         except httpx.RequestError as e:
             raise FinancialServicesRegisterApiRequestError(e) from None
@@ -1138,5 +1161,6 @@ class FinancialServicesRegisterApiClient:
         """
         url = f"{API_CONSTANTS.BASEURL.value}/CommonSearch?{urlencode({'q': 'RM'})}"
 
-        response = await self.api_session.get(url)
+        async with self._api_limiter():
+            response = await self.api_session.get(url)
         return FinancialServicesRegisterApiResponse(response)
