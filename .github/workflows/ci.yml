@@ -24,8 +24,8 @@ jobs:
   test:
     env:
       PYTHONDEVMODE: 1
-      API_USERNAME: ${{ secrets.API_USERNAME }}
-      API_KEY: ${{ secrets.API_KEY }}
+      PDM_IGNORE_SAVED_PYTHON: 1
+      PDM_NON_INTERACTIVE: 1
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
