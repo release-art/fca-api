@@ -26,12 +26,17 @@ jobs:
           pdm install -G docs
       - name: Sphinx build
         run: |
-          pdm run sphinx-build docs _sphinx_build
-      - name: Deploy Docs to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
+          pdm run doc
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./_sphinx_build
+          # Upload entire repository
+          path: './dist/docs/html'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
   publish:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest

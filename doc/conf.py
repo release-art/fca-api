@@ -78,28 +78,23 @@ show_authors = True
 
 # Sphinx extensions: not all of these are used or required, but they are still
 # listed here if requirements change.
-extensions = ['jupyter_sphinx',
-              'matplotlib.sphinxext.plot_directive',
-              'myst_parser',
-              'nb2plots',
-              'numpydoc',
-              'sphinx.ext.autodoc',
-              #'sphinx.ext.autosectionlabel',
-              #'sphinx.ext.autosummary',
-              'sphinx.ext.coverage',
-              'sphinx.ext.doctest',
-              'sphinx.ext.duration',
-              'sphinx.ext.extlinks',
-              'sphinx.ext.graphviz',
-              'sphinx.ext.inheritance_diagram',
-              'sphinx.ext.intersphinx',
-              #'sphinx.ext.linkcode',
-              'sphinx.ext.mathjax',
-              'sphinx.ext.napoleon',
-              'sphinx.ext.todo',
-              'sphinx.ext.viewcode',
-              'sphinx_copybutton',
-              'sphinx_design',]
+extensions = [
+    'myst_parser',
+    'sphinx.ext.autodoc',
+    'sphinx.ext.coverage',
+    'sphinx.ext.doctest',
+    'sphinx.ext.duration',
+    'sphinx.ext.extlinks',
+    'sphinx.ext.graphviz',
+    'sphinx.ext.inheritance_diagram',
+    'sphinx.ext.intersphinx',
+    'sphinx.ext.mathjax',
+    'sphinx.ext.napoleon',
+    'sphinx.ext.todo',
+    'sphinx.ext.viewcode',
+    'sphinx_copybutton',
+    'sphinx_design',
+]
 
 # Autodoc settings -
 #     For more on all available autodoc defaults see
@@ -161,15 +156,15 @@ html_context = {
     'default_mode': 'dark',
     'display_github': True,
     'github_url': 'https://github.com',
-    'github_user': 'sr-murthy',
-    'github_repo': 'financial-services-register-api',
+    'github_user': 'release-art',
+    'github_repo': 'fca-api',
     'github_version': 'main',
-    'doc_path': 'docs',
-    'conf_path': 'docs/conf.py',
+    'doc_path': 'doc',
+    'conf_path': 'doc/conf.py',
     'project': project,
     'project_description': description,
     'release': release,
-    'release_target': f'https://github.com/sr-murthy/financial-services-register-api/releases/tag/{release}'
+    'release_target': f'https://github.com/release-art/fca-api/releases/tag/{release}'
 }
 
 # -- Options for HTML output -------------------------------------------------
@@ -179,7 +174,7 @@ html_context = {
 html_baseurl = 'https://financial-services-register-api.readthedocs.io'
 
 # HTML theme options
-html_theme = 'furo'
+html_theme = 'sphinx_rtd_theme'
 html_theme_options = {}
 
 #html_logo = '_static/logo.png'
