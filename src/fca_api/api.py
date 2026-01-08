@@ -98,6 +98,7 @@ class FinancialServicesRegisterApiClient:
 
     #: All instances must have this private attribute to store API session state
     _api_session: httpx.AsyncClient
+    _api_limiter: typing.Callable[[], typing.Awaitable[None]]
 
     def __init__(
         self,
@@ -105,6 +106,7 @@ class FinancialServicesRegisterApiClient:
             typing.Tuple[str, str],
             httpx.AsyncClient,
         ],
+        api_limiter: typing.Optional[typing.Callable[[], typing.Awaitable[None]]] = None,
     ) -> None:
         """Initialiser accepting either API credentials or a pre-configured
         session.
@@ -116,6 +118,9 @@ class FinancialServicesRegisterApiClient:
                 Supports two forms:
                 1. A tuple of (api_username: str, api_key: str)
                 2. An instance of httpx.Client (with correct headers set)
+            api_limiter: Callable, optional
+                An optional asynchronous callable to be used as a rate limiter
+                for API calls. If not provided, no rate limiting is applied.
         """
         if isinstance(credentials, httpx.AsyncClient):
             self._api_session = credentials
@@ -134,6 +139,14 @@ class FinancialServicesRegisterApiClient:
                 "or an instance of httpx.AsyncClient."
                 f"Got {type(credentials)} instead."
             )
+        if api_limiter is None:
+
+            async def noop_limiter() -> None:
+                return None
+
+            self._api_limiter = noop_limiter
+        else:
+            self._api_limiter = api_limiter
 
     @property
     def api_session(self) -> httpx.AsyncClient:
@@ -204,6 +217,7 @@ class FinancialServicesRegisterApiClient:
         search_str = urlencode({"q": resource_name, "type": resource_type})
         url = f"{API_CONSTANTS.BASEURL.value}/Search?{search_str}"
         try:
+            await self._api_limiter()
             response = await self.api_session.get(url)
             return FinancialServicesRegisterApiResponse(response)
         except httpx.RequestError as e:
@@ -403,6 +417,7 @@ class FinancialServicesRegisterApiClient:
             url += f"/{'/'.join(modifiers)}"
 
         try:
+            await self._api_limiter()
             response = await self.api_session.get(url)
             return FinancialServicesRegisterApiResponse(response)
         except httpx.RequestError as e:
@@ -1138,5 +1153,6 @@ class FinancialServicesRegisterApiClient:
         """
         url = f"{API_CONSTANTS.BASEURL.value}/CommonSearch?{urlencode({'q': 'RM'})}"
 
+        await self._api_limiter()
         response = await self.api_session.get(url)
         return FinancialServicesRegisterApiResponse(response)
