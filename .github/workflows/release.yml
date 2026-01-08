@@ -82,6 +82,7 @@ jobs:
           private-key: ${{ secrets.RELEASE_ART_WORKFLOW_APP_PK }}
       - uses: actions/checkout@v6
         with:
+          token: ${{ steps.app-token.outputs.token }}
           persist-credentials: true
       - name: Set up Python
         uses: actions/setup-python@v6
@@ -94,6 +95,5 @@ jobs:
           pdm bump patch
       - uses: stefanzweifel/git-auto-commit-action@v7
         with:
-          token: ${{ steps.app-token.outputs.token }}
           commit_message: "Bump version for next release"
           create_branch: false
