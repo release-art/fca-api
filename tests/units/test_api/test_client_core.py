@@ -23,6 +23,14 @@ class TestFinancialServicesRegisterApiClientCore:
         assert test_client.api_version == API_CONSTANTS.API_VERSION.value
 
     @pytest.mark.asyncio
+    async def test_client_init_incorrect(self):
+        with pytest.raises(ValueError):
+            fca_api.api.FinancialServicesRegisterApiClient(credentials=None)
+
+        with pytest.raises(ValueError):
+            fca_api.api.FinancialServicesRegisterApiClient(credentials=("only_username",))
+
+    @pytest.mark.asyncio
     async def test_common_search_raises_on_request_error(self, test_client, mocker):
         mock_api_session_get = mocker.patch.object(test_client._api_session, "get")
         mock_api_session_get.side_effect = httpx.RequestError("test RequestError")

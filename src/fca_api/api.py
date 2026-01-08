@@ -15,7 +15,6 @@ from fca_api.const import (
 )
 from fca_api.exc import (
     FinancialServicesRegisterApiRequestError,
-    FinancialServicesRegisterApiResponseError,
 )
 
 
@@ -210,7 +209,7 @@ class FinancialServicesRegisterApiClient:
         except httpx.RequestError as e:
             raise FinancialServicesRegisterApiRequestError(e) from None
 
-    async def _search_ref_number(self, resource_name: str, resource_type: str, /) -> str | list[dict[str, str]]:
+    async def _search_ref_number(self, resource_name: str, resource_type: str, /) -> list[dict[str, str]]:
         """:py:class:`str` or :py:class:`list`: A private base handler for
         public search methods for unique firm, individual and product reference
         numbers.
@@ -273,18 +272,7 @@ class FinancialServicesRegisterApiClient:
             raise
 
         if res.ok and res.data:
-            if len(res.data) == 1:
-                try:
-                    return res.data[0]["Reference Number"]
-                except KeyError:
-                    raise FinancialServicesRegisterApiResponseError(
-                        "Unexpected response data structure from the API for "
-                        f'{resource_type} search by name "{resource_name}"! '
-                        "Please check the API developer documentation at "
-                        f"{API_CONSTANTS.DEVELOPER_PORTAL.value}."
-                    ) from None
-            if len(res.data) > 1:
-                return res.data
+            return res.data
         elif not res.ok:
             raise FinancialServicesRegisterApiRequestError(
                 f"API search request failed for an unknown reason: "
