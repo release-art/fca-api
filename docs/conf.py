@@ -1,47 +1,41 @@
-# -- IMPORTS --
-
-# -- Standard libraries --
-import importlib
-import json
-import os
 import sys
+import pathlib
+import tomllib
 
 from datetime import datetime
 
-# -- 3rd party libraries --
-
-# -- Internal libraries --
-
-
-# Configuration file for the Sphinx documentation builder.
-#
-# For the full list of built-in configuration values, see the documentation:
-# https://www.sphinx-doc.org/en/master/usage/configuration.html
 
 # -- Path setup --------------------------------------------------------------
+
+THIS_DIR = pathlib.Path(__file__).parent.resolve()
+PROJECT_ROOT = THIS_DIR.parent.resolve()
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
-sys.path.insert(0, os.path.abspath('.'))
-sys.path.insert(0, os.path.dirname(os.path.abspath('.')))
-sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath('.')), 'src'))
+for path in (THIS_DIR, PROJECT_ROOT, PROJECT_ROOT / 'src'):
+    sys.path.insert(0, str(path.resolve()))
 
 import fca_api
 from fca_api.__version__ import __version__
 
+with open(PROJECT_ROOT / 'pyproject.toml', 'rb') as f:
+    pyproject_data = tomllib.load(f)
+
+# import pprint
+# pprint.pprint(pyproject_data)
+
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-author = 'I. Orlovs'
-copyright = f'I. Orlovs, {datetime.now().year}'
-description = """
-              Lightweight async Python client for the UK Financial Services Register RESTful API.
-              """
+author = pyproject_data['project']['authors'][0]['name']
+copyright = f'{author}, {datetime.now().year}'
+description = pyproject_data['project']['description']
 github_url = 'https://github.com'
-github_repo = f'{github_url}/release-art/fca-api'
+github_repo = pyproject_data['project']['urls']['Repository']
 github_version = 'main'
+
 pypi_project = 'https://pypi.org/project/fca-api/'
 project = fca_api.__name__
 release = __version__
@@ -65,7 +59,7 @@ primary_domain = None
 rst_epilog = f"""
 .. |author|                 replace:: **{author}**
 .. |copyright|              replace:: **{copyright}**
-.. |docs_url|               replace:: ''
+.. |docs_url|               replace:: { pyproject_data['project']['urls']['Documentation'] }
 .. |project|                replace:: **{project}**
 .. |project_description|    replace:: {description}
 .. |release|                replace:: **{release}**
@@ -146,18 +140,12 @@ todo_include_todos = True
 html_context = {
     'authors': author,
     'copyright': copyright,
-    'default_mode': 'dark',
-    'display_github': True,
-    'github_url': 'https://github.com',
-    'github_user': 'release-art',
-    'github_repo': 'fca-api',
-    'github_version': 'main',
+    'default_mode': 'auto',
     'doc_path': 'doc',
     'conf_path': 'doc/conf.py',
     'project': project,
     'project_description': description,
     'release': release,
-    'release_target': f'https://github.com/release-art/fca-api/releases/tag/{release}'
 }
 
 # -- Options for HTML output -------------------------------------------------
@@ -167,8 +155,27 @@ html_context = {
 html_baseurl = 'https://docs.release.art/fca-api/'
 
 # HTML theme options
-html_theme = 'furo'
-html_theme_options = {}
+html_theme = 'pydata_sphinx_theme'
+html_theme_options = {
+    "icon_links": [
+        {
+            # Label for this link
+            "name": "GitHub",
+            # URL where the link will redirect
+            "url": github_repo,  # required
+            # Icon class (if "type": "fontawesome"), or path to local image (if "type": "local")
+            "icon": "fa-brands fa-github",
+            # The type of image to be used (see below for details)
+            "type": "fontawesome",
+        },
+        {
+            "name": "PyPI",
+            "url": pypi_project,
+            "icon": "fa-brands fa-python",
+            "type": "fontawesome",
+        }
+   ]
+}
 
 #html_logo = '_static/logo.png'
 
