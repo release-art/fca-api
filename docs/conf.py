@@ -167,7 +167,7 @@ html_context = {
 html_baseurl = 'https://docs.release.art/fca-api/'
 
 # HTML theme options
-html_theme = 'sphinx_rtd_theme'
+html_theme = 'furo'
 html_theme_options = {}
 
 #html_logo = '_static/logo.png'

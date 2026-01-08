@@ -8,7 +8,7 @@ PROJECT_ROOT := $(PWD)
 
 TESTS_ROOT := $(PROJECT_ROOT)/tests
 
-.PHONY: doc
+.PHONY: docs
 
 # Make everything (possible)
 all:
@@ -21,10 +21,12 @@ clean:
 version_extract:
 	echo "$(PACKAGE_VERSION)"
 
-doc:
+docs:
 	@echo "\n$(PACKAGE_NAME)[$(BRANCH)@$(HEAD)]: Building documentation\n"
 	cd "$(PROJECT_ROOT)" && \
-	sphinx-build -b html -W -T -E ./doc ./dist/docs/html
+	sphinx-build -b html -W -T -E ./docs ./dist/docs/html
+
+doc: docs
 
 # Dependency management
 update_deps:
