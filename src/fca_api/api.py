@@ -278,7 +278,7 @@ class FinancialServicesRegisterApiClient:
                 f"API search request failed for an unknown reason: "
                 f"{res.reason_phrase}. Please check the search parameters and try again."
             )
-        elif not res.data:
+        else:
             raise FinancialServicesRegisterApiRequestError(
                 "No data found in the API response. Please check the search parameters and try again."
             )

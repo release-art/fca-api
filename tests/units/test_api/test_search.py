@@ -1,10 +1,7 @@
-# -- IMPORTS --
-
-# -- 3rd party libraries --
 import httpx
 import pytest
 
-# -- Internal libraries --
+import fca_api
 from fca_api.exc import (
     FinancialServicesRegisterApiRequestError,
 )
@@ -26,6 +23,26 @@ class TestSearchFunctionality:
 
         with pytest.raises(FinancialServicesRegisterApiRequestError):
             await test_client._search_ref_number(resource_name, resource_type)
+
+    @pytest.mark.asyncio
+    @pytest.mark.parametrize("resource_type", ["firm", "individual", "fund"])
+    async def test_search_raises_on_malformed_response(self, test_client, mocker, resource_type):
+        mock_response = mocker.create_autospec(httpx.Response)
+        mock_response.json = mocker.MagicMock(
+            name="json",
+            return_value={"Data": None},
+        )
+        mock_response.status_code = 200
+        mocker.patch.object(
+            test_client._api_session,
+            "get",
+            mocker.AsyncMock(return_value=mock_response),
+        )
+
+        assert await test_client._api_session.get() == mock_response
+
+        with pytest.raises(fca_api.exc.FinancialServicesRegisterApiRequestError):
+            await test_client._search_ref_number("bad response", resource_type)
 
     @pytest.mark.asyncio
     async def test_search_ref_number_raises_on_bad_response(self, test_client, mocker):
