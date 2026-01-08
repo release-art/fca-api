@@ -44,27 +44,6 @@ class TestSearchFunctionality:
         with pytest.raises(FinancialServicesRegisterApiRequestError):
             await test_client._search_ref_number("bad search", resource_type)
 
-    # @pytest.mark.asyncio
-    # @pytest.mark.parametrize("resource_type", ["firm", "individual", "fund"])
-    # async def test_search_raises_on_malformed_response(self, test_client, mocker, resource_type):
-    #     mock_response = mocker.create_autospec(httpx.Response)
-    #     mock_response.json = mocker.MagicMock(
-    #         name="json",
-    #         return_value={"Data": [{"not a Reference Number": None}]},
-    #     )
-    #     mock_response.status_code = 200
-    #     # mock_api_session_get = mocker.AsyncMock(return_value=mock_response)
-    #     mocker.patch.object(
-    #         test_client._api_session,
-    #         "get",
-    #         mocker.AsyncMock(return_value=mock_response),
-    #     )
-
-    #     assert await test_client._api_session.get() == mock_response
-
-    #     with pytest.raises(FinancialServicesRegisterApiResponseError):
-    #         await test_client._search_ref_number("bad response", resource_type)
-
     @pytest.mark.asyncio
     @pytest.mark.parametrize("resource_type", ["firm", "individual", "fund"])
     async def test_search_ref_number_raises_on_nonexistent_resource(self, test_client, resource_type):
