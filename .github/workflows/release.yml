@@ -102,7 +102,7 @@ jobs:
           commit_user_name: ${{ steps.app-token.outputs.app-slug }}[bot]
           commit_user_email: ${{ steps.get-user-id.outputs.user-id }}+${{ steps.app-token.outputs.app-slug }}[bot]@users.noreply.github.com
           commit_message: |-
-            Bump version for next release
+            [ci skip] Bump version for next release
 
 
             skip-checks: true
