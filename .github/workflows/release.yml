@@ -44,34 +44,34 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-  publish:
-    needs: start
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v6
-      - name: Set up Python
-        uses: actions/setup-python@v6
-      - name: Install dependencies
-        run: |
-          python -m pip install pdm
-      - name: Build packages
-        run: pdm build
-      - name: Publish distribution to Test PyPI
-        run: |
-          pdm publish --no-build
-        env:
-          PDM_PUBLISH_PASSWORD: ${{ secrets.TEST_PYPI_API_TOKEN }}
-          PDM_PUBLISH_USERNAME: '__token__'
-          PDM_PUBLISH_REPO: 'https://test.pypi.org/legacy/'
-      - name: Publish distribution to PRODUCTION PyPI
-        # if: false
-        run: |
-          pdm publish --no-build
-        env:
-          PDM_PUBLISH_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
-          PDM_PUBLISH_USERNAME: '__token__'
+  # publish:
+  #   needs: start
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v6
+  #     - name: Set up Python
+  #       uses: actions/setup-python@v6
+  #     - name: Install dependencies
+  #       run: |
+  #         python -m pip install pdm
+  #     - name: Build packages
+  #       run: pdm build
+  #     - name: Publish distribution to Test PyPI
+  #       run: |
+  #         pdm publish --no-build
+  #       env:
+  #         PDM_PUBLISH_PASSWORD: ${{ secrets.TEST_PYPI_API_TOKEN }}
+  #         PDM_PUBLISH_USERNAME: '__token__'
+  #         PDM_PUBLISH_REPO: 'https://test.pypi.org/legacy/'
+  #     - name: Publish distribution to PRODUCTION PyPI
+  #       # if: false
+  #       run: |
+  #         pdm publish --no-build
+  #       env:
+  #         PDM_PUBLISH_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
+  #         PDM_PUBLISH_USERNAME: '__token__'
   bump-version: # Bump version for the next release
-    needs: publish
+    # needs: publish
     runs-on: ubuntu-latest
     # Bump version in the PR that targets the "main" branch
     steps:
