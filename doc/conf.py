@@ -171,7 +171,7 @@ html_context = {
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
 # General (non-theme) HTML output options
-html_baseurl = 'https://financial-services-register-api.readthedocs.io'
+html_baseurl = 'https://fca-api.readthedocs.io'
 
 # HTML theme options
 html_theme = 'sphinx_rtd_theme'
@@ -202,4 +202,4 @@ html_show_sourcelink = True
 html_copy_source = True
 
 # Output file base name for HTML help builder - use the project name
-htmlhelp_basename = 'financial-services-register-api'
+htmlhelp_basename = 'fca-api'

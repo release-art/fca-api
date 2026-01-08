@@ -8,7 +8,7 @@
 API Reference
 =============
 
-``financial-services-register-api`` API reference.
+``fca-api`` API reference.
 
 .. toctree::
    :maxdepth: 1

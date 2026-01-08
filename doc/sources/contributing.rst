@@ -13,10 +13,10 @@ Contributors and contributions are welcome. Please read these guidelines first.
 Git :fab:`github`
 =================
 
-The project homepage is on `GitHub <https://github.com/sr-murthy/financial-services-register-api>`_.
+The project homepage is on `GitHub <https://github.com/release-art/fca-api>`_.
 
-Contributors can open pull requests from a fork targeting the parent `main branch <https://github.com/sr-murthy/financial-services-register-api/tree/main>`_. But it may be a good first step to create an `issue <https://github.com/sr-murthy/financial-services-register-api/issues>`_ or open
-a `discussion topic <https://github.com/sr-murthy/financial-services-register-api/discussions>`_.
+Contributors can open pull requests from a fork targeting the parent `main branch <https://github.com/release-art/fca-api/tree/main>`_. But it may be a good first step to create an `issue <https://github.com/release-art/fca-api/issues>`_ or open
+a `discussion topic <https://github.com/release-art/fca-api/discussions>`_.
 
 .. _contributing.repo:
 
@@ -34,16 +34,15 @@ Dependencies :fas:`cubes`
 
 The only external dependency is `requests <https://requests.readthedocs.io/en/latest/>`_.
 
-Development dependencies are specified in the ``[tool.pdm.dev-dependencies]`` section of the `project TOML <https://github.com/sr-murthy/financial-services-register-api/blob/main/pyproject.toml>`_, but these are purely indicative.
+Development dependencies are specified in the ``[tool.pdm.dev-dependencies]`` section of the `project TOML <https://github.com/release-art/fca-api/blob/main/pyproject.toml>`_, but these are purely indicative.
 
 .. _contributing.tests:
 
 Tests :fas:`microscope`
 =======================
 
-Tests are located in the ``tests`` folder and can be run directly or via there `Makefile <https://github.com/sr-murthy/financial-services-register-api/blob/main/Makefile>`_ which provides a ``unittests`` target. Linting is done via Ruff (``make lint``) and there are also doctests (``make doctests``).
+Tests are located in the ``tests`` folder and can be run directly or via there `Makefile <https://github.com/release-art/fca-api/blob/main/Makefile>`_ which provides a ``unittests`` target. Linting is done via Ruff (``make lint``) and there are also doctests (``make doctests``).
 
-The unit and doctests require the API username (``API_USERNAME``) and key (``API_KEY``) to be available in the environment.
 
 .. _contributing.documentation:
 
@@ -57,13 +56,7 @@ This documentation site is written, built and deployed using `reStructuredText <
 CI :fas:`circle-play`
 =====================
 
-The CI workflows are defined `here <https://github.com/sr-murthy/financial-services-register-api/blob/main/.github/workflows/ci.yml>`_ and there is also a separate `CodeQL workflow <https://github.com/sr-murthy/financial-services-register-api/blob/main/.github/workflows/codeql-analysis.yml>`_.
+The CI workflows are defined `here <https://github.com/release-art/fca-api/blob/main/.github/workflows/ci.yml>`_ and there is also a separate `CodeQL workflow <https://github.com/release-art/fca-api/blob/main/.github/workflows/codeql-analysis.yml>`_.
 
 .. _contributing.versioning-and-releases:
 
-Releases :fas:`upload`
-======================
-
-The `package <https://pypi.org/project/financial-services-register-api/>`_ is currently at version ``1.2.0``.
-
-Releases are created and published (to PyPI and GitHub) manually.
