@@ -69,7 +69,7 @@ For detailed API reference, usage examples, and advanced configuration options, 
 
 ## Contributing
 
-Contributions are welcome! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on how to contribute to this project.
+Contributions are welcome! Please see [contributing guidelines](https://docs.release.art/fca-api/sources/contributing.html) on how to contribute to this project.
 
 ## License
 

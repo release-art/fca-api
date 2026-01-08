@@ -8,9 +8,9 @@ on:
   workflow_dispatch: {}
 
 permissions:
-  contents: write # allow pushing code changes
   pages: write # allow publishing to GitHub Pages
-  id-token: write 
+  id-token: write
+  
 
 jobs:
   start:
@@ -74,8 +74,19 @@ jobs:
     runs-on: ubuntu-latest
     # Bump version in the PR that targets the "main" branch
     steps:
+      - uses: actions/create-github-app-token@v2
+        id: app-token
+        with:
+          app-id: ${{ vars.RELEASE_ART_WORKFLOW_APP_ID }}
+          private-key: ${{ secrets.RELEASE_ART_WORKFLOW_APP_PK }}
+      - name: Get GitHub App User ID
+        id: get-user-id
+        run: echo "user-id=$(gh api "/users/${{ steps.app-token.outputs.app-slug }}[bot]" --jq .id)" >> "$GITHUB_OUTPUT"
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
       - uses: actions/checkout@v6
         with:
+          token: ${{ steps.app-token.outputs.token }}
           persist-credentials: true
       - name: Set up Python
         uses: actions/setup-python@v6
@@ -85,10 +96,14 @@ jobs:
           pdm self add pdm-bump
       - name: Bump version
         run: |
-          git config --global user.email "github+actions@gmail.com"
-          git config --global user.name "Actions"
           pdm bump patch
       - uses: stefanzweifel/git-auto-commit-action@v7
         with:
-          commit_message: "Bump version for next release"
+          commit_user_name: ${{ steps.app-token.outputs.app-slug }}[bot]
+          commit_user_email: ${{ steps.get-user-id.outputs.user-id }}+${{ steps.app-token.outputs.app-slug }}[bot]@users.noreply.github.com
+          commit_message: |
+            Bump version for next release
+
+
+            skip-checks: true
           create_branch: false
