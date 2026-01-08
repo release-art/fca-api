@@ -1,4 +1,5 @@
 # -- IMPORTS --
+import contextlib
 import re
 
 import httpx
@@ -29,6 +30,48 @@ class TestFinancialServicesRegisterApiClientCore:
 
         with pytest.raises(ValueError):
             fca_api.api.FinancialServicesRegisterApiClient(credentials=("only_username",))
+
+    @pytest.mark.asyncio
+    async def test_rate_limiter(self, mocker, test_api_username, test_api_key):
+        limiter_enter_mock = mocker.AsyncMock(name="limiter_enter_mock")
+        limiter_exit_mock = mocker.AsyncMock(name="limiter_exit_mock")
+
+        @contextlib.asynccontextmanager
+        async def limiter_mock():
+            await limiter_enter_mock()
+            try:
+                yield
+            finally:
+                await limiter_exit_mock()
+
+        mock_client = mocker.create_autospec(httpx.AsyncClient, name="mock-httpx-client")
+        test_client = fca_api.api.FinancialServicesRegisterApiClient(
+            credentials=mock_client,
+            api_limiter=limiter_mock,
+        )
+        # assert test_client._api_limiter is limiter_mock
+
+        for idx in range(3):
+            out = await test_client.get_regulated_markets()
+            assert out is not None
+            assert limiter_enter_mock.await_count == idx + 1
+            assert limiter_exit_mock.await_count == idx + 1
+
+        limiter_enter_mock.reset_mock()
+        limiter_exit_mock.reset_mock()
+        for idx in range(3):
+            out = await test_client.common_search("test resource", "firm")
+            assert out is not None
+            assert limiter_enter_mock.await_count == idx + 1
+            assert limiter_exit_mock.await_count == idx + 1
+
+        limiter_enter_mock.reset_mock()
+        limiter_exit_mock.reset_mock()
+        for idx in range(3):
+            out = await test_client._get_resource_info("123", "firm", "sdf")
+            assert out is not None
+            assert limiter_enter_mock.await_count == idx + 1
+            assert limiter_exit_mock.await_count == idx + 1
 
     @pytest.mark.asyncio
     async def test_common_search_raises_on_request_error(self, test_client, mocker):
