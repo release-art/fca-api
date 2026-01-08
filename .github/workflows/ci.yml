@@ -88,10 +88,9 @@ jobs:
     - name: Upload coverage reports to Codecov
       uses: codecov/codecov-action@v5
       with:
-        slug: release-art/fca_api
+        slug: release-art/fca-api
         files: ./coverage.xml
         flags: unit
         verbose: true
       env:
         CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-        slug: release-art/fca-api
