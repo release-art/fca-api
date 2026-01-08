@@ -1,0 +1,39 @@
+{
+  "content": {
+    "json": {
+      "Data": null,
+      "Message": "Product Other Name not found",
+      "ResultInfo": null,
+      "Status": "FSR-API-05-02-11"
+    }
+  },
+  "headers": {
+    "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
+    "cf-cache-status": "DYNAMIC",
+    "cf-ray": "9bad7dcc99b59515-LHR",
+    "connection": "keep-alive",
+    "content-encoding": "gzip",
+    "content-type": "application/json;charset=UTF-8",
+    "date": "Thu, 08 Jan 2026 17:42:26 GMT",
+    "server": "cloudflare",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Fri, 08-Jan-2027 17:42:26 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Fri, 08-Jan-2027 17:42:26 GMT; Max-Age=31536000; secure",
+    "strict-transport-security": "max-age=63072000; includeSubDomains",
+    "transfer-encoding": "chunked",
+    "vary": "Accept-Encoding",
+    "x-content-type-options": "nosniff"
+  },
+  "request": {
+    "headers": {
+      "accept": "application/json",
+      "accept-encoding": "gzip, deflate",
+      "connection": "keep-alive",
+      "user-agent": "python-httpx/0.28.1",
+      "x-auth-email": "user@example.com",
+      "x-auth-key": "00617470e8144a09"
+    },
+    "params": null,
+    "url": "https://register.fca.org.uk/services/V0.1/CIS/1006826/Names"
+  },
+  "status_code": 200,
+  "url": "https://register.fca.org.uk/services/V0.1/CIS/1006826/Names"
+}

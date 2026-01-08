@@ -1,0 +1,241 @@
+{
+  "content": {
+    "json": {
+      "Data": [
+        {
+          "Current": {
+            "(33)SMF18 Other Overall Responsibility": {
+              "Effective Date": "11/06/2021",
+              "Individual Name": "Geraldine Moran",
+              "Name": "SMF18 Other Overall Responsibility",
+              "Restriction": "",
+              "Suspension / Restriction End Date": "",
+              "Suspension / Restriction Start Date": "",
+              "URL": "https://register.fca.org.uk/services/V0.1/Individuals/GXM01567"
+            },
+            "(34)SMF18 Other Overall Responsibility": {
+              "Effective Date": "12/04/2023",
+              "Individual Name": "Fiona Helen Mayo",
+              "Name": "SMF18 Other Overall Responsibility",
+              "Restriction": "",
+              "Suspension / Restriction End Date": "",
+              "Suspension / Restriction Start Date": "",
+              "URL": "https://register.fca.org.uk/services/V0.1/Individuals/FXM00240"
+            },
+            "(35)SMF20 Chief Actuary": {
+              "Effective Date": "01/07/2024",
+              "Individual Name": "Barry Wright",
+              "Name": "SMF20 Chief Actuary",
+              "Restriction": "",
+              "Suspension / Restriction End Date": "",
+              "Suspension / Restriction Start Date": "",
+              "URL": "https://register.fca.org.uk/services/V0.1/Individuals/BXW00300"
+            },
+            "(36)SMF11 Chair of the Audit Committee": {
+              "Effective Date": "26/02/2024",
+              "Individual Name": "Timothy Walter Harris",
+              "Name": "SMF11 Chair of the Audit Committee",
+              "Restriction": "",
+              "Suspension / Restriction End Date": "",
+              "Suspension / Restriction Start Date": "",
+              "URL": "https://register.fca.org.uk/services/V0.1/Individuals/TWH01030"
+            },
+            "(37)SMF7 Group Entity Senior Manager": {
+              "Effective Date": "10/12/2018",
+              "Individual Name": "Hamayou Akbar Hussain",
+              "Name": "SMF7 Group Entity Senior Manager",
+              "Restriction": "",
+              "Suspension / Restriction End Date": "",
+              "Suspension / Restriction Start Date": "",
+              "URL": "https://register.fca.org.uk/services/V0.1/Individuals/HAH01030"
+            },
+            "(38)SMF5 Head of Internal Audit": {
+              "Effective Date": "30/04/2025",
+              "Individual Name": "Daniel Marc Williams",
+              "Name": "SMF5 Head of Internal Audit",
+              "Restriction": "",
+              "Suspension / Restriction End Date": "",
+              "Suspension / Restriction Start Date": "",
+              "URL": "https://register.fca.org.uk/services/V0.1/Individuals/DMW01209"
+            },
+            "(39)Responsible for Insurance Distribution": {
+              "Effective Date": "14/04/2023",
+              "Individual Name": "Jonathan Dye",
+              "Name": "Responsible for Insurance Distribution",
+              "Restriction": "",
+              "Suspension / Restriction End Date": "",
+              "Suspension / Restriction Start Date": "",
+              "URL": "https://register.fca.org.uk/services/V0.1/Individuals/JXD01572"
+            },
+            "(40)SMF1 Chief Executive": {
+              "Effective Date": "14/04/2023",
+              "Individual Name": "Jonathan Dye",
+              "Name": "SMF1 Chief Executive",
+              "Restriction": "",
+              "Suspension / Restriction End Date": "",
+              "Suspension / Restriction Start Date": "",
+              "URL": "https://register.fca.org.uk/services/V0.1/Individuals/JXD01572"
+            },
+            "(41)SMF16 Compliance Oversight": {
+              "Effective Date": "25/10/2024",
+              "Individual Name": "Ruth Helen Edge",
+              "Name": "SMF16 Compliance Oversight",
+              "Restriction": "",
+              "Suspension / Restriction End Date": "",
+              "Suspension / Restriction Start Date": "",
+              "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RXE00172"
+            },
+            "(42)SMF7 Group Entity Senior Manager": {
+              "Effective Date": "21/11/2022",
+              "Individual Name": "Paul David Cooper",
+              "Name": "SMF7 Group Entity Senior Manager",
+              "Restriction": "",
+              "Suspension / Restriction End Date": "",
+              "Suspension / Restriction Start Date": "",
+              "URL": "https://register.fca.org.uk/services/V0.1/Individuals/PDC01119"
+            }
+          },
+          "Previous": {
+            "(186)CF8 Apportionment and Oversight": {
+              "Effective Date": "18/02/2004",
+              "End Date": "22/01/2014",
+              "Individual Name": "Bronislaw Edmund Masojada",
+              "Name": "CF8 Apportionment and Oversight",
+              "Restriction": "",
+              "Suspension / Restriction End Date": "",
+              "Suspension / Restriction Start Date": "",
+              "URL": "https://register.fca.org.uk/services/V0.1/Individuals/BEM01012"
+            },
+            "(187)CF3 Chief Executive": {
+              "Effective Date": "18/02/2004",
+              "End Date": "22/01/2014",
+              "Individual Name": "Bronislaw Edmund Masojada",
+              "Name": "CF3 Chief Executive",
+              "Restriction": "",
+              "Suspension / Restriction End Date": "",
+              "Suspension / Restriction Start Date": "",
+              "URL": "https://register.fca.org.uk/services/V0.1/Individuals/BEM01012"
+            },
+            "(188)CF2 Non Executive Director": {
+              "Effective Date": "17/10/2014",
+              "End Date": "06/03/2016",
+              "Individual Name": "Bronislaw Edmund Masojada",
+              "Name": "CF2 Non Executive Director",
+              "Restriction": "",
+              "Suspension / Restriction End Date": "",
+              "Suspension / Restriction Start Date": "",
+              "URL": "https://register.fca.org.uk/services/V0.1/Individuals/BEM01012"
+            },
+            "(189)CF1 Director": {
+              "Effective Date": "01/12/2001",
+              "End Date": "17/10/2014",
+              "Individual Name": "Bronislaw Edmund Masojada",
+              "Name": "CF1 Director",
+              "Restriction": "",
+              "Suspension / Restriction End Date": "",
+              "Suspension / Restriction Start Date": "",
+              "URL": "https://register.fca.org.uk/services/V0.1/Individuals/BEM01012"
+            },
+            "(190)SIMF7 Group Entity Senior Insurance Manager Function": {
+              "Effective Date": "07/03/2016",
+              "End Date": "09/12/2018",
+              "Individual Name": "Lynn Ann Carter",
+              "Name": "SIMF7 Group Entity Senior Insurance Manager Function",
+              "Restriction": "",
+              "Suspension / Restriction End Date": "",
+              "Suspension / Restriction Start Date": "",
+              "URL": "https://register.fca.org.uk/services/V0.1/Individuals/LAC01114"
+            },
+            "(191)SMF7 Group Entity Senior Manager": {
+              "Effective Date": "10/12/2018",
+              "End Date": "01/12/2021",
+              "Individual Name": "Lynn Ann Carter",
+              "Name": "SMF7 Group Entity Senior Manager",
+              "Restriction": "",
+              "Suspension / Restriction End Date": "",
+              "Suspension / Restriction Start Date": "",
+              "URL": "https://register.fca.org.uk/services/V0.1/Individuals/LAC01114"
+            },
+            "(192)CF29 Significant management": {
+              "Effective Date": "02/03/2016",
+              "End Date": "06/03/2016",
+              "Individual Name": "Lynn Ann Carter",
+              "Name": "CF29 Significant management",
+              "Restriction": "",
+              "Suspension / Restriction End Date": "",
+              "Suspension / Restriction Start Date": "",
+              "URL": "https://register.fca.org.uk/services/V0.1/Individuals/LAC01114"
+            },
+            "(193)SIMF10 Chair of the Risk Committee": {
+              "Effective Date": "07/03/2016",
+              "End Date": "09/12/2018",
+              "Individual Name": "Henry Charles Vaughan Keeling",
+              "Name": "SIMF10 Chair of the Risk Committee",
+              "Restriction": "",
+              "Suspension / Restriction End Date": "",
+              "Suspension / Restriction Start Date": "",
+              "URL": "https://register.fca.org.uk/services/V0.1/Individuals/HCK01001"
+            },
+            "(194)SMF10 Chair of the Risk Committee": {
+              "Effective Date": "10/12/2018",
+              "End Date": "30/04/2022",
+              "Individual Name": "Henry Charles Vaughan Keeling",
+              "Name": "SMF10 Chair of the Risk Committee",
+              "Restriction": "",
+              "Suspension / Restriction End Date": "",
+              "Suspension / Restriction Start Date": "",
+              "URL": "https://register.fca.org.uk/services/V0.1/Individuals/HCK01001"
+            },
+            "(195)CF2 Non Executive Director": {
+              "Effective Date": "13/04/2012",
+              "End Date": "06/03/2016",
+              "Individual Name": "Henry Charles Vaughan Keeling",
+              "Name": "CF2 Non Executive Director",
+              "Restriction": "",
+              "Suspension / Restriction End Date": "",
+              "Suspension / Restriction Start Date": "",
+              "URL": "https://register.fca.org.uk/services/V0.1/Individuals/HCK01001"
+            }
+          }
+        }
+      ],
+      "Message": "SUCCESS : Control Function Found",
+      "ResultInfo": {
+        "Next": "https://register.fca.org.uk/services/V0.1/Firm/113849/CF?pgnp=2",
+        "page": "1",
+        "per_page": "20",
+        "total_count": "237"
+      },
+      "Status": "FSR-API-02-12-00"
+    }
+  },
+  "headers": {
+    "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
+    "cf-cache-status": "DYNAMIC",
+    "cf-ray": "9bad7d760a6f7a09-LHR",
+    "connection": "keep-alive",
+    "content-encoding": "gzip",
+    "content-type": "application/json;charset=UTF-8",
+    "date": "Thu, 08 Jan 2026 17:42:12 GMT",
+    "server": "cloudflare",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Fri, 08-Jan-2027 17:42:12 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Fri, 08-Jan-2027 17:42:12 GMT; Max-Age=31536000; secure",
+    "strict-transport-security": "max-age=63072000; includeSubDomains",
+    "transfer-encoding": "chunked",
+    "vary": "Accept-Encoding",
+    "x-content-type-options": "nosniff"
+  },
+  "request": {
+    "headers": {
+      "accept": "application/json",
+      "accept-encoding": "gzip, deflate",
+      "connection": "keep-alive",
+      "user-agent": "python-httpx/0.28.1",
+      "x-auth-email": "user@example.com",
+      "x-auth-key": "00617470e8144a09"
+    },
+    "params": null,
+    "url": "https://register.fca.org.uk/services/V0.1/Firm/113849/CF"
+  },
+  "status_code": 200,
+  "url": "https://register.fca.org.uk/services/V0.1/Firm/113849/CF"
+}

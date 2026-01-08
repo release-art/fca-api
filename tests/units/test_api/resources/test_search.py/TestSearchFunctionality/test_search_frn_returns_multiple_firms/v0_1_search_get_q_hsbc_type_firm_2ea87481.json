@@ -1,0 +1,185 @@
+{
+  "content": {
+    "json": {
+      "Data": [
+        {
+          "Name": "HSBC Continental Europe, Ireland (Postcode: -)",
+          "Reference Number": "840173",
+          "Status": "Authorised Schedule 5 - Depositary of a recognised overseas scheme and a temporary recognised overseas scheme",
+          "Type of business or Individual": "Firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Firm/840173"
+        },
+        {
+          "Name": "HSBC Global Banking and Markets / HSBG GAM Investment Bank / HSBC Global Asset Management (clone of FCA authorised firms) (Postcode: n/a)",
+          "Reference Number": "",
+          "Status": "Unauthorised",
+          "Type of business or Individual": "Unauthorised firm",
+          "URL": null
+        },
+        {
+          "Name": "HSBC Invest Direct / HSBC InvestDirect (Clone of FCA Authorised firm) (Postcode: n/a)",
+          "Reference Number": "",
+          "Status": "Unauthorised",
+          "Type of business or Individual": "Unauthorised firm",
+          "URL": null
+        },
+        {
+          "Name": "HSBC Pollination Climate Asset Management Limited (Postcode: SE1 2AQ)",
+          "Reference Number": "939017",
+          "Status": "No longer registered as an Appointed Representative",
+          "Type of business or Individual": "Firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Firm/939017"
+        },
+        {
+          "Name": "Climate Asset Management Limited (Postcode: W1T 4HD)",
+          "Reference Number": "944222",
+          "Status": "Authorised",
+          "Type of business or Individual": "Firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Firm/944222"
+        },
+        {
+          "Name": "HSBC Asset Management (Fund Services UK) Limited (Postcode: E14 5HQ)",
+          "Reference Number": "974977",
+          "Status": "Authorised",
+          "Type of business or Individual": "Firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Firm/974977"
+        },
+        {
+          "Name": "thefirstdirect.com (Clone of HSBC UK Bank Plc t/a first direct) (Postcode: n/a)",
+          "Reference Number": "",
+          "Status": "Unauthorised",
+          "Type of business or Individual": "Unauthorised firm",
+          "URL": null
+        },
+        {
+          "Name": "hsbcfixedincome.com (Clone of FCA Authorised firm) (Postcode: N/A)",
+          "Reference Number": "",
+          "Status": "Unauthorised",
+          "Type of business or Individual": "Unauthorised firm",
+          "URL": null
+        },
+        {
+          "Name": "hsbcukbankplc.com (Clone of FCA authorised firm) (Postcode: N/A)",
+          "Reference Number": "",
+          "Status": "Unauthorised",
+          "Type of business or Individual": "Unauthorised firm",
+          "URL": null
+        },
+        {
+          "Name": "savings-hsbc.com (Clone of FCA authorised firm) (Postcode: n/a)",
+          "Reference Number": "",
+          "Status": "Unauthorised",
+          "Type of business or Individual": "Unauthorised firm",
+          "URL": null
+        },
+        {
+          "Name": "HSBC Securities Services (Luxembourg) S.A.",
+          "Reference Number": "414729",
+          "Status": "No longer authorised",
+          "Type of business or Individual": "Firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Firm/414729"
+        },
+        {
+          "Name": "Assetfinance December (R) Limited (Postcode: E14 5HQ)",
+          "Reference Number": "484469",
+          "Status": "Registered",
+          "Type of business or Individual": "Firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Firm/484469"
+        },
+        {
+          "Name": "HSBC Bank Plc (Postcode: E14 5HQ)",
+          "Reference Number": "114216",
+          "Status": "Authorised",
+          "Type of business or Individual": "Firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Firm/114216"
+        },
+        {
+          "Name": "JLT Actuaries and Consultants Limited (Postcode: EC3N 2PH)",
+          "Reference Number": "122270",
+          "Status": "No longer authorised",
+          "Type of business or Individual": "Firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Firm/122270"
+        },
+        {
+          "Name": "HSBC Global Asset Management (UK) Limited (Postcode: E14 5HQ)",
+          "Reference Number": "122335",
+          "Status": "Authorised",
+          "Type of business or Individual": "Firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Firm/122335"
+        },
+        {
+          "Name": "The Hongkong and Shanghai Banking Corporation Limited (Postcode: E14 5HQ)",
+          "Reference Number": "122366",
+          "Status": "No longer authorised",
+          "Type of business or Individual": "Firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Firm/122366"
+        },
+        {
+          "Name": "HSBC Securities (USA) Inc (Postcode: E14 5HQ)",
+          "Reference Number": "124732",
+          "Status": "No longer authorised",
+          "Type of business or Individual": "Firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Firm/124732"
+        },
+        {
+          "Name": "HSBC Private Bank (UK) Limited (Postcode: W1S 3LJ)",
+          "Reference Number": "124781",
+          "Status": "Applied to Cancel",
+          "Type of business or Individual": "Firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Firm/124781"
+        },
+        {
+          "Name": "HSBC Investment Residuary Limited (Postcode: EC4R 1BE)",
+          "Reference Number": "124398",
+          "Status": "No longer authorised",
+          "Type of business or Individual": "Firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Firm/124398"
+        },
+        {
+          "Name": "Montagu Oldco Ltd (Postcode: EC4V 3BJ)",
+          "Reference Number": "121948",
+          "Status": "No longer authorised",
+          "Type of business or Individual": "Firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Firm/121948"
+        }
+      ],
+      "Message": "Ok. Search successful",
+      "ResultInfo": {
+        "Next": "https://register.fca.org.uk/services/V0.1/Search?q=hsbc&type=firm&pgnp=2",
+        "page": "1",
+        "per_page": "20",
+        "total_count": "129"
+      },
+      "Status": "FSR-API-04-01-00"
+    }
+  },
+  "headers": {
+    "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
+    "cf-cache-status": "DYNAMIC",
+    "cf-ray": "9bad7e958ed2f64f-LHR",
+    "connection": "keep-alive",
+    "content-encoding": "gzip",
+    "content-type": "application/json;charset=UTF-8",
+    "date": "Thu, 08 Jan 2026 17:42:59 GMT",
+    "server": "cloudflare",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Fri, 08-Jan-2027 17:42:58 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Fri, 08-Jan-2027 17:42:58 GMT; Max-Age=31536000; secure",
+    "strict-transport-security": "max-age=63072000; includeSubDomains",
+    "transfer-encoding": "chunked",
+    "vary": "Accept-Encoding",
+    "x-content-type-options": "nosniff"
+  },
+  "request": {
+    "headers": {
+      "accept": "application/json",
+      "accept-encoding": "gzip, deflate",
+      "connection": "keep-alive",
+      "user-agent": "python-httpx/0.28.1",
+      "x-auth-email": "user@example.com",
+      "x-auth-key": "00617470e8144a09"
+    },
+    "params": null,
+    "url": "https://register.fca.org.uk/services/V0.1/Search?q=hsbc&type=firm"
+  },
+  "status_code": 200,
+  "url": "https://register.fca.org.uk/services/V0.1/Search?q=hsbc&type=firm"
+}

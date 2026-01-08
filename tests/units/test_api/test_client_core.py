@@ -2,11 +2,9 @@
 import re
 
 import httpx
-
-# -- 3rd party libraries --
 import pytest
 
-# -- Internal libraries --
+import fca_api
 from fca_api.const import (
     FINANCIAL_SERVICES_REGISTER_API_CONSTANTS as API_CONSTANTS,
 )
@@ -17,13 +15,20 @@ from fca_api.exc import (
 
 class TestFinancialServicesRegisterApiClientCore:
     @pytest.mark.asyncio
-    async def test_client_init_sets_credentials(self, test_client, test_api_username, test_api_key):
-        assert test_client.api_session.api_username == test_api_username
-        assert test_client.api_session.api_key == test_api_key
+    async def test_client_init_sets_credentials(self, test_api_username, test_api_key):
+        test_client = fca_api.api.FinancialServicesRegisterApiClient(credentials=(test_api_username, test_api_key))
         assert test_client.api_session.headers["ACCEPT"] == "application/json"
         assert test_client.api_session.headers["X-AUTH-EMAIL"] == test_api_username
         assert test_client.api_session.headers["X-AUTH-KEY"] == test_api_key
         assert test_client.api_version == API_CONSTANTS.API_VERSION.value
+
+    @pytest.mark.asyncio
+    async def test_client_init_incorrect(self):
+        with pytest.raises(ValueError):
+            fca_api.api.FinancialServicesRegisterApiClient(credentials=None)
+
+        with pytest.raises(ValueError):
+            fca_api.api.FinancialServicesRegisterApiClient(credentials=("only_username",))
 
     @pytest.mark.asyncio
     async def test_common_search_raises_on_request_error(self, test_client, mocker):

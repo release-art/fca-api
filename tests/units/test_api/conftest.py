@@ -5,7 +5,6 @@ import pytest_asyncio
 
 from fca_api.api import (
     FinancialServicesRegisterApiClient,
-    FinancialServicesRegisterApiSession,
 )
 
 
@@ -17,25 +16,14 @@ def test_resources_path() -> pathlib.Path:
 
 
 @pytest_asyncio.fixture
-async def test_session(test_api_username, test_api_key):
-    session = FinancialServicesRegisterApiSession(test_api_username, test_api_key)
-    yield session
-    await session.aclose()
-
-
-@pytest_asyncio.fixture
-async def test_client(test_api_username, test_api_key, cache_reading_session_subclass, test_resources_path):
-    client = FinancialServicesRegisterApiClient(
-        cache_reading_session_subclass(test_api_username, test_api_key, cache_dir=test_resources_path)
-    )
-    yield client
-    await client.api_session.aclose()
-
-
-# @pytest_asyncio.fixture
-# async def test_client(test_api_username, test_api_key, cache_writing_session_subclass, test_resources_path):
-#     client = FinancialServicesRegisterApiClient(
-#         cache_writing_session_subclass(test_api_username, test_api_key, cache_dir=test_resources_path)
-#     )
-#     yield client
-#     await client.api_session.aclose()
+async def test_client(caching_session_subclass, test_api_username, test_api_key, test_resources_path):
+    async with caching_session_subclass(
+        headers={
+            "ACCEPT": "application/json",
+            "X-AUTH-EMAIL": test_api_username,
+            "X-AUTH-KEY": test_api_key,
+        },
+        cache_dir=test_resources_path,
+        cache_mode="read",
+    ) as api_session:
+        yield FinancialServicesRegisterApiClient(credentials=api_session)

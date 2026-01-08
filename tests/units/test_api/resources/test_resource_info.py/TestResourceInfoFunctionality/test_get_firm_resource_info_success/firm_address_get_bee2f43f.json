@@ -1,0 +1,73 @@
+{
+  "content": {
+    "json": {
+      "Data": [
+        {
+          "Address LIne 3": "",
+          "Address Line 1": "22 Bishopsgate",
+          "Address Line 2": "",
+          "Address Line 4": "",
+          "Address Type": "Principal Place of Business",
+          "Country": "UNITED KINGDOM",
+          "County": "",
+          "Phone Number": "+4402074486000",
+          "Postcode": "EC2N 4BQ",
+          "Town": "London",
+          "URL": "https://register.fca.org.uk/services/V0.1/Firm/113849/Address?Type=PPOB",
+          "Website Address": "www.hiscox.co.uk"
+        },
+        {
+          "Address LIne 3": "",
+          "Address Line 1": "22 Bishopsgate",
+          "Address Line 2": "",
+          "Address Line 4": "",
+          "Address Type": "Complaints Contact",
+          "Country": "UNITED KINGDOM",
+          "County": "",
+          "Individual": "Douglas Stewart",
+          "Phone Number": "+4402074486000",
+          "Postcode": "EC2N 4BQ",
+          "Town": "London",
+          "URL": "https://register.fca.org.uk/services/V0.1/Firm/113849/Address?Type=Complaint",
+          "Website Address": ""
+        }
+      ],
+      "Message": "Ok. Firm Address Found",
+      "ResultInfo": {
+        "page": "1",
+        "per_page": "2",
+        "total_count": "2"
+      },
+      "Status": "FSR-API-02-02-00"
+    }
+  },
+  "headers": {
+    "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
+    "cf-cache-status": "DYNAMIC",
+    "cf-ray": "9bad7dfa0ce2bec3-LHR",
+    "connection": "keep-alive",
+    "content-encoding": "gzip",
+    "content-type": "application/json;charset=UTF-8",
+    "date": "Thu, 08 Jan 2026 17:42:33 GMT",
+    "server": "cloudflare",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Fri, 08-Jan-2027 17:42:33 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Fri, 08-Jan-2027 17:42:33 GMT; Max-Age=31536000; secure",
+    "strict-transport-security": "max-age=63072000; includeSubDomains",
+    "transfer-encoding": "chunked",
+    "vary": "Accept-Encoding",
+    "x-content-type-options": "nosniff"
+  },
+  "request": {
+    "headers": {
+      "accept": "application/json",
+      "accept-encoding": "gzip, deflate",
+      "connection": "keep-alive",
+      "user-agent": "python-httpx/0.28.1",
+      "x-auth-email": "user@example.com",
+      "x-auth-key": "00617470e8144a09"
+    },
+    "params": null,
+    "url": "https://register.fca.org.uk/services/V0.1/Firm/113849/Address"
+  },
+  "status_code": 200,
+  "url": "https://register.fca.org.uk/services/V0.1/Firm/113849/Address"
+}

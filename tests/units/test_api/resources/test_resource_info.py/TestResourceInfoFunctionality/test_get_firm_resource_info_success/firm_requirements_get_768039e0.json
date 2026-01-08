@@ -1,0 +1,62 @@
+{
+  "content": {
+    "json": {
+      "Data": [
+        {
+          "Effective Date": "26/04/2016",
+          "Financial Promotions Requirement": "FALSE",
+          "No CBTL business unless registered": "The firm must not carry on any activity that would constitute consumer buy-to-let mortgage business as defined in Part 3 of the Mortgage Credit Directive Order 2015 (SI 910/2015) unless registered as a consumer buy-to-let mortgage firm",
+          "Requirement Reference": "OR-0131728"
+        },
+        {
+          "Effective Date": "25/04/2016",
+          "Financial Promotions Requirement": "FALSE",
+          "Not permitted to canvass off trade premises": "The firm is not permitted to canvass regulated borrower-lender-supplier agreements or regulated consumer hire agreements off trade premises",
+          "Requirement Reference": "OR-0131653"
+        },
+        {
+          "Effective Date": "06/11/2023",
+          "Financial Promotions Requirement": "TRUE",
+          "Financial Promotions for own firm, ARs and other members of the group": "This firm can approve its own financial promotions as well as those of members of its wider group and, in certain circumstances, those of its appointed representatives.",
+          "Requirement Reference": "OR-0229266"
+        }
+      ],
+      "Message": "Ok. Firm Requirements found",
+      "ResultInfo": {
+        "page": "1",
+        "per_page": "3",
+        "total_count": "3"
+      },
+      "Status": "FSR-API-02-06-00"
+    }
+  },
+  "headers": {
+    "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
+    "cf-cache-status": "DYNAMIC",
+    "cf-ray": "9bad7e0e2fb2bec3-LHR",
+    "connection": "keep-alive",
+    "content-encoding": "gzip",
+    "content-type": "application/json;charset=UTF-8",
+    "date": "Thu, 08 Jan 2026 17:42:36 GMT",
+    "server": "cloudflare",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Fri, 08-Jan-2027 17:42:36 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Fri, 08-Jan-2027 17:42:36 GMT; Max-Age=31536000; secure",
+    "strict-transport-security": "max-age=63072000; includeSubDomains",
+    "transfer-encoding": "chunked",
+    "vary": "Accept-Encoding",
+    "x-content-type-options": "nosniff"
+  },
+  "request": {
+    "headers": {
+      "accept": "application/json",
+      "accept-encoding": "gzip, deflate",
+      "connection": "keep-alive",
+      "user-agent": "python-httpx/0.28.1",
+      "x-auth-email": "user@example.com",
+      "x-auth-key": "00617470e8144a09"
+    },
+    "params": null,
+    "url": "https://register.fca.org.uk/services/V0.1/Firm/113849/Requirements"
+  },
+  "status_code": 200,
+  "url": "https://register.fca.org.uk/services/V0.1/Firm/113849/Requirements"
+}

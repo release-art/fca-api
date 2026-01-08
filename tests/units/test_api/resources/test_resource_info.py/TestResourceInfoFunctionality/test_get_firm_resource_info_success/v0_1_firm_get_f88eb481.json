@@ -1,0 +1,77 @@
+{
+  "content": {
+    "json": {
+      "Data": [
+        {
+          "Address": "https://register.fca.org.uk/services/V0.1/Firm/113849/Address",
+          "Appointed Representative": "https://register.fca.org.uk/services/V0.1/Firm/113849/AR",
+          "Business Type": "Regulated",
+          "Client Money Permission": "Control but not hold client money",
+          "Companies House Number": "00070234",
+          "DisciplinaryHistory": "https://register.fca.org.uk/services/V0.1/Firm/113849/DisciplinaryHistory",
+          "E-Money Agent Effective Date": "",
+          "E-Money Agent Status": "",
+          "Exceptional Info Details": [],
+          "Exclusions": "https://register.fca.org.uk/services/V0.1/Firm/113849/Exclusions",
+          "FRN": "113849",
+          "Individuals": "https://register.fca.org.uk/services/V0.1/Firm/113849/Individuals",
+          "MLRs Status": "",
+          "MLRs Status Effective Date": "",
+          "Mutual Society Number": "",
+          "Name": "https://register.fca.org.uk/services/V0.1/Firm/113849/Names",
+          "Organisation Name": "Hiscox Insurance Company Limited",
+          "PSD / EMD Effective Date": "",
+          "PSD / EMD Status": "",
+          "PSD Agent Effective date": "",
+          "PSD Agent Status": "",
+          "Passport": "https://register.fca.org.uk/services/V0.1/Firm/113849/Passports",
+          "Permission": "https://register.fca.org.uk/services/V0.1/Firm/113849/Permissions",
+          "Regulators": "https://register.fca.org.uk/services/V0.1/Firm/113849/Regulators",
+          "Requirements": "https://register.fca.org.uk/services/V0.1/Firm/113849/Requirements",
+          "Status": "Authorised",
+          "Status Effective Date": "01/12/2001",
+          "Sub Status Effective from": "",
+          "Sub-Status": "",
+          "System Timestamp": "08/01/2026 17:42",
+          "Waivers": "https://register.fca.org.uk/services/V0.1/Firm/113849/Waivers"
+        }
+      ],
+      "Message": "Ok. Firm Found",
+      "ResultInfo": {
+        "page": "1",
+        "per_page": "1",
+        "total_count": "1"
+      },
+      "Status": "FSR-API-02-01-00"
+    }
+  },
+  "headers": {
+    "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
+    "cf-cache-status": "DYNAMIC",
+    "cf-ray": "9bad7dee496abec3-LHR",
+    "connection": "keep-alive",
+    "content-encoding": "gzip",
+    "content-type": "application/json",
+    "date": "Thu, 08 Jan 2026 17:42:32 GMT",
+    "server": "cloudflare",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Fri, 08-Jan-2027 17:42:31 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Fri, 08-Jan-2027 17:42:31 GMT; Max-Age=31536000; secure",
+    "strict-transport-security": "max-age=63072000; includeSubDomains",
+    "transfer-encoding": "chunked",
+    "vary": "Accept-Encoding",
+    "x-content-type-options": "nosniff"
+  },
+  "request": {
+    "headers": {
+      "accept": "application/json",
+      "accept-encoding": "gzip, deflate",
+      "connection": "keep-alive",
+      "user-agent": "python-httpx/0.28.1",
+      "x-auth-email": "user@example.com",
+      "x-auth-key": "00617470e8144a09"
+    },
+    "params": null,
+    "url": "https://register.fca.org.uk/services/V0.1/Firm/113849"
+  },
+  "status_code": 200,
+  "url": "https://register.fca.org.uk/services/V0.1/Firm/113849"
+}
