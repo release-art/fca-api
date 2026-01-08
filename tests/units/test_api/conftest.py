@@ -22,17 +22,9 @@ async def test_client(caching_session_subclass, test_api_username, test_api_key,
             "X-AUTH-EMAIL": test_api_username,
             "X-AUTH-KEY": test_api_key,
         },
-        cache_dir=test_resources_path
+        cache_dir=test_resources_path,
+        cache_mode="write",
     ) as api_session:
         yield FinancialServicesRegisterApiClient(
             credentials=api_session
         )
-
-
-# @pytest_asyncio.fixture
-# async def test_client(test_api_username, test_api_key, cache_writing_session_subclass, test_resources_path):
-#     client = FinancialServicesRegisterApiClient(
-#         cache_writing_session_subclass(test_api_username, test_api_key, cache_dir=test_resources_path)
-#     )
-#     yield client
-#     await client.api_session.aclose()

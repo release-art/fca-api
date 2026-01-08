@@ -1,0 +1,50 @@
+{
+  "content": {
+    "json": {
+      "Data": [
+        {
+          "ActionEffectiveFrom": "11/11/2024",
+          "EnforcementType": "FSMA",
+          "TypeofAction": "Prohibition",
+          "TypeofDescription": "On 31 October 2024, Mr Mackey signed a Settlement Agreement with the FCA which has banned Mr Mackey from working in financial services and fined him \u00a31.1m for acting without integrity. Mr Mackey was the executive director with sole management control of Inspire, an insurance brokerage company, in the construction sector. Between 2016 and October 2020, Mr Mackey used insurer premia to fund Inspire\u2019s operating costs and to pay for personal living expenses instead of paying insurers. Mr Mackey accepts that, due to his actions, Inspire owes insurers over \u00a3660,000. Estimates of this amount by Inspire\u2019s liquidator are significantly higher and suggest a shortfall of over \u00a32.2m. In addition, Mr Mackey has not been truthful to the FCA, admitting Inspire failed to carry out client asset audits when submitting regulatory reports despite stating in various FCA returns that it had done so. As a result of his conduct, the FCA has found that Mr Mackey has failed to act with integrity (breach of Principle 1 of APER/ Individual Conduct Rule 1 of COCON) and failed to deal in an open and cooperative way with the Authority (breach of Principle 4 of APER/Individual Conduct Rule 3 of COCON). https://www.fca.org.uk/publication/final-notices/leigh-mackey-2024.pdf"
+        }
+      ],
+      "Message": "Ok. Disciplinary history information found",
+      "ResultInfo": {
+        "page": "1",
+        "per_page": "10",
+        "total_count": "1"
+      },
+      "Status": "FSR-API-03-03-00"
+    }
+  },
+  "headers": {
+    "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
+    "cf-cache-status": "DYNAMIC",
+    "cf-ray": "9bad7de75dd39858-LHR",
+    "connection": "keep-alive",
+    "content-encoding": "gzip",
+    "content-type": "application/json;charset=UTF-8",
+    "date": "Thu, 08 Jan 2026 17:42:30 GMT",
+    "server": "cloudflare",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Fri, 08-Jan-2027 17:42:30 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Fri, 08-Jan-2027 17:42:30 GMT; Max-Age=31536000; secure",
+    "strict-transport-security": "max-age=63072000; includeSubDomains",
+    "transfer-encoding": "chunked",
+    "vary": "Accept-Encoding",
+    "x-content-type-options": "nosniff"
+  },
+  "request": {
+    "headers": {
+      "accept": "application/json",
+      "accept-encoding": "gzip, deflate",
+      "connection": "keep-alive",
+      "user-agent": "python-httpx/0.28.1",
+      "x-auth-email": "user@example.com",
+      "x-auth-key": "00617470e8144a09"
+    },
+    "params": null,
+    "url": "https://register.fca.org.uk/services/V0.1/Individuals/LXM01328/DisciplinaryHistory"
+  },
+  "status_code": 200,
+  "url": "https://register.fca.org.uk/services/V0.1/Individuals/LXM01328/DisciplinaryHistory"
+}

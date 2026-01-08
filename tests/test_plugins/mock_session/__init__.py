@@ -20,16 +20,6 @@ def pytest_runtest_setup(item):
     cache_filename.G_CUR_TEST_PREFIX = pathlib.PurePath(*path_parts)
     yield
 
-
-# @pytest.fixture
-# def cache_writing_session_subclass():
-#     return writing.CachingFinancialServicesRegisterApiSession
-
-
-# @pytest.fixture
-# def cache_reading_session_subclass():
-#     return reading.MockFinancialServicesRegisterApiSession
-
 @pytest.fixture
 def caching_session_subclass():
     return session.CachingSession

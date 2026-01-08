@@ -1,0 +1,125 @@
+{
+  "content": {
+    "json": {
+      "Data": {
+        "CurrentAppointedRepresentatives": null,
+        "PreviousAppointedRepresentatives": [
+          {
+            "EEA Tied Agent": "false",
+            "Effective Date": "14/01/2005",
+            "FRN": "407489",
+            "Name": "Hood Group Administration Ltd",
+            "Principal FRN": "113849",
+            "Principal Firm Name": "Hiscox Insurance Company Limited",
+            "RecordSubType": "Full",
+            "Termination Date": "16/09/2008",
+            "Tied Agent": "false",
+            "URL": "https://register.fca.org.uk/services/V0.1/Firm/407489",
+            "[NotinUse] Insurance Distribution": "true"
+          },
+          {
+            "EEA Tied Agent": "false",
+            "Effective Date": "14/01/2005",
+            "FRN": "403527",
+            "Name": "Institute of Directors",
+            "Principal FRN": "113849",
+            "Principal Firm Name": "Hiscox Insurance Company Limited",
+            "RecordSubType": "Full",
+            "Termination Date": "30/12/2008",
+            "Tied Agent": "false",
+            "URL": "https://register.fca.org.uk/services/V0.1/Firm/403527",
+            "[NotinUse] Insurance Distribution": "true"
+          },
+          {
+            "EEA Tied Agent": "false",
+            "Effective Date": "17/08/2006",
+            "FRN": "403533",
+            "Name": "Royal Institution of Chartered Surveyors",
+            "Principal FRN": "113849",
+            "Principal Firm Name": "Hiscox Insurance Company Limited",
+            "RecordSubType": "Full",
+            "Termination Date": "29/12/2008",
+            "Tied Agent": "false",
+            "URL": "https://register.fca.org.uk/services/V0.1/Firm/403533",
+            "[NotinUse] Insurance Distribution": "true"
+          },
+          {
+            "EEA Tied Agent": "false",
+            "Effective Date": "14/01/2005",
+            "FRN": "417501",
+            "Name": "The Law Society",
+            "Principal FRN": "113849",
+            "Principal Firm Name": "Hiscox Insurance Company Limited",
+            "RecordSubType": "Full",
+            "Termination Date": "07/01/2009",
+            "Tied Agent": "false",
+            "URL": "https://register.fca.org.uk/services/V0.1/Firm/417501",
+            "[NotinUse] Insurance Distribution": "true"
+          },
+          {
+            "EEA Tied Agent": "false",
+            "Effective Date": "14/01/2005",
+            "FRN": "403300",
+            "Name": "Three Lions Underwriting Ltd",
+            "Principal FRN": "113849",
+            "Principal Firm Name": "Hiscox Insurance Company Limited",
+            "RecordSubType": "Full",
+            "Termination Date": "31/10/2005",
+            "Tied Agent": "false",
+            "URL": "https://register.fca.org.uk/services/V0.1/Firm/403300",
+            "[NotinUse] Insurance Distribution": "true"
+          },
+          {
+            "EEA Tied Agent": "false",
+            "Effective Date": "18/01/2005",
+            "FRN": "404593",
+            "Name": "Times Newspapers Limited",
+            "Principal FRN": "113849",
+            "Principal Firm Name": "Hiscox Insurance Company Limited",
+            "RecordSubType": "Introducer",
+            "Termination Date": "21/10/2008",
+            "Tied Agent": "false",
+            "URL": "https://register.fca.org.uk/services/V0.1/Firm/404593",
+            "[NotinUse] Insurance Distribution": "false"
+          }
+        ]
+      },
+      "Message": "Ok. Appointed Representative Found",
+      "ResultInfo": {
+        "page": "1",
+        "per_page": "10",
+        "total_count": "6"
+      },
+      "Status": "FSR-API-05-04-00"
+    }
+  },
+  "headers": {
+    "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
+    "cf-cache-status": "DYNAMIC",
+    "cf-ray": "9bad7dbefd1eef2f-LHR",
+    "connection": "keep-alive",
+    "content-encoding": "gzip",
+    "content-type": "application/json;charset=UTF-8",
+    "date": "Thu, 08 Jan 2026 17:42:24 GMT",
+    "server": "cloudflare",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Fri, 08-Jan-2027 17:42:23 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Fri, 08-Jan-2027 17:42:23 GMT; Max-Age=31536000; secure",
+    "strict-transport-security": "max-age=63072000; includeSubDomains",
+    "transfer-encoding": "chunked",
+    "vary": "Accept-Encoding",
+    "x-content-type-options": "nosniff"
+  },
+  "request": {
+    "headers": {
+      "accept": "application/json",
+      "accept-encoding": "gzip, deflate",
+      "connection": "keep-alive",
+      "user-agent": "python-httpx/0.28.1",
+      "x-auth-email": "user@example.com",
+      "x-auth-key": "00617470e8144a09"
+    },
+    "params": null,
+    "url": "https://register.fca.org.uk/services/V0.1/Firm/113849/AR"
+  },
+  "status_code": 200,
+  "url": "https://register.fca.org.uk/services/V0.1/Firm/113849/AR"
+}

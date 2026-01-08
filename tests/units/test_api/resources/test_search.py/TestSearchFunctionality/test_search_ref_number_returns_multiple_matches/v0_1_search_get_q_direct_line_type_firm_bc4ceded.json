@@ -1,0 +1,185 @@
+{
+  "content": {
+    "json": {
+      "Data": [
+        {
+          "Name": "SKS Beds LTD (Postcode: WF5 9NQ)",
+          "Reference Number": "830050",
+          "Status": "Appointed representative - introducer",
+          "Type of business or Individual": "Firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Firm/830050"
+        },
+        {
+          "Name": "SecPro Limited (Postcode: SA7 0AJ)",
+          "Reference Number": "831665",
+          "Status": "Lapsed",
+          "Type of business or Individual": "Firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Firm/831665"
+        },
+        {
+          "Name": "CAR CALL (U.K.) LTD (Postcode: PO7 7SE)",
+          "Reference Number": "834627",
+          "Status": "Authorised",
+          "Type of business or Individual": "Firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Firm/834627"
+        },
+        {
+          "Name": "Accident Management Direct Line Limited (Postcode: WS1 3RF)",
+          "Reference Number": "838484",
+          "Status": "Lapsed",
+          "Type of business or Individual": "Firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Firm/838484"
+        },
+        {
+          "Name": "Finance Advice Helpline Limited (Postcode: HA8 7EB)",
+          "Reference Number": "838876",
+          "Status": "Authorised",
+          "Type of business or Individual": "Firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Firm/838876"
+        },
+        {
+          "Name": "DLG Bonds / Direct Line Group PLC (Clone of FCA authorised firms and UK registered companies) (Postcode: n/a)",
+          "Reference Number": "",
+          "Status": "Unauthorised",
+          "Type of business or Individual": "Unauthorised firm",
+          "URL": null
+        },
+        {
+          "Name": "JFX GLOBAL LTD (Postcode: M8 8FX)",
+          "Reference Number": "963850",
+          "Status": "No longer registered as an Appointed Representative",
+          "Type of business or Individual": "Firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Firm/963850"
+        },
+        {
+          "Name": "Direct Line Opt In (Clone of FCA authorised firm) (Postcode: n/a)",
+          "Reference Number": "",
+          "Status": "Unauthorised",
+          "Type of business or Individual": "Unauthorised firm",
+          "URL": null
+        },
+        {
+          "Name": "Direct Line Sustainability (Clone of FCA Authorised Firm) (Postcode: n/a)",
+          "Reference Number": "",
+          "Status": "Unauthorised",
+          "Type of business or Individual": "Unauthorised firm",
+          "URL": null
+        },
+        {
+          "Name": "ConnectAQuote Pty Ltd (Postcode: 7441)",
+          "Reference Number": "981517",
+          "Status": "No longer registered as an Appointed Representative",
+          "Type of business or Individual": "Firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Firm/981517"
+        },
+        {
+          "Name": "CHURCH HILL CLAIMS LTD (Postcode: MK3 6PT)",
+          "Reference Number": "1011050",
+          "Status": "No longer registered as an Appointed Representative",
+          "Type of business or Individual": "Firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Firm/1011050"
+        },
+        {
+          "Name": "T G Webster (Insurance Services) Limited (Postcode: HD6 1AQ)",
+          "Reference Number": "118497",
+          "Status": "No longer authorised",
+          "Type of business or Individual": "Firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Firm/118497"
+        },
+        {
+          "Name": "Nationwide Building Society (Postcode: SN38 1NW)",
+          "Reference Number": "106078",
+          "Status": "Authorised",
+          "Type of business or Individual": "Firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Firm/106078"
+        },
+        {
+          "Name": "Direct Line Unit Trusts Limited (Postcode: G2 8JB)",
+          "Reference Number": "176886",
+          "Status": "No longer authorised",
+          "Type of business or Individual": "Firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Firm/176886"
+        },
+        {
+          "Name": "Protection Life Company Limited (Postcode: PR1 8UY)",
+          "Reference Number": "170956",
+          "Status": "No longer authorised",
+          "Type of business or Individual": "Firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Firm/170956"
+        },
+        {
+          "Name": "Jameson Hulme (Postcode: TF1 1NE)",
+          "Reference Number": "193270",
+          "Status": "No longer registered as an Appointed Representative",
+          "Type of business or Individual": "Firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Firm/193270"
+        },
+        {
+          "Name": "Direct Life Independent Advice Line (Postcode: YO41 1AU)",
+          "Reference Number": "200712",
+          "Status": "No longer registered as an Appointed Representative",
+          "Type of business or Individual": "Firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Firm/200712"
+        },
+        {
+          "Name": "Linea Directa Aseguradora, S.A. Compania de Seguros y Reaseguros",
+          "Reference Number": "203342",
+          "Status": "No longer authorised",
+          "Type of business or Individual": "Firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Firm/203342"
+        },
+        {
+          "Name": "Direct Line Financial Services Limited (Postcode: G2 5SH)",
+          "Reference Number": "204458",
+          "Status": "No longer authorised",
+          "Type of business or Individual": "Firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Firm/204458"
+        },
+        {
+          "Name": "U K Insurance Limited (Postcode: EC4R 3AD)",
+          "Reference Number": "202810",
+          "Status": "Authorised",
+          "Type of business or Individual": "Firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Firm/202810"
+        }
+      ],
+      "Message": "Ok. Search successful",
+      "ResultInfo": {
+        "Next": "https://register.fca.org.uk/services/V0.1/Search?q=direct line&type=firm&pgnp=2",
+        "page": "1",
+        "per_page": "20",
+        "total_count": "51"
+      },
+      "Status": "FSR-API-04-01-00"
+    }
+  },
+  "headers": {
+    "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
+    "cf-cache-status": "DYNAMIC",
+    "cf-ray": "9bad7e686b51fc95-LHR",
+    "connection": "keep-alive",
+    "content-encoding": "gzip",
+    "content-type": "application/json;charset=UTF-8",
+    "date": "Thu, 08 Jan 2026 17:42:52 GMT",
+    "server": "cloudflare",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Fri, 08-Jan-2027 17:42:50 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Fri, 08-Jan-2027 17:42:50 GMT; Max-Age=31536000; secure",
+    "strict-transport-security": "max-age=63072000; includeSubDomains",
+    "transfer-encoding": "chunked",
+    "vary": "Accept-Encoding",
+    "x-content-type-options": "nosniff"
+  },
+  "request": {
+    "headers": {
+      "accept": "application/json",
+      "accept-encoding": "gzip, deflate",
+      "connection": "keep-alive",
+      "user-agent": "python-httpx/0.28.1",
+      "x-auth-email": "user@example.com",
+      "x-auth-key": "00617470e8144a09"
+    },
+    "params": null,
+    "url": "https://register.fca.org.uk/services/V0.1/Search?q=direct+line&type=firm"
+  },
+  "status_code": 200,
+  "url": "https://register.fca.org.uk/services/V0.1/Search?q=direct+line&type=firm"
+}

@@ -1,0 +1,212 @@
+{
+  "content": {
+    "json": {
+      "Data": {
+        "Accepting Deposits": [
+          {
+            "Customer Type": [
+              "All"
+            ]
+          },
+          {
+            "Investment Type": [
+              "Deposit"
+            ]
+          },
+          {
+            "Limitation": [
+              "Limited to accepting deposits in the course of carrying on insurance business for which the firm holds a permission."
+            ]
+          }
+        ],
+        "Advising on P2P agreements": [
+          {
+            "Customer Type": [
+              "Commercial",
+              "Retail (Non-Investment Insurance)"
+            ]
+          }
+        ],
+        "Advising on investments (except on Pension Transfers and Pension Opt Outs)": [
+          {
+            "Customer Type": [
+              "Commercial",
+              "Retail (Non-Investment Insurance)"
+            ]
+          },
+          {
+            "Investment Type": [
+              "Non-investment insurance contracts"
+            ]
+          }
+        ],
+        "Agreeing to carry on a regulated activity": [
+          {
+            "Limitation": [
+              "The firm can only agree to carry on the regulated activities specified in this Notice."
+            ]
+          }
+        ],
+        "Arranging (bringing about) deals in investments": [
+          {
+            "Customer Type": [
+              "Retail (Non-Investment Insurance)",
+              "Commercial"
+            ]
+          },
+          {
+            "Investment Type": [
+              "Non-investment insurance contracts"
+            ]
+          }
+        ],
+        "Assisting in the administration and performance of a contract of insurance": [
+          {
+            "Customer Type": [
+              "Retail (Non-Investment Insurance)",
+              "Commercial"
+            ]
+          },
+          {
+            "Investment Type": [
+              "Non-investment insurance contracts"
+            ]
+          }
+        ],
+        "Carrying out contracts of insurance": [
+          {
+            "Customer Type": [
+              "All"
+            ]
+          },
+          {
+            "Investment Type": [
+              "Sickness",
+              "Accident",
+              "Land Vehicles",
+              "Railway rolling stock",
+              "Aircraft",
+              "Ships",
+              "Goods in transit",
+              "Fire and natural forces",
+              "Damage to property",
+              "Motor vehicle liability",
+              "Aircraft liability",
+              "Liability for ships",
+              "General liability",
+              "Credit",
+              "Suretyship",
+              "Miscellaneous financial loss",
+              "Legal expenses",
+              "Assistance"
+            ]
+          }
+        ],
+        "Dealing in investments as principal": [
+          {
+            "Customer Type": [
+              "Retail (Investment)",
+              "Professional"
+            ]
+          },
+          {
+            "Investment Type": [
+              "Rights to or interests in investments (Contractually Based Investments)",
+              "Commodity Future",
+              "Commodity option and option on commodity future",
+              "Contract for Differences (excluding a spread bet and, a rolling spot forex contract and a binary bet)",
+              "Future (excluding a commodity future and a rolling spot forex contract)",
+              "Option (excluding a commodity option and an option on a commodity future)",
+              "Rolling spot forex contract",
+              "Spread Bet"
+            ]
+          },
+          {
+            "Limitation": [
+              "The firm, in carrying out this regulated activity, is limited to entering into transactions in a manner which, if the firm was an unauthorised person, would come within article 16 of the RAO.",
+              "Investment activity in \"rights to or interests in investments (contractually based)\" is limited to investment types granted for this activity."
+            ]
+          }
+        ],
+        "Effecting contracts of insurance": [
+          {
+            "Customer Type": [
+              "All"
+            ]
+          },
+          {
+            "Investment Type": [
+              "Accident",
+              "Sickness",
+              "Land Vehicles",
+              "Railway rolling stock",
+              "Aircraft",
+              "Ships",
+              "Goods in transit",
+              "Fire and natural forces",
+              "Damage to property",
+              "Motor vehicle liability",
+              "Aircraft liability",
+              "Liability for ships",
+              "General liability",
+              "Credit",
+              "Suretyship",
+              "Miscellaneous financial loss",
+              "Legal expenses",
+              "Assistance"
+            ]
+          }
+        ],
+        "Making arrangements with a view to transactions in investments": [
+          {
+            "Customer Type": [
+              "Retail (Non-Investment Insurance)",
+              "Commercial"
+            ]
+          },
+          {
+            "Investment Type": [
+              "Non-investment insurance contracts"
+            ]
+          }
+        ]
+      },
+      "Message": "Ok. Firm permission found",
+      "ResultInfo": {
+        "page": "1",
+        "per_page": "20",
+        "total_count": "10"
+      },
+      "Status": "FSR-API-02-03-00"
+    }
+  },
+  "headers": {
+    "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
+    "cf-cache-status": "DYNAMIC",
+    "cf-ray": "9bad7e083a12bec3-LHR",
+    "connection": "keep-alive",
+    "content-encoding": "gzip",
+    "content-type": "application/json;charset=UTF-8",
+    "date": "Thu, 08 Jan 2026 17:42:36 GMT",
+    "server": "cloudflare",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Fri, 08-Jan-2027 17:42:35 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Fri, 08-Jan-2027 17:42:35 GMT; Max-Age=31536000; secure",
+    "strict-transport-security": "max-age=63072000; includeSubDomains",
+    "transfer-encoding": "chunked",
+    "vary": "Accept-Encoding",
+    "x-content-type-options": "nosniff"
+  },
+  "request": {
+    "headers": {
+      "accept": "application/json",
+      "accept-encoding": "gzip, deflate",
+      "connection": "keep-alive",
+      "user-agent": "python-httpx/0.28.1",
+      "x-auth-email": "user@example.com",
+      "x-auth-key": "00617470e8144a09"
+    },
+    "params": null,
+    "url": "https://register.fca.org.uk/services/V0.1/Firm/113849/Permissions"
+  },
+  "status_code": 200,
+  "url": "https://register.fca.org.uk/services/V0.1/Firm/113849/Permissions"
+}
