@@ -1,0 +1,95 @@
+import httpx
+import pathlib
+import typing
+import enum
+import base64
+import json
+
+from . import cache_filename
+
+@enum.unique
+class CacheMode(enum.StrEnum):
+    READ = "read"
+    WRITE = "write"
+
+class CachingSession(httpx.AsyncClient):
+    """A test-only session that caches responses to disk for reuse."""
+
+    cache_dir: pathlib.Path
+    cache_mode: CacheMode
+
+    def __init__(
+        self,
+        headers: dict,
+        cache_dir: pathlib.Path,
+        cache_mode: typing.Literal["read", "write"] = "read",
+    ) -> None:
+        super().__init__(headers=headers)
+        self.cache_dir = pathlib.Path(cache_dir)
+        self.cache_mode = CacheMode(cache_mode)
+
+    def _get_cache_filename(self, url: str, **kwargs: typing.Any) -> pathlib.Path:
+        """Generate a cache filename based on the request parameters.
+
+        Parameters
+        ----------
+        url : str
+            The request URL.
+        **kwargs : Any
+            Additional request parameters.
+
+        Returns
+        -------
+        pathlib.Path
+            Path to the cache file.
+        """
+        # Create a unique identifier from URL and request parameters
+        # This must match the logic in CachingFinancialServicesRegisterApiSession
+        return self.cache_dir / cache_filename.make("GET", url, dict(self.headers), **kwargs)
+
+    async def get(self, url: str, **kwargs: typing.Any) -> httpx.Response:
+        """Load cached response instead of making HTTP request.
+
+        Parameters
+        ----------
+        url : str
+            The request URL.
+        **kwargs : Any
+            Additional request parameters.
+
+        Returns
+        -------
+        httpx.Response
+            The cached HTTP response.
+
+        Raises
+        ------
+        FileNotFoundError
+            If no cached response is found for this request.
+        """
+        cache_file = self._get_cache_filename(url, **kwargs)
+
+        if not cache_file.exists():
+            raise FileNotFoundError(
+                f"No cached response found for request. "
+                f"Cache file: {cache_file}\\n"
+                f"URL: {url}\\n"
+                f"Params: {kwargs.get('params', 'None')}"
+            )
+
+        # Load cached response data
+        with cache_file.open("r") as f:
+            cache_data = json.load(f)
+
+        # Create a mock HTTP response
+        # We need to construct the response in a way that httpx.Response accepts
+        request = httpx.Request("GET", url, params=kwargs.get("params"))
+
+        response = httpx.Response(
+            status_code=cache_data["status_code"],
+            headers=cache_data["headers"] | {"content-encoding": "none"},
+            content=base64.b64decode(cache_data["content"]),
+            request=request,
+        )
+
+        return response

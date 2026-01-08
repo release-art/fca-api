@@ -1,23 +1,15 @@
-from __future__ import annotations
-
 __all__ = [
     "FinancialServicesRegisterApiClient",
     "FinancialServicesRegisterApiResponse",
-    "FinancialServicesRegisterApiSession",
 ]
 
 
-# -- IMPORTS --
-
-# -- Standard libraries --
-
+import typing
 from typing import Literal, Union
 from urllib.parse import urlencode
 
-# -- 3rd party libraries --
 import httpx
 
-# -- Internal libraries --
 from fca_api.const import (
     FINANCIAL_SERVICES_REGISTER_API_CONSTANTS as API_CONSTANTS,
 )
@@ -25,63 +17,6 @@ from fca_api.exc import (
     FinancialServicesRegisterApiRequestError,
     FinancialServicesRegisterApiResponseError,
 )
-
-
-class FinancialServicesRegisterApiSession(httpx.AsyncClient):
-    """A simple :py:class:`httpx.AsyncClient`-based class for an API session."""
-
-    _api_username: str
-    _api_key: str
-
-    def __init__(self, api_username: str, api_key: str) -> None:
-        """Initialiser requiring the API username and key.
-
-        Parameters
-        ----------
-        api_username : str
-            The API username which will be the email used to sign up on the
-            API developer portal:
-
-            https://register.fca.org.uk/Developer/s/
-
-        api_key : str
-            The API key obtained from the registration profile on the API
-            developer portal.
-        """
-        super().__init__(
-            headers={
-                "ACCEPT": "application/json",
-                "X-AUTH-EMAIL": api_username,
-                "X-AUTH-KEY": api_key,
-            }
-        )
-
-        self._api_username = api_username
-        self._api_key = api_key
-
-    @property
-    def api_username(self) -> str:
-        """:py:class:`str`: The API username (signup email for the Financial
-        Services Register).
-
-        Returns
-        -------
-        str
-            The API username.
-        """
-        return self._api_username
-
-    @property
-    def api_key(self) -> str:
-        """:py:class:`str`: The API key (obtained from the API developer portal
-        profile).
-
-        Returns
-        -------
-        str
-            The API key.
-        """
-        return self._api_key
 
 
 class FinancialServicesRegisterApiResponse(httpx.Response):
@@ -163,48 +98,52 @@ class FinancialServicesRegisterApiClient:
     """
 
     #: All instances must have this private attribute to store API session state
-    _api_session: FinancialServicesRegisterApiSession
+    _api_session: httpx.AsyncClient
 
     def __init__(
         self,
-        api_username_or_session: Union[str, FinancialServicesRegisterApiSession],
-        api_key: str = None,
+        credentials: Union[
+            typing.Tuple[str, str],
+            httpx.AsyncClient,
+        ],
     ) -> None:
         """Initialiser accepting either API credentials or a pre-configured
         session.
 
         Parameters
         ----------
-        api_username_or_session : str or FinancialServicesRegisterApiSession
-            Either the API username (email used for API registration) when using
-            separate credentials, or a pre-configured
-            FinancialServicesRegisterApiSession instance.
-
-        api_key : str, optional
-            The API key from the developer portal. Required when
-            api_username_or_session is a string (username). Ignored when
-            api_username_or_session is a session instance.
+            credentials:
+                Connection credentials.
+                Supports two forms:
+                1. A tuple of (api_username: str, api_key: str)
+                2. An instance of httpx.Client (with correct headers set)
         """
-        if isinstance(api_username_or_session, FinancialServicesRegisterApiSession):
-            # Using pre-configured session
-            self._api_session = api_username_or_session
+        if isinstance(credentials, httpx.AsyncClient):
+            self._api_session = credentials
+        elif isinstance(credentials, tuple | list) and len(credentials) == 2:
+            api_username, api_key = credentials
+            self._api_session = httpx.AsyncClient(
+                headers={
+                    "ACCEPT": "application/json",
+                    "X-AUTH-EMAIL": api_username,
+                    "X-AUTH-KEY": api_key,
+                }
+            )
         else:
-            # Using separate credentials
-            if api_key is None:
-                raise ValueError("api_key must be provided when api_username_or_session is a string")
-            self._api_session = FinancialServicesRegisterApiSession(api_username_or_session, api_key)
+            raise ValueError(
+                "credentials must be either a tuple of (api_username: str, api_key: str) "
+                "or an instance of httpx.AsyncClient."
+                f"Got {type(credentials)} instead."
+            )
 
     @property
-    def api_session(self) -> FinancialServicesRegisterApiSession:
+    def api_session(self) -> httpx.AsyncClient:
         """:py:class:`~fca_api.api.FinancialServicesRegisterApiSession`:
         The API session instance.
 
         Returns
         -------
-        FinancialServicesRegisterApiSession
-            The current
-            :py:class:`~fca_api.api.FinancialServicesRegisterApiSession`
-            object.
+        httpx.AsyncClient
         """
         return self._api_session
 
