@@ -32,7 +32,7 @@ It is necessary to have an API username and key from the `FCA developer portal <
 Dependencies :fas:`cubes`
 =========================
 
-The only external dependency is `requests <https://requests.readthedocs.io/en/latest/>`_.
+The only external dependency is `httpx <https://www.python-httpx.org/>`_.
 
 Development dependencies are specified in the ``[tool.pdm.dev-dependencies]`` section of the `project TOML <https://github.com/release-art/fca-api/blob/main/pyproject.toml>`_, but these are purely indicative.
 

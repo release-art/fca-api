@@ -20,9 +20,4 @@ The Financial Services Register, or FS Register, is a **public** database of all
 > [!NOTE]
 > The FS Register API is free to use but accessing it, including via this library, requires [registration](https://register.fca.org.uk/Developer/ShAPI_LoginPage?ec=302&startURL=%2FDeveloper%2Fs%2F#). Registration involves a free sign up with an email, which is used as the API username in requests, and basic personal information. Once registered an API key is available from your registration profile.
 
-See the [Sphinx documentation](https://financial-services-register-api.readthedocs.io/en/latest/) for more details on:
-
-* [understanding the FS Register API](https://financial-services-register-api.readthedocs.io/en/latest/sources/financial-services-register-api.html)
-* [usage](https://financial-services-register-api.readthedocs.io/en/latest/sources/usage.html)
-* [contributing](https://financial-services-register-api.readthedocs.io/en/latest/sources/contributing.html)
-* [API reference](https://financial-services-register-api.readthedocs.io/en/latest/sources/api-reference.html)
+See the [documentation](https://docs.release.art/fca-api/) for more details.

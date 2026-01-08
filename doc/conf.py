@@ -109,13 +109,6 @@ autodoc_default_options = {
 # Sphinx autodoc autosummary settings
 autosummary_generate = False
 
-# Numpydoc settings
-numpydoc_show_class_members = True
-numpydoc_show_inherited_class_members = False
-numpydoc_class_members_toctree = False
-numpydoc_attributes_as_param_list = False
-numpydoc_xref_param_type = False
-
 # Intersphinx mappings to reference external documentation domains - none required.
 intersphinx_mapping = {}
 
@@ -171,7 +164,7 @@ html_context = {
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
 # General (non-theme) HTML output options
-html_baseurl = 'https://fca-api.readthedocs.io'
+html_baseurl = 'https://docs.release.art/fca-api/'
 
 # HTML theme options
 html_theme = 'sphinx_rtd_theme'
