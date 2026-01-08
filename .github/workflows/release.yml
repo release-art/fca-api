@@ -13,8 +13,12 @@ permissions:
   id-token: write 
 
 jobs:
+  start:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    steps: []
   docs:
-    # if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    needs: start
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -38,7 +42,7 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
   publish:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    needs: start
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
