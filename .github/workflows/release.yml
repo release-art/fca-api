@@ -10,7 +10,8 @@ on:
 permissions:
   contents: write # allow pushing code changes
   pages: write # allow publishing to GitHub Pages
-  id-token: write 
+  id-token: write
+  
 
 jobs:
   start:
@@ -85,8 +86,6 @@ jobs:
           pdm self add pdm-bump
       - name: Bump version
         run: |
-          git config --global user.email "github+actions@gmail.com"
-          git config --global user.name "Actions"
           pdm bump patch
       - uses: stefanzweifel/git-auto-commit-action@v7
         with:

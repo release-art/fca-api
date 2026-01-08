@@ -1,5 +1,5 @@
 ===============================
-financial-services-register-api
+fca-api
 ===============================
 
 A Python client library for the UK `Financial Services Register <https://register.fca.org.uk/s/>`_ `RESTful API <https://register.fca.org.uk/Developer/s/>`_.
