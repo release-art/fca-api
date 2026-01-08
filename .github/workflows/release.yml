@@ -16,7 +16,9 @@ jobs:
   start:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
-    steps: []
+    steps:
+      - name: Start release
+        run: echo "Starting release process"
   docs:
     needs: start
     runs-on: ubuntu-latest
