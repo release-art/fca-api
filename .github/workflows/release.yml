@@ -95,5 +95,9 @@ jobs:
           pdm bump patch
       - uses: stefanzweifel/git-auto-commit-action@v7
         with:
-          commit_message: "Bump version for next release"
+          commit_message: |
+            Bump version for next release
+
+
+            skip-checks: true
           create_branch: false
