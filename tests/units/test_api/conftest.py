@@ -14,6 +14,7 @@ def test_resources_path() -> pathlib.Path:
     assert out.is_dir(), f"Test resources path does not exist: {out}"
     return out.resolve()
 
+
 @pytest_asyncio.fixture
 async def test_client(caching_session_subclass, test_api_username, test_api_key, test_resources_path):
     async with caching_session_subclass(
@@ -23,8 +24,6 @@ async def test_client(caching_session_subclass, test_api_username, test_api_key,
             "X-AUTH-KEY": test_api_key,
         },
         cache_dir=test_resources_path,
-        cache_mode="write",
+        cache_mode="read",
     ) as api_session:
-        yield FinancialServicesRegisterApiClient(
-            credentials=api_session
-        )
+        yield FinancialServicesRegisterApiClient(credentials=api_session)

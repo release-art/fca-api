@@ -20,6 +20,7 @@ def pytest_runtest_setup(item):
     cache_filename.G_CUR_TEST_PREFIX = pathlib.PurePath(*path_parts)
     yield
 
+
 @pytest.fixture
 def caching_session_subclass():
     return session.CachingSession

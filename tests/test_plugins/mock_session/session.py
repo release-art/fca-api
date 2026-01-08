@@ -1,17 +1,19 @@
-import httpx
+import enum
+import gzip
+import json
 import pathlib
 import typing
-import enum
-import base64
-import json
-import gzip
+
+import httpx
 
 from . import cache_filename
+
 
 @enum.unique
 class CacheMode(enum.StrEnum):
     READ = "read"
     WRITE = "write"
+
 
 class CachingSession(httpx.AsyncClient):
     """A test-only session that caches responses to disk for reuse."""
@@ -78,7 +80,7 @@ class CachingSession(httpx.AsyncClient):
                     f"URL: {url}\\n"
                     f"Params: {kwargs.get('params', 'None')}"
                 )
-    
+
             # Load cached response data
             with cache_file.open("r") as f:
                 cache_data = json.load(f)
@@ -87,7 +89,10 @@ class CachingSession(httpx.AsyncClient):
             # We need to construct the response in a way that httpx.Response accepts
             request = httpx.Request("GET", url, params=kwargs.get("params"))
 
-            content_payload = json.dumps(cache_data["content"]).encode("utf-8")
+            if json_content := cache_data["content"].get("json"):
+                content_payload = json.dumps(json_content).encode("utf-8")
+            else:
+                raise NotImplementedError("Only JSON content is supported in the mock session.")
             response = httpx.Response(
                 status_code=cache_data["status_code"],
                 headers=cache_data["headers"] | {"content-encoding": "gzip"},
@@ -103,13 +108,14 @@ class CachingSession(httpx.AsyncClient):
                 "status_code": response.status_code,
                 "headers": dict(response.headers),
                 "content": {
-                    "json": response.json() # Assume JSON content for simplicity
+                    "json": response.json()  # Assume JSON content for simplicity
                 },
                 "url": str(response.url),
                 "request": {
                     "url": str(url),
                     "params": kwargs.get("params"),
-                    "headers": dict(self.headers) | {
+                    "headers": dict(self.headers)
+                    | {
                         # Mask private headers
                         "x-auth-email": "user@example.com",
                         "x-auth-key": "00617470e8144a09",

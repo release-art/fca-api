@@ -2,7 +2,6 @@
 import re
 
 import httpx
-
 import pytest
 
 import fca_api
