@@ -67,14 +67,15 @@ jobs:
       uses: actions/cache@v4
       with:
         path: .venv
-        key: venv-2-${{ runner.os }}-${{ matrix.arch }}-${{ matrix.python-version }}-${{ hashFiles('pdm.lock') }}
+        key: venv-3-${{ runner.os }}-${{ matrix.arch }}-${{ matrix.python-version }}-${{ hashFiles('pdm.lock') }}
         restore-keys: |
-          venv-2-${{ runner.os }}-${{ matrix.arch }}-${{ matrix.python-version }}-
+          venv-3-${{ runner.os }}-${{ matrix.arch }}-${{ matrix.python-version }}-
 
     - name: Install current PDM via pip
       if: matrix.install-via == 'pip'
       run: |
         python -m pip install pdm
+        pdm use python
         pdm info -v
 
     - name: Lint + Run unit & acceptance tests + Measure code coverage
