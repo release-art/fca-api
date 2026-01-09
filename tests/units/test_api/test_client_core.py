@@ -26,7 +26,7 @@ class TestFinancialServicesRegisterApiClientCore:
             fca_api.api.FinancialServicesRegisterApiClient(credentials=("only_username",))
 
     @pytest.mark.asyncio
-    async def test_rate_limiter(self, mocker):
+    async def test_rate_limiter(self, mocker, mock_http_client):
         limiter_enter_mock = mocker.AsyncMock(name="limiter_enter_mock")
         limiter_exit_mock = mocker.AsyncMock(name="limiter_exit_mock")
 
@@ -38,15 +38,8 @@ class TestFinancialServicesRegisterApiClientCore:
             finally:
                 await limiter_exit_mock()
 
-        mock_client = mocker.create_autospec(httpx.AsyncClient, name="mock-httpx-client")
-        mock_client.get.return_value = mock_req = mocker.create_autospec(
-            httpx.Response,
-            instance=True,
-        )
-        mock_req.status_code = 200
-        mock_req.json.return_value = {"status": "FSR-API-04-01-00", "message": "Ok. Search successful", "Data": [{}]}
         test_client = fca_api.api.FinancialServicesRegisterApiClient(
-            credentials=mock_client,
+            credentials=mock_http_client,
             api_limiter=limiter_mock,
         )
 

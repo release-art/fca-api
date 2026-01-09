@@ -1,5 +1,6 @@
 import pathlib
 
+import httpx
 import pytest
 import pytest_asyncio
 
@@ -13,6 +14,19 @@ def test_resources_path() -> pathlib.Path:
     out = pathlib.Path(__file__).parent / "resources"
     assert out.is_dir(), f"Test resources path does not exist: {out}"
     return out.resolve()
+
+
+@pytest.fixture
+def mock_http_client(mocker):
+    mock_client = mocker.create_autospec(httpx.AsyncClient, name="mock-httpx-client")
+    mock_client.get.return_value = mock_req = mocker.create_autospec(
+        httpx.Response,
+        instance=True,
+    )
+    mock_req.status_code = 200
+    mock_req.json.return_value = {"status": "FSR-API-04-01-00", "message": "Ok. Search successful", "Data": [{}]}
+    mock_req.extensions = {}
+    return mock_client
 
 
 @pytest_asyncio.fixture
