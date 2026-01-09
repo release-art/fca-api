@@ -1,7 +1,6 @@
 import pytest
 
 
-
 class TestFirmMethods:
     @pytest.mark.asyncio
     async def test_get_firm_success(self, test_client):

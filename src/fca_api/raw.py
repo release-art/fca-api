@@ -5,6 +5,7 @@ client.
 It provides direct access to the FS Register API endpoints with minimal
 abstraction/data validation.
 """
+
 import contextlib
 import typing
 from typing import Literal, Union
@@ -42,12 +43,12 @@ class FcaApiResponse(httpx.Response, typing.Generic[T]):
 
     @property
     def status(self) -> str:
-        """:py:class:`str`: The status code of the API response.
+        """:py:class:`str`: The status message of the API response.
 
         Returns
         -------
         str
-            The status code of the API response.
+            The status message of the API response.
         """
         return self.json().get("Status")
 
@@ -79,7 +80,7 @@ class FcaApiResponse(httpx.Response, typing.Generic[T]):
 
         Returns
         -------
-        str
+        T
             The data in the API response - will usually be either a
             :py:class:`dict` or a :py:class:`list` of dicts.
         """
@@ -162,8 +163,7 @@ class RawClient:
 
     @property
     def api_session(self) -> httpx.AsyncClient:
-        """:py:class:`~fca_api.api.FinancialServicesRegisterApiSession`:
-        The API session instance.
+        """:py:class:`httpx.AsyncClient`: The API session instance.
 
         Returns
         -------
@@ -185,7 +185,7 @@ class RawClient:
     async def common_search(
         self, resource_name: str, resource_type: Literal["firm", "individual", "fund"]
     ) -> FcaApiResponse[list[dict[str, typing.Any]]]:
-        """:py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`:
+        """:py:class:`~fca_api.raw.FcaApiResponse`:
         Returns a response containing the results of a search using the FS
         Register API common search API endpoint.
 
@@ -199,7 +199,7 @@ class RawClient:
         ``"individual"``, ``"fund"``).
 
         Returns an
-        :py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`
+        :py:class:`~fca_api.raw.FcaApiResponse`
         object if the API call completes without exceptions or errors.
 
         Parameters
@@ -216,13 +216,13 @@ class RawClient:
 
         Returns
         -------
-        FinancialServicesRegisterApiResponse
+        FcaApiResponse[list[dict[str, typing.Any]]]
             Wrapper of the API response object - there may be no data in
-            the response if the FRN isn't found.
+            the response if no matching resources are found.
 
         Raises
         ------
-        FinancialServicesRegisterApiRequestException
+        FcaRequestError
             If there was a :py:class:`httpx.RequestError` in making the original
             request.
         """
@@ -255,16 +255,13 @@ class RawClient:
         return out
 
     async def search_frn(self, firm_name: str) -> FcaApiResponse[list[dict[str, str]]]:
-        """:py:class:`str` or :py:class:`list`: Returns the unique firm
-        reference number (FRN) of a given firm, if found, or else a JSON array
-        of matching records.
+        """:py:class:`~fca_api.raw.FcaApiResponse`: Returns a response containing
+        firm records matching the given firm name.
 
-        Calls the private method
-        :py:meth:`~fca_api.FinancialServicesRegisterApiClient._search_ref_number`
-        to do the search.
+        Calls the common_search method to perform the search.
 
-        Returns a FinancialServicesRegisterApiResponse containing the api
-        response.
+        Returns a FcaApiResponse containing the api response with matching
+        firm records.
 
         Parameters
         ----------
@@ -275,16 +272,15 @@ class RawClient:
 
         Returns
         -------
-        str
-            A string version of the firm reference number (FRN), if found, or
-            a JSON array of all matching records.
+        FcaApiResponse[list[dict[str, str]]]
+            A response containing a list of matching firm records.
         """
         return await self.common_search(firm_name, const.ResourceTypes.FIRM.value.type_name)
 
     async def _get_resource_info(
         self, resource_ref_number: str, resource_type: str, modifiers: tuple[str] = None
     ) -> FcaApiResponse:
-        """:py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`:
+        """:py:class:`~fca_api.raw.FcaApiResponse`:
         A private, base handler for resource information API handlers.
 
         Is the base handler for the following resource informational API
@@ -327,7 +323,7 @@ class RawClient:
            end users.
 
         Returns an
-        :py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`.
+        :py:class:`~fca_api.raw.FcaApiResponse`.
 
         The optional modifiers, given as a tuple of strings, should represent a
         valid ordered combination of actions and/or properties related to the
@@ -354,12 +350,12 @@ class RawClient:
 
         Raises
         ------
-        FinancialServicesRegisterApiRequestException
+        FcaRequestError
             If there was a request exception.
 
         Returns
         -------
-        FinancialServicesRegisterApiResponse
+        FcaApiResponse
             Wrapper of the API response object - there may be no data in
             the response if the resource ref. number isn't found.
         """
@@ -382,7 +378,7 @@ class RawClient:
             raise exc.FcaRequestError(e) from None
 
     async def get_firm(self, frn: str) -> FcaApiResponse:
-        """:py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`:
+        """:py:class:`~fca_api.raw.FcaApiResponse`:
         Returns a response containing firm details, given its firm reference
         number (FRN)
 
@@ -392,7 +388,7 @@ class RawClient:
             /V0.1/Firm/{FRN}
 
         Returns a
-        :py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`,
+        :py:class:`~fca_api.raw.FcaApiResponse`,
         with data if the FRN is found, otherwise with no data.
 
         Parameters
@@ -402,14 +398,14 @@ class RawClient:
 
         Returns
         -------
-        FinancialServicesRegisterApiResponse
+        FcaApiResponse
             Wrapper of the API response object - there may be no data in
             the response if the FRN isn't found.
         """
         return await self._get_resource_info(frn, const.ResourceTypes.FIRM.value.type_name)
 
     async def get_firm_names(self, frn: str) -> FcaApiResponse:
-        """:py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`:
+        """:py:class:`~fca_api.raw.FcaApiResponse`:
         Returns a response containing the alternative or secondary trading name
         details of a firm, given its firm reference number (FRN).
 
@@ -419,7 +415,7 @@ class RawClient:
             /V0.1/Firm/{FRN}/Names
 
         Returns a
-        :py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`,
+        :py:class:`~fca_api.raw.FcaApiResponse`,
         with data if the FRN is found, otherwise with no data.
 
         Parameters
@@ -429,7 +425,7 @@ class RawClient:
 
         Returns
         -------
-        FinancialServicesRegisterApiResponse
+        FcaApiResponse
             Wrapper of the API response object - there may be no data in
             the response if the FRN isn't found.
         """
@@ -440,7 +436,7 @@ class RawClient:
         )
 
     async def get_firm_addresses(self, frn: str) -> FcaApiResponse:
-        """:py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`:
+        """:py:class:`~fca_api.raw.FcaApiResponse`:
         Returns a response containing the address details of a firm, given its
         firm reference number (FRN).
 
@@ -450,7 +446,7 @@ class RawClient:
             /V0.1/Firm/{FRN}/Address
 
         Returns a
-        :py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`,
+        :py:class:`~fca_api.raw.FcaApiResponse`,
         with data if the FRN is found, otherwise with no data.
 
         Parameters
@@ -460,7 +456,7 @@ class RawClient:
 
         Returns
         -------
-        FinancialServicesRegisterApiResponse
+        FcaApiResponse
             Wrapper of the API response object - there may be no data in
             the response if the FRN isn't found.
         """
@@ -471,7 +467,7 @@ class RawClient:
         )
 
     async def get_firm_controlled_functions(self, frn: str) -> FcaApiResponse:
-        """:py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`:
+        """:py:class:`~fca_api.raw.FcaApiResponse`:
         Returns a response containing the controlled functions associated with a
         firm, given its firm reference number (FRN).
 
@@ -481,7 +477,7 @@ class RawClient:
             /V0.1/Firm/{FRN}/CF
 
         Returns a
-        :py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`,
+        :py:class:`~fca_api.raw.FcaApiResponse`,
         with data if the FRN is found, otherwise with no data.
 
         Parameters
@@ -491,7 +487,7 @@ class RawClient:
 
         Returns
         -------
-        FinancialServicesRegisterApiResponse
+        FcaApiResponse
             Wrapper of the API response object - there may be no data in
             the response if the FRN isn't found.
         """
@@ -502,7 +498,7 @@ class RawClient:
         )
 
     async def get_firm_individuals(self, frn: str) -> FcaApiResponse:
-        """:py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`:
+        """:py:class:`~fca_api.raw.FcaApiResponse`:
         Returns a response containing the individuals associated with a firm,
         given its firm reference number (FRN).
 
@@ -512,7 +508,7 @@ class RawClient:
             /V0.1/Firm/{FRN}/Individuals
 
         Returns a
-        :py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`,
+        :py:class:`~fca_api.raw.FcaApiResponse`,
         with data if the FRN is found, otherwise with no data.
 
         Parameters
@@ -522,7 +518,7 @@ class RawClient:
 
         Returns
         -------
-        FinancialServicesRegisterApiResponse
+        FcaApiResponse
             Wrapper of the API response object - there may be no data in
             the response if the FRN isn't found.
         """
@@ -533,7 +529,7 @@ class RawClient:
         )
 
     async def get_firm_permissions(self, frn: str) -> FcaApiResponse:
-        """:py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`:
+        """:py:class:`~fca_api.raw.FcaApiResponse`:
         Returns a response containing the permissions associated with a firm,
         given its firm reference number (FRN).
 
@@ -543,7 +539,7 @@ class RawClient:
             /V0.1/Firm/{FRN}/Permissions
 
         Returns a
-        :py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`,
+        :py:class:`~fca_api.raw.FcaApiResponse`,
         with data if the FRN is found, otherwise with no data.
 
         Parameters
@@ -553,7 +549,7 @@ class RawClient:
 
         Returns
         -------
-        FinancialServicesRegisterApiResponse
+        FcaApiResponse
             Wrapper of the API response object - there may be no data in
             the response if the FRN isn't found.
         """
@@ -564,7 +560,7 @@ class RawClient:
         )
 
     async def get_firm_requirements(self, frn: str) -> FcaApiResponse:
-        """:py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`:
+        """:py:class:`~fca_api.raw.FcaApiResponse`:
         Returns a response containing the requirements associated with a firm,
         given its firm reference number (FRN).
 
@@ -574,7 +570,7 @@ class RawClient:
             /V0.1/Firm/{FRN}/Requirements
 
         Returns a
-        :py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`,
+        :py:class:`~fca_api.raw.FcaApiResponse`,
         with data if the FRN is found, otherwise with no data.
 
         Parameters
@@ -584,7 +580,7 @@ class RawClient:
 
         Returns
         -------
-        FinancialServicesRegisterApiResponse
+        FcaApiResponse
             Wrapper of the API response object - there may be no data in
             the response if the FRN isn't found.
         """
@@ -594,10 +590,8 @@ class RawClient:
             modifiers=("Requirements",),
         )
 
-    async def get_firm_requirement_investment_types(
-        self, frn: str, req_ref: str
-    ) -> FcaApiResponse:
-        """:py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`:
+    async def get_firm_requirement_investment_types(self, frn: str, req_ref: str) -> FcaApiResponse:
+        """:py:class:`~fca_api.raw.FcaApiResponse`:
         Returns a response containing any investment types listed for a specific
         requirement associated with a firm, given its firm reference number
         (FRN).
@@ -608,7 +602,7 @@ class RawClient:
             /V0.1/Firm/{FRN}/Requirements/<ReqRef>/InvestmentTypes
 
         Returns a
-        :py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`,
+        :py:class:`~fca_api.raw.FcaApiResponse`,
         with data if the FRN is found, otherwise with no data.
 
         Parameters
@@ -621,7 +615,7 @@ class RawClient:
 
         Returns
         -------
-        FinancialServicesRegisterApiResponse
+        FcaApiResponse
             Wrapper of the API response object - there may be no data in
             the response if the FRN isn't found.
         """
@@ -632,7 +626,7 @@ class RawClient:
         )
 
     async def get_firm_regulators(self, frn: str) -> FcaApiResponse:
-        """:py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`:
+        """:py:class:`~fca_api.raw.FcaApiResponse`:
         Returns a response containing the regulators associated with a firm,
         given its firm reference number (FRN).
 
@@ -642,7 +636,7 @@ class RawClient:
             /V0.1/Firm/{FRN}/Regulators
 
         Returns a
-        :py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`,
+        :py:class:`~fca_api.raw.FcaApiResponse`,
         with data if the FRN is found, otherwise with no data.
 
         Parameters
@@ -652,7 +646,7 @@ class RawClient:
 
         Returns
         -------
-        FinancialServicesRegisterApiResponse
+        FcaApiResponse
             Wrapper of the API response object - there may be no data in
             the response if the FRN isn't found.
         """
@@ -663,7 +657,7 @@ class RawClient:
         )
 
     async def get_firm_passports(self, frn: str) -> FcaApiResponse:
-        """:py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`:
+        """:py:class:`~fca_api.raw.FcaApiResponse`:
         Returns a response containing the passports associated with a firm,
         given its firm reference number (FRN).
 
@@ -673,7 +667,7 @@ class RawClient:
             /V0.1/Firm/{FRN}/Passports
 
         Returns a
-        :py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`,
+        :py:class:`~fca_api.raw.FcaApiResponse`,
         with data if the FRN is found, otherwise with no data.
 
         Parameters
@@ -683,7 +677,7 @@ class RawClient:
 
         Returns
         -------
-        FinancialServicesRegisterApiResponse
+        FcaApiResponse
             Wrapper of the API response object - there may be no data in
             the response if the FRN isn't found.
         """
@@ -694,7 +688,7 @@ class RawClient:
         )
 
     async def get_firm_passport_permissions(self, frn: str, country: str) -> FcaApiResponse:
-        """:py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`:
+        """:py:class:`~fca_api.raw.FcaApiResponse`:
         Returns a response containing country-specific passport permissions for
         a firm and a country, given its firm reference number (FRN) and country
         name.
@@ -705,7 +699,7 @@ class RawClient:
             /V0.1/Firm/{FRN}/Requirements/{Country}/Permission
 
         Returns a
-        :py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`,
+        :py:class:`~fca_api.raw.FcaApiResponse`,
         with data if the FRN is found, otherwise with no data.
 
         Parameters
@@ -718,7 +712,7 @@ class RawClient:
 
         Returns
         -------
-        FinancialServicesRegisterApiResponse
+        FcaApiResponse
             Wrapper of the API response object - there may be no data in
             the response if the FRN isn't found.
         """
@@ -729,7 +723,7 @@ class RawClient:
         )
 
     async def get_firm_waivers(self, frn: str) -> FcaApiResponse:
-        """:py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`:
+        """:py:class:`~fca_api.raw.FcaApiResponse`:
         Returns a response containing any waivers applying to a firm, given its
         firm reference number (FRN).
 
@@ -739,7 +733,7 @@ class RawClient:
             /V0.1/Firm/{FRN}/Waivers
 
         Returns a
-        :py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`,
+        :py:class:`~fca_api.raw.FcaApiResponse`,
         with data if the FRN is found, otherwise with no data.
 
         Parameters
@@ -749,7 +743,7 @@ class RawClient:
 
         Returns
         -------
-        FinancialServicesRegisterApiResponse
+        FcaApiResponse
             Wrapper of the API response object - there may be no data in
             the response if the FRN isn't found.
         """
@@ -760,7 +754,7 @@ class RawClient:
         )
 
     async def get_firm_exclusions(self, frn: str) -> FcaApiResponse:
-        """:py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`:
+        """:py:class:`~fca_api.raw.FcaApiResponse`:
         Returns a response containing any exclusions applying to a firm, given
         its firm reference number (FRN).
 
@@ -770,7 +764,7 @@ class RawClient:
             /V0.1/Firm/{FRN}/Exclusions
 
         Returns a
-        :py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`,
+        :py:class:`~fca_api.raw.FcaApiResponse`,
         with data if the FRN is found, otherwise with no data.
 
         Parameters
@@ -780,7 +774,7 @@ class RawClient:
 
         Returns
         -------
-        FinancialServicesRegisterApiResponse
+        FcaApiResponse
             Wrapper of the API response object - there may be no data in
             the response if the FRN isn't found.
         """
@@ -791,7 +785,7 @@ class RawClient:
         )
 
     async def get_firm_disciplinary_history(self, frn: str) -> FcaApiResponse:
-        """:py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`:
+        """:py:class:`~fca_api.raw.FcaApiResponse`:
         Returns a response containing the disciplinary history of a firm, given
         its firm reference number (FRN).
 
@@ -801,7 +795,7 @@ class RawClient:
             /V0.1/Firm/{FRN}/DisciplinaryHistory
 
         Returns a
-        :py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`,
+        :py:class:`~fca_api.raw.FcaApiResponse`,
         with data if the FRN is found, otherwise with no data.
 
         Parameters
@@ -811,7 +805,7 @@ class RawClient:
 
         Returns
         -------
-        FinancialServicesRegisterApiResponse
+        FcaApiResponse
             Wrapper of the API response object - there may be no data in
             the response if the FRN isn't found.
         """
@@ -822,7 +816,7 @@ class RawClient:
         )
 
     async def get_firm_appointed_representatives(self, frn: str) -> FcaApiResponse:
-        """:py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`:
+        """:py:class:`~fca_api.raw.FcaApiResponse`:
         Returns a response containing information on the appointed
         representatives of a firm, given its firm reference number (FRN).
 
@@ -832,7 +826,7 @@ class RawClient:
             /V0.1/Firm/{FRN}/AR
 
         Returns a
-        :py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`,
+        :py:class:`~fca_api.raw.FcaApiResponse`,
         with data if the FRN is found, otherwise with no data.
 
         Parameters
@@ -842,7 +836,7 @@ class RawClient:
 
         Returns
         -------
-        FinancialServicesRegisterApiResponse
+        FcaApiResponse
             Wrapper of the API response object - there may be no data in
             the response if the FRN isn't found.
         """
@@ -853,25 +847,23 @@ class RawClient:
         )
 
     async def search_irn(self, individual_name: str) -> FcaApiResponse[list[dict[str, str]]]:
-        """:py:class:`str` or :py:class:`list`: Returns the unique individual
-        reference number (IRN) of a given individual, if found, or else a JSON
-        array of matching records.
+        """:py:class:`~fca_api.raw.FcaApiResponse`: Returns a response containing
+        individual records matching the given individual name.
 
-        Returns a FinancialServicesRegisterApiResponse containing the api
-        response.
+        Returns a FcaApiResponse containing the api response with matching
+        individual records.
 
         Parameters
         ----------
-        firm_name : str
+        individual_name : str
             The individual name (case insensitive). The name needs to be precise
             enough to guarantee a unique return value, otherwise a JSON array
             of all matching records are returned.
 
         Returns
         -------
-        str
-            A string version of the individual reference number (IRN), if found, or
-            a JSON array of all matching records.
+        FcaApiResponse[list[dict[str, str]]]
+            A response containing a list of matching individual records.
         """
         return await self.common_search(
             individual_name,
@@ -879,7 +871,7 @@ class RawClient:
         )
 
     async def get_individual(self, irn: str) -> FcaApiResponse:
-        """:py:class:`~fca_api.api.FinancialServicesRegisterApiResponse` :
+        """:py:class:`~fca_api.raw.FcaApiResponse` :
         Returns a response containing individual details, given their individual
         reference number (IRN)
 
@@ -889,7 +881,7 @@ class RawClient:
             /V0.1/Individuals/{IRN}
 
         Returns a
-        :py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`,
+        :py:class:`~fca_api.raw.FcaApiResponse`,
         with data if the IRN is found, otherwise with no data.
 
         Parameters
@@ -899,14 +891,14 @@ class RawClient:
 
         Returns
         -------
-        FinancialServicesRegisterApiResponse
+        FcaApiResponse
             Wrapper of the API response object - there may be no data in
             the response if the IRN isn't found.
         """
         return await self._get_resource_info(irn, const.ResourceTypes.INDIVIDUAL.value.type_name)
 
     async def get_individual_controlled_functions(self, irn: str) -> FcaApiResponse:
-        """:py:class:`~fca_api.api.FinancialServicesRegisterApiResponse` :
+        """:py:class:`~fca_api.raw.FcaApiResponse` :
         Returns a response containing the controlled functions associated with
         an individual, given their individual reference number (FRN).
 
@@ -916,7 +908,7 @@ class RawClient:
             /V0.1/Firm/{IRN}/CF
 
         Returns a
-        :py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`,
+        :py:class:`~fca_api.raw.FcaApiResponse`,
         with data if the IRN is found, otherwise with no data.
 
         Parameters
@@ -926,7 +918,7 @@ class RawClient:
 
         Returns
         -------
-        FinancialServicesRegisterApiResponse
+        FcaApiResponse
             Wrapepr of the API response object - there may be no data in
             the response if the IRN isn't found.
         """
@@ -937,7 +929,7 @@ class RawClient:
         )
 
     async def get_individual_disciplinary_history(self, irn: str) -> FcaApiResponse:
-        """:py:class:`~fca_api.api.FinancialServicesRegisterApiResponse` :
+        """:py:class:`~fca_api.raw.FcaApiResponse` :
         Returns a response containing the disciplinary history of an
         individual, given their individual reference number (FRN).
 
@@ -947,7 +939,7 @@ class RawClient:
             /V0.1/Firm/{IRN}/DisciplinaryHistory
 
         Returns a
-        :py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`,
+        :py:class:`~fca_api.raw.FcaApiResponse`,
         with data if the IRN is found, otherwise with no data.
 
         Parameters
@@ -957,7 +949,7 @@ class RawClient:
 
         Returns
         -------
-        FinancialServicesRegisterApiResponse
+        FcaApiResponse
             Wrapper of the API response object - there may be no data in
             the response if the IRN isn't found.
         """
@@ -968,30 +960,28 @@ class RawClient:
         )
 
     async def search_prn(self, fund_name: str) -> FcaApiResponse[list[dict[str, str]]]:
-        """:py:class:`str` or :py:class:`list`: Returns the unique product
-        reference number (PRN) of a given fund, if found, or else a JSON array
-        of matching records.
+        """:py:class:`~fca_api.raw.FcaApiResponse`: Returns a response containing
+        fund records matching the given fund name.
 
-        Returns a FinancialServicesRegisterApiResponse containing the api
-        response.
+        Returns a FcaApiResponse containing the api response with matching
+        fund records.
 
         Parameters
         ----------
-        firm_name : str
+        fund_name : str
             The fund name (case insensitive). The name needs to be precise
             enough to guarantee a unique return value, otherwise a JSON array
             of all matching records are returned.
 
         Returns
         -------
-        str
-            A string version of the product reference number (PRN), if found, or
-            a JSON array of all matching records.
+        FcaApiResponse[list[dict[str, str]]]
+            A response containing a list of matching fund records.
         """
         return await self.common_search(fund_name, const.ResourceTypes.FUND.value.type_name)
 
     async def get_fund(self, prn: str) -> FcaApiResponse:
-        """:py:class:`~fca_api.api.FinancialServicesRegisterApiResponse` :
+        """:py:class:`~fca_api.raw.FcaApiResponse` :
         Returns a response containing fund (or collective investment scheme
         (CIS)) details, given its product reference number (PRN)
 
@@ -1001,7 +991,7 @@ class RawClient:
             /V0.1/CIS/{PRN}
 
         Returns a
-        :py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`,
+        :py:class:`~fca_api.raw.FcaApiResponse`,
         with data if the PRN is found, otherwise with no data.
 
         Parameters
@@ -1011,14 +1001,14 @@ class RawClient:
 
         Returns
         -------
-        FinancialServicesRegisterApiResponse
+        FcaApiResponse
             Wrapper of the API response object - there may be no data in
             the response if the PRN isn't found.
         """
         return await self._get_resource_info(prn, const.ResourceTypes.FUND.value.type_name)
 
     async def get_fund_names(self, prn: str) -> FcaApiResponse:
-        """:py:class:`~fca_api.api.FinancialServicesRegisterApiResponse` :
+        """:py:class:`~fca_api.raw.FcaApiResponse` :
         Returns a response containing the alternative or secondary trading name
         details of a fund (or collective investment scheme (CIS)), given its
         product reference number (PRN).
@@ -1029,7 +1019,7 @@ class RawClient:
             /V0.1/CIS/{PRN}/Names
 
         Returns a
-        :py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`,
+        :py:class:`~fca_api.raw.FcaApiResponse`,
         with data if the PRN is found, otherwise with no data.
 
         Parameters
@@ -1039,7 +1029,7 @@ class RawClient:
 
         Returns
         -------
-        FinancialServicesRegisterApiResponse
+        FcaApiResponse
             Wrapper of the API response object - there may be no data in
             the response if the PRN isn't found.
         """
@@ -1050,7 +1040,7 @@ class RawClient:
         )
 
     async def get_fund_subfunds(self, prn: str) -> FcaApiResponse:
-        """:py:class:`~fca_api.api.FinancialServicesRegisterApiResponse` :
+        """:py:class:`~fca_api.raw.FcaApiResponse` :
         Returns a response containing the subfund details of a fund (or
         collective investment scheme (CIS)), given its product reference number
         (PRN).
@@ -1061,8 +1051,8 @@ class RawClient:
             /V0.1/CIS/{PRN}/Subfund
 
         Returns a
-        :py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`,
-        with data if the FRN is found, otherwise with no data.
+        :py:class:`~fca_api.raw.FcaApiResponse`,
+        with data if the PRN is found, otherwise with no data.
 
         Parameters
         ----------
@@ -1071,7 +1061,7 @@ class RawClient:
 
         Returns
         -------
-        FinancialServicesRegisterApiResponse
+        FcaApiResponse
             Wrapper of the API response object - there may be no data in
             the response if the PRN isn't found.
         """
@@ -1082,7 +1072,7 @@ class RawClient:
         )
 
     async def get_regulated_markets(self) -> FcaApiResponse:
-        """:py:class:`~fca_api.api.FinancialServicesRegisterApiResponse` :
+        """:py:class:`~fca_api.raw.FcaApiResponse` :
         Returns a response containing details of all current regulated markets,
         as defined in UK and EU / EEA financial services legislation.
 
@@ -1096,7 +1086,7 @@ class RawClient:
 
         Returns
         -------
-        FinancialServicesRegisterApiResponse
+        FcaApiResponse
             Wrapper of the API response object - there may be no data in
             the response if the common search query produces no results.
         """

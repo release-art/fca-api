@@ -2,8 +2,9 @@
 
 Performs data validation and transformation on top of the raw API client.
 """
-import typing
-from . import raw, exc
+
+from . import raw
+
 
 class Client:
     """High-level Financial Services Register API client.
