@@ -1,0 +1,186 @@
+{
+  "content": {
+    "json": {
+      "Data": [
+        {
+          "Name": "ROBERT SUITOR",
+          "Reference Number": "RXS03051",
+          "Status": "Active",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RXS03051"
+        },
+        {
+          "Name": "Robert Barclay",
+          "Reference Number": "RXB00450",
+          "Status": "Active",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RXB00450"
+        },
+        {
+          "Name": "Robert Holwill",
+          "Reference Number": "RXH02129",
+          "Status": "Active",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RXH02129"
+        },
+        {
+          "Name": "Robert Riddaway",
+          "Reference Number": "RXR00034",
+          "Status": "Regulatory approval no longer required",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RXR00034"
+        },
+        {
+          "Name": "Brampreet Ahluwalia",
+          "Reference Number": "BXA01227",
+          "Status": "Regulatory approval no longer required",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/BXA01227"
+        },
+        {
+          "Name": "Robert Andrew Kennedy",
+          "Reference Number": "RXK00487",
+          "Status": "Active",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RXK00487"
+        },
+        {
+          "Name": "Jatinder Chohan",
+          "Reference Number": "JXC00268",
+          "Status": "Regulatory approval no longer required",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/JXC00268"
+        },
+        {
+          "Name": "Chitraparsad Boyjonauth",
+          "Reference Number": "CXB01913",
+          "Status": "Regulatory approval no longer required",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/CXB01913"
+        },
+        {
+          "Name": "Waqaas Anwar",
+          "Reference Number": "WXA00102",
+          "Status": "Active",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/WXA00102"
+        },
+        {
+          "Name": "Ahkamel Islam",
+          "Reference Number": "AXI01139",
+          "Status": "Regulatory approval no longer required",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/AXI01139"
+        },
+        {
+          "Name": "Robert Kevin Bergin",
+          "Reference Number": "RKB01052",
+          "Status": "Regulatory approval no longer required",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RKB01052"
+        },
+        {
+          "Name": "Roberto Lobue",
+          "Reference Number": "RXL01806",
+          "Status": "Regulatory approval no longer required",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RXL01806"
+        },
+        {
+          "Name": "Robert Dickson",
+          "Reference Number": "RXD00094",
+          "Status": "Active",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RXD00094"
+        },
+        {
+          "Name": "Robert Shirley",
+          "Reference Number": "RXS03271",
+          "Status": "Active",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RXS03271"
+        },
+        {
+          "Name": "Manhor Singh Dhaliwal",
+          "Reference Number": "MXD00343",
+          "Status": "Regulatory approval no longer required",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/MXD00343"
+        },
+        {
+          "Name": "Babar Ali Bilal Naeem",
+          "Reference Number": "BXN00027",
+          "Status": "Regulatory approval no longer required",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/BXN00027"
+        },
+        {
+          "Name": "Babak Mahdavi Damghani",
+          "Reference Number": "BMD01042",
+          "Status": "Regulatory approval no longer required",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/BMD01042"
+        },
+        {
+          "Name": "Jaswinder Dhillon",
+          "Reference Number": "JXD00517",
+          "Status": "Active",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/JXD00517"
+        },
+        {
+          "Name": "Gursharon Singh Keer",
+          "Reference Number": "GXK00048",
+          "Status": "Active",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/GXK00048"
+        },
+        {
+          "Name": "Robert Duffy",
+          "Reference Number": "RXD01450",
+          "Status": "Regulatory approval no longer required",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RXD01450"
+        }
+      ],
+      "Message": "Ok. Search successful",
+      "ResultInfo": {
+        "Next": "https://register.fca.org.uk/services/V0.1/Search?q=bob&type=individual&pgnp=53",
+        "Previous": "https://register.fca.org.uk/services/V0.1/Search?q=bob&type=individual&pgnp=51",
+        "page": "52",
+        "per_page": "20",
+        "total_count": "1123"
+      },
+      "Status": "FSR-API-04-01-00"
+    }
+  },
+  "headers": {
+    "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
+    "cf-cache-status": "DYNAMIC",
+    "cf-ray": "9bb37eda9fb8bea1-LHR",
+    "connection": "keep-alive",
+    "content-encoding": "gzip",
+    "content-type": "application/json;charset=UTF-8",
+    "date": "Fri, 09 Jan 2026 11:11:45 GMT",
+    "server": "cloudflare",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Sat, 09-Jan-2027 11:11:43 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Sat, 09-Jan-2027 11:11:43 GMT; Max-Age=31536000; secure",
+    "strict-transport-security": "max-age=63072000; includeSubDomains",
+    "transfer-encoding": "chunked",
+    "vary": "Accept-Encoding",
+    "x-content-type-options": "nosniff"
+  },
+  "request": {
+    "headers": {
+      "accept": "application/json",
+      "accept-encoding": "gzip, deflate",
+      "connection": "keep-alive",
+      "user-agent": "python-httpx/0.28.1",
+      "x-auth-email": "user@example.com",
+      "x-auth-key": "00617470e8144a09"
+    },
+    "params": null,
+    "url": "https://register.fca.org.uk/services/V0.1/Search?q=bob&type=individual&pgnp=52"
+  },
+  "status_code": 200,
+  "url": "https://register.fca.org.uk/services/V0.1/Search?q=bob&type=individual&pgnp=52"
+}

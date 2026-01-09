@@ -53,7 +53,7 @@ class FcaApiResponse(httpx.Response, typing.Generic[T]):
         return self.json().get("Status")
 
     @property
-    def resultinfo(self) -> dict:
+    def result_info(self) -> dict:
         """:py:class:`dict`: The pagination information in the API response.
 
         Returns
@@ -183,7 +183,10 @@ class RawClient:
         return const.ApiConstants.API_VERSION.value
 
     async def common_search(
-        self, resource_name: str, resource_type: Literal["firm", "individual", "fund"]
+        self,
+        resource_name: str,
+        resource_type: Literal["firm", "individual", "fund"],
+        page: int|None=None,
     ) -> FcaApiResponse[list[dict[str, typing.Any]]]:
         """:py:class:`~fca_api.raw.FcaApiResponse`:
         Returns a response containing the results of a search using the FS
@@ -226,7 +229,11 @@ class RawClient:
             If there was a :py:class:`httpx.RequestError` in making the original
             request.
         """
-        search_str = urlencode({"q": resource_name, "type": resource_type})
+        search_req = {"q": resource_name, "type": resource_type}
+        if page is not None:
+            assert isinstance(page, int) and page >= 1, page
+            search_req["pgnp"] = page
+        search_str = urlencode(search_req)
         url = f"{const.ApiConstants.BASEURL.value}/Search?{search_str}"
         try:
             async with self._api_limiter():
@@ -254,7 +261,7 @@ class RawClient:
 
         return out
 
-    async def search_frn(self, firm_name: str) -> FcaApiResponse[list[dict[str, str]]]:
+    async def search_frn(self, firm_name: str, page: int|None=None) -> FcaApiResponse[list[dict[str, str]]]:
         """:py:class:`~fca_api.raw.FcaApiResponse`: Returns a response containing
         firm records matching the given firm name.
 
@@ -266,16 +273,16 @@ class RawClient:
         Parameters
         ----------
         firm_name : str
-            The firm name (case insensitive). The name needs to be precise
-            enough to guarantee a unique return value, otherwise a JSON array
-            of all matching records are returned.
+            The firm name (case insensitive).
+            
+            Returns an API response with all matching form records.
 
         Returns
         -------
         FcaApiResponse[list[dict[str, str]]]
             A response containing a list of matching firm records.
         """
-        return await self.common_search(firm_name, const.ResourceTypes.FIRM.value.type_name)
+        return await self.common_search(firm_name, const.ResourceTypes.FIRM.value.type_name, page=page)
 
     async def _get_resource_info(
         self, resource_ref_number: str, resource_type: str, modifiers: tuple[str] = None
@@ -846,7 +853,7 @@ class RawClient:
             modifiers=("AR",),
         )
 
-    async def search_irn(self, individual_name: str) -> FcaApiResponse[list[dict[str, str]]]:
+    async def search_irn(self, individual_name: str, page: int|None=None) -> FcaApiResponse[list[dict[str, str]]]:
         """:py:class:`~fca_api.raw.FcaApiResponse`: Returns a response containing
         individual records matching the given individual name.
 
@@ -868,6 +875,7 @@ class RawClient:
         return await self.common_search(
             individual_name,
             const.ResourceTypes.INDIVIDUAL.value.type_name,
+            page=page,
         )
 
     async def get_individual(self, irn: str) -> FcaApiResponse:

@@ -1,0 +1,58 @@
+{
+  "content": {
+    "json": {
+      "Data": [
+        {
+          "Name": "REVOLUTION FINANCE BROKERS LIMITED (Postcode: CM13 3FR)",
+          "Reference Number": "841555",
+          "Status": "No longer registered as an Appointed Representative",
+          "Type of business or Individual": "Firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Firm/841555"
+        },
+        {
+          "Name": "Revolution Finance Brokers Limited (Postcode: IG11 0HZ)",
+          "Reference Number": "846155",
+          "Status": "Authorised",
+          "Type of business or Individual": "Firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Firm/846155"
+        }
+      ],
+      "Message": "Ok. Search successful",
+      "ResultInfo": {
+        "page": "1",
+        "per_page": "20",
+        "total_count": "2"
+      },
+      "Status": "FSR-API-04-01-00"
+    }
+  },
+  "headers": {
+    "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
+    "cf-cache-status": "DYNAMIC",
+    "cf-ray": "9bb37d9c3e84e90e-LHR",
+    "connection": "keep-alive",
+    "content-encoding": "gzip",
+    "content-type": "application/json;charset=UTF-8",
+    "date": "Fri, 09 Jan 2026 11:10:53 GMT",
+    "server": "cloudflare",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Sat, 09-Jan-2027 11:10:52 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Sat, 09-Jan-2027 11:10:52 GMT; Max-Age=31536000; secure",
+    "strict-transport-security": "max-age=63072000; includeSubDomains",
+    "transfer-encoding": "chunked",
+    "vary": "Accept-Encoding",
+    "x-content-type-options": "nosniff"
+  },
+  "request": {
+    "headers": {
+      "accept": "application/json",
+      "accept-encoding": "gzip, deflate",
+      "connection": "keep-alive",
+      "user-agent": "python-httpx/0.28.1",
+      "x-auth-email": "user@example.com",
+      "x-auth-key": "00617470e8144a09"
+    },
+    "params": null,
+    "url": "https://register.fca.org.uk/services/V0.1/Search?q=revolution+brokers&type=firm"
+  },
+  "status_code": 200,
+  "url": "https://register.fca.org.uk/services/V0.1/Search?q=revolution+brokers&type=firm"
+}

@@ -11,8 +11,9 @@ from . import cache_filename
 
 @enum.unique
 class CacheMode(enum.StrEnum):
-    READ = "read"
-    WRITE = "write"
+    READ = "readonly"
+    WRITE = "writeonly"
+    FETCH_MISSING = "fetch_missing"
 
 
 class CachingSession(httpx.AsyncClient):
@@ -25,7 +26,7 @@ class CachingSession(httpx.AsyncClient):
         self,
         headers: dict,
         cache_dir: pathlib.Path,
-        cache_mode: typing.Literal["read", "write"] = "read",
+        cache_mode: typing.Literal["readonly", "writeonly", "fetch_missing"] = "readonly",
     ) -> None:
         super().__init__(headers=headers)
         self.cache_dir = pathlib.Path(cache_dir)
