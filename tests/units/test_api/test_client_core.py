@@ -6,12 +6,6 @@ import httpx
 import pytest
 
 import fca_api
-from fca_api.const import (
-    FINANCIAL_SERVICES_REGISTER_API_CONSTANTS as API_CONSTANTS,
-)
-from fca_api.exc import (
-    FinancialServicesRegisterApiRequestError,
-)
 
 
 class TestFinancialServicesRegisterApiClientCore:
@@ -21,7 +15,7 @@ class TestFinancialServicesRegisterApiClientCore:
         assert test_client.api_session.headers["ACCEPT"] == "application/json"
         assert test_client.api_session.headers["X-AUTH-EMAIL"] == test_api_username
         assert test_client.api_session.headers["X-AUTH-KEY"] == test_api_key
-        assert test_client.api_version == API_CONSTANTS.API_VERSION.value
+        assert test_client.api_version == fca_api.const.ApiConstants.API_VERSION.value
 
     @pytest.mark.asyncio
     async def test_client_init_incorrect(self):
@@ -32,7 +26,7 @@ class TestFinancialServicesRegisterApiClientCore:
             fca_api.api.FinancialServicesRegisterApiClient(credentials=("only_username",))
 
     @pytest.mark.asyncio
-    async def test_rate_limiter(self, mocker, test_api_username, test_api_key):
+    async def test_rate_limiter(self, mocker):
         limiter_enter_mock = mocker.AsyncMock(name="limiter_enter_mock")
         limiter_exit_mock = mocker.AsyncMock(name="limiter_exit_mock")
 
@@ -45,11 +39,16 @@ class TestFinancialServicesRegisterApiClientCore:
                 await limiter_exit_mock()
 
         mock_client = mocker.create_autospec(httpx.AsyncClient, name="mock-httpx-client")
+        mock_client.get.return_value = mock_req = mocker.create_autospec(
+            httpx.Response,
+            instance=True,
+        )
+        mock_req.status_code = 200
+        mock_req.json.return_value = {"status": "FSR-API-04-01-00", "message": "Ok. Search successful", "Data": [{}]}
         test_client = fca_api.api.FinancialServicesRegisterApiClient(
             credentials=mock_client,
             api_limiter=limiter_mock,
         )
-        # assert test_client._api_limiter is limiter_mock
 
         for idx in range(3):
             out = await test_client.get_regulated_markets()
@@ -78,13 +77,13 @@ class TestFinancialServicesRegisterApiClientCore:
         mock_api_session_get = mocker.patch.object(test_client._api_session, "get")
         mock_api_session_get.side_effect = httpx.RequestError("test RequestError")
 
-        with pytest.raises(FinancialServicesRegisterApiRequestError):
+        with pytest.raises(fca_api.exc.FinancialServicesRegisterApiRequestError):
             await test_client.common_search("exceptional resource", "firm")
 
     @pytest.mark.asyncio
     async def test_common_search_success(self, test_client):
         recv_response = await test_client.common_search("hastings direct", "firm")
-        assert recv_response.ok
+        assert recv_response.is_success
         assert recv_response.data
         assert len(recv_response.data)
         assert recv_response.status == "FSR-API-04-01-00"
@@ -92,14 +91,14 @@ class TestFinancialServicesRegisterApiClientCore:
         assert recv_response.resultinfo
 
         recv_response = await test_client.common_search("non existent firm", "firm")
-        assert recv_response.ok
+        assert recv_response.is_success
         assert not recv_response.data
         assert recv_response.status == "FSR-API-04-01-11"
         assert recv_response.message == "No search result found"
         assert not recv_response.resultinfo
 
         recv_response = await test_client.common_search("mark carney", "individual")
-        assert recv_response.ok
+        assert recv_response.is_success
         assert recv_response.data
         assert len(recv_response.data)
         assert recv_response.status == "FSR-API-04-01-00"
@@ -107,14 +106,14 @@ class TestFinancialServicesRegisterApiClientCore:
         assert recv_response.resultinfo
 
         recv_response = await test_client.common_search("non existent individual", "individual")
-        assert recv_response.ok
+        assert recv_response.is_success
         assert not recv_response.data
         assert recv_response.status == "FSR-API-04-01-11"
         assert recv_response.message == "No search result found"
         assert not recv_response.resultinfo
 
         recv_response = await test_client.common_search("jupiter asia pacific income", "fund")
-        assert recv_response.ok
+        assert recv_response.is_success
         assert recv_response.data
         assert len(recv_response.data)
         assert recv_response.status == "FSR-API-04-01-00"
@@ -122,7 +121,7 @@ class TestFinancialServicesRegisterApiClientCore:
         assert recv_response.resultinfo
 
         recv_response = await test_client.common_search("non existent fund", "fund")
-        assert recv_response.ok
+        assert recv_response.is_success
         assert not recv_response.data
         assert recv_response.status == "FSR-API-04-01-11"
         assert recv_response.message == "No search result found"
@@ -131,7 +130,7 @@ class TestFinancialServicesRegisterApiClientCore:
     @pytest.mark.asyncio
     async def test_financial_services_register_api_client__get_regulated_markets(self, test_client):
         recv_response = await test_client.get_regulated_markets()
-        assert recv_response.ok
+        assert recv_response.is_success
         assert recv_response.data
         assert len(recv_response.data)
         assert re.match(r"^FSR-API-\d{2}-\d{2}-\d{2}$", recv_response.status)

@@ -11,12 +11,13 @@ from urllib.parse import urlencode
 
 import httpx
 
-from fca_api.const import (
-    FINANCIAL_SERVICES_REGISTER_API_CONSTANTS as API_CONSTANTS,
-)
-from fca_api.exc import (
-    FinancialServicesRegisterApiRequestError,
-)
+# from fca_api.const import (
+#     FINANCIAL_SERVICES_REGISTER_API_CONSTANTS as API_CONSTANTS,
+# )
+# from fca_api.exc import (
+#     exc.FinancialServicesRegisterApiRequestError,
+# )
+from . import const, exc
 
 
 @contextlib.asynccontextmanager
@@ -25,10 +26,14 @@ async def _noop_limiter() -> typing.AsyncGenerator[None, None]:
 
 
 LimiterContextT = typing.Callable[[], typing.AsyncContextManager[None]]
+T = typing.TypeVar("T")
+UNSET = object()
 
 
-class FinancialServicesRegisterApiResponse(httpx.Response):
+class FinancialServicesRegisterApiResponse(httpx.Response, typing.Generic[T]):
     """A simple :py:class:`httpx.Response`-based wrapper for the API responses."""
+
+    _fca_data_override: T = UNSET
 
     def __init__(self, response: httpx.Response) -> None:
         """Initialiser requiring a :py:class:`httpx.Response` object.
@@ -74,7 +79,7 @@ class FinancialServicesRegisterApiResponse(httpx.Response):
         return self.json().get("Message")
 
     @property
-    def data(self) -> dict | list[dict]:
+    def data(self) -> T:
         """:py:class:`dict` or :py:class:`list`: The data in the API response.
 
         Returns
@@ -83,18 +88,19 @@ class FinancialServicesRegisterApiResponse(httpx.Response):
             The data in the API response - will usually be either a
             :py:class:`dict` or a :py:class:`list` of dicts.
         """
+        if self._fca_data_override is not UNSET:
+            return self._fca_data_override
         return self.json().get("Data")
 
-    @property
-    def ok(self) -> bool:
-        """:py:class:`bool`: Whether the response was successful.
+    def override_data(self, new_data: T) -> None:
+        """Override the data property with new data.
 
-        Returns
-        -------
-        bool
-            True if the response status code is less than 400.
+        Parameters
+        ----------
+        new_data : T
+            The new data to set.
         """
-        return self.status_code < 400
+        self._fca_data_override = new_data
 
 
 class FinancialServicesRegisterApiClient:
@@ -176,11 +182,11 @@ class FinancialServicesRegisterApiClient:
         str
             The API version being used by the client.
         """
-        return API_CONSTANTS.API_VERSION.value
+        return const.ApiConstants.API_VERSION.value
 
     async def common_search(
         self, resource_name: str, resource_type: Literal["firm", "individual", "fund"]
-    ) -> FinancialServicesRegisterApiResponse:
+    ) -> FinancialServicesRegisterApiResponse[list[dict[str, typing.Any]]]:
         """:py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`:
         Returns a response containing the results of a search using the FS
         Register API common search API endpoint.
@@ -223,89 +229,34 @@ class FinancialServicesRegisterApiClient:
             request.
         """
         search_str = urlencode({"q": resource_name, "type": resource_type})
-        url = f"{API_CONSTANTS.BASEURL.value}/Search?{search_str}"
+        url = f"{const.ApiConstants.BASEURL.value}/Search?{search_str}"
         try:
             async with self._api_limiter():
                 response = await self.api_session.get(url)
-            return FinancialServicesRegisterApiResponse(response)
         except httpx.RequestError as e:
-            raise FinancialServicesRegisterApiRequestError(e) from None
-
-    async def _search_ref_number(self, resource_name: str, resource_type: str, /) -> list[dict[str, str]]:
-        """:py:class:`str` or :py:class:`list`: A private base handler for
-        public search methods for unique firm, individual and product reference
-        numbers.
-
-        .. note::
-
-           This is a private method and is **not** intended for direct use by
-           end users.
-
-        Uses the API common search endpoint:
-        ::
-
-            /V0.1/Search?q=resource_name&type=resource_type
-
-        to perform a case-insensitive search for resources of type
-        ``resource_type`` in the Financial Services Register on the given
-        resource name substring.
-
-        Returns a non-null string of the resource ref. number if there is
-        a unique associated resource. Otherwise returns :py:class.
-
-        If there are multiple resources matching the given resource name
-        substring then a JSON array of the matching records is returned.
-
-
-        Parameters
-        ----------
-        resource_name : str
-            The resource name substring - need not be in any particular case.
-            The name needs to be precise enough to guarantee a unique return
-            value, otherwise multiple records exist and an exception is raised.
-
-        resource_type : str
-            The resource type, which should be one of ``'firm'``,
-            ``'individual'``, or ``'fund'``.
-
-        Returns
-        -------
-        str, list
-            The unique resource reference number, if found. Otherwise
-            a JSON array of matching records.
-
-        Raises
-        ------
-        ValueError
-            If the resource type is not of ``'firm'``, ``'individual'``, or
-            ``'fund'``.
-        FinancialServicesRegisterApiRequestException
-            If there was an API request exception.
-        FinancialServicesRegisterApiResponseException
-            If the API response does not conform to the expected structure, or
-            no data was found for the given resource type and name.
-        """
-        if resource_type not in API_CONSTANTS.RESOURCE_TYPES.value:
-            raise ValueError('Resource type must be one of the strings ``"firm"``, ``"fund"``, or ``"individual"``')
-
-        try:
-            res = await self.common_search(resource_name, resource_type)
-        except FinancialServicesRegisterApiRequestError:
-            raise
-
-        if res.ok and res.data:
-            return res.data
-        elif not res.ok:
-            raise FinancialServicesRegisterApiRequestError(
-                f"API search request failed for an unknown reason: "
-                f"{res.reason_phrase}. Please check the search parameters and try again."
+            raise exc.FinancialServicesRegisterApiRequestError(e) from None
+        out = FinancialServicesRegisterApiResponse(response)
+        if not out.is_success:
+            raise exc.FinancialServicesRegisterApiRequestError(
+                f"API search request failed with status code {out.status_code}: "
+                f"{out.reason_phrase}. Please check the search parameters and try again."
             )
-        else:
-            raise FinancialServicesRegisterApiRequestError(
-                "No data found in the API response. Please check the search parameters and try again."
+        elif not out.data:
+            if "no search result found" not in out.message.lower():
+                raise exc.FinancialServicesRegisterApiRequestError(
+                    "API search response has no data. Please check the search parameters and try again."
+                )
+            else:
+                # No results found - return empty list (the API returns None)
+                out.override_data([])
+        elif not isinstance(out.data, list):
+            raise exc.FinancialServicesRegisterApiRequestError(
+                "API search response data is not a list as expected. Please check the search parameters and try again."
             )
 
-    async def search_frn(self, firm_name: str) -> str | list[dict[str, str]]:
+        return out
+
+    async def search_frn(self, firm_name: str) -> FinancialServicesRegisterApiResponse[list[dict[str, str]]]:
         """:py:class:`str` or :py:class:`list`: Returns the unique firm
         reference number (FRN) of a given firm, if found, or else a JSON array
         of matching records.
@@ -314,8 +265,8 @@ class FinancialServicesRegisterApiClient:
         :py:meth:`~fca_api.FinancialServicesRegisterApiClient._search_ref_number`
         to do the search.
 
-        Returns a non-null string of the FRN if there is a unique associated
-        firm. Otherwise, a JSON array of all matching records is returned.
+        Returns a FinancialServicesRegisterApiResponse containing the api
+        response.
 
         Parameters
         ----------
@@ -330,7 +281,7 @@ class FinancialServicesRegisterApiClient:
             A string version of the firm reference number (FRN), if found, or
             a JSON array of all matching records.
         """
-        return await self._search_ref_number(firm_name, API_CONSTANTS.RESOURCE_TYPES.value["firm"]["type_name"])
+        return await self.common_search(firm_name, const.ResourceTypes.FIRM.value.type_name)
 
     async def _get_resource_info(
         self, resource_ref_number: str, resource_type: str, modifiers: tuple[str] = None
@@ -414,12 +365,13 @@ class FinancialServicesRegisterApiClient:
             Wrapper of the API response object - there may be no data in
             the response if the resource ref. number isn't found.
         """
-        if resource_type not in API_CONSTANTS.RESOURCE_TYPES.value:
+        if resource_type not in const.ResourceTypes.all_types():
             raise ValueError('Resource type must be one of the strings ``"firm"``, ``"fund"``, or ``"individual"``')
 
-        resource_endpoint_base = API_CONSTANTS.RESOURCE_TYPES.value[resource_type]["endpoint_base"]
+        resource_type_info = const.ResourceTypes.from_type_name(resource_type)
+        resource_endpoint_base = resource_type_info.endpoint_base
 
-        url = f"{API_CONSTANTS.BASEURL.value}/{resource_endpoint_base}/{resource_ref_number}"
+        url = f"{const.ApiConstants.BASEURL.value}/{resource_endpoint_base}/{resource_ref_number}"
 
         if modifiers:
             url += f"/{'/'.join(modifiers)}"
@@ -429,7 +381,7 @@ class FinancialServicesRegisterApiClient:
                 response = await self.api_session.get(url)
             return FinancialServicesRegisterApiResponse(response)
         except httpx.RequestError as e:
-            raise FinancialServicesRegisterApiRequestError(e) from None
+            raise exc.FinancialServicesRegisterApiRequestError(e) from None
 
     async def get_firm(self, frn: str) -> FinancialServicesRegisterApiResponse:
         """:py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`:
@@ -456,7 +408,7 @@ class FinancialServicesRegisterApiClient:
             Wrapper of the API response object - there may be no data in
             the response if the FRN isn't found.
         """
-        return await self._get_resource_info(frn, API_CONSTANTS.RESOURCE_TYPES.value["firm"]["type_name"])
+        return await self._get_resource_info(frn, const.ResourceTypes.FIRM.value.type_name)
 
     async def get_firm_names(self, frn: str) -> FinancialServicesRegisterApiResponse:
         """:py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`:
@@ -485,7 +437,7 @@ class FinancialServicesRegisterApiClient:
         """
         return await self._get_resource_info(
             frn,
-            API_CONSTANTS.RESOURCE_TYPES.value["firm"]["type_name"],
+            const.ResourceTypes.FIRM.value.type_name,
             modifiers=("Names",),
         )
 
@@ -516,7 +468,7 @@ class FinancialServicesRegisterApiClient:
         """
         return await self._get_resource_info(
             frn,
-            API_CONSTANTS.RESOURCE_TYPES.value["firm"]["type_name"],
+            const.ResourceTypes.FIRM.value.type_name,
             modifiers=("Address",),
         )
 
@@ -547,7 +499,7 @@ class FinancialServicesRegisterApiClient:
         """
         return await self._get_resource_info(
             frn,
-            API_CONSTANTS.RESOURCE_TYPES.value["firm"]["type_name"],
+            const.ResourceTypes.FIRM.value.type_name,
             modifiers=("CF",),
         )
 
@@ -578,7 +530,7 @@ class FinancialServicesRegisterApiClient:
         """
         return await self._get_resource_info(
             frn,
-            API_CONSTANTS.RESOURCE_TYPES.value["firm"]["type_name"],
+            const.ResourceTypes.FIRM.value.type_name,
             modifiers=("Individuals",),
         )
 
@@ -609,7 +561,7 @@ class FinancialServicesRegisterApiClient:
         """
         return await self._get_resource_info(
             frn,
-            API_CONSTANTS.RESOURCE_TYPES.value["firm"]["type_name"],
+            const.ResourceTypes.FIRM.value.type_name,
             modifiers=("Permissions",),
         )
 
@@ -640,7 +592,7 @@ class FinancialServicesRegisterApiClient:
         """
         return await self._get_resource_info(
             frn,
-            API_CONSTANTS.RESOURCE_TYPES.value["firm"]["type_name"],
+            const.ResourceTypes.FIRM.value.type_name,
             modifiers=("Requirements",),
         )
 
@@ -677,7 +629,7 @@ class FinancialServicesRegisterApiClient:
         """
         return await self._get_resource_info(
             frn,
-            API_CONSTANTS.RESOURCE_TYPES.value["firm"]["type_name"],
+            const.ResourceTypes.FIRM.value.type_name,
             modifiers=("Requirements", req_ref, "InvestmentTypes"),
         )
 
@@ -708,7 +660,7 @@ class FinancialServicesRegisterApiClient:
         """
         return await self._get_resource_info(
             frn,
-            API_CONSTANTS.RESOURCE_TYPES.value["firm"]["type_name"],
+            const.ResourceTypes.FIRM.value.type_name,
             modifiers=("Regulators",),
         )
 
@@ -739,7 +691,7 @@ class FinancialServicesRegisterApiClient:
         """
         return await self._get_resource_info(
             frn,
-            API_CONSTANTS.RESOURCE_TYPES.value["firm"]["type_name"],
+            const.ResourceTypes.FIRM.value.type_name,
             modifiers=("Passports",),
         )
 
@@ -774,7 +726,7 @@ class FinancialServicesRegisterApiClient:
         """
         return await self._get_resource_info(
             frn,
-            API_CONSTANTS.RESOURCE_TYPES.value["firm"]["type_name"],
+            const.ResourceTypes.FIRM.value.type_name,
             modifiers=("Passports", country, "Permission"),
         )
 
@@ -805,7 +757,7 @@ class FinancialServicesRegisterApiClient:
         """
         return await self._get_resource_info(
             frn,
-            API_CONSTANTS.RESOURCE_TYPES.value["firm"]["type_name"],
+            const.ResourceTypes.FIRM.value.type_name,
             modifiers=("Waivers",),
         )
 
@@ -836,7 +788,7 @@ class FinancialServicesRegisterApiClient:
         """
         return await self._get_resource_info(
             frn,
-            API_CONSTANTS.RESOURCE_TYPES.value["firm"]["type_name"],
+            const.ResourceTypes.FIRM.value.type_name,
             modifiers=("Exclusions",),
         )
 
@@ -867,7 +819,7 @@ class FinancialServicesRegisterApiClient:
         """
         return await self._get_resource_info(
             frn,
-            API_CONSTANTS.RESOURCE_TYPES.value["firm"]["type_name"],
+            const.ResourceTypes.FIRM.value.type_name,
             modifiers=("DisciplinaryHistory",),
         )
 
@@ -898,22 +850,17 @@ class FinancialServicesRegisterApiClient:
         """
         return await self._get_resource_info(
             frn,
-            API_CONSTANTS.RESOURCE_TYPES.value["firm"]["type_name"],
+            const.ResourceTypes.FIRM.value.type_name,
             modifiers=("AR",),
         )
 
-    async def search_irn(self, individual_name: str) -> str | list[dict[str, str]]:
+    async def search_irn(self, individual_name: str) -> FinancialServicesRegisterApiResponse[list[dict[str, str]]]:
         """:py:class:`str` or :py:class:`list`: Returns the unique individual
         reference number (IRN) of a given individual, if found, or else a JSON
         array of matching records.
 
-        Calls the private method
-        :py:meth:`~fca_api.FinancialServicesRegisterApiClient._search_ref_number`
-        to do the search.
-
-        Returns a non-null string of the IRN if there is a unique associated
-        individual. Otherwise, a JSON array of all matching records is
-        returned.
+        Returns a FinancialServicesRegisterApiResponse containing the api
+        response.
 
         Parameters
         ----------
@@ -928,9 +875,9 @@ class FinancialServicesRegisterApiClient:
             A string version of the individual reference number (IRN), if found, or
             a JSON array of all matching records.
         """
-        return await self._search_ref_number(
+        return await self.common_search(
             individual_name,
-            API_CONSTANTS.RESOURCE_TYPES.value["individual"]["type_name"],
+            const.ResourceTypes.INDIVIDUAL.value.type_name,
         )
 
     async def get_individual(self, irn: str) -> FinancialServicesRegisterApiResponse:
@@ -958,7 +905,7 @@ class FinancialServicesRegisterApiClient:
             Wrapper of the API response object - there may be no data in
             the response if the IRN isn't found.
         """
-        return await self._get_resource_info(irn, API_CONSTANTS.RESOURCE_TYPES.value["individual"]["type_name"])
+        return await self._get_resource_info(irn, const.ResourceTypes.INDIVIDUAL.value.type_name)
 
     async def get_individual_controlled_functions(self, irn: str) -> FinancialServicesRegisterApiResponse:
         """:py:class:`~fca_api.api.FinancialServicesRegisterApiResponse` :
@@ -987,7 +934,7 @@ class FinancialServicesRegisterApiClient:
         """
         return await self._get_resource_info(
             irn,
-            API_CONSTANTS.RESOURCE_TYPES.value["individual"]["type_name"],
+            const.ResourceTypes.INDIVIDUAL.value.type_name,
             modifiers=("CF",),
         )
 
@@ -1018,21 +965,17 @@ class FinancialServicesRegisterApiClient:
         """
         return await self._get_resource_info(
             irn,
-            API_CONSTANTS.RESOURCE_TYPES.value["individual"]["type_name"],
+            const.ResourceTypes.INDIVIDUAL.value.type_name,
             modifiers=("DisciplinaryHistory",),
         )
 
-    async def search_prn(self, fund_name: str) -> str | list[dict[str, str]]:
+    async def search_prn(self, fund_name: str) -> FinancialServicesRegisterApiResponse[list[dict[str, str]]]:
         """:py:class:`str` or :py:class:`list`: Returns the unique product
         reference number (PRN) of a given fund, if found, or else a JSON array
         of matching records.
 
-        Calls the private method
-        :py:meth:`~fca_api.FinancialServicesRegisterApiClient._search_ref_number`
-        to do the search.
-
-        Returns a non-null string of the PRN if there is a unique associated
-        fund. Otherwise, a JSON array of all matching records is returned.
+        Returns a FinancialServicesRegisterApiResponse containing the api
+        response.
 
         Parameters
         ----------
@@ -1047,7 +990,7 @@ class FinancialServicesRegisterApiClient:
             A string version of the product reference number (PRN), if found, or
             a JSON array of all matching records.
         """
-        return await self._search_ref_number(fund_name, API_CONSTANTS.RESOURCE_TYPES.value["fund"]["type_name"])
+        return await self.common_search(fund_name, const.ResourceTypes.FUND.value.type_name)
 
     async def get_fund(self, prn: str) -> FinancialServicesRegisterApiResponse:
         """:py:class:`~fca_api.api.FinancialServicesRegisterApiResponse` :
@@ -1074,7 +1017,7 @@ class FinancialServicesRegisterApiClient:
             Wrapper of the API response object - there may be no data in
             the response if the PRN isn't found.
         """
-        return await self._get_resource_info(prn, API_CONSTANTS.RESOURCE_TYPES.value["fund"]["type_name"])
+        return await self._get_resource_info(prn, const.ResourceTypes.FUND.value.type_name)
 
     async def get_fund_names(self, prn: str) -> FinancialServicesRegisterApiResponse:
         """:py:class:`~fca_api.api.FinancialServicesRegisterApiResponse` :
@@ -1104,7 +1047,7 @@ class FinancialServicesRegisterApiClient:
         """
         return await self._get_resource_info(
             prn,
-            API_CONSTANTS.RESOURCE_TYPES.value["fund"]["type_name"],
+            const.ResourceTypes.FUND.value.type_name,
             modifiers=("Names",),
         )
 
@@ -1136,7 +1079,7 @@ class FinancialServicesRegisterApiClient:
         """
         return await self._get_resource_info(
             prn,
-            API_CONSTANTS.RESOURCE_TYPES.value["fund"]["type_name"],
+            const.ResourceTypes.FUND.value.type_name,
             modifiers=("Subfund",),
         )
 
@@ -1159,7 +1102,7 @@ class FinancialServicesRegisterApiClient:
             Wrapper of the API response object - there may be no data in
             the response if the common search query produces no results.
         """
-        url = f"{API_CONSTANTS.BASEURL.value}/CommonSearch?{urlencode({'q': 'RM'})}"
+        url = f"{const.ApiConstants.BASEURL.value}/CommonSearch?{urlencode({'q': 'RM'})}"
 
         async with self._api_limiter():
             response = await self.api_session.get(url)
