@@ -1,10 +1,6 @@
-# -- IMPORTS --
-
-# -- 3rd party libraries --
 import httpx
 import pytest
 
-# -- Internal libraries --
 from fca_api.exc import (
     FcaRequestError,
 )

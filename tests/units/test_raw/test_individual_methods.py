@@ -1,11 +1,4 @@
-# -- IMPORTS --
-
-# -- Standard libraries --
-
-# -- 3rd party libraries --
 import pytest
-
-# -- Internal libraries --
 
 
 class TestIndividualMethods:

@@ -1,4 +1,3 @@
-# -- IMPORTS --
 import contextlib
 import re
 
@@ -11,7 +10,7 @@ import fca_api
 class TestFinancialServicesRegisterApiClientCore:
     @pytest.mark.asyncio
     async def test_client_init_sets_credentials(self, test_api_username, test_api_key):
-        test_client = fca_api.api.RawClient(credentials=(test_api_username, test_api_key))
+        test_client = fca_api.raw.RawClient(credentials=(test_api_username, test_api_key))
         assert test_client.api_session.headers["ACCEPT"] == "application/json"
         assert test_client.api_session.headers["X-AUTH-EMAIL"] == test_api_username
         assert test_client.api_session.headers["X-AUTH-KEY"] == test_api_key
@@ -20,10 +19,10 @@ class TestFinancialServicesRegisterApiClientCore:
     @pytest.mark.asyncio
     async def test_client_init_incorrect(self):
         with pytest.raises(ValueError):
-            fca_api.api.RawClient(credentials=None)
+            fca_api.raw.RawClient(credentials=None)
 
         with pytest.raises(ValueError):
-            fca_api.api.RawClient(credentials=("only_username",))
+            fca_api.raw.RawClient(credentials=("only_username",))
 
     @pytest.mark.asyncio
     async def test_rate_limiter(self, mocker, mock_http_client):
@@ -38,7 +37,7 @@ class TestFinancialServicesRegisterApiClientCore:
             finally:
                 await limiter_exit_mock()
 
-        test_client = fca_api.api.RawClient(
+        test_client = fca_api.raw.RawClient(
             credentials=mock_http_client,
             api_limiter=limiter_mock,
         )
