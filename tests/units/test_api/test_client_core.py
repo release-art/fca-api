@@ -77,7 +77,7 @@ class TestFinancialServicesRegisterApiClientCore:
         mock_api_session_get = mocker.patch.object(test_client._api_session, "get")
         mock_api_session_get.side_effect = httpx.RequestError("test RequestError")
 
-        with pytest.raises(fca_api.exc.FinancialServicesRegisterApiRequestError):
+        with pytest.raises(fca_api.exc.FcaRequestError):
             await test_client.common_search("exceptional resource", "firm")
 
     @pytest.mark.asyncio

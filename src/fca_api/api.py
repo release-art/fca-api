@@ -11,12 +11,6 @@ from urllib.parse import urlencode
 
 import httpx
 
-# from fca_api.const import (
-#     FINANCIAL_SERVICES_REGISTER_API_CONSTANTS as API_CONSTANTS,
-# )
-# from fca_api.exc import (
-#     exc.FinancialServicesRegisterApiRequestError,
-# )
 from . import const, exc
 
 
@@ -234,23 +228,23 @@ class FinancialServicesRegisterApiClient:
             async with self._api_limiter():
                 response = await self.api_session.get(url)
         except httpx.RequestError as e:
-            raise exc.FinancialServicesRegisterApiRequestError(e) from None
+            raise exc.FcaRequestError(e) from None
         out = FinancialServicesRegisterApiResponse(response)
         if not out.is_success:
-            raise exc.FinancialServicesRegisterApiRequestError(
+            raise exc.FcaRequestError(
                 f"API search request failed with status code {out.status_code}: "
                 f"{out.reason_phrase}. Please check the search parameters and try again."
             )
         elif not out.data:
             if "no search result found" not in out.message.lower():
-                raise exc.FinancialServicesRegisterApiRequestError(
+                raise exc.FcaRequestError(
                     "API search response has no data. Please check the search parameters and try again."
                 )
             else:
                 # No results found - return empty list (the API returns None)
                 out.override_data([])
         elif not isinstance(out.data, list):
-            raise exc.FinancialServicesRegisterApiRequestError(
+            raise exc.FcaRequestError(
                 "API search response data is not a list as expected. Please check the search parameters and try again."
             )
 
@@ -381,7 +375,7 @@ class FinancialServicesRegisterApiClient:
                 response = await self.api_session.get(url)
             return FinancialServicesRegisterApiResponse(response)
         except httpx.RequestError as e:
-            raise exc.FinancialServicesRegisterApiRequestError(e) from None
+            raise exc.FcaRequestError(e) from None
 
     async def get_firm(self, frn: str) -> FinancialServicesRegisterApiResponse:
         """:py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`:

@@ -6,7 +6,7 @@ import pytest
 
 # -- Internal libraries --
 from fca_api.exc import (
-    FinancialServicesRegisterApiRequestError,
+    FcaRequestError,
 )
 
 
@@ -37,7 +37,7 @@ class TestResourceInfoFunctionality:
     ):
         mocker.patch.object(test_client._api_session, "get", side_effect=httpx.RequestError("test RequestError"))
 
-        with pytest.raises(FinancialServicesRegisterApiRequestError):
+        with pytest.raises(FcaRequestError):
             await test_client._get_resource_info(resource_ref_number, resource_type)
 
     @pytest.mark.asyncio
@@ -49,7 +49,7 @@ class TestResourceInfoFunctionality:
     ):
         mocker.patch.object(test_client._api_session, "get", side_effect=httpx.RequestError("test RequestError"))
 
-        with pytest.raises(FinancialServicesRegisterApiRequestError):
+        with pytest.raises(FcaRequestError):
             await test_client._get_resource_info(
                 resource_ref_number,
                 resource_type,
