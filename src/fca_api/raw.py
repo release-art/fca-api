@@ -1,3 +1,10 @@
+"""
+This module implements the low-level Financial Services Register API
+client.
+
+It provides direct access to the FS Register API endpoints with minimal
+abstraction/data validation.
+"""
 import contextlib
 import typing
 from typing import Literal, Union

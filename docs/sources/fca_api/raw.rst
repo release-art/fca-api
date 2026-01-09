@@ -1,7 +1,7 @@
 =======================================
-``fca_api.api``
+``fca_api.raw``
 =======================================
 
-.. automodule:: fca_api.api
+.. automodule:: fca_api.raw
     :members:
     :special-members:
