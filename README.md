@@ -61,7 +61,7 @@ if __name__ == "__main__":
 - **Type Hints**: Full type annotation support for better development experience  
 - **Comprehensive Coverage**: Access to all major FCA Register endpoints
 - **Easy to Use**: Intuitive API design with sensible defaults
-- **Lightweight**: Minimal dependencies with httpx as the only requirement
+- **Lightweight**: Minimal dependencies with `httpx` and `pydantc` being the only requirements
 
 ## Documentation
 

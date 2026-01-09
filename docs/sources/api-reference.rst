@@ -14,3 +14,5 @@ API Reference
    fca_api/const
    fca_api/exc
    fca_api/raw
+   fca_api/types/index
+   fca_api/api

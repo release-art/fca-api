@@ -28,6 +28,7 @@ license = "MPL-2.0"
 
 dependencies = [
     "httpx>=0.28.1",
+    "pydantic>=2.12.5",
 ]
 
 readme = "README.md"
