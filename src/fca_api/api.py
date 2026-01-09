@@ -1,6 +1,6 @@
 __all__ = [
-    "FinancialServicesRegisterApiClient",
-    "FinancialServicesRegisterApiResponse",
+    "RawClient",
+    "FcaApiResponse",
 ]
 
 
@@ -24,7 +24,7 @@ T = typing.TypeVar("T")
 UNSET = object()
 
 
-class FinancialServicesRegisterApiResponse(httpx.Response, typing.Generic[T]):
+class FcaApiResponse(httpx.Response, typing.Generic[T]):
     """A simple :py:class:`httpx.Response`-based wrapper for the API responses."""
 
     _fca_data_override: T = UNSET
@@ -97,8 +97,11 @@ class FinancialServicesRegisterApiResponse(httpx.Response, typing.Generic[T]):
         self._fca_data_override = new_data
 
 
-class FinancialServicesRegisterApiClient:
-    """Client for the Financial Services Register API (V0.1).
+class RawClient:
+    """Low-level client for the Financial Services Register API (V0.1).
+
+    This client provides direct access to the FS Register API endpoints
+    with minimal abstraction/data validation.
 
     Consult the API documentation for further details.
 
@@ -180,7 +183,7 @@ class FinancialServicesRegisterApiClient:
 
     async def common_search(
         self, resource_name: str, resource_type: Literal["firm", "individual", "fund"]
-    ) -> FinancialServicesRegisterApiResponse[list[dict[str, typing.Any]]]:
+    ) -> FcaApiResponse[list[dict[str, typing.Any]]]:
         """:py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`:
         Returns a response containing the results of a search using the FS
         Register API common search API endpoint.
@@ -229,7 +232,7 @@ class FinancialServicesRegisterApiClient:
                 response = await self.api_session.get(url)
         except httpx.RequestError as e:
             raise exc.FcaRequestError(e) from None
-        out = FinancialServicesRegisterApiResponse(response)
+        out = FcaApiResponse(response)
         if not out.is_success:
             raise exc.FcaRequestError(
                 f"API search request failed with status code {out.status_code}: "
@@ -250,7 +253,7 @@ class FinancialServicesRegisterApiClient:
 
         return out
 
-    async def search_frn(self, firm_name: str) -> FinancialServicesRegisterApiResponse[list[dict[str, str]]]:
+    async def search_frn(self, firm_name: str) -> FcaApiResponse[list[dict[str, str]]]:
         """:py:class:`str` or :py:class:`list`: Returns the unique firm
         reference number (FRN) of a given firm, if found, or else a JSON array
         of matching records.
@@ -279,7 +282,7 @@ class FinancialServicesRegisterApiClient:
 
     async def _get_resource_info(
         self, resource_ref_number: str, resource_type: str, modifiers: tuple[str] = None
-    ) -> FinancialServicesRegisterApiResponse:
+    ) -> FcaApiResponse:
         """:py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`:
         A private, base handler for resource information API handlers.
 
@@ -373,11 +376,11 @@ class FinancialServicesRegisterApiClient:
         try:
             async with self._api_limiter():
                 response = await self.api_session.get(url)
-            return FinancialServicesRegisterApiResponse(response)
+            return FcaApiResponse(response)
         except httpx.RequestError as e:
             raise exc.FcaRequestError(e) from None
 
-    async def get_firm(self, frn: str) -> FinancialServicesRegisterApiResponse:
+    async def get_firm(self, frn: str) -> FcaApiResponse:
         """:py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`:
         Returns a response containing firm details, given its firm reference
         number (FRN)
@@ -404,7 +407,7 @@ class FinancialServicesRegisterApiClient:
         """
         return await self._get_resource_info(frn, const.ResourceTypes.FIRM.value.type_name)
 
-    async def get_firm_names(self, frn: str) -> FinancialServicesRegisterApiResponse:
+    async def get_firm_names(self, frn: str) -> FcaApiResponse:
         """:py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`:
         Returns a response containing the alternative or secondary trading name
         details of a firm, given its firm reference number (FRN).
@@ -435,7 +438,7 @@ class FinancialServicesRegisterApiClient:
             modifiers=("Names",),
         )
 
-    async def get_firm_addresses(self, frn: str) -> FinancialServicesRegisterApiResponse:
+    async def get_firm_addresses(self, frn: str) -> FcaApiResponse:
         """:py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`:
         Returns a response containing the address details of a firm, given its
         firm reference number (FRN).
@@ -466,7 +469,7 @@ class FinancialServicesRegisterApiClient:
             modifiers=("Address",),
         )
 
-    async def get_firm_controlled_functions(self, frn: str) -> FinancialServicesRegisterApiResponse:
+    async def get_firm_controlled_functions(self, frn: str) -> FcaApiResponse:
         """:py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`:
         Returns a response containing the controlled functions associated with a
         firm, given its firm reference number (FRN).
@@ -497,7 +500,7 @@ class FinancialServicesRegisterApiClient:
             modifiers=("CF",),
         )
 
-    async def get_firm_individuals(self, frn: str) -> FinancialServicesRegisterApiResponse:
+    async def get_firm_individuals(self, frn: str) -> FcaApiResponse:
         """:py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`:
         Returns a response containing the individuals associated with a firm,
         given its firm reference number (FRN).
@@ -528,7 +531,7 @@ class FinancialServicesRegisterApiClient:
             modifiers=("Individuals",),
         )
 
-    async def get_firm_permissions(self, frn: str) -> FinancialServicesRegisterApiResponse:
+    async def get_firm_permissions(self, frn: str) -> FcaApiResponse:
         """:py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`:
         Returns a response containing the permissions associated with a firm,
         given its firm reference number (FRN).
@@ -559,7 +562,7 @@ class FinancialServicesRegisterApiClient:
             modifiers=("Permissions",),
         )
 
-    async def get_firm_requirements(self, frn: str) -> FinancialServicesRegisterApiResponse:
+    async def get_firm_requirements(self, frn: str) -> FcaApiResponse:
         """:py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`:
         Returns a response containing the requirements associated with a firm,
         given its firm reference number (FRN).
@@ -592,7 +595,7 @@ class FinancialServicesRegisterApiClient:
 
     async def get_firm_requirement_investment_types(
         self, frn: str, req_ref: str
-    ) -> FinancialServicesRegisterApiResponse:
+    ) -> FcaApiResponse:
         """:py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`:
         Returns a response containing any investment types listed for a specific
         requirement associated with a firm, given its firm reference number
@@ -627,7 +630,7 @@ class FinancialServicesRegisterApiClient:
             modifiers=("Requirements", req_ref, "InvestmentTypes"),
         )
 
-    async def get_firm_regulators(self, frn: str) -> FinancialServicesRegisterApiResponse:
+    async def get_firm_regulators(self, frn: str) -> FcaApiResponse:
         """:py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`:
         Returns a response containing the regulators associated with a firm,
         given its firm reference number (FRN).
@@ -658,7 +661,7 @@ class FinancialServicesRegisterApiClient:
             modifiers=("Regulators",),
         )
 
-    async def get_firm_passports(self, frn: str) -> FinancialServicesRegisterApiResponse:
+    async def get_firm_passports(self, frn: str) -> FcaApiResponse:
         """:py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`:
         Returns a response containing the passports associated with a firm,
         given its firm reference number (FRN).
@@ -689,7 +692,7 @@ class FinancialServicesRegisterApiClient:
             modifiers=("Passports",),
         )
 
-    async def get_firm_passport_permissions(self, frn: str, country: str) -> FinancialServicesRegisterApiResponse:
+    async def get_firm_passport_permissions(self, frn: str, country: str) -> FcaApiResponse:
         """:py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`:
         Returns a response containing country-specific passport permissions for
         a firm and a country, given its firm reference number (FRN) and country
@@ -724,7 +727,7 @@ class FinancialServicesRegisterApiClient:
             modifiers=("Passports", country, "Permission"),
         )
 
-    async def get_firm_waivers(self, frn: str) -> FinancialServicesRegisterApiResponse:
+    async def get_firm_waivers(self, frn: str) -> FcaApiResponse:
         """:py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`:
         Returns a response containing any waivers applying to a firm, given its
         firm reference number (FRN).
@@ -755,7 +758,7 @@ class FinancialServicesRegisterApiClient:
             modifiers=("Waivers",),
         )
 
-    async def get_firm_exclusions(self, frn: str) -> FinancialServicesRegisterApiResponse:
+    async def get_firm_exclusions(self, frn: str) -> FcaApiResponse:
         """:py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`:
         Returns a response containing any exclusions applying to a firm, given
         its firm reference number (FRN).
@@ -786,7 +789,7 @@ class FinancialServicesRegisterApiClient:
             modifiers=("Exclusions",),
         )
 
-    async def get_firm_disciplinary_history(self, frn: str) -> FinancialServicesRegisterApiResponse:
+    async def get_firm_disciplinary_history(self, frn: str) -> FcaApiResponse:
         """:py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`:
         Returns a response containing the disciplinary history of a firm, given
         its firm reference number (FRN).
@@ -817,7 +820,7 @@ class FinancialServicesRegisterApiClient:
             modifiers=("DisciplinaryHistory",),
         )
 
-    async def get_firm_appointed_representatives(self, frn: str) -> FinancialServicesRegisterApiResponse:
+    async def get_firm_appointed_representatives(self, frn: str) -> FcaApiResponse:
         """:py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`:
         Returns a response containing information on the appointed
         representatives of a firm, given its firm reference number (FRN).
@@ -848,7 +851,7 @@ class FinancialServicesRegisterApiClient:
             modifiers=("AR",),
         )
 
-    async def search_irn(self, individual_name: str) -> FinancialServicesRegisterApiResponse[list[dict[str, str]]]:
+    async def search_irn(self, individual_name: str) -> FcaApiResponse[list[dict[str, str]]]:
         """:py:class:`str` or :py:class:`list`: Returns the unique individual
         reference number (IRN) of a given individual, if found, or else a JSON
         array of matching records.
@@ -874,7 +877,7 @@ class FinancialServicesRegisterApiClient:
             const.ResourceTypes.INDIVIDUAL.value.type_name,
         )
 
-    async def get_individual(self, irn: str) -> FinancialServicesRegisterApiResponse:
+    async def get_individual(self, irn: str) -> FcaApiResponse:
         """:py:class:`~fca_api.api.FinancialServicesRegisterApiResponse` :
         Returns a response containing individual details, given their individual
         reference number (IRN)
@@ -901,7 +904,7 @@ class FinancialServicesRegisterApiClient:
         """
         return await self._get_resource_info(irn, const.ResourceTypes.INDIVIDUAL.value.type_name)
 
-    async def get_individual_controlled_functions(self, irn: str) -> FinancialServicesRegisterApiResponse:
+    async def get_individual_controlled_functions(self, irn: str) -> FcaApiResponse:
         """:py:class:`~fca_api.api.FinancialServicesRegisterApiResponse` :
         Returns a response containing the controlled functions associated with
         an individual, given their individual reference number (FRN).
@@ -932,7 +935,7 @@ class FinancialServicesRegisterApiClient:
             modifiers=("CF",),
         )
 
-    async def get_individual_disciplinary_history(self, irn: str) -> FinancialServicesRegisterApiResponse:
+    async def get_individual_disciplinary_history(self, irn: str) -> FcaApiResponse:
         """:py:class:`~fca_api.api.FinancialServicesRegisterApiResponse` :
         Returns a response containing the disciplinary history of an
         individual, given their individual reference number (FRN).
@@ -963,7 +966,7 @@ class FinancialServicesRegisterApiClient:
             modifiers=("DisciplinaryHistory",),
         )
 
-    async def search_prn(self, fund_name: str) -> FinancialServicesRegisterApiResponse[list[dict[str, str]]]:
+    async def search_prn(self, fund_name: str) -> FcaApiResponse[list[dict[str, str]]]:
         """:py:class:`str` or :py:class:`list`: Returns the unique product
         reference number (PRN) of a given fund, if found, or else a JSON array
         of matching records.
@@ -986,7 +989,7 @@ class FinancialServicesRegisterApiClient:
         """
         return await self.common_search(fund_name, const.ResourceTypes.FUND.value.type_name)
 
-    async def get_fund(self, prn: str) -> FinancialServicesRegisterApiResponse:
+    async def get_fund(self, prn: str) -> FcaApiResponse:
         """:py:class:`~fca_api.api.FinancialServicesRegisterApiResponse` :
         Returns a response containing fund (or collective investment scheme
         (CIS)) details, given its product reference number (PRN)
@@ -1013,7 +1016,7 @@ class FinancialServicesRegisterApiClient:
         """
         return await self._get_resource_info(prn, const.ResourceTypes.FUND.value.type_name)
 
-    async def get_fund_names(self, prn: str) -> FinancialServicesRegisterApiResponse:
+    async def get_fund_names(self, prn: str) -> FcaApiResponse:
         """:py:class:`~fca_api.api.FinancialServicesRegisterApiResponse` :
         Returns a response containing the alternative or secondary trading name
         details of a fund (or collective investment scheme (CIS)), given its
@@ -1045,7 +1048,7 @@ class FinancialServicesRegisterApiClient:
             modifiers=("Names",),
         )
 
-    async def get_fund_subfunds(self, prn: str) -> FinancialServicesRegisterApiResponse:
+    async def get_fund_subfunds(self, prn: str) -> FcaApiResponse:
         """:py:class:`~fca_api.api.FinancialServicesRegisterApiResponse` :
         Returns a response containing the subfund details of a fund (or
         collective investment scheme (CIS)), given its product reference number
@@ -1077,7 +1080,7 @@ class FinancialServicesRegisterApiClient:
             modifiers=("Subfund",),
         )
 
-    async def get_regulated_markets(self) -> FinancialServicesRegisterApiResponse:
+    async def get_regulated_markets(self) -> FcaApiResponse:
         """:py:class:`~fca_api.api.FinancialServicesRegisterApiResponse` :
         Returns a response containing details of all current regulated markets,
         as defined in UK and EU / EEA financial services legislation.
@@ -1100,4 +1103,4 @@ class FinancialServicesRegisterApiClient:
 
         async with self._api_limiter():
             response = await self.api_session.get(url)
-        return FinancialServicesRegisterApiResponse(response)
+        return FcaApiResponse(response)

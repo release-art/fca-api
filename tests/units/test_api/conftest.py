@@ -5,7 +5,7 @@ import pytest
 import pytest_asyncio
 
 from fca_api.api import (
-    FinancialServicesRegisterApiClient,
+    RawClient,
 )
 
 
@@ -40,4 +40,4 @@ async def test_client(caching_session_subclass, test_api_username, test_api_key,
         cache_dir=test_resources_path,
         cache_mode="read",
     ) as api_session:
-        yield FinancialServicesRegisterApiClient(credentials=api_session)
+        yield RawClient(credentials=api_session)
