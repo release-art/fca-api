@@ -51,6 +51,84 @@ class CachingSession(httpx.AsyncClient):
         # This must match the logic in CachingFinancialServicesRegisterApiSession
         return self.cache_dir / cache_filename.make("GET", url, headers={}, **kwargs)
 
+    async def _read_response_from_cache(self, cache_file: pathlib.Path) -> httpx.Response:
+        """Read a cached response from disk.
+
+        Parameters
+        ----------
+        cache_file : pathlib.Path
+            Path to the cache file.
+
+        Returns
+        -------
+        httpx.Response
+            The cached HTTP response.
+        """
+        with cache_file.open("r") as f:
+            cache_data = json.load(f)
+
+        # Create a mock HTTP response
+        # We need to construct the response in a way that httpx.Response accepts
+        request = httpx.Request("GET", cache_data["url"], params=cache_data["request"].get("params"))
+
+        if json_content := cache_data["content"].get("json"):
+            content_payload = json.dumps(json_content).encode("utf-8")
+        else:
+            raise NotImplementedError("Only JSON content is supported in the mock session.")
+        response = httpx.Response(
+            status_code=cache_data["status_code"],
+            headers=cache_data["headers"] | {"content-encoding": "gzip"},
+            content=gzip.compress(content_payload),
+            request=request,
+        )
+        return response
+
+    async def _make_and_save_request(
+        self, cache_file: pathlib.Path, method: str, url: str, **kwargs: typing.Any
+    ) -> httpx.Response:
+        """Make an HTTP request and save the response to cache.
+
+        Parameters
+        ----------
+        method : str
+            The HTTP method (e.g., "GET", "POST").
+        url : str
+            The request URL.
+        **kwargs : Any
+            Additional request parameters.
+
+        Returns
+        -------
+        httpx.Response
+            The HTTP response.
+        """
+        if not cache_file.parent.exists():
+            cache_file.parent.mkdir(parents=True, exist_ok=True)
+
+        response = await super().get(url, **kwargs)
+        cache_data = {
+            "status_code": response.status_code,
+            "headers": dict(response.headers),
+            "content": {
+                "json": response.json()  # Assume JSON content for simplicity
+            },
+            "url": str(response.url),
+            "request": {
+                "url": str(url),
+                "params": kwargs.get("params"),
+                "headers": dict(self.headers)
+                | {
+                    # Mask private headers
+                    "x-auth-email": "user@example.com",
+                    "x-auth-key": "00617470e8144a09",
+                },
+            },
+        }
+
+        with cache_file.open("w") as f:
+            json.dump(cache_data, f, indent=2, sort_keys=True)
+        return response
+
     async def get(self, url: str, **kwargs: typing.Any) -> httpx.Response:
         """Load cached response instead of making HTTP request.
 
@@ -74,58 +152,14 @@ class CachingSession(httpx.AsyncClient):
         cache_file = self._get_cache_filename(url, **kwargs)
 
         if self.cache_mode == CacheMode.READ:
-            if not cache_file.exists():
-                raise FileNotFoundError(
-                    f"No cached response found for request. "
-                    f"Cache file: {cache_file}\\n"
-                    f"URL: {url}\\n"
-                    f"Params: {kwargs.get('params', 'None')}"
-                )
-
-            # Load cached response data
-            with cache_file.open("r") as f:
-                cache_data = json.load(f)
-
-            # Create a mock HTTP response
-            # We need to construct the response in a way that httpx.Response accepts
-            request = httpx.Request("GET", url, params=kwargs.get("params"))
-
-            if json_content := cache_data["content"].get("json"):
-                content_payload = json.dumps(json_content).encode("utf-8")
-            else:
-                raise NotImplementedError("Only JSON content is supported in the mock session.")
-            response = httpx.Response(
-                status_code=cache_data["status_code"],
-                headers=cache_data["headers"] | {"content-encoding": "gzip"},
-                content=gzip.compress(content_payload),
-                request=request,
-            )
+            response = await self._read_response_from_cache(cache_file)
         elif self.cache_mode == CacheMode.WRITE:
-            if not cache_file.parent.exists():
-                cache_file.parent.mkdir(parents=True, exist_ok=True)
-
-            response = await super().get(url, **kwargs)
-            cache_data = {
-                "status_code": response.status_code,
-                "headers": dict(response.headers),
-                "content": {
-                    "json": response.json()  # Assume JSON content for simplicity
-                },
-                "url": str(response.url),
-                "request": {
-                    "url": str(url),
-                    "params": kwargs.get("params"),
-                    "headers": dict(self.headers)
-                    | {
-                        # Mask private headers
-                        "x-auth-email": "user@example.com",
-                        "x-auth-key": "00617470e8144a09",
-                    },
-                },
-            }
-
-            with cache_file.open("w") as f:
-                json.dump(cache_data, f, indent=2, sort_keys=True)
+            response = await self._make_and_save_request(cache_file, "GET", url, **kwargs)
+        elif self.cache_mode == CacheMode.FETCH_MISSING:
+            if cache_file.exists():
+                response = await self._read_response_from_cache(cache_file)
+            else:
+                response = await self._make_and_save_request(cache_file, "GET", url, **kwargs)
         else:
             raise NotImplementedError(f"Unexpected cache mode for reading: {self.cache_mode}")
 

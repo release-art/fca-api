@@ -2,12 +2,16 @@
 
 Performs data validation and transformation on top of the raw API client.
 """
+
 import typing
-import httpx
 import warnings
+
+import httpx
+
 from . import raw, types
 
-T = typing.TypeVar('T')
+T = typing.TypeVar("T")
+BaseSubclassT = typing.TypeVar("BaseSubclassT", bound=types.base.Base)
 
 
 class Client:
@@ -42,7 +46,7 @@ class Client:
             The raw FCA API client.
         """
         return self._client
-    
+
     def _check_api_version(self, request: raw.FcaApiResponse, expected: str) -> None:
         """Check that the API version in the response matches the expected version.
 
@@ -54,36 +58,53 @@ class Client:
             warnings.warn(
                 f"API version mismatch: expected {expected}, got {request.status} (request url: {request.url})",
                 RuntimeWarning,
+                stacklevel=2,
             )
-    
-    async def search_frn(self, firm_name: str, seed_page_idx: int|None=None) -> types.pagination.MultipageList[types.api.FirmSearchResult]:
-        """Search for a firm by its name."""
-        res = await self._client.search_frn(firm_name, page=seed_page_idx)
-        self._check_api_version(res, expected=types.api.FirmSearchResult._expected_api_version)
-        result_info = types.pagination.PaginatedResultInfo.model_validate(res.result_info)
-        data = res.data
-        assert isinstance(data, list)
-        return types.pagination.MultipageList(
-            items=[
-                types.api.FirmSearchResult.model_validate(item)
-                for item in res.data
-            ],
-            result_info=result_info,
-            fetch_page=lambda page_idx: self.search_frn(firm_name, seed_page_idx=page_idx),
-        )
 
-    async def search_irn(self, individual_name: str, seed_page_idx: int|None=None) -> types.pagination.MultipageList[types.api.IndividualSearchResult]:
-        """Search for an individual by their name."""
-        res = await self._client.search_irn(individual_name, page=seed_page_idx)
-        self._check_api_version(res, expected=types.api.IndividualSearchResult._expected_api_version)
-        result_info = types.pagination.PaginatedResultInfo.model_validate(res.result_info)
+    async def _paginated_search(
+        self,
+        search_fn: typing.Callable[[int], typing.Awaitable[raw.FcaApiResponse]],
+        page_idx: int,
+        result_t: typing.Type[BaseSubclassT],
+    ) -> types.pagination.FetchPageRvT[BaseSubclassT]:
+        """Execute a common search-style search with pagination support & validation.
+
+        Parameters:
+            search_fn: The search function to call (with the page number as an argument).
+            page_idx: The page index to fetch.
+            result_t: The expected type of the result items.
+        """
+        res = await search_fn(page_idx)
+        self._check_api_version(res, expected=result_t._expected_api_version)
+        if res.result_info:
+            result_info = types.pagination.PaginatedResultInfo.model_validate(res.result_info)
+        else:
+            result_info = None
         data = res.data
         assert isinstance(data, list)
-        return types.pagination.MultipageList(
-            items=[
-                types.api.IndividualSearchResult.model_validate(item)
-                for item in res.data
-            ],
-            result_info=result_info,
-            fetch_page=lambda page_idx: self.search_irn(individual_name, seed_page_idx=page_idx),
+        items = [result_t.model_validate(item) for item in res.data]
+        return (result_info, items)
+
+    async def search_frn(self, firm_name: str) -> types.pagination.MultipageList[types.api.FirmSearchResult]:
+        """Search for a firm by its name."""
+        out = types.pagination.MultipageList(
+            fetch_page=lambda page_idx: self._paginated_search(
+                lambda page_idx: self._client.search_frn(firm_name, page_idx), page_idx, types.api.FirmSearchResult
+            ),
         )
+        await out._asyinc_init()
+        return out
+
+    async def search_irn(
+        self, individual_name: str
+    ) -> types.pagination.MultipageList[types.api.IndividualSearchResult]:
+        """Search for an individual by their name."""
+        out = types.pagination.MultipageList(
+            fetch_page=lambda page_idx: self._paginated_search(
+                lambda page_idx: self._client.search_irn(individual_name, page_idx),
+                page_idx,
+                types.api.IndividualSearchResult,
+            ),
+        )
+        await out._asyinc_init()
+        return out

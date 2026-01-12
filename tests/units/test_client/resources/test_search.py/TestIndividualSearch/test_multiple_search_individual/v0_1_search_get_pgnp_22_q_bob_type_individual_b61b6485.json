@@ -3,13 +3,6 @@
     "json": {
       "Data": [
         {
-          "Name": "Robert Timothy Tyley",
-          "Reference Number": "RTT01007",
-          "Status": "Regulatory approval no longer required",
-          "Type of business or Individual": "Individual",
-          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RTT01007"
-        },
-        {
           "Name": "Robert Hughes",
           "Reference Number": "RXH78517",
           "Status": "Active",
@@ -52,6 +45,13 @@
           "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RXJ00089"
         },
         {
+          "Name": "Sarbjit Singh Kullar",
+          "Reference Number": "SSK01022",
+          "Status": "Regulatory approval no longer required",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/SSK01022"
+        },
+        {
           "Name": "Robert Stephen White",
           "Reference Number": "RSW00016",
           "Status": "Active",
@@ -71,20 +71,6 @@
           "Status": "Active",
           "Type of business or Individual": "Individual",
           "URL": "https://register.fca.org.uk/services/V0.1/Individuals/DGH00026"
-        },
-        {
-          "Name": "Robert Gregory",
-          "Reference Number": "RXG00047",
-          "Status": "Regulatory approval no longer required",
-          "Type of business or Individual": "Individual",
-          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RXG00047"
-        },
-        {
-          "Name": "Robert Ian Baird Fraser",
-          "Reference Number": "RIB00008",
-          "Status": "Regulatory approval no longer required",
-          "Type of business or Individual": "Individual",
-          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RIB00008"
         },
         {
           "Name": "Robert Minicus",
@@ -136,6 +122,20 @@
           "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RMG01121"
         },
         {
+          "Name": "Robert Ian Baird Fraser",
+          "Reference Number": "RIB00008",
+          "Status": "Regulatory approval no longer required",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RIB00008"
+        },
+        {
+          "Name": "Robert Gregory",
+          "Reference Number": "RXG00047",
+          "Status": "Regulatory approval no longer required",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RXG00047"
+        },
+        {
           "Name": "Robert Victor Davis",
           "Reference Number": "RVD01007",
           "Status": "Regulatory approval no longer required",
@@ -157,13 +157,13 @@
   "headers": {
     "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
     "cf-cache-status": "DYNAMIC",
-    "cf-ray": "9bb37e38d9c5bea1-LHR",
+    "cf-ray": "9bcba7549f62ecdb-LHR",
     "connection": "keep-alive",
     "content-encoding": "gzip",
     "content-type": "application/json;charset=UTF-8",
-    "date": "Fri, 09 Jan 2026 11:11:18 GMT",
+    "date": "Mon, 12 Jan 2026 09:33:40 GMT",
     "server": "cloudflare",
-    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Sat, 09-Jan-2027 11:11:17 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Sat, 09-Jan-2027 11:11:17 GMT; Max-Age=31536000; secure",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Tue, 12-Jan-2027 09:33:39 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Tue, 12-Jan-2027 09:33:39 GMT; Max-Age=31536000; secure",
     "strict-transport-security": "max-age=63072000; includeSubDomains",
     "transfer-encoding": "chunked",
     "vary": "Accept-Encoding",

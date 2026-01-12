@@ -1,10 +1,11 @@
 """Search return types for the FCA API."""
-import typing
-import pydantic
 
 from typing import Annotated
 
+import pydantic
+
 from . import base
+
 
 class FirmSearchResult(base.Base):
     """A model representing a firm search result."""
@@ -12,7 +13,7 @@ class FirmSearchResult(base.Base):
     _expected_api_version = "FSR-API-04-01-00"
 
     url: Annotated[
-        pydantic.HttpUrl|None,
+        pydantic.HttpUrl | None,
         pydantic.Field(
             description="The URL of the firm's record in the FCA register.",
             validation_alias=pydantic.AliasChoices("URL", "url"),
@@ -57,13 +58,14 @@ class FirmSearchResult(base.Base):
         ),
     ]
 
+
 class IndividualSearchResult(base.Base):
     """A model representing an individual search result."""
 
     _expected_api_version = "FSR-API-04-01-00"
 
     url: Annotated[
-        pydantic.HttpUrl|None,
+        pydantic.HttpUrl | None,
         pydantic.Field(
             description="The URL of the individual's record in the FCA register.",
             validation_alias=pydantic.AliasChoices("URL", "url"),

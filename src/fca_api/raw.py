@@ -186,7 +186,7 @@ class RawClient:
         self,
         resource_name: str,
         resource_type: Literal["firm", "individual", "fund"],
-        page: int|None=None,
+        page: int | None = None,
     ) -> FcaApiResponse[list[dict[str, typing.Any]]]:
         """:py:class:`~fca_api.raw.FcaApiResponse`:
         Returns a response containing the results of a search using the FS
@@ -229,6 +229,11 @@ class RawClient:
             If there was a :py:class:`httpx.RequestError` in making the original
             request.
         """
+        assert page is None or page > 0, f"Invalid page number: {page}"
+        if not resource_name:
+            raise ValueError("Resource name must be a non-empty string.")
+        if not resource_type:
+            raise ValueError("Resource type must be a non-empty string.")
         search_req = {"q": resource_name, "type": resource_type}
         if page is not None:
             assert isinstance(page, int) and page >= 1, page
@@ -247,13 +252,8 @@ class RawClient:
                 f"{out.reason_phrase}. Please check the search parameters and try again."
             )
         elif not out.data:
-            if "no search result found" not in out.message.lower():
-                raise exc.FcaRequestError(
-                    "API search response has no data. Please check the search parameters and try again."
-                )
-            else:
-                # No results found - return empty list (the API returns None)
-                out.override_data([])
+            # No results found - ensure that an empty list is returned (the API returns None sometimes)
+            out.override_data([])
         elif not isinstance(out.data, list):
             raise exc.FcaRequestError(
                 "API search response data is not a list as expected. Please check the search parameters and try again."
@@ -261,7 +261,7 @@ class RawClient:
 
         return out
 
-    async def search_frn(self, firm_name: str, page: int|None=None) -> FcaApiResponse[list[dict[str, str]]]:
+    async def search_frn(self, firm_name: str, page: int | None = None) -> FcaApiResponse[list[dict[str, str]]]:
         """:py:class:`~fca_api.raw.FcaApiResponse`: Returns a response containing
         firm records matching the given firm name.
 
@@ -274,7 +274,7 @@ class RawClient:
         ----------
         firm_name : str
             The firm name (case insensitive).
-            
+
             Returns an API response with all matching form records.
 
         Returns
@@ -853,7 +853,7 @@ class RawClient:
             modifiers=("AR",),
         )
 
-    async def search_irn(self, individual_name: str, page: int|None=None) -> FcaApiResponse[list[dict[str, str]]]:
+    async def search_irn(self, individual_name: str, page: int | None = None) -> FcaApiResponse[list[dict[str, str]]]:
         """:py:class:`~fca_api.raw.FcaApiResponse`: Returns a response containing
         individual records matching the given individual name.
 

@@ -73,18 +73,18 @@
           "URL": "https://register.fca.org.uk/services/V0.1/Individuals/BBB00017"
         },
         {
-          "Name": "Christian Bob Heeringa",
-          "Reference Number": "CBH01033",
-          "Status": "Regulatory approval no longer required",
-          "Type of business or Individual": "Individual",
-          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/CBH01033"
-        },
-        {
           "Name": "Bob Michiel Arends",
           "Reference Number": "BMA01031",
           "Status": "Regulatory approval no longer required",
           "Type of business or Individual": "Individual",
           "URL": "https://register.fca.org.uk/services/V0.1/Individuals/BMA01031"
+        },
+        {
+          "Name": "Christian Bob Heeringa",
+          "Reference Number": "CBH01033",
+          "Status": "Regulatory approval no longer required",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/CBH01033"
         },
         {
           "Name": "Jascha Bob Raadtgever",
@@ -157,13 +157,13 @@
   "headers": {
     "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
     "cf-cache-status": "DYNAMIC",
-    "cf-ray": "9bb37dca18a1bea1-LHR",
+    "cf-ray": "9bcba6ec3852ecdb-LHR",
     "connection": "keep-alive",
     "content-encoding": "gzip",
     "content-type": "application/json;charset=UTF-8",
-    "date": "Fri, 09 Jan 2026 11:11:00 GMT",
+    "date": "Mon, 12 Jan 2026 09:33:24 GMT",
     "server": "cloudflare",
-    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Sat, 09-Jan-2027 11:11:00 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Sat, 09-Jan-2027 11:11:00 GMT; Max-Age=31536000; secure",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Tue, 12-Jan-2027 09:33:23 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Tue, 12-Jan-2027 09:33:23 GMT; Max-Age=31536000; secure",
     "strict-transport-security": "max-age=63072000; includeSubDomains",
     "transfer-encoding": "chunked",
     "vary": "Accept-Encoding",

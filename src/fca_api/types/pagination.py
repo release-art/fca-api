@@ -1,10 +1,13 @@
 """"""
 
-import typing
-import pydantic
 import asyncio
+import enum
+import typing
 
-T = typing.TypeVar('T')
+import pydantic
+
+T = typing.TypeVar("T")
+
 
 class PaginatedResultInfo(pydantic.BaseModel):
     next: typing.Optional[pydantic.HttpUrl] = None
@@ -22,6 +25,22 @@ class PaginatedResultInfo(pydantic.BaseModel):
     def model_validate(cls, data: dict) -> "PaginatedResultInfo":
         return super().model_validate({key.lower().strip(): value for (key, value) in data.items()})
 
+
+FetchPageRvT = typing.Tuple[
+    typing.Optional[PaginatedResultInfo],
+    typing.Sequence[T],
+]
+
+FetchPageCallableT = typing.Callable[[int], typing.Awaitable[FetchPageRvT[T]]]
+
+
+@enum.unique
+class SpecialResultInfoState(enum.Enum):
+    UNINITIALIZED = enum.auto()
+    FIRST_PAGE_FETCH_FAILED = enum.auto()
+    ALL_PAGES_FETCHED = enum.auto()
+
+
 class MultipageList(typing.Generic[T]):
     """A list that represents a multipage API response.
 
@@ -29,24 +48,32 @@ class MultipageList(typing.Generic[T]):
     """
 
     _items: typing.List[T]
-    _fetch_page_cb: typing.Callable[[int], typing.Awaitable["MultipageList[T]"]]
+    _fetch_page_cb: FetchPageCallableT[T]
     _lock: asyncio.Lock
-    _result_info: PaginatedResultInfo
-    # _fetched_page_indices - a set of 1-based page indices that have been fetched
-    _fetched_page_indices: typing.Set[int]
+    _result_info: PaginatedResultInfo | SpecialResultInfoState
 
     def __init__(
         self,
         /,
-        items: typing.Sequence[T],
-        result_info: PaginatedResultInfo,
-        fetch_page: typing.Callable[[int], typing.Awaitable["MultipageList[T]"]],
+        fetch_page: FetchPageCallableT[T],
     ) -> None:
-        self._items = list(items)
+        self._items = []
         self._lock = asyncio.Lock()
-        self._result_info = result_info
         self._fetch_page_cb = fetch_page
-        self._fetched_page_indices = {result_info.page}
+        self._result_info = SpecialResultInfoState.UNINITIALIZED
+
+    def _has_next_page(self) -> bool:
+        if self._result_info is SpecialResultInfoState.UNINITIALIZED:
+            return True
+        elif isinstance(self._result_info, SpecialResultInfoState):
+            # Any other special state means that there are no more pages to fetch.
+            return False
+        assert isinstance(self._result_info, PaginatedResultInfo)
+        return (self._result_info.page < self._result_info.total_pages) and self._result_info.next is not None
+
+    async def _asyinc_init(self) -> None:
+        # Fetch the first page to initialize the result info.
+        await self._fetch_page_to_item_idx(0)
 
     async def _fetch_page_to_item_idx(self, desired_item_idx: int):
         """Fetch a specific page from the API if it is not already cached.
@@ -54,28 +81,48 @@ class MultipageList(typing.Generic[T]):
         Args:
             desired_item_idx: The index of the desired item to fetch.
         """
-        if len(self._items) > desired_item_idx:
+        if len(self._items) > desired_item_idx or not self._has_next_page():
             return
         async with self._lock:
-            # Double-check after acquiring the lock
-            while len(self._items) <= desired_item_idx:
-                last_fetched_page = max(self._fetched_page_indices)
-                new_page = await self._fetch_page_cb(last_fetched_page + 1)
-                assert new_page._result_info.page == last_fetched_page + 1, (
-                    new_page._result_info.page,
-                    last_fetched_page + 1,
-                )
-                self._items.extend(new_page.local_items())
-                self._fetched_page_indices.add(new_page._result_info.page)
-        return new_page
+            # Double-check after acquiring the lock.
+            while len(self._items) <= desired_item_idx and self._has_next_page():
+                if isinstance(self._result_info, SpecialResultInfoState):
+                    last_fetched_page = 0
+                else:
+                    last_fetched_page = self._result_info.page
+
+                (new_page_info, new_items) = await self._fetch_page_cb(last_fetched_page + 1)
+                self._max_fetched_page = last_fetched_page + 1
+                if new_page_info is None:
+                    if last_fetched_page == 0:
+                        self._result_info = SpecialResultInfoState.FIRST_PAGE_FETCH_FAILED
+                    else:
+                        self._result_info = SpecialResultInfoState.ALL_PAGES_FETCHED
+                else:
+                    assert new_page_info.page == last_fetched_page + 1, (
+                        new_page_info.page,
+                        last_fetched_page + 1,
+                    )
+                    self._items.extend(new_items)
+                    self._result_info = new_page_info
+        return new_page_info
 
     async def __getitem__(self, index: int) -> T:
         await self._fetch_page_to_item_idx(index)
         return self._items[index]
-    
+
     async def __aiter__(self) -> typing.AsyncIterator[T]:
+        idx = 0
         for idx in range(len(self)):
-            yield await self[idx]
+            try:
+                yield await self[idx]
+            except IndexError:
+                # Double check that this is an actual IndexError, or the __len__
+                # has changed due to FCA api inconsistencies.
+                if idx >= len(self):
+                    break
+                else:
+                    raise
 
     def local_items(self) -> typing.Tuple[T, ...]:
         """Return the items that have been locally cached without making API calls.
@@ -86,7 +133,19 @@ class MultipageList(typing.Generic[T]):
         return tuple(self._items)
 
     def __len__(self) -> int:
-        return self._result_info.total_count
+        """
+        Return the estimated total number of items available from the API.
+
+        Please ntoe that the result_info.total_count may not always be accurate,
+        so it is possible to get an IndexError when accessing an index less than this length.
+        """
+        if self._has_next_page():
+            # while the list was not fully fetched,
+            # return an estimate based on the total_count from result_info
+            out = self._result_info.total_count
+        else:
+            out = len(self._items)
+        return out
 
     def __repr__(self) -> str:
         return f"MultipageList({super().__repr__()})"

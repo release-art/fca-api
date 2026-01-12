@@ -1,14 +1,17 @@
-import pytest_asyncio
-import pytest
 import pathlib
 
+import pytest
+import pytest_asyncio
+
 import fca_api
+
 
 @pytest.fixture
 def test_resources_path() -> pathlib.Path:
     out = pathlib.Path(__file__).parent / "resources"
     assert out.is_dir(), f"Test resources path does not exist: {out}"
     return out.resolve()
+
 
 @pytest_asyncio.fixture
 async def test_client(caching_session_subclass, test_api_username, test_api_key, test_resources_path):

@@ -3,11 +3,11 @@
     "json": {
       "Data": [
         {
-          "Name": "Robert Young",
-          "Reference Number": "RXY21124",
-          "Status": "Active",
+          "Name": "Robert Anthony Cawley",
+          "Reference Number": "RAC01114",
+          "Status": "Regulatory approval no longer required",
           "Type of business or Individual": "Individual",
-          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RXY21124"
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RAC01114"
         },
         {
           "Name": "Robert Neill",
@@ -45,13 +45,6 @@
           "URL": "https://register.fca.org.uk/services/V0.1/Individuals/MXR01678"
         },
         {
-          "Name": "Robert Melville Stiddard",
-          "Reference Number": "RMS01122",
-          "Status": "Regulatory approval no longer required",
-          "Type of business or Individual": "Individual",
-          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RMS01122"
-        },
-        {
           "Name": "Robert John Luckett",
           "Reference Number": "RJL00014",
           "Status": "Regulatory approval no longer required",
@@ -73,25 +66,18 @@
           "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RWW01048"
         },
         {
+          "Name": "Robert Melville Stiddard",
+          "Reference Number": "RMS01122",
+          "Status": "Regulatory approval no longer required",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RMS01122"
+        },
+        {
           "Name": "Robert Howard Tempest",
           "Reference Number": "RHT00013",
           "Status": "Active",
           "Type of business or Individual": "Individual",
           "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RHT00013"
-        },
-        {
-          "Name": "Robert Dickson",
-          "Reference Number": "RXD00059",
-          "Status": "Regulatory approval no longer required",
-          "Type of business or Individual": "Individual",
-          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RXD00059"
-        },
-        {
-          "Name": "Robert Walter Kerslake",
-          "Reference Number": "RWK01047",
-          "Status": "Regulatory approval no longer required",
-          "Type of business or Individual": "Individual",
-          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RWK01047"
         },
         {
           "Name": "Robert Wilfred Carson",
@@ -113,6 +99,20 @@
           "Status": "Regulatory approval no longer required",
           "Type of business or Individual": "Individual",
           "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RXD00265"
+        },
+        {
+          "Name": "Robert Walter Kerslake",
+          "Reference Number": "RWK01047",
+          "Status": "Regulatory approval no longer required",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RWK01047"
+        },
+        {
+          "Name": "Robert Dickson",
+          "Reference Number": "RXD00059",
+          "Status": "Regulatory approval no longer required",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RXD00059"
         },
         {
           "Name": "Robert James Hawkins",
@@ -157,13 +157,13 @@
   "headers": {
     "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
     "cf-cache-status": "DYNAMIC",
-    "cf-ray": "9bb37e1dcd9cbea1-LHR",
+    "cf-ray": "9bcba73ba829ecdb-LHR",
     "connection": "keep-alive",
     "content-encoding": "gzip",
     "content-type": "application/json;charset=UTF-8",
-    "date": "Fri, 09 Jan 2026 11:11:14 GMT",
+    "date": "Mon, 12 Jan 2026 09:33:36 GMT",
     "server": "cloudflare",
-    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Sat, 09-Jan-2027 11:11:13 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Sat, 09-Jan-2027 11:11:13 GMT; Max-Age=31536000; secure",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Tue, 12-Jan-2027 09:33:35 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Tue, 12-Jan-2027 09:33:35 GMT; Max-Age=31536000; secure",
     "strict-transport-security": "max-age=63072000; includeSubDomains",
     "transfer-encoding": "chunked",
     "vary": "Accept-Encoding",

@@ -3,6 +3,13 @@
     "json": {
       "Data": [
         {
+          "Name": "Robert Charles Wills",
+          "Reference Number": "RCW01085",
+          "Status": "Regulatory approval no longer required",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RCW01085"
+        },
+        {
           "Name": "Robert Andrew Arnold",
           "Reference Number": "RAA01085",
           "Status": "Regulatory approval no longer required",
@@ -101,6 +108,13 @@
           "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RXS01756"
         },
         {
+          "Name": "Robert Kay Torkelund",
+          "Reference Number": "RKT01022",
+          "Status": "Regulatory approval no longer required",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RKT01022"
+        },
+        {
           "Name": "Robert Kenneth Howarth",
           "Reference Number": "RKH01049",
           "Status": "Regulatory approval no longer required",
@@ -127,20 +141,6 @@
           "Status": "Regulatory approval no longer required",
           "Type of business or Individual": "Individual",
           "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RXK01283"
-        },
-        {
-          "Name": "Harjeet Singh Jolly",
-          "Reference Number": "HSJ01009",
-          "Status": "Regulatory approval no longer required",
-          "Type of business or Individual": "Individual",
-          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/HSJ01009"
-        },
-        {
-          "Name": "Robert Peter Taylor",
-          "Reference Number": "RPT01039",
-          "Status": "Regulatory approval no longer required",
-          "Type of business or Individual": "Individual",
-          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RPT01039"
         }
       ],
       "Message": "Ok. Search successful",
@@ -157,13 +157,13 @@
   "headers": {
     "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
     "cf-cache-status": "DYNAMIC",
-    "cf-ray": "9bb37e6b1832bea1-LHR",
+    "cf-ray": "9bcba7836eccecdb-LHR",
     "connection": "keep-alive",
     "content-encoding": "gzip",
     "content-type": "application/json;charset=UTF-8",
-    "date": "Fri, 09 Jan 2026 11:11:26 GMT",
+    "date": "Mon, 12 Jan 2026 09:33:48 GMT",
     "server": "cloudflare",
-    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Sat, 09-Jan-2027 11:11:25 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Sat, 09-Jan-2027 11:11:25 GMT; Max-Age=31536000; secure",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Tue, 12-Jan-2027 09:33:47 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Tue, 12-Jan-2027 09:33:47 GMT; Max-Age=31536000; secure",
     "strict-transport-security": "max-age=63072000; includeSubDomains",
     "transfer-encoding": "chunked",
     "vary": "Accept-Encoding",

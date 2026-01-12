@@ -3,13 +3,6 @@
     "json": {
       "Data": [
         {
-          "Name": "Robert Bailey",
-          "Reference Number": "RXB01741",
-          "Status": "Regulatory approval no longer required",
-          "Type of business or Individual": "Individual",
-          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RXB01741"
-        },
-        {
           "Name": "Robert Primmer",
           "Reference Number": "RXP01468",
           "Status": "Regulatory approval no longer required",
@@ -31,18 +24,18 @@
           "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RPT01048"
         },
         {
-          "Name": "Yuti Kohchi",
-          "Reference Number": "YXK01086",
+          "Name": "Robert Marksman",
+          "Reference Number": "RXM02495",
           "Status": "Regulatory approval no longer required",
           "Type of business or Individual": "Individual",
-          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/YXK01086"
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RXM02495"
         },
         {
-          "Name": "Robert Petrie",
-          "Reference Number": "RXP01326",
+          "Name": "Robert Malcolm Packer",
+          "Reference Number": "RMP01091",
           "Status": "Regulatory approval no longer required",
           "Type of business or Individual": "Individual",
-          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RXP01326"
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RMP01091"
         },
         {
           "Name": "Robert Alfred Harper",
@@ -73,6 +66,13 @@
           "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RAN01041"
         },
         {
+          "Name": "Yuti Kohchi",
+          "Reference Number": "YXK01086",
+          "Status": "Regulatory approval no longer required",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/YXK01086"
+        },
+        {
           "Name": "Robert Emmet Gallery",
           "Reference Number": "REG01040",
           "Status": "Regulatory approval no longer required",
@@ -80,18 +80,25 @@
           "URL": "https://register.fca.org.uk/services/V0.1/Individuals/REG01040"
         },
         {
+          "Name": "Robert Petrie",
+          "Reference Number": "RXP01326",
+          "Status": "Regulatory approval no longer required",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RXP01326"
+        },
+        {
+          "Name": "Robert Burnham Starbuck",
+          "Reference Number": "RBS01028",
+          "Status": "Regulatory approval no longer required",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RBS01028"
+        },
+        {
           "Name": "Robert Hugh Menzies",
           "Reference Number": "RHM01021",
           "Status": "Regulatory approval no longer required",
           "Type of business or Individual": "Individual",
           "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RHM01021"
-        },
-        {
-          "Name": "Robert Malcolm Packer",
-          "Reference Number": "RMP01091",
-          "Status": "Regulatory approval no longer required",
-          "Type of business or Individual": "Individual",
-          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RMP01091"
         },
         {
           "Name": "Robert John Mayor Parker",
@@ -115,11 +122,11 @@
           "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RJS01341"
         },
         {
-          "Name": "Robert Burnham Starbuck",
-          "Reference Number": "RBS01028",
+          "Name": "Robert Edward Beedham",
+          "Reference Number": "REB01124",
           "Status": "Regulatory approval no longer required",
           "Type of business or Individual": "Individual",
-          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RBS01028"
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/REB01124"
         },
         {
           "Name": "Christoph Vedral",
@@ -127,13 +134,6 @@
           "Status": "Active",
           "Type of business or Individual": "Individual",
           "URL": "https://register.fca.org.uk/services/V0.1/Individuals/CXV01023"
-        },
-        {
-          "Name": "Robert Edward Beedham",
-          "Reference Number": "REB01124",
-          "Status": "Regulatory approval no longer required",
-          "Type of business or Individual": "Individual",
-          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/REB01124"
         },
         {
           "Name": "Robert Gabriel Frederick Dann",
@@ -157,13 +157,13 @@
   "headers": {
     "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
     "cf-cache-status": "DYNAMIC",
-    "cf-ray": "9bb37eca7aedbea1-LHR",
+    "cf-ray": "9bcba7e3ef52ecdb-LHR",
     "connection": "keep-alive",
     "content-encoding": "gzip",
     "content-type": "application/json;charset=UTF-8",
-    "date": "Fri, 09 Jan 2026 11:11:41 GMT",
+    "date": "Mon, 12 Jan 2026 09:34:03 GMT",
     "server": "cloudflare",
-    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Sat, 09-Jan-2027 11:11:41 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Sat, 09-Jan-2027 11:11:41 GMT; Max-Age=31536000; secure",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Tue, 12-Jan-2027 09:34:02 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Tue, 12-Jan-2027 09:34:02 GMT; Max-Age=31536000; secure",
     "strict-transport-security": "max-age=63072000; includeSubDomains",
     "transfer-encoding": "chunked",
     "vary": "Accept-Encoding",

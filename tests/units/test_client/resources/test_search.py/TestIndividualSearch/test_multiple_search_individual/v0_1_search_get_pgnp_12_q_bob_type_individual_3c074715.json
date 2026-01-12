@@ -10,13 +10,6 @@
           "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RJF01098"
         },
         {
-          "Name": "Robert Charles Brown",
-          "Reference Number": "RCB01128",
-          "Status": "Active",
-          "Type of business or Individual": "Individual",
-          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RCB01128"
-        },
-        {
           "Name": "Robert Plumb",
           "Reference Number": "RXP01423",
           "Status": "Regulatory approval no longer required",
@@ -29,6 +22,13 @@
           "Status": "Regulatory approval no longer required",
           "Type of business or Individual": "Individual",
           "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RGK00004"
+        },
+        {
+          "Name": "Robert Charles Brown",
+          "Reference Number": "RCB01128",
+          "Status": "Active",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RCB01128"
         },
         {
           "Name": "Robert Michael Darling",
@@ -45,13 +45,6 @@
           "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RXC02311"
         },
         {
-          "Name": "Robert Wilson Duke",
-          "Reference Number": "RXD00399",
-          "Status": "Regulatory approval no longer required",
-          "Type of business or Individual": "Individual",
-          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RXD00399"
-        },
-        {
           "Name": "Robert Charles Screen",
           "Reference Number": "RCS01101",
           "Status": "Regulatory approval no longer required",
@@ -59,18 +52,11 @@
           "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RCS01101"
         },
         {
-          "Name": "Arthur Leonard Robert Morton",
-          "Reference Number": "MXB02192",
+          "Name": "Robert Wilson Duke",
+          "Reference Number": "RXD00399",
           "Status": "Regulatory approval no longer required",
           "Type of business or Individual": "Individual",
-          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/MXB02192"
-        },
-        {
-          "Name": "Robert Edward Holt",
-          "Reference Number": "REH01059",
-          "Status": "Regulatory approval no longer required",
-          "Type of business or Individual": "Individual",
-          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/REH01059"
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RXD00399"
         },
         {
           "Name": "Robert Jackson",
@@ -78,6 +64,13 @@
           "Status": "Regulatory approval no longer required",
           "Type of business or Individual": "Individual",
           "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RXJ00045"
+        },
+        {
+          "Name": "Robert Edward Holt",
+          "Reference Number": "REH01059",
+          "Status": "Regulatory approval no longer required",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/REH01059"
         },
         {
           "Name": "Robert Solloway",
@@ -94,11 +87,11 @@
           "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RXJ01373"
         },
         {
-          "Name": "Robert James Kimmel",
-          "Reference Number": "RXK77250",
-          "Status": "Active",
+          "Name": "Arthur Leonard Robert Morton",
+          "Reference Number": "MXB02192",
+          "Status": "Regulatory approval no longer required",
           "Type of business or Individual": "Individual",
-          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RXK77250"
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/MXB02192"
         },
         {
           "Name": "Robert Hymas",
@@ -113,6 +106,13 @@
           "Status": "Regulatory approval no longer required",
           "Type of business or Individual": "Individual",
           "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RMU01007"
+        },
+        {
+          "Name": "Robert James Kimmel",
+          "Reference Number": "RXK77250",
+          "Status": "Active",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RXK77250"
         },
         {
           "Name": "Robert Duff",
@@ -157,13 +157,13 @@
   "headers": {
     "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
     "cf-cache-status": "DYNAMIC",
-    "cf-ray": "9bb37e02ce50bea1-LHR",
+    "cf-ray": "9bcba7202d6aecdb-LHR",
     "connection": "keep-alive",
     "content-encoding": "gzip",
     "content-type": "application/json;charset=UTF-8",
-    "date": "Fri, 09 Jan 2026 11:11:10 GMT",
+    "date": "Mon, 12 Jan 2026 09:33:32 GMT",
     "server": "cloudflare",
-    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Sat, 09-Jan-2027 11:11:09 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Sat, 09-Jan-2027 11:11:09 GMT; Max-Age=31536000; secure",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Tue, 12-Jan-2027 09:33:31 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Tue, 12-Jan-2027 09:33:31 GMT; Max-Age=31536000; secure",
     "strict-transport-security": "max-age=63072000; includeSubDomains",
     "transfer-encoding": "chunked",
     "vary": "Accept-Encoding",
