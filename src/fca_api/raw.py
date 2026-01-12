@@ -967,7 +967,7 @@ class RawClient:
             modifiers=("DisciplinaryHistory",),
         )
 
-    async def search_prn(self, fund_name: str) -> FcaApiResponse[list[dict[str, str]]]:
+    async def search_prn(self, fund_name: str, page: int | None = None) -> FcaApiResponse[list[dict[str, str]]]:
         """:py:class:`~fca_api.raw.FcaApiResponse`: Returns a response containing
         fund records matching the given fund name.
 
@@ -986,7 +986,7 @@ class RawClient:
         FcaApiResponse[list[dict[str, str]]]
             A response containing a list of matching fund records.
         """
-        return await self.common_search(fund_name, const.ResourceTypes.FUND.value.type_name)
+        return await self.common_search(fund_name, const.ResourceTypes.FUND.value.type_name, page=page)
 
     async def get_fund(self, prn: str) -> FcaApiResponse:
         """:py:class:`~fca_api.raw.FcaApiResponse` :

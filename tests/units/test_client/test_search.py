@@ -43,9 +43,26 @@ class TestIndividualSearch:
     @pytest.mark.asyncio
     async def test_empty_search_individual(self, test_client: fca_api.api.Client):
         response = await test_client.search_irn("f9eed039-4da8-4f21-8b02-424a6ec9d9e5")
-        assert len(response) >= 1000
+        assert len(response) == 0
+        idx = 0
+        async for item in response:
+            assert item.name
+            idx += 1
+        assert idx == len(response) == 0
+
+
+class TestFundSearch:
+    @pytest.mark.asyncio
+    async def test_search_fund_by_name(self, test_client: fca_api.api.Client):
+        response = await test_client.search_prn("global equity fund")
+        assert len(response) > 500
         idx = 0
         async for item in response:
             assert item.name
             idx += 1
         assert idx == len(response)
+
+    @pytest.mark.asyncio
+    async def test_search_fund_no_results(self, test_client: fca_api.api.Client):
+        response = await test_client.search_prn("nonexistent fund xyz")
+        assert len(response) == 0

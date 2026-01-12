@@ -1,0 +1,185 @@
+{
+  "content": {
+    "json": {
+      "Data": [
+        {
+          "Name": "TrinityBridge Select Global Equity Fund",
+          "Reference Number": "474289",
+          "Status": "Authorised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/474289"
+        },
+        {
+          "Name": "GLOBAL EQUITY FUND",
+          "Reference Number": "1047564",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1047564"
+        },
+        {
+          "Name": "MOMENTUM GF GLOBAL EQUITY FUND",
+          "Reference Number": "1034893",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1034893"
+        },
+        {
+          "Name": "IFSL Church House Esk Global Equity Fund",
+          "Reference Number": "181048",
+          "Status": "Authorised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/181048"
+        },
+        {
+          "Name": "THE KILTEARN GLOBAL EQUITY (IRELAND) FUND",
+          "Reference Number": "939295",
+          "Status": "De-recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/939295"
+        },
+        {
+          "Name": "CT Global Equity-Linked UK Inflation Fund",
+          "Reference Number": "635580",
+          "Status": "Approved",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/635580"
+        },
+        {
+          "Name": "Stonehage Fleming Global Select Equity Fund",
+          "Reference Number": "634421",
+          "Status": "Terminated",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/634421"
+        },
+        {
+          "Name": "CT Global Equity-Linked UK Gilt Fund",
+          "Reference Number": "635582",
+          "Status": "Approved",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/635582"
+        },
+        {
+          "Name": "WS ACCESS Global Equity Fund - Nomura",
+          "Reference Number": "964369",
+          "Status": "Approved",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/964369"
+        },
+        {
+          "Name": "BlackRock Global Unconstrained Equity Fund (UK)",
+          "Reference Number": "918656",
+          "Status": "Authorised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/918656"
+        },
+        {
+          "Name": "Algebris Global Equity Select Fund",
+          "Reference Number": "1025244",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1025244"
+        },
+        {
+          "Name": "AQR Adaptive Global Equity UCITS Fund",
+          "Reference Number": "1037341",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1037341"
+        },
+        {
+          "Name": "UBS Global Emerging Markets Equity Climate Transition Fund",
+          "Reference Number": "990632",
+          "Status": "Approved",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/990632"
+        },
+        {
+          "Name": "Artemis SmartGARP Global Equity Fund",
+          "Reference Number": "145869",
+          "Status": "Authorised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/145869"
+        },
+        {
+          "Name": "HC Global Equity Fund",
+          "Reference Number": "1042887",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1042887"
+        },
+        {
+          "Name": "Oasis Crescent Global Equity Fund",
+          "Reference Number": "930640",
+          "Status": "Approved",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/930640"
+        },
+        {
+          "Name": "OneFamily Global Equity Fund",
+          "Reference Number": "796004",
+          "Status": "Approved",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/796004"
+        },
+        {
+          "Name": "Global Multi-Factor Equity Fund",
+          "Reference Number": "1025582",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1025582"
+        },
+        {
+          "Name": "INVESCO GLOBAL EQUITY FUND",
+          "Reference Number": "1042043",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1042043"
+        },
+        {
+          "Name": "GLOBAL EQUITY FUND",
+          "Reference Number": "1049059",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1049059"
+        }
+      ],
+      "Message": "Ok. Search successful",
+      "ResultInfo": {
+        "Next": "https://register.fca.org.uk/services/V0.1/Search?q=global equity fund&type=fund&pgnp=2",
+        "page": "1",
+        "per_page": "20",
+        "total_count": "572"
+      },
+      "Status": "FSR-API-04-01-00"
+    }
+  },
+  "headers": {
+    "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
+    "cf-cache-status": "DYNAMIC",
+    "cf-ray": "9bcbcd79ebcd9400-LHR",
+    "connection": "keep-alive",
+    "content-encoding": "gzip",
+    "content-type": "application/json;charset=UTF-8",
+    "date": "Mon, 12 Jan 2026 09:59:42 GMT",
+    "server": "cloudflare",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Tue, 12-Jan-2027 09:59:42 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Tue, 12-Jan-2027 09:59:42 GMT; Max-Age=31536000; secure",
+    "strict-transport-security": "max-age=63072000; includeSubDomains",
+    "transfer-encoding": "chunked",
+    "vary": "Accept-Encoding",
+    "x-content-type-options": "nosniff"
+  },
+  "request": {
+    "headers": {
+      "accept": "application/json",
+      "accept-encoding": "gzip, deflate",
+      "connection": "keep-alive",
+      "user-agent": "python-httpx/0.28.1",
+      "x-auth-email": "user@example.com",
+      "x-auth-key": "00617470e8144a09"
+    },
+    "params": null,
+    "url": "https://register.fca.org.uk/services/V0.1/Search?q=global+equity+fund&type=fund&pgnp=1"
+  },
+  "status_code": 200,
+  "url": "https://register.fca.org.uk/services/V0.1/Search?q=global+equity+fund&type=fund&pgnp=1"
+}

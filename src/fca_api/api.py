@@ -108,3 +108,13 @@ class Client:
         )
         await out._asyinc_init()
         return out
+
+    async def search_prn(self, fund_name: str) -> types.pagination.MultipageList[types.api.FirmSearchResult]:
+        """Search for a firm by its name."""
+        out = types.pagination.MultipageList(
+            fetch_page=lambda page_idx: self._paginated_search(
+                lambda page_idx: self._client.search_prn(fund_name, page_idx), page_idx, types.api.FundSearchResult
+            ),
+        )
+        await out._asyinc_init()
+        return out

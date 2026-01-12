@@ -1,0 +1,129 @@
+{
+  "content": {
+    "json": {
+      "Data": [
+        {
+          "Name": "Guinness Global Quality Midcap Fund",
+          "Reference Number": "940750",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/940750"
+        },
+        {
+          "Name": "HENDERSON GLOBAL DIVIDEND INCOME FUND",
+          "Reference Number": "639702",
+          "Status": "Terminated",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/639702"
+        },
+        {
+          "Name": "INSIGHT INVESTMENT GLOBAL ALPHA FUND",
+          "Reference Number": "645431",
+          "Status": "Terminated",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/645431"
+        },
+        {
+          "Name": "LF ARCH CRU GLOBAL GROWTH FUND",
+          "Reference Number": "632270",
+          "Status": "Approved",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/632270"
+        },
+        {
+          "Name": "Janus Henderson Global Select Fund",
+          "Reference Number": "108830",
+          "Status": "Authorised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/108830"
+        },
+        {
+          "Name": "Liontrust Global Innovation Fund",
+          "Reference Number": "635929",
+          "Status": "Approved",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/635929"
+        },
+        {
+          "Name": "Neuberger Berman Global Sustainable Value Fund",
+          "Reference Number": "665252",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/665252"
+        },
+        {
+          "Name": "TM Castlefield Risk Managed Fund",
+          "Reference Number": "634404",
+          "Status": "Approved",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/634404"
+        },
+        {
+          "Name": "SCHRODER QEP GLOBAL CORE FUND",
+          "Reference Number": "143271",
+          "Status": "Authorised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/143271"
+        },
+        {
+          "Name": "Sanlam Global High Quality Fund",
+          "Reference Number": "636781",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/636781"
+        },
+        {
+          "Name": "WS Guinness Global Quality Mid Cap Fund",
+          "Reference Number": "988587",
+          "Status": "Approved",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/988587"
+        },
+        {
+          "Name": "Threadneedle Managed Equity Fund (in wind-up)",
+          "Reference Number": "184262",
+          "Status": "Terminated",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/184262"
+        }
+      ],
+      "Message": "Ok. Search successful",
+      "ResultInfo": {
+        "Previous": "https://register.fca.org.uk/services/V0.1/Search?q=global equity fund&type=fund&pgnp=28",
+        "page": "29",
+        "per_page": "20",
+        "total_count": "572"
+      },
+      "Status": "FSR-API-04-01-00"
+    }
+  },
+  "headers": {
+    "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
+    "cf-cache-status": "DYNAMIC",
+    "cf-ray": "9bcbd56e58a88c31-LHR",
+    "connection": "keep-alive",
+    "content-encoding": "gzip",
+    "content-type": "application/json;charset=UTF-8",
+    "date": "Mon, 12 Jan 2026 10:05:08 GMT",
+    "server": "cloudflare",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Tue, 12-Jan-2027 10:05:08 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Tue, 12-Jan-2027 10:05:08 GMT; Max-Age=31536000; secure",
+    "strict-transport-security": "max-age=63072000; includeSubDomains",
+    "transfer-encoding": "chunked",
+    "vary": "Accept-Encoding",
+    "x-content-type-options": "nosniff"
+  },
+  "request": {
+    "headers": {
+      "accept": "application/json",
+      "accept-encoding": "gzip, deflate",
+      "connection": "keep-alive",
+      "user-agent": "python-httpx/0.28.1",
+      "x-auth-email": "user@example.com",
+      "x-auth-key": "00617470e8144a09"
+    },
+    "params": null,
+    "url": "https://register.fca.org.uk/services/V0.1/Search?q=global+equity+fund&type=fund&pgnp=29"
+  },
+  "status_code": 200,
+  "url": "https://register.fca.org.uk/services/V0.1/Search?q=global+equity+fund&type=fund&pgnp=29"
+}

@@ -1,0 +1,186 @@
+{
+  "content": {
+    "json": {
+      "Data": [
+        {
+          "Name": "TM Brunel Low Volatility Global Equity Fund",
+          "Reference Number": "823032",
+          "Status": "Approved",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/823032"
+        },
+        {
+          "Name": "Border to Coast Global Equity Alpha Fund",
+          "Reference Number": "846441",
+          "Status": "Approved",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/846441"
+        },
+        {
+          "Name": "BNY Mellon (Schroder Solutions) Global Equity Fund",
+          "Reference Number": "842045",
+          "Status": "Approved",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/842045"
+        },
+        {
+          "Name": "Janus Henderson Global Life Sciences Equity Fund",
+          "Reference Number": "1002512",
+          "Status": "Approved",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1002512"
+        },
+        {
+          "Name": "Baillie Gifford Responsible Global Equity Income Fund",
+          "Reference Number": "825919",
+          "Status": "Approved",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/825919"
+        },
+        {
+          "Name": "JPM Global Research Enhanced Index Equity Fund",
+          "Reference Number": "913984",
+          "Status": "Approved",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/913984"
+        },
+        {
+          "Name": "Fidelity Global Emerging Markets Equity Feeder Fund",
+          "Reference Number": "847242",
+          "Status": "Approved",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/847242"
+        },
+        {
+          "Name": "Omnis Global Emerging Markets Equity Opportunities Fund",
+          "Reference Number": "841192",
+          "Status": "Approved",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/841192"
+        },
+        {
+          "Name": "Omnis Global Emerging Markets Equity Leaders Fund",
+          "Reference Number": "841191",
+          "Status": "Approved",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/841191"
+        },
+        {
+          "Name": "The SEI Factor Allocation Global Equity Fund",
+          "Reference Number": "940457",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/940457"
+        },
+        {
+          "Name": "Sarasin Fund of Funds - Global Equity",
+          "Reference Number": "645024",
+          "Status": "Terminated",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/645024"
+        },
+        {
+          "Name": "SCHRODER INTERNATIONAL SELECTION FUND GLOBAL EQUITY YIELD",
+          "Reference Number": "643278",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/643278"
+        },
+        {
+          "Name": "SCHRODER INTERNATIONAL SELECTION FUND GLOBAL EQUITY ALPHA",
+          "Reference Number": "643271",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/643271"
+        },
+        {
+          "Name": "Wellington Global Select Capital Appreciation Equity Fund",
+          "Reference Number": "634365",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/634365"
+        },
+        {
+          "Name": "PineBridge Global Emerging Markets Focus Equity Fund",
+          "Reference Number": "632952",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/632952"
+        },
+        {
+          "Name": "Aberdeen Global Emerging Markets Quantitative Equity Fund",
+          "Reference Number": "700126",
+          "Status": "Terminated",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/700126"
+        },
+        {
+          "Name": "CF MACQUARIE GLOBAL PRIVATE EQUITY SECURITIES FUND",
+          "Reference Number": "642123",
+          "Status": "Terminated",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/642123"
+        },
+        {
+          "Name": "CREDIT SUISSE GLOBAL EQUITY (EX-UK) PASSIVE  FUND",
+          "Reference Number": "640668",
+          "Status": "Terminated",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/640668"
+        },
+        {
+          "Name": "Nordea 1 - Global Stable Equity Plus Fund",
+          "Reference Number": "1048613",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1048613"
+        },
+        {
+          "Name": "Schroder Global ex UK Equity Tracker Component Fund",
+          "Reference Number": "729921",
+          "Status": "Authorised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/729921"
+        }
+      ],
+      "Message": "Ok. Search successful",
+      "ResultInfo": {
+        "Next": "https://register.fca.org.uk/services/V0.1/Search?q=global equity fund&type=fund&pgnp=24",
+        "Previous": "https://register.fca.org.uk/services/V0.1/Search?q=global equity fund&type=fund&pgnp=22",
+        "page": "23",
+        "per_page": "20",
+        "total_count": "572"
+      },
+      "Status": "FSR-API-04-01-00"
+    }
+  },
+  "headers": {
+    "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
+    "cf-cache-status": "DYNAMIC",
+    "cf-ray": "9bcbd55c6a8f8c31-LHR",
+    "connection": "keep-alive",
+    "content-encoding": "gzip",
+    "content-type": "application/json;charset=UTF-8",
+    "date": "Mon, 12 Jan 2026 10:05:05 GMT",
+    "server": "cloudflare",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Tue, 12-Jan-2027 10:05:05 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Tue, 12-Jan-2027 10:05:05 GMT; Max-Age=31536000; secure",
+    "strict-transport-security": "max-age=63072000; includeSubDomains",
+    "transfer-encoding": "chunked",
+    "vary": "Accept-Encoding",
+    "x-content-type-options": "nosniff"
+  },
+  "request": {
+    "headers": {
+      "accept": "application/json",
+      "accept-encoding": "gzip, deflate",
+      "connection": "keep-alive",
+      "user-agent": "python-httpx/0.28.1",
+      "x-auth-email": "user@example.com",
+      "x-auth-key": "00617470e8144a09"
+    },
+    "params": null,
+    "url": "https://register.fca.org.uk/services/V0.1/Search?q=global+equity+fund&type=fund&pgnp=23"
+  },
+  "status_code": 200,
+  "url": "https://register.fca.org.uk/services/V0.1/Search?q=global+equity+fund&type=fund&pgnp=23"
+}
