@@ -39,3 +39,13 @@ class TestIndividualSearch:
             assert item.name
             idx += 1
         assert idx == len(response)
+
+    @pytest.mark.asyncio
+    async def test_empty_search_individual(self, test_client: fca_api.api.Client):
+        response = await test_client.search_irn("f9eed039-4da8-4f21-8b02-424a6ec9d9e5")
+        assert len(response) >= 1000
+        idx = 0
+        async for item in response:
+            assert item.name
+            idx += 1
+        assert idx == len(response)
