@@ -80,14 +80,14 @@ class TestFinancialServicesRegisterApiClientCore:
         assert len(recv_response.data)
         assert recv_response.status == "FSR-API-04-01-00"
         assert recv_response.message == "Ok. Search successful"
-        assert recv_response.resultinfo
+        assert recv_response.result_info
 
         recv_response = await test_client.common_search("non existent firm", "firm")
         assert recv_response.is_success
         assert not recv_response.data
         assert recv_response.status == "FSR-API-04-01-11"
         assert recv_response.message == "No search result found"
-        assert not recv_response.resultinfo
+        assert not recv_response.result_info
 
         recv_response = await test_client.common_search("mark carney", "individual")
         assert recv_response.is_success
@@ -95,14 +95,14 @@ class TestFinancialServicesRegisterApiClientCore:
         assert len(recv_response.data)
         assert recv_response.status == "FSR-API-04-01-00"
         assert recv_response.message == "Ok. Search successful"
-        assert recv_response.resultinfo
+        assert recv_response.result_info
 
         recv_response = await test_client.common_search("non existent individual", "individual")
         assert recv_response.is_success
         assert not recv_response.data
         assert recv_response.status == "FSR-API-04-01-11"
         assert recv_response.message == "No search result found"
-        assert not recv_response.resultinfo
+        assert not recv_response.result_info
 
         recv_response = await test_client.common_search("jupiter asia pacific income", "fund")
         assert recv_response.is_success
@@ -110,14 +110,14 @@ class TestFinancialServicesRegisterApiClientCore:
         assert len(recv_response.data)
         assert recv_response.status == "FSR-API-04-01-00"
         assert recv_response.message == "Ok. Search successful"
-        assert recv_response.resultinfo
+        assert recv_response.result_info
 
         recv_response = await test_client.common_search("non existent fund", "fund")
         assert recv_response.is_success
         assert not recv_response.data
         assert recv_response.status == "FSR-API-04-01-11"
         assert recv_response.message == "No search result found"
-        assert not recv_response.resultinfo
+        assert not recv_response.result_info
 
     @pytest.mark.asyncio
     async def test_financial_services_register_api_client__get_regulated_markets(self, test_client):
@@ -127,4 +127,4 @@ class TestFinancialServicesRegisterApiClientCore:
         assert len(recv_response.data)
         assert re.match(r"^FSR-API-\d{2}-\d{2}-\d{2}$", recv_response.status)
         assert recv_response.message == "Ok. Search successful"
-        assert recv_response.resultinfo
+        assert recv_response.result_info

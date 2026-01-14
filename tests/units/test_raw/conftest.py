@@ -38,6 +38,6 @@ async def test_client(caching_session_subclass, test_api_username, test_api_key,
             "X-AUTH-KEY": test_api_key,
         },
         cache_dir=test_resources_path,
-        cache_mode="read",
+        cache_mode="fetch_missing",
     ) as api_session:
         yield RawClient(credentials=api_session)
