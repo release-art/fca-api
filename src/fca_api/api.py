@@ -4,6 +4,7 @@ Performs data validation and transformation on top of the raw API client.
 """
 
 import logging
+import re
 import typing
 
 import httpx
@@ -158,9 +159,40 @@ class Client:
                 else:
                     logger.warning(f"Unexpected firm name entry field: {key}={value!r}")
 
-        return types.firm.FirmNames.model_validate(
+        return types.firm.FirmNamesResponse.model_validate(
             {
                 "current": [types.firm.CurrentFirmNameAlias.model_validate(item) for item in current_names],
                 "previous": [types.firm.PreviousFirmNameAlias.model_validate(item) for item in previous_names],
             }
+        )
+
+    async def get_firm_addresses(self, frn: str):
+        """Get firm addresses by FRN.
+
+        Args:
+            frn: The firm's FRN.
+
+        Returns:
+            A list of the firm's addresses.
+        """
+        address_line_re = re.compile(r"address \s+ line \s+ (\d+)", re.IGNORECASE | re.VERBOSE)
+        res = await self._client.get_firm_addresses(frn)
+        data = res.data
+        assert isinstance(data, list), "Expected a list of firm address objects in the response data."
+        # Process address lines
+        for raw_row in data:
+            address_lines: list[tuple[int, str]] = []
+            for key in tuple(raw_row.keys()):
+                if not isinstance(key, str):
+                    continue
+                if match := address_line_re.match(key):
+                    line_idx = int(match.group(1))
+                    line_value = raw_row.pop(key)
+                    if not line_value:
+                        # Skip empty address lines
+                        continue
+                    address_lines.append((line_idx, line_value))
+            raw_row["address_lines"] = [line for _idx, line in sorted(address_lines, key=lambda x: x[0])]
+        return types.firm.FirmAddressesResponse.model_validate(
+            {"addresses": [types.firm.FirmAddress.model_validate(item) for item in data]}
         )

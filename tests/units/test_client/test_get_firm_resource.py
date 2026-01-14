@@ -84,3 +84,31 @@ class TestNutmegFirmDetails:
                 },
             ],
         }
+
+    @pytest.mark.asyncio
+    async def test_get_firm_addresses(self, test_client: fca_api.api.Client, frn: str):
+        addresses = await test_client.get_firm_addresses(frn)
+        assert addresses.model_dump(mode="json") == {
+            "addresses": [
+                {
+                    "type": "principal place of business",
+                    "phone_number": "+442035981515",
+                    "address_lines": ["25 Bank Street"],
+                    "town": "london",
+                    "postcode": "E14 5JP",
+                    "county": "",
+                    "website": "https://www.personalinvesting.jpmorgan.com/",
+                    "address_url": "https://register.fca.org.uk/services/V0.1/Firm/552016/Address?Type=PPOB",
+                },
+                {
+                    "type": "complaints contact",
+                    "phone_number": "+442035981515",
+                    "address_lines": ["25 Bank Street"],
+                    "town": "london",
+                    "postcode": "E14 5JP",
+                    "county": "",
+                    "website": None,
+                    "address_url": "https://register.fca.org.uk/services/V0.1/Firm/552016/Address?Type=Complaint",
+                },
+            ]
+        }

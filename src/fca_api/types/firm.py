@@ -335,6 +335,92 @@ class PreviousFirmNameAlias(CurrentFirmNameAlias):
     ]
 
 
-class FirmNames(base.Base):
+class FirmNamesResponse(base.Base):
     current: list[CurrentFirmNameAlias]
     previous: list[PreviousFirmNameAlias]
+
+
+class FirmAddress(base.Base):
+    """A firm address data structure."""
+
+    type: Annotated[
+        str,
+        pydantic.StringConstraints(
+            to_lower=True,
+            strip_whitespace=True,
+        ),
+        pydantic.Field(
+            description="The type of an address (e.g., registered, trading).",
+            validation_alias=pydantic.AliasChoices("address type", "type"),
+            serialization_alias="type",
+        ),
+    ]
+    phone_number: Annotated[
+        Optional[str],
+        pydantic.Field(
+            description="The phone number associated with the address, if available.",
+            validation_alias=pydantic.AliasChoices("phone number", "phone_number"),
+            serialization_alias="phone_number",
+        ),
+    ]
+    address_lines: Annotated[
+        list[str],
+        pydantic.Field(
+            description="The address lines of the address.",
+        ),
+    ]
+
+    town: Annotated[
+        str,
+        pydantic.StringConstraints(
+            to_lower=True,
+            strip_whitespace=True,
+        ),
+        pydantic.Field(
+            description="The town of the address.",
+        ),
+    ]
+    postcode: Annotated[
+        str,
+        pydantic.StringConstraints(
+            to_upper=True,
+            strip_whitespace=True,
+        ),
+        pydantic.Field(
+            description="The postcode of the address.",
+        ),
+    ]
+    county: Annotated[
+        str,
+        pydantic.StringConstraints(
+            to_lower=True,
+            strip_whitespace=True,
+        ),
+        pydantic.Field(
+            description="The country of the address.",
+        ),
+    ]
+
+    website: Annotated[
+        Optional[pydantic.HttpUrl],
+        pydantic.Field(
+            description="The website URL associated with the address, if available.",
+            validation_alias=pydantic.AliasChoices("website address", "website_url"),
+            serialization_alias="website_url",
+        ),
+        pydantic.BeforeValidator(lambda v: None if not v else v),
+    ]
+    address_url: Annotated[
+        pydantic.HttpUrl,
+        pydantic.Field(
+            description="The URL of the address record in the FCA register.",
+            validation_alias=pydantic.AliasChoices("url", "address_url"),
+            serialization_alias="address_url",
+        ),
+    ]
+
+
+class FirmAddressesResponse(base.Base):
+    """An representation of firm addresses response."""
+
+    addresses: list[FirmAddress]
