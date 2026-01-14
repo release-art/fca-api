@@ -8,6 +8,7 @@ abstraction/data validation.
 
 import contextlib
 import typing
+import re
 from typing import Literal, Union
 from urllib.parse import urlencode
 
@@ -252,7 +253,7 @@ class RawClient:
                 f"{out.reason_phrase}. Please check the search parameters and try again."
             )
         # Check if the API status is in expected format
-        elif out.status and not out.status.startswith("FSR-API-04-01-"):
+        elif out.status and not out.status.startswith("FSR-API-"):
             raise exc.FcaRequestError(
                 f"Unexpected API status: {out.status}. Message: {out.message}"
             )
