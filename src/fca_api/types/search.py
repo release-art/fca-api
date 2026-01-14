@@ -10,21 +10,17 @@ from . import base
 class FirmSearchResult(base.Base):
     """A model representing a firm search result."""
 
-    _expected_api_version = "FSR-API-04-01-11"
-
     url: Annotated[
         pydantic.HttpUrl | None,
         pydantic.Field(
             description="The URL of the firm's record in the FCA register.",
-            validation_alias=pydantic.AliasChoices("URL", "url"),
-            serialization_alias="url",
         ),
     ]
     frn: Annotated[
         str,
         pydantic.Field(
             description="The firm's Financial Reference Number (FRN).",
-            validation_alias=pydantic.AliasChoices("Reference Number", "frn"),
+            validation_alias=pydantic.AliasChoices("reference number", "frn"),
             serialization_alias="frn",
         ),
     ]
@@ -32,8 +28,6 @@ class FirmSearchResult(base.Base):
         str,
         pydantic.Field(
             description="The firm's status.",
-            validation_alias=pydantic.AliasChoices("Status", "status"),
-            serialization_alias="status",
             to_lower=True,
             trim_whitespace=True,
         ),
@@ -42,7 +36,7 @@ class FirmSearchResult(base.Base):
         str,
         pydantic.Field(
             description="The type of the resource.",
-            validation_alias=pydantic.AliasChoices("Type of business or Individual", "type"),
+            validation_alias=pydantic.AliasChoices("type of business or individual", "type"),
             serialization_alias="type",
             to_lower=True,
             trim_whitespace=True,
@@ -52,8 +46,6 @@ class FirmSearchResult(base.Base):
         str,
         pydantic.Field(
             description="The firm's name.",
-            validation_alias=pydantic.AliasChoices("Name", "name"),
-            serialization_alias="name",
             trim_whitespace=True,
         ),
     ]
@@ -68,15 +60,13 @@ class IndividualSearchResult(base.Base):
         pydantic.HttpUrl | None,
         pydantic.Field(
             description="The URL of the individual's record in the FCA register.",
-            validation_alias=pydantic.AliasChoices("URL", "url"),
-            serialization_alias="url",
         ),
     ]
     irn: Annotated[
         str,
         pydantic.Field(
             description="The individual's Reference Number (IRN).",
-            validation_alias=pydantic.AliasChoices("Reference Number", "irn"),
+            validation_alias=pydantic.AliasChoices("reference number", "irn"),
             serialization_alias="irn",
         ),
     ]
@@ -84,8 +74,6 @@ class IndividualSearchResult(base.Base):
         str,
         pydantic.Field(
             description="The individual's name.",
-            validation_alias=pydantic.AliasChoices("Name", "name"),
-            serialization_alias="name",
             trim_whitespace=True,
         ),
     ]
@@ -100,15 +88,13 @@ class FundSearchResult(base.Base):
         pydantic.HttpUrl | None,
         pydantic.Field(
             description="The URL of the firm's record in the FCA register.",
-            validation_alias=pydantic.AliasChoices("URL", "url"),
-            serialization_alias="url",
         ),
     ]
     prn: Annotated[
         str,
         pydantic.Field(
             description="The fund's Financial Reference Number (FRN).",
-            validation_alias=pydantic.AliasChoices("Reference Number", "prn"),
+            validation_alias=pydantic.AliasChoices("reference number", "prn"),
             serialization_alias="prn",
         ),
     ]
@@ -116,8 +102,6 @@ class FundSearchResult(base.Base):
         str,
         pydantic.Field(
             description="The firm's status.",
-            validation_alias=pydantic.AliasChoices("Status", "status"),
-            serialization_alias="status",
             to_lower=True,
             trim_whitespace=True,
         ),
@@ -126,7 +110,7 @@ class FundSearchResult(base.Base):
         str,
         pydantic.Field(
             description="The type of the resource.",
-            validation_alias=pydantic.AliasChoices("Type of business or Individual", "type"),
+            validation_alias=pydantic.AliasChoices("type of business or individual", "type"),
             serialization_alias="type",
             to_lower=True,
             trim_whitespace=True,
@@ -136,8 +120,6 @@ class FundSearchResult(base.Base):
         str,
         pydantic.Field(
             description="The firm's name.",
-            validation_alias=pydantic.AliasChoices("Name", "name"),
-            serialization_alias="name",
             trim_whitespace=True,
         ),
     ]
