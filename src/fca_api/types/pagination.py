@@ -82,7 +82,8 @@ class MultipageList(typing.Generic[T]):
             desired_item_idx: The index of the desired item to fetch.
         """
         if len(self._items) > desired_item_idx or not self._has_next_page():
-            return
+            return None
+        new_page_info = None
         async with self._lock:
             # Double-check after acquiring the lock.
             while len(self._items) <= desired_item_idx and self._has_next_page():
