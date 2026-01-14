@@ -5,7 +5,7 @@ import pytest
 import fca_api
 
 
-class TestFirmDetails:
+class TestNutmegFirmDetails:
     @pytest.fixture
     def frn(self) -> str:
         return "552016"  # Nutmeg / J.P. Morgan Personal Investing FRN
@@ -45,4 +45,42 @@ class TestFirmDetails:
             "address_url": "https://register.fca.org.uk/services/V0.1/Firm/552016/Address",
             "appointed_representative_url": "https://register.fca.org.uk/services/V0.1/Firm/552016/AR",
             "disciplinary_history_url": "https://register.fca.org.uk/services/V0.1/Firm/552016/DisciplinaryHistory",
+        }
+
+    @pytest.mark.asyncio
+    async def test_get_firm_names(self, test_client: fca_api.api.Client, frn: str):
+        names = await test_client.get_firm_names(frn)
+        assert names.model_dump(mode="json") == {
+            "current": [
+                {
+                    "name": "J.P. Morgan Personal Investing",
+                    "status": "trading",
+                    "effective_from": "2025-11-03T00:00:00",
+                },
+                {
+                    "name": "J.P. MORGAN PERSONAL INVESTING LIMITED",
+                    "status": "registered",
+                    "effective_from": "2025-11-03T00:00:00",
+                },
+            ],
+            "previous": [
+                {
+                    "name": "Nutmeg",
+                    "status": "trading",
+                    "effective_from": "2011-05-24T00:00:00",
+                    "effective_to": "2025-11-03T00:00:00",
+                },
+                {
+                    "name": "Nutmeg Saving and Investment Limited",
+                    "status": "registered",
+                    "effective_from": "2012-05-25T00:00:00",
+                    "effective_to": "2025-11-03T00:00:00",
+                },
+                {
+                    "name": "Hungry Finance Limited",
+                    "status": "registered",
+                    "effective_from": "2011-10-06T00:00:00",
+                    "effective_to": "2012-05-25T00:00:00",
+                },
+            ],
         }

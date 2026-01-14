@@ -287,3 +287,54 @@ class FirmDetails(base.Base):
             serialization_alias="disciplinary_history_url",
         ),
     ]
+
+
+class CurrentFirmNameAlias(base.Base):
+    """Current or trading name/brand name of a firm."""
+
+    name: Annotated[
+        str,
+        pydantic.Field(
+            description="The name of the firm.",
+            validation_alias=pydantic.AliasChoices("name", "organisation name"),
+            serialization_alias="name",
+        ),
+    ]
+    status: Annotated[
+        str,
+        pydantic.StringConstraints(
+            to_lower=True,
+            strip_whitespace=True,
+        ),
+        pydantic.Field(
+            description="The status of the name (e.g., trading, registered).",
+        ),
+    ]
+    effective_from: Annotated[
+        datetime.datetime,
+        pydantic.Field(
+            description="The date from which the name became effective.",
+            validation_alias=pydantic.AliasChoices("effective from", "effective_from"),
+            serialization_alias="effective_from",
+        ),
+        pydantic.BeforeValidator(field_parsers.parse_date),
+    ]
+
+
+class PreviousFirmNameAlias(CurrentFirmNameAlias):
+    """Previous name/brand name of a firm, now ceased."""
+
+    effective_to: Annotated[
+        datetime.datetime,
+        pydantic.Field(
+            description="The date until which the name was effective.",
+            validation_alias=pydantic.AliasChoices("effective to", "effective_to"),
+            serialization_alias="effective_to",
+        ),
+        pydantic.BeforeValidator(field_parsers.parse_date),
+    ]
+
+
+class FirmNames(base.Base):
+    current: list[CurrentFirmNameAlias]
+    previous: list[PreviousFirmNameAlias]

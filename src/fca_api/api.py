@@ -3,11 +3,14 @@
 Performs data validation and transformation on top of the raw API client.
 """
 
+import logging
 import typing
 
 import httpx
 
 from . import raw, types
+
+logger = logging.getLogger(__name__)
 
 T = typing.TypeVar("T")
 BaseSubclassT = typing.TypeVar("BaseSubclassT", bound=types.base.Base)
@@ -125,3 +128,39 @@ class Client:
         data = res.data
         assert isinstance(data, list) and len(data) == 1, "Expected a single firm detail object in the response data."
         return types.firm.FirmDetails.model_validate(data[0])
+
+    async def get_firm_names(self, frn: str):
+        """Get firm names by FRN.
+
+        Args:
+            frn: The firm's FRN.
+
+        Returns:
+            A list of the firm's names.
+        """
+        res = await self._client.get_firm_names(frn)
+        data = res.data
+        assert isinstance(data, list), "Expected a list of firm name objects in the response data."
+        current_names = []
+        previous_names = []
+        for el in data:
+            if not isinstance(el, dict):
+                logger.warning(f"Unexpected firm name entry format: {el!r}")
+                continue
+            for key, value in el.items():
+                key = key.lower().strip()
+                if key == "previous names":
+                    assert isinstance(value, list)
+                    previous_names.extend(value)
+                elif key == "current names":
+                    assert isinstance(value, list)
+                    current_names.extend(value)
+                else:
+                    logger.warning(f"Unexpected firm name entry field: {key}={value!r}")
+
+        return types.firm.FirmNames.model_validate(
+            {
+                "current": [types.firm.CurrentFirmNameAlias.model_validate(item) for item in current_names],
+                "previous": [types.firm.PreviousFirmNameAlias.model_validate(item) for item in previous_names],
+            }
+        )
