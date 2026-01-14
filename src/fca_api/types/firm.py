@@ -1,8 +1,9 @@
+import datetime
 from typing import Annotated
 
 import pydantic
 
-from . import base
+from . import base, field_parsers
 
 
 class FirmDetails(base.Base):
@@ -56,6 +57,15 @@ class FirmDetails(base.Base):
             validation_alias=pydantic.AliasChoices("client money permission", "client_money_permission"),
             serialization_alias="client_money_permission",
         ),
+    ]
+    timestamp: Annotated[
+        datetime.datetime,
+        pydantic.Field(
+            description="The timestamp when the data was retrieved from the FCA register.",
+            validation_alias=pydantic.AliasChoices("system timestamp", "timestamp"),
+            serialization_alias="timestamp",
+        ),
+        pydantic.BeforeValidator(field_parsers.parse_date),
     ]
 
     # URLs

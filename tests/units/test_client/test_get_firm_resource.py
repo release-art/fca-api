@@ -13,7 +13,7 @@ class TestFirmDetails:
     @pytest.mark.asyncio
     async def test_get_firm(self, test_client: fca_api.api.Client, frn: str):
         firm = await test_client.get_firm(frn)
-        print(firm.model_dump(mode="python"))
+        print(firm.model_dump(mode="json"))
         1 / 0
         assert firm.frn == frn
         assert firm.name == "J.P. MORGAN PERSONAL INVESTING LIMITED"

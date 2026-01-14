@@ -348,7 +348,7 @@ ALL_KNOWN_CODES: tuple[Code, ...] = (
     ),
 )
 
-ALL_KNOWN_CODES_DICT: dict[str, Code] = {code.value: code for code in ALL_KNOWN_CODES}
+ALL_KNOWN_CODES_DICT: dict[str, Code] = {code.value.lower().strip(): code for code in ALL_KNOWN_CODES}
 
 
 def find_code(value: str) -> Code | None:
@@ -360,7 +360,4 @@ def find_code(value: str) -> Code | None:
     Returns:
         The matching Code object, or None if not found.
     """
-    for code in ALL_KNOWN_CODES:
-        if code.value == value:
-            return code
-    return None
+    return ALL_KNOWN_CODES_DICT.get(value.lower().strip(), None)

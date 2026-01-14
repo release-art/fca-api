@@ -8,12 +8,13 @@ abstraction/data validation.
 
 import contextlib
 import typing
+import warnings
 from typing import Literal, Union
 from urllib.parse import urlencode
 
 import httpx
 
-from . import const, exc
+from . import const, exc, raw_status_codes
 
 
 @contextlib.asynccontextmanager
@@ -42,7 +43,7 @@ class FcaApiResponse(httpx.Response, typing.Generic[T]):
         self.__dict__.update(**response.__dict__)
 
     @property
-    def status(self) -> str:
+    def fca_api_status(self) -> str:
         """:py:class:`str`: The status message of the API response.
 
         Returns
@@ -251,10 +252,20 @@ class RawClient:
                 f"API search request failed with status code {out.status_code}: "
                 f"{out.reason_phrase}. Please check the search parameters and try again."
             )
-        # Check if the API status is in expected format
-        elif out.status and not out.status.startswith("FSR-API-"):
-            raise exc.FcaRequestError(f"Unexpected API status: {out.status}. Message: {out.message}")
-        elif not out.data:
+
+        fca_status_code = out.fca_api_status
+        fca_code_info = raw_status_codes.find_code(fca_status_code)
+        if fca_code_info is None:
+            warnings.warn(
+                f"Received unknown FCA API status code: {fca_status_code}. "
+                "Please ensure that your client is up to date.",
+            )
+        elif fca_code_info.is_error:
+            raise exc.FcaRequestError(
+                f"API search request failed with FCA API status code {fca_status_code}: {out.message}"
+            )
+
+        if not out.data:
             # No results found - ensure that an empty list is returned (the API returns None sometimes)
             out.override_data([])
         elif not isinstance(out.data, list):
