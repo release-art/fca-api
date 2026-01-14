@@ -1,6 +1,7 @@
 """"""
 
 import asyncio
+import dataclasses
 import enum
 import typing
 
@@ -41,13 +42,19 @@ class SpecialResultInfoState(enum.Enum):
     ALL_PAGES_FETCHED = enum.auto()
 
 
+@dataclasses.dataclass(frozen=True, kw_only=True, slots=True)
+class FetchedPageData(typing.Generic[T]):
+    items: typing.Sequence[T]
+    page_info: typing.Optional[PaginatedResultInfo]
+
+
 class MultipageList(typing.Generic[T]):
     """A list that represents a multipage API response.
 
     This class can be extended in the future to include pagination metadata.
     """
 
-    _items: typing.List[T]
+    _pages: typing.List[FetchedPageData[T]]
     _fetch_page_cb: FetchPageCallableT[T]
     _lock: asyncio.Lock
     _result_info: PaginatedResultInfo | SpecialResultInfoState
@@ -57,7 +64,7 @@ class MultipageList(typing.Generic[T]):
         /,
         fetch_page: FetchPageCallableT[T],
     ) -> None:
-        self._items = []
+        self._pages = []
         self._lock = asyncio.Lock()
         self._fetch_page_cb = fetch_page
         self._result_info = SpecialResultInfoState.UNINITIALIZED
@@ -75,18 +82,18 @@ class MultipageList(typing.Generic[T]):
         # Fetch the first page to initialize the result info.
         await self._fetch_page_to_item_idx(0)
 
-    async def _fetch_page_to_item_idx(self, desired_item_idx: int):
+    async def _fetch_page_to_item_idx(self, desired_item_idx: int) -> typing.Optional[PaginatedResultInfo]:
         """Fetch a specific page from the API if it is not already cached.
 
         Args:
             desired_item_idx: The index of the desired item to fetch.
         """
-        if len(self._items) > desired_item_idx or not self._has_next_page():
+        if self.local_len() > desired_item_idx or not self._has_next_page():
             return None
         new_page_info = None
         async with self._lock:
             # Double-check after acquiring the lock.
-            while len(self._items) <= desired_item_idx and self._has_next_page():
+            while self.local_len() <= desired_item_idx and self._has_next_page():
                 if isinstance(self._result_info, SpecialResultInfoState):
                     last_fetched_page = 0
                 else:
@@ -104,13 +111,19 @@ class MultipageList(typing.Generic[T]):
                         new_page_info.page,
                         last_fetched_page + 1,
                     )
-                    self._items.extend(new_items)
+                    self._pages.append(FetchedPageData(items=new_items, page_info=new_page_info))
                     self._result_info = new_page_info
         return new_page_info
 
     async def __getitem__(self, index: int) -> T:
+        """Get an item by its index, fetching pages as necessary.
+
+        Please note: negative indices are not supported.
+        """
+        if index < 0:
+            raise IndexError("Negative indices are not supported.")
         await self._fetch_page_to_item_idx(index)
-        return self._items[index]
+        return self.local_items()[index]
 
     async def __aiter__(self) -> typing.AsyncIterator[T]:
         idx = 0
@@ -131,7 +144,18 @@ class MultipageList(typing.Generic[T]):
         Returns:
             A tuple of locally cached items.
         """
-        return tuple(self._items)
+        items = []
+        for page in self._pages:
+            items.extend(page.items)
+        return tuple(items)
+
+    def local_len(self) -> int:
+        """Return the number of items that have been locally cached without making API calls.
+
+        Returns:
+            The number of locally cached items.
+        """
+        return sum(len(page.items) for page in self._pages)
 
     def __len__(self) -> int:
         """
@@ -145,7 +169,7 @@ class MultipageList(typing.Generic[T]):
             # return an estimate based on the total_count from result_info
             out = self._result_info.total_count
         else:
-            out = len(self._items)
+            out = self.local_len()
         return out
 
     def __repr__(self) -> str:

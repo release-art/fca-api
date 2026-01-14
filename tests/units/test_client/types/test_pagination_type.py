@@ -41,7 +41,7 @@ class TestMultipageList:
         fetch_page = AsyncMock()
         mpl = pagination.MultipageList(fetch_page=fetch_page)
 
-        assert mpl._items == []
+        assert mpl._pages == []
         assert mpl._fetch_page_cb == fetch_page
         assert isinstance(mpl._lock, asyncio.Lock)
         assert mpl._result_info == pagination.SpecialResultInfoState.UNINITIALIZED
@@ -55,8 +55,10 @@ class TestMultipageList:
 
         await mpl._asyinc_init()
 
-        assert len(mpl._items) == 3
-        assert mpl._items == ["item1", "item2", "item3"]
+        assert len(mpl._pages) == 1
+        assert len(mpl.local_items()) == 3
+        assert len(mpl._pages[0].items) == 3
+        assert mpl.local_items() == ("item1", "item2", "item3")
         assert isinstance(mpl._result_info, pagination.PaginatedResultInfo)
         assert mpl._result_info.page == 1
         assert mpl._result_info.total_count == 25
@@ -72,7 +74,7 @@ class TestMultipageList:
         await mpl._asyinc_init()
 
         assert mpl._result_info == pagination.SpecialResultInfoState.FIRST_PAGE_FETCH_FAILED
-        assert len(mpl._items) == 0
+        assert mpl.local_len() == 0
 
     @pytest.mark.asyncio
     async def test_has_next_page_uninitialized(self):
@@ -152,13 +154,13 @@ class TestMultipageList:
 
         # Fetch item at index 3 (4th item) - should fetch pages 1 and 2
         await mpl._fetch_page_to_item_idx(3)
-        assert len(mpl._items) == 4  # Should have items 1-4 after fetching first 2 pages
-        assert mpl._items == ["item1", "item2", "item3", "item4"]
+        assert len(mpl.local_items()) == 4  # Should have items 1-4 after fetching first 2 pages
+        assert mpl.local_items() == ("item1", "item2", "item3", "item4")
 
         # Now fetch item at index 4 (5th item) - should fetch page 3
         await mpl._fetch_page_to_item_idx(4)
-        assert len(mpl._items) == 6  # Should fetch all pages to get item 5
-        assert mpl._items == ["item1", "item2", "item3", "item4", "item5", "item6"]
+        assert len(mpl.local_items()) == 6  # Should fetch all pages to get item 5
+        assert mpl.local_items() == ("item1", "item2", "item3", "item4", "item5", "item6")
 
     @pytest.mark.asyncio
     async def test_fetch_page_assertion_error(self):
@@ -217,12 +219,12 @@ class TestMultipageList:
         # Mock scenario where len() changes during iteration due to API inconsistencies
         fetch_page = AsyncMock()
         mpl = pagination.MultipageList(fetch_page=fetch_page)
-        mpl._items = ["item1", "item2"]
         mpl._result_info = pagination.PaginatedResultInfo(
             page=1,
             per_page=10,
             total_count=5,  # Claim 5 items but only have 2
         )
+        mpl._pages = [pagination.FetchedPageData(items=["item1", "item2"], page_info=mpl._result_info)]
 
         items = []
         async for item in mpl:
@@ -286,8 +288,8 @@ class TestMultipageList:
         """Test __len__ when all pages are fetched."""
         fetch_page = AsyncMock()
         mpl = pagination.MultipageList(fetch_page=fetch_page)
-        mpl._items = ["item1", "item2", "item3"]
         mpl._result_info = pagination.SpecialResultInfoState.ALL_PAGES_FETCHED
+        mpl._pages.append(pagination.FetchedPageData(items=["item1", "item2", "item3"], page_info=None))
 
         # Should return actual item count
         assert len(mpl) == 3
@@ -501,23 +503,16 @@ class TestErrorHandlingEdgeCases:
             await mpl._asyinc_init()
 
     @pytest.mark.asyncio
-    async def test_negative_index_access(self):
+    @pytest.mark.parametrize("invalid_index", [-1, -5, -10])
+    async def test_negative_index_access(self, invalid_index):
         """Test accessing negative indices."""
         pages_data = [({"page": 1, "per_page": 10, "total_count": 25}, ["item1", "item2", "item3"])]
         fetch_page = self.create_mock_fetch_page(pages_data)
         mpl = pagination.MultipageList(fetch_page=fetch_page)
         await mpl._asyinc_init()
 
-        # Negative indices should work like normal Python lists (access from end)
-        item = await mpl[-1]  # Should return 'item3'
-        assert item == "item3"
-
-        item = await mpl[-2]  # Should return 'item2'
-        assert item == "item2"
-
-        # But accessing beyond available negative indices should raise IndexError
         with pytest.raises(IndexError):
-            await mpl[-10]  # Only 3 items, so -10 is out of bounds
+            await mpl[invalid_index]
 
     def create_mock_fetch_page(self, pages_data):
         """Helper to create a mock fetch_page callable with predefined pages."""
