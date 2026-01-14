@@ -251,6 +251,11 @@ class RawClient:
                 f"API search request failed with status code {out.status_code}: "
                 f"{out.reason_phrase}. Please check the search parameters and try again."
             )
+        # Check if the API status is in expected format
+        elif out.status and not out.status.startswith("FSR-API-04-01-"):
+            raise exc.FcaRequestError(
+                f"Unexpected API status: {out.status}. Message: {out.message}"
+            )
         elif not out.data:
             # No results found - ensure that an empty list is returned (the API returns None sometimes)
             out.override_data([])
