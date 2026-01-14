@@ -268,6 +268,120 @@ class TestMultipageList:
         assert mpl.local_items() == ("item1", "item2", "item3")
 
     @pytest.mark.asyncio
+    async def test_local_pages_empty_before_init(self):
+        """Test local_pages returns empty tuple before initialization."""
+        fetch_page = AsyncMock()
+        mpl = pagination.MultipageList(fetch_page=fetch_page)
+        
+        assert mpl.local_pages() == ()
+
+    @pytest.mark.asyncio
+    async def test_local_pages_single_page(self):
+        """Test local_pages with a single page of items."""
+        pages_data = [({"page": 1, "per_page": 10, "total_count": 3}, ["item1", "item2", "item3"])]
+        fetch_page = self.create_mock_fetch_page(pages_data)
+        mpl = pagination.MultipageList(fetch_page=fetch_page)
+
+        await mpl._asyinc_init()
+        
+        result = mpl.local_pages()
+        assert result == (("item1", "item2", "item3"),)
+        assert isinstance(result, tuple)
+        assert len(result) == 1
+        assert isinstance(result[0], tuple)
+
+    @pytest.mark.asyncio
+    async def test_local_pages_multiple_pages(self):
+        """Test local_pages with multiple pages of items."""
+        pages_data = [
+            ({"page": 1, "per_page": 2, "total_count": 5, "next": "http://example.com/page2"}, ["item1", "item2"]),
+            ({"page": 2, "per_page": 2, "total_count": 5, "next": "http://example.com/page3"}, ["item3", "item4"]),
+            ({"page": 3, "per_page": 2, "total_count": 5}, ["item5"])
+        ]
+        fetch_page = self.create_mock_fetch_page(pages_data)
+        mpl = pagination.MultipageList(fetch_page=fetch_page)
+
+        await mpl._asyinc_init()
+        
+        # Initially only first page is cached
+        result = mpl.local_pages()
+        assert result == (("item1", "item2"),)
+        
+        # Fetch more items to trigger additional page loads
+        await mpl._fetch_page_to_item_idx(3)  # Should load page 2
+        result = mpl.local_pages()
+        assert result == (("item1", "item2"), ("item3", "item4"))
+        
+        await mpl._fetch_page_to_item_idx(4)  # Should load page 3
+        result = mpl.local_pages()
+        assert result == (("item1", "item2"), ("item3", "item4"), ("item5",))
+
+    @pytest.mark.asyncio
+    async def test_local_pages_empty_pages(self):
+        """Test local_pages with empty pages."""
+        pages_data = [
+            ({"page": 1, "per_page": 10, "total_count": 0}, []),
+            (None, [])  # Empty subsequent page
+        ]
+        fetch_page = self.create_mock_fetch_page(pages_data)
+        mpl = pagination.MultipageList(fetch_page=fetch_page)
+
+        await mpl._asyinc_init()
+        
+        result = mpl.local_pages()
+        assert result == ((),)
+        assert len(result) == 1
+        assert len(result[0]) == 0
+
+    @pytest.mark.asyncio
+    async def test_local_pages_immutable_return(self):
+        """Test that local_pages returns immutable tuples."""
+        pages_data = [({"page": 1, "per_page": 10, "total_count": 2}, ["item1", "item2"])]
+        fetch_page = self.create_mock_fetch_page(pages_data)
+        mpl = pagination.MultipageList(fetch_page=fetch_page)
+
+        await mpl._asyinc_init()
+        
+        result1 = mpl.local_pages()
+        result2 = mpl.local_pages()
+        
+        # Should return the same structure
+        assert result1 == result2
+        # But different tuple instances (defensive copy)
+        assert result1 is not result2
+        assert result1[0] is not result2[0]
+
+    @pytest.mark.asyncio
+    async def test_local_pages_with_failed_pages(self):
+        """Test local_pages behavior when some pages fail to fetch."""
+        async def failing_fetch_page(page_num: int):
+            if page_num == 1:
+                return pagination.PaginatedResultInfo(
+                    page=1, per_page=2, total_count=4, 
+                    next="http://example.com/page2"
+                ), ["item1", "item2"]
+            elif page_num == 2:
+                raise Exception("Simulated API failure")
+            return None, []
+
+        mpl = pagination.MultipageList(fetch_page=failing_fetch_page)
+        await mpl._asyinc_init()
+        
+        # First page should be available
+        result = mpl.local_pages()
+        assert result == (("item1", "item2"),)
+        
+        # Try to fetch second page (will fail)
+        try:
+            await mpl._fetch_page_to_item_idx(3)
+        except Exception:
+            pass  # Expected to fail
+        
+        # Should still only have first page
+        result = mpl.local_pages()
+        assert result == (("item1", "item2"),)
+
+    @pytest.mark.asyncio
     async def test_len_with_has_next_page(self):
         """Test __len__ when more pages are available."""
         pages_data = [

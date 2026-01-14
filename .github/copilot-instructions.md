@@ -36,7 +36,7 @@ async def search_frn(self, firm_name: str) -> types.pagination.MultipageList[typ
 
 ### Build System: PDM + Make
 - Use `pdm` for dependency management, not pip
-- `bin/test.sh` to run pytest with coverage
+- `bin/test.sh` to run pytest with coverage. You can pass test paths/selectors to it (or any other additional pytest arguments) to restrict or customize the test run.
 <!-- - `make docs` builds Sphinx documentation -->
 
 ### Sophisticated Testing Infrastructure
