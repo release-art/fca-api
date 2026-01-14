@@ -461,6 +461,7 @@ class TestSpecialResultInfoState:
         assert hasattr(pagination.SpecialResultInfoState, "UNINITIALIZED")
         assert hasattr(pagination.SpecialResultInfoState, "FIRST_PAGE_FETCH_FAILED")
         assert hasattr(pagination.SpecialResultInfoState, "ALL_PAGES_FETCHED")
+        assert hasattr(pagination.SpecialResultInfoState, "PAGE_FETCH_FAILED")
 
     def test_enum_uniqueness(self):
         """Test that enum values are unique."""
@@ -468,6 +469,7 @@ class TestSpecialResultInfoState:
             pagination.SpecialResultInfoState.UNINITIALIZED,
             pagination.SpecialResultInfoState.FIRST_PAGE_FETCH_FAILED,
             pagination.SpecialResultInfoState.ALL_PAGES_FETCHED,
+            pagination.SpecialResultInfoState.PAGE_FETCH_FAILED,
         ]
 
         assert len(values) == len(set(values))
@@ -477,16 +479,202 @@ class TestErrorHandlingEdgeCases:
     """Test error handling and edge cases for pagination types."""
 
     @pytest.mark.asyncio
-    async def test_fetch_page_callback_exception(self):
-        """Test handling when fetch_page callback raises an exception."""
+    async def test_fetch_page_callback_exception_first_page(self):
+        """Test graceful handling when fetch_page callback raises exception on first page."""
 
         async def failing_fetch_page(page_num: int):
             raise ValueError("API connection failed")
 
         mpl = pagination.MultipageList(fetch_page=failing_fetch_page)
 
-        with pytest.raises(ValueError, match="API connection failed"):
+        # Should handle exception gracefully, not raise it
+        await mpl._asyinc_init()
+
+        # Should be marked as failed
+        assert mpl._result_info == pagination.SpecialResultInfoState.FIRST_PAGE_FETCH_FAILED
+        assert len(mpl) == 0
+        assert mpl.local_items() == ()
+        assert not mpl._has_next_page()
+
+    @pytest.mark.asyncio
+    async def test_fetch_page_callback_exception_subsequent_page(self):
+        """Test graceful handling when fetch_page callback raises exception on subsequent pages."""
+        call_count = 0
+
+        async def mixed_fetch_page(page_num: int):
+            nonlocal call_count
+            call_count += 1
+            if page_num == 1:
+                # First page succeeds
+                return pagination.PaginatedResultInfo(
+                    page=1, per_page=2, total_count=10, next="http://example.com/page2"
+                ), ["item1", "item2"]
+            else:
+                # Subsequent pages fail
+                raise ConnectionError("Network timeout")
+
+        mpl = pagination.MultipageList(fetch_page=mixed_fetch_page)
+        await mpl._asyinc_init()
+
+        # First page should work fine
+        assert mpl.local_len() == 2
+        assert mpl.local_items() == ("item1", "item2")
+
+        # Try to fetch more items, should handle exception gracefully
+        await mpl._fetch_page_to_item_idx(3)
+
+        # Should be marked as failed
+        assert mpl._result_info == pagination.SpecialResultInfoState.PAGE_FETCH_FAILED
+        assert not mpl._has_next_page()
+        # Should still have the items from the first page
+        assert mpl.local_len() == 2
+        assert mpl.local_items() == ("item1", "item2")
+
+    @pytest.mark.asyncio
+    async def test_fetch_page_callback_mixed_exceptions_and_success(self):
+        """Test handling when some pages fail and others succeed."""
+
+        async def intermittent_fetch_page(page_num: int):
+            if page_num == 1:
+                return pagination.PaginatedResultInfo(
+                    page=1, per_page=2, total_count=6, next="http://example.com/page2"
+                ), ["item1", "item2"]
+            elif page_num == 2:
+                # Second page fails
+                raise TimeoutError("Request timeout")
+            else:
+                # This should not be called due to failure on page 2
+                return pagination.PaginatedResultInfo(page=3, per_page=2, total_count=6, next=None), ["item5", "item6"]
+
+        mpl = pagination.MultipageList(fetch_page=intermittent_fetch_page)
+        await mpl._asyinc_init()
+
+        # First page loads successfully
+        assert mpl.local_len() == 2
+
+        # Try to access item that would require second page
+        await mpl._fetch_page_to_item_idx(3)
+
+        # Should gracefully handle the exception and stop fetching
+        assert mpl._result_info == pagination.SpecialResultInfoState.PAGE_FETCH_FAILED
+        assert not mpl._has_next_page()
+        assert mpl.local_len() == 2  # Only first page items
+
+    @pytest.mark.asyncio
+    @pytest.mark.parametrize(
+        "exception_type", [ValueError, ConnectionError, TimeoutError, RuntimeError, KeyError, TypeError]
+    )
+    async def test_fetch_page_callback_various_exception_types(self, exception_type):
+        """Test graceful handling of different types of exceptions."""
+
+        async def failing_fetch_page(page_num: int):
+            raise exception_type("Simulated fetch_page exception")
+
+        mpl = pagination.MultipageList(fetch_page=failing_fetch_page)
+        await mpl._asyinc_init()
+
+        # Should handle any exception gracefully
+        assert mpl._result_info == pagination.SpecialResultInfoState.FIRST_PAGE_FETCH_FAILED
+        assert len(mpl) == 0
+        assert not mpl._has_next_page()
+
+    @pytest.mark.asyncio
+    async def test_fetch_page_callback_exception_during_iteration(self):
+        """Test exception handling during async iteration."""
+
+        async def failing_after_first_fetch_page(page_num: int):
+            if page_num == 1:
+                return pagination.PaginatedResultInfo(
+                    page=1, per_page=2, total_count=4, next="http://example.com/page2"
+                ), ["item1", "item2"]
+            else:
+                raise OSError("Disk full")
+
+        mpl = pagination.MultipageList(fetch_page=failing_after_first_fetch_page)
+        await mpl._asyinc_init()
+
+        items = []
+        # This should iterate through available items and stop gracefully when exception occurs
+        async for item in mpl:
+            items.append(item)
+
+        # Should only get items from the successful first page
+        assert items == ["item1", "item2"]
+        assert mpl._result_info == pagination.SpecialResultInfoState.PAGE_FETCH_FAILED
+
+    @pytest.mark.asyncio
+    async def test_fetch_page_callback_exception_getitem_access(self):
+        """Test exception handling during individual item access."""
+
+        async def failing_second_page_fetch_page(page_num: int):
+            if page_num == 1:
+                return pagination.PaginatedResultInfo(
+                    page=1, per_page=2, total_count=4, next="http://example.com/page2"
+                ), ["item1", "item2"]
+            else:
+                raise MemoryError("Out of memory")
+
+        mpl = pagination.MultipageList(fetch_page=failing_second_page_fetch_page)
+        await mpl._asyinc_init()
+
+        # Access items from first page should work
+        assert await mpl[0] == "item1"
+        assert await mpl[1] == "item2"
+
+        # Access item that would require second page should handle exception
+        # The fetch will fail but not raise - instead item access should raise IndexError
+        with pytest.raises(IndexError):
+            await mpl[2]
+
+        # State should reflect the fetch failure
+        assert mpl._result_info == pagination.SpecialResultInfoState.PAGE_FETCH_FAILED
+
+    @pytest.mark.asyncio
+    async def test_fetch_page_callback_exception_logging(self, caplog):
+        """Test that exceptions are properly logged when they occur."""
+        import logging
+
+        async def failing_fetch_page(page_num: int):
+            if page_num == 1:
+                raise ValueError("Critical API failure")
+            else:
+                raise ConnectionError("Network down")
+
+        mpl = pagination.MultipageList(fetch_page=failing_fetch_page)
+
+        # Clear any existing log records
+        caplog.clear()
+
+        with caplog.at_level(logging.ERROR):
             await mpl._asyinc_init()
+
+        # Should have logged the exception
+        assert len(caplog.records) == 1
+        assert caplog.records[0].levelname == "ERROR"
+        assert "Failed to fetch page 1" in caplog.records[0].message
+        assert "Critical API failure" in caplog.records[0].message
+
+        # Test logging for subsequent page failures too
+        async def mixed_logging_fetch_page(page_num: int):
+            if page_num == 1:
+                return pagination.PaginatedResultInfo(
+                    page=1, per_page=2, total_count=4, next="http://example.com/page2"
+                ), ["item1", "item2"]
+            else:
+                raise TimeoutError("Request timeout on page 2")
+
+        mpl2 = pagination.MultipageList(fetch_page=mixed_logging_fetch_page)
+        await mpl2._asyinc_init()
+
+        caplog.clear()
+        with caplog.at_level(logging.ERROR):
+            # This should trigger the exception on page 2
+            await mpl2._fetch_page_to_item_idx(3)
+
+        # Should have logged the second page exception
+        assert len(caplog.records) == 1
+        assert "Failed to fetch page 2" in caplog.records[0].message
+        assert "Request timeout on page 2" in caplog.records[0].message
 
     @pytest.mark.asyncio
     async def test_fetch_page_returns_invalid_data(self):

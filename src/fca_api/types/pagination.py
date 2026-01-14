@@ -3,10 +3,12 @@
 import asyncio
 import dataclasses
 import enum
+import logging
 import typing
 
 import pydantic
 
+logger = logging.getLogger(__name__)
 T = typing.TypeVar("T")
 
 
@@ -40,6 +42,7 @@ class SpecialResultInfoState(enum.Enum):
     UNINITIALIZED = enum.auto()
     FIRST_PAGE_FETCH_FAILED = enum.auto()
     ALL_PAGES_FETCHED = enum.auto()
+    PAGE_FETCH_FAILED = enum.auto()
 
 
 @dataclasses.dataclass(frozen=True, kw_only=True, slots=True)
@@ -99,7 +102,15 @@ class MultipageList(typing.Generic[T]):
                 else:
                     last_fetched_page = self._result_info.page
 
-                (new_page_info, new_items) = await self._fetch_page_cb(last_fetched_page + 1)
+                try:
+                    (new_page_info, new_items) = await self._fetch_page_cb(last_fetched_page + 1)
+                except Exception as exc:
+                    logger.exception(f"Failed to fetch page {last_fetched_page + 1}: {exc}")
+                    if last_fetched_page == 0:
+                        self._result_info = SpecialResultInfoState.FIRST_PAGE_FETCH_FAILED
+                    else:
+                        self._result_info = SpecialResultInfoState.PAGE_FETCH_FAILED
+                    return None
                 self._max_fetched_page = last_fetched_page + 1
                 if new_page_info is None:
                     if last_fetched_page == 0:
@@ -157,6 +168,14 @@ class MultipageList(typing.Generic[T]):
         """
         return sum(len(page.items) for page in self._pages)
 
+    def local_pages(self) -> typing.Tuple[tuple[T, ...], ...]:
+        """Return the pages that have been locally cached without making API calls.
+
+        Returns:
+            A tuple of locally cached pages, each page is a tuple of items.
+        """
+        return tuple(tuple(page.items) for page in self._pages)
+
     def __len__(self) -> int:
         """
         Return the estimated total number of items available from the API.
@@ -173,4 +192,4 @@ class MultipageList(typing.Generic[T]):
         return out
 
     def __repr__(self) -> str:
-        return f"MultipageList({super().__repr__()})"
+        return f"MultipageList({self._pages})"
