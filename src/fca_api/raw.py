@@ -259,6 +259,7 @@ class RawClient:
             warnings.warn(
                 f"Received unknown FCA API status code: {fca_status_code}. "
                 "Please ensure that your client is up to date.",
+                stacklevel=2,
             )
         elif fca_code_info.is_error:
             raise exc.FcaRequestError(

@@ -15,7 +15,7 @@ class TestSearchFunctionality:
     async def test_common_search_unexpected_message_error(self, test_client, mock_http_client):
         test_client._api_session = mock_http_client
         mock_http_client.get.return_value.json.return_value = {
-            "Status": "XXX-API-99-99-99",
+            "Status": "FSR-API-01-01-11",
             "Message": "Hey, I found something!",
             "Data": None,
         }
@@ -26,7 +26,7 @@ class TestSearchFunctionality:
     async def test_common_search_unexpected_data_type(self, test_client, mock_http_client):
         test_client._api_session = mock_http_client
         mock_http_client.get.return_value.json.return_value = {
-            "Status": "FSR-API-99-99-99",
+            "Status": "FSR-API-02-01-00",
             "Message": "Hey, I found something!",
             "Data": "this should be a list, not a string",
         }

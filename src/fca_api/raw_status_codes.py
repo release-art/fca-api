@@ -327,7 +327,7 @@ ALL_KNOWN_CODES: tuple[Code, ...] = (
     ),
     Code(
         value="FSR-API-04-01-11",
-        is_error=True,
+        is_error=False,
         description="No search result found - When SOQL returns no record",
     ),
     Code(
@@ -360,4 +360,8 @@ def find_code(value: str) -> Code | None:
     Returns:
         The matching Code object, or None if not found.
     """
+    if value is None:
+        return None
+    elif not isinstance(value, str):
+        raise TypeError(f"Value must be a string. Got: {value!r}")
     return ALL_KNOWN_CODES_DICT.get(value.lower().strip(), None)
