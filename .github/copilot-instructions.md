@@ -36,10 +36,8 @@ async def search_frn(self, firm_name: str) -> types.pagination.MultipageList[typ
 
 ### Build System: PDM + Make
 - Use `pdm` for dependency management, not pip
-- `make unittests` runs pytest with coverage
-- `make autoformat` applies ruff formatting and fixes
-- `make lint` checks code quality with ruff
-- `make docs` builds Sphinx documentation
+- `bin/test.sh` to run pytest with coverage
+<!-- - `make docs` builds Sphinx documentation -->
 
 ### Sophisticated Testing Infrastructure
 - **Two-tier testing**: `test_raw/` for HTTP layer, `test_client/` for high-level API
