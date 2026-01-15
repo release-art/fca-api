@@ -153,3 +153,6 @@ class IndividualControlledFunction(base.Base):
             description="URL to the controlled function details.",
         ),
     ]
+
+class IndividualDisciplinaryRecord(base.Base):
+    """Individual Disciplinary Record details."""

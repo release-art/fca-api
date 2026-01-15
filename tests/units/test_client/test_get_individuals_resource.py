@@ -85,3 +85,8 @@ class TestNutmegFirmDetails:
                 "url": "https://register.fca.org.uk/services/V0.1/Firm/124431",
             },
         ]
+
+    @pytest.mark.asyncio
+    async def test_get_individual_controlled_functions(self, test_client: fca_api.api.Client, irn: str):
+        out = await test_client.get_individual_disciplinary_history(irn)
+        1 / 0

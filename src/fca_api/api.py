@@ -613,3 +613,15 @@ class Client:
                         )
                     )
         return out
+
+    async def get_individual_disciplinary_history(
+        self, irn: str
+    ) -> types.pagination.MultipageList[types.individual.IndividualDisciplinaryRecord]:
+        out = types.pagination.MultipageList(
+            fetch_page=PaginatedResponseHandler(
+                lambda page_idx: self._client.get_individual_disciplinary_history(irn, page=page_idx),
+                lambda data: [types.individual.IndividualDisciplinaryRecord.model_validate(item) for item in data],
+            ).fetch_page,
+        )
+        await out._async_init()
+        return out
