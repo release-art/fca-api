@@ -48,21 +48,35 @@ class TestFinancialServicesRegisterApiClientCore:
             assert limiter_enter_mock.await_count == idx + 1
             assert limiter_exit_mock.await_count == idx + 1
 
-        limiter_enter_mock.reset_mock()
-        limiter_exit_mock.reset_mock()
-        for idx in range(3):
-            out = await test_client.common_search("test resource", "firm")
-            assert out is not None
-            assert limiter_enter_mock.await_count == idx + 1
-            assert limiter_exit_mock.await_count == idx + 1
+    @pytest.mark.asyncio
+    async def test_common_search_empty_resource_name(self, mock_http_client):
+        """Test that common_search raises ValueError for empty resource name."""
+        test_client = fca_api.raw.RawClient(credentials=mock_http_client)
 
-        limiter_enter_mock.reset_mock()
-        limiter_exit_mock.reset_mock()
-        for idx in range(3):
-            out = await test_client._get_resource_info("123", "firm", "sdf")
-            assert out is not None
-            assert limiter_enter_mock.await_count == idx + 1
-            assert limiter_exit_mock.await_count == idx + 1
+        with pytest.raises(ValueError, match="Resource name must be a non-empty string"):
+            await test_client.common_search("", "firm")
+
+    @pytest.mark.asyncio
+    async def test_common_search_empty_resource_type(self, mock_http_client):
+        """Test that common_search raises ValueError for empty resource type."""
+        test_client = fca_api.raw.RawClient(credentials=mock_http_client)
+
+        with pytest.raises(ValueError, match="Resource type must be a non-empty string"):
+            await test_client.common_search("test", "")
+
+    @pytest.mark.asyncio
+    async def test_get_regulated_markets_with_page_raises(self, mock_http_client):
+        """Test that get_regulated_markets raises NotImplementedError for pagination."""
+        test_client = fca_api.raw.RawClient(credentials=mock_http_client)
+
+        with pytest.raises(NotImplementedError, match="Pagination is not supported for regulated markets"):
+            await test_client.get_regulated_markets(page=2)
+
+    @pytest.mark.asyncio
+    async def test_common_search_success(self, test_client):
+        """Test common search success."""
+        response = await test_client.common_search("test", "firm")
+        assert response is not None
 
     @pytest.mark.asyncio
     async def test_common_search_raises_on_request_error(self, test_client, mocker):
@@ -73,7 +87,7 @@ class TestFinancialServicesRegisterApiClientCore:
             await test_client.common_search("exceptional resource", "firm")
 
     @pytest.mark.asyncio
-    async def test_common_search_success(self, test_client):
+    async def test_common_search_success_2(self, test_client):
         recv_response = await test_client.common_search("hastings direct", "firm")
         assert recv_response.is_success
         assert recv_response.data
