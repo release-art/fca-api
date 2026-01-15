@@ -1,0 +1,186 @@
+{
+  "content": {
+    "json": {
+      "Data": [
+        {
+          "Name": "SCHRODER INTERNATIONAL SELECTION FUND GLOBAL EQUITY ALPHA",
+          "Reference Number": "643271",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/643271"
+        },
+        {
+          "Name": "Wellington Global Select Capital Appreciation Equity Fund",
+          "Reference Number": "634365",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/634365"
+        },
+        {
+          "Name": "PineBridge Global Emerging Markets Focus Equity Fund",
+          "Reference Number": "632952",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/632952"
+        },
+        {
+          "Name": "Aberdeen Global Emerging Markets Quantitative Equity Fund",
+          "Reference Number": "700126",
+          "Status": "Terminated",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/700126"
+        },
+        {
+          "Name": "CF MACQUARIE GLOBAL PRIVATE EQUITY SECURITIES FUND",
+          "Reference Number": "642123",
+          "Status": "Terminated",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/642123"
+        },
+        {
+          "Name": "CREDIT SUISSE GLOBAL EQUITY (EX-UK) PASSIVE  FUND",
+          "Reference Number": "640668",
+          "Status": "Terminated",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/640668"
+        },
+        {
+          "Name": "WS Lyrical Global Investment Value Equity Strategy Fund",
+          "Reference Number": "994194",
+          "Status": "Terminated",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/994194"
+        },
+        {
+          "Name": "Nordea 1 - Global Stable Equity Plus Fund",
+          "Reference Number": "1048613",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1048613"
+        },
+        {
+          "Name": "Mercer Passive Fundamental Indexation Global Equity Feeder Fund",
+          "Reference Number": "1047736",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1047736"
+        },
+        {
+          "Name": "Nordea 1 - Global Sustainable Stars Equity Fund",
+          "Reference Number": "1046831",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1046831"
+        },
+        {
+          "Name": "Janus Henderson Global Real Estate Equity Income Fund",
+          "Reference Number": "1045951",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1045951"
+        },
+        {
+          "Name": "Global Research Enhanced Index Equity Paris Aligned Fund",
+          "Reference Number": "1045551",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1045551"
+        },
+        {
+          "Name": "Nordea 2 - BetaPlus Enhanced Global Equity Fund",
+          "Reference Number": "1043161",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1043161"
+        },
+        {
+          "Name": "Federated Hermes Global Emerging Markets ex-China Equity Fund",
+          "Reference Number": "1043112",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1043112"
+        },
+        {
+          "Name": "FI Institutional Global Developed Equity ESG Values Fund",
+          "Reference Number": "1043040",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1043040"
+        },
+        {
+          "Name": "Life Cycle Global Equity Select Fund \u2013 UCITS",
+          "Reference Number": "1027611",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1027611"
+        },
+        {
+          "Name": "FI Institutional Global Small Cap Equity Selection Fund",
+          "Reference Number": "1032282",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1032282"
+        },
+        {
+          "Name": "Fidelity Funds \u2013 Global Equity Income ESG Fund",
+          "Reference Number": "1039409",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1039409"
+        },
+        {
+          "Name": "Fidelity Funds - Absolute Return Global Equity Fund",
+          "Reference Number": "1039309",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1039309"
+        },
+        {
+          "Name": "Skerryvore ICAV \u2013 Global Emerging Markets Equity Fund",
+          "Reference Number": "1010223",
+          "Status": "Approved",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1010223"
+        }
+      ],
+      "Message": "Ok. Search successful",
+      "ResultInfo": {
+        "Next": "https://register.fca.org.uk/services/V0.1/Search?q=global equity fund&type=fund&pgnp=25",
+        "Previous": "https://register.fca.org.uk/services/V0.1/Search?q=global equity fund&type=fund&pgnp=23",
+        "page": "24",
+        "per_page": "20",
+        "total_count": "577"
+      },
+      "Status": "FSR-API-04-01-00"
+    }
+  },
+  "headers": {
+    "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
+    "cf-cache-status": "DYNAMIC",
+    "cf-ray": "9be745ba99c788c2-LHR",
+    "connection": "keep-alive",
+    "content-encoding": "gzip",
+    "content-type": "application/json;charset=UTF-8",
+    "date": "Thu, 15 Jan 2026 18:00:23 GMT",
+    "server": "cloudflare",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 18:00:23 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 18:00:23 GMT; Max-Age=31536000; secure",
+    "strict-transport-security": "max-age=63072000; includeSubDomains",
+    "transfer-encoding": "chunked",
+    "vary": "Accept-Encoding",
+    "x-content-type-options": "nosniff"
+  },
+  "request": {
+    "headers": {
+      "accept": "application/json",
+      "accept-encoding": "gzip, deflate",
+      "connection": "keep-alive",
+      "user-agent": "python-httpx/0.28.1",
+      "x-auth-email": "user@example.com",
+      "x-auth-key": "00617470e8144a09"
+    },
+    "params": null,
+    "url": "https://register.fca.org.uk/services/V0.1/Search?q=global+equity+fund&type=fund&pgnp=24"
+  },
+  "status_code": 200,
+  "url": "https://register.fca.org.uk/services/V0.1/Search?q=global+equity+fund&type=fund&pgnp=24"
+}

@@ -1,0 +1,186 @@
+{
+  "content": {
+    "json": {
+      "Data": [
+        {
+          "Name": "Robert Stephen Osborne",
+          "Reference Number": "RSO01014",
+          "Status": "Regulatory approval no longer required",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RSO01014"
+        },
+        {
+          "Name": "Robert Charles Munro",
+          "Reference Number": "RCM00013",
+          "Status": "Regulatory approval no longer required",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RCM00013"
+        },
+        {
+          "Name": "Robert Norman George Johnson",
+          "Reference Number": "RNJ00004",
+          "Status": "Regulatory approval no longer required",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RNJ00004"
+        },
+        {
+          "Name": "Robert John Sparrowhawk",
+          "Reference Number": "RJS00037",
+          "Status": "Regulatory approval no longer required",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RJS00037"
+        },
+        {
+          "Name": "Robert Hansberry",
+          "Reference Number": "RXH33287",
+          "Status": "Regulatory approval no longer required",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RXH33287"
+        },
+        {
+          "Name": "Robert Stewart Bright",
+          "Reference Number": "RSB01088",
+          "Status": "Regulatory approval no longer required",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RSB01088"
+        },
+        {
+          "Name": "Robert Hewitson",
+          "Reference Number": "RXH00098",
+          "Status": "Regulatory approval no longer required",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RXH00098"
+        },
+        {
+          "Name": "Robert John Moore",
+          "Reference Number": "RJM01325",
+          "Status": "Active",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RJM01325"
+        },
+        {
+          "Name": "Robert William Barnett",
+          "Reference Number": "RWB00017",
+          "Status": "Active",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RWB00017"
+        },
+        {
+          "Name": "Martyn Robert Frost",
+          "Reference Number": "MXF91553",
+          "Status": "Regulatory approval no longer required",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/MXF91553"
+        },
+        {
+          "Name": "Robert Michael Jolly",
+          "Reference Number": "RMJ01012",
+          "Status": "Regulatory approval no longer required",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RMJ01012"
+        },
+        {
+          "Name": "Robert Colley",
+          "Reference Number": "RXC02207",
+          "Status": "Active",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RXC02207"
+        },
+        {
+          "Name": "James Robert Maguire Jr",
+          "Reference Number": "JRM01107",
+          "Status": "Active",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/JRM01107"
+        },
+        {
+          "Name": "Robert William McGowan-Smyth",
+          "Reference Number": "RWM01089",
+          "Status": "Active",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RWM01089"
+        },
+        {
+          "Name": "Robert John O'Reilly",
+          "Reference Number": "RJO00010",
+          "Status": "Regulatory approval no longer required",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RJO00010"
+        },
+        {
+          "Name": "Manjeet Singh Rakhra",
+          "Reference Number": "MSR01061",
+          "Status": "Active",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/MSR01061"
+        },
+        {
+          "Name": "Robert John Locker",
+          "Reference Number": "RJL01180",
+          "Status": "Active",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RJL01180"
+        },
+        {
+          "Name": "Robert Alan Roderick",
+          "Reference Number": "RXR18065",
+          "Status": "Active",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RXR18065"
+        },
+        {
+          "Name": "Robert Ross Bannerman",
+          "Reference Number": "RRB01034",
+          "Status": "Active",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RRB01034"
+        },
+        {
+          "Name": "Robert Timothy Tyley",
+          "Reference Number": "RTT01007",
+          "Status": "Regulatory approval no longer required",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RTT01007"
+        }
+      ],
+      "Message": "Ok. Search successful",
+      "ResultInfo": {
+        "Next": "https://register.fca.org.uk/services/V0.1/Search?q=bob&type=individual&pgnp=22",
+        "Previous": "https://register.fca.org.uk/services/V0.1/Search?q=bob&type=individual&pgnp=20",
+        "page": "21",
+        "per_page": "20",
+        "total_count": "1124"
+      },
+      "Status": "FSR-API-04-01-00"
+    }
+  },
+  "headers": {
+    "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
+    "cf-cache-status": "DYNAMIC",
+    "cf-ray": "9be744ba3f1db16b-LHR",
+    "connection": "keep-alive",
+    "content-encoding": "gzip",
+    "content-type": "application/json;charset=UTF-8",
+    "date": "Thu, 15 Jan 2026 17:59:43 GMT",
+    "server": "cloudflare",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 17:59:42 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 17:59:42 GMT; Max-Age=31536000; secure",
+    "strict-transport-security": "max-age=63072000; includeSubDomains",
+    "transfer-encoding": "chunked",
+    "vary": "Accept-Encoding",
+    "x-content-type-options": "nosniff"
+  },
+  "request": {
+    "headers": {
+      "accept": "application/json",
+      "accept-encoding": "gzip, deflate",
+      "connection": "keep-alive",
+      "user-agent": "python-httpx/0.28.1",
+      "x-auth-email": "user@example.com",
+      "x-auth-key": "00617470e8144a09"
+    },
+    "params": null,
+    "url": "https://register.fca.org.uk/services/V0.1/Search?q=bob&type=individual&pgnp=21"
+  },
+  "status_code": 200,
+  "url": "https://register.fca.org.uk/services/V0.1/Search?q=bob&type=individual&pgnp=21"
+}

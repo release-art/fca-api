@@ -1,0 +1,186 @@
+{
+  "content": {
+    "json": {
+      "Data": [
+        {
+          "Name": "Bitcoin Revolution / Bitcoin Trader (Postcode: EC3R 6HA)",
+          "Reference Number": "",
+          "Status": "Unauthorised",
+          "Type of business or Individual": "Unauthorised firm",
+          "URL": null
+        },
+        {
+          "Name": "RIFCI.COM LIMITED (Postcode: NG2 4LA)",
+          "Reference Number": "941120",
+          "Status": "No longer authorised",
+          "Type of business or Individual": "Firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Firm/941120"
+        },
+        {
+          "Name": "CAR STATE LTD (Postcode: LS1 2QH)",
+          "Reference Number": "944153",
+          "Status": "No longer authorised",
+          "Type of business or Individual": "Firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Firm/944153"
+        },
+        {
+          "Name": "Revolution Fuels LTD (Postcode: LE9 8JE)",
+          "Reference Number": "945511",
+          "Status": "No Longer Registered as a PSD Agent",
+          "Type of business or Individual": "Payment services firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Firm/945511"
+        },
+        {
+          "Name": "REVOLUTION PERFORMANCE CARS LIMITED (Postcode: RG40 1LR)",
+          "Reference Number": "950198",
+          "Status": "No longer authorised",
+          "Type of business or Individual": "Firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Firm/950198"
+        },
+        {
+          "Name": "Revolution Roofing Scotland Ltd (Postcode: ML5 3JW)",
+          "Reference Number": "957506",
+          "Status": "No longer registered as an Appointed Representative",
+          "Type of business or Individual": "Firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Firm/957506"
+        },
+        {
+          "Name": "REVOLUTION SPECIALIST CARS LIMITED (Postcode: NG18 4ZE)",
+          "Reference Number": "966259",
+          "Status": "Authorised",
+          "Type of business or Individual": "Firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Firm/966259"
+        },
+        {
+          "Name": "Green Revolution (Nationwide) Ltd (Postcode: NN1 3BA)",
+          "Reference Number": "979505",
+          "Status": "No longer registered as an Appointed Representative",
+          "Type of business or Individual": "Firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Firm/979505"
+        },
+        {
+          "Name": "RevolutionInvest.ltd (Postcode: n/a)",
+          "Reference Number": "",
+          "Status": "Unauthorised",
+          "Type of business or Individual": "Unauthorised firm",
+          "URL": null
+        },
+        {
+          "Name": "Exotic Aquatics Limited (Postcode: BT5 6QR)",
+          "Reference Number": "989893",
+          "Status": "Authorised",
+          "Type of business or Individual": "Firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Firm/989893"
+        },
+        {
+          "Name": "Greener Revolution Ltd (Postcode: DL14 6XG)",
+          "Reference Number": "990734",
+          "Status": "No longer registered as an Appointed Representative",
+          "Type of business or Individual": "Firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Firm/990734"
+        },
+        {
+          "Name": "Revolution FSL (clone of FCA authorised firm) (Postcode: n/a)",
+          "Reference Number": "",
+          "Status": "Unauthorised",
+          "Type of business or Individual": "Unauthorised firm",
+          "URL": null
+        },
+        {
+          "Name": "Revolution Heating Limited (Postcode: BN11 5JS)",
+          "Reference Number": "1015036",
+          "Status": "No longer registered as an Appointed Representative",
+          "Type of business or Individual": "Firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Firm/1015036"
+        },
+        {
+          "Name": "REVOLUTION AESTHETICS CLINIC LTD (Postcode: B23 6LR)",
+          "Reference Number": "1015915",
+          "Status": "Appointed representative - introducer",
+          "Type of business or Individual": "Firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Firm/1015915"
+        },
+        {
+          "Name": "PATERSON GROUP SCOTLAND LTD (Postcode: PH1 3DZ)",
+          "Reference Number": "1020917",
+          "Status": "Appointed representative",
+          "Type of business or Individual": "Firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Firm/1020917"
+        },
+        {
+          "Name": "Crypto Revolution App (Postcode: N/A)",
+          "Reference Number": "",
+          "Status": "Unauthorised",
+          "Type of business or Individual": "Unauthorised firm",
+          "URL": null
+        },
+        {
+          "Name": "CONVENIENCE REVOLUTION LIMITED (Postcode: DH1 1RG)",
+          "Reference Number": "1038587",
+          "Status": "No Longer Registered as a PSD Agent",
+          "Type of business or Individual": "Payment services firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Firm/1038587"
+        },
+        {
+          "Name": "D2 KNR LTD (Postcode: CV21 2AG)",
+          "Reference Number": "1048939",
+          "Status": "Appointed representative - introducer",
+          "Type of business or Individual": "Firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Firm/1048939"
+        },
+        {
+          "Name": "Revolution Property Management Limited (Postcode: M5 3ED)",
+          "Reference Number": "500003",
+          "Status": "No longer registered as an Appointed Representative",
+          "Type of business or Individual": "Firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Firm/500003"
+        },
+        {
+          "Name": "Zara Begum (Postcode: E7 8DP)",
+          "Reference Number": "586345",
+          "Status": "No Longer Registered as a PSD Agent",
+          "Type of business or Individual": "Payment services firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Firm/586345"
+        }
+      ],
+      "Message": "Ok. Search successful",
+      "ResultInfo": {
+        "Next": "https://register.fca.org.uk/services/V0.1/Search?q=revolution&type=firm&pgnp=3",
+        "Previous": "https://register.fca.org.uk/services/V0.1/Search?q=revolution&type=firm&pgnp=1",
+        "page": "2",
+        "per_page": "20",
+        "total_count": "74"
+      },
+      "Status": "FSR-API-04-01-00"
+    }
+  },
+  "headers": {
+    "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
+    "cf-cache-status": "DYNAMIC",
+    "cf-ray": "9be7443ca9f51520-LHR",
+    "connection": "keep-alive",
+    "content-encoding": "gzip",
+    "content-type": "application/json;charset=UTF-8",
+    "date": "Thu, 15 Jan 2026 17:59:23 GMT",
+    "server": "cloudflare",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 17:59:22 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 17:59:22 GMT; Max-Age=31536000; secure",
+    "strict-transport-security": "max-age=63072000; includeSubDomains",
+    "transfer-encoding": "chunked",
+    "vary": "Accept-Encoding",
+    "x-content-type-options": "nosniff"
+  },
+  "request": {
+    "headers": {
+      "accept": "application/json",
+      "accept-encoding": "gzip, deflate",
+      "connection": "keep-alive",
+      "user-agent": "python-httpx/0.28.1",
+      "x-auth-email": "user@example.com",
+      "x-auth-key": "00617470e8144a09"
+    },
+    "params": null,
+    "url": "https://register.fca.org.uk/services/V0.1/Search?q=revolution&type=firm&pgnp=2"
+  },
+  "status_code": 200,
+  "url": "https://register.fca.org.uk/services/V0.1/Search?q=revolution&type=firm&pgnp=2"
+}

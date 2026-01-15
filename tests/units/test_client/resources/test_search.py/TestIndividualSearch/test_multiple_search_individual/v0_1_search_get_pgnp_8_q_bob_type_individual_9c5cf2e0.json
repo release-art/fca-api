@@ -1,0 +1,186 @@
+{
+  "content": {
+    "json": {
+      "Data": [
+        {
+          "Name": "Vladimir Bobryashov",
+          "Reference Number": "VXB01224",
+          "Status": "Regulatory approval no longer required",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/VXB01224"
+        },
+        {
+          "Name": "Archie Bobbins",
+          "Reference Number": "AXB01564",
+          "Status": "Active",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/AXB01564"
+        },
+        {
+          "Name": "Bobby Aigbogun",
+          "Reference Number": "BRA01024",
+          "Status": "Active",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/BRA01024"
+        },
+        {
+          "Name": "Maxim Bobrov",
+          "Reference Number": "MXB01737",
+          "Status": "Active",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/MXB01737"
+        },
+        {
+          "Name": "Bobinder Singh Nahal",
+          "Reference Number": "BSN00008",
+          "Status": "Active",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/BSN00008"
+        },
+        {
+          "Name": "Bobby Sahota",
+          "Reference Number": "BXS01556",
+          "Status": "Regulatory approval no longer required",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/BXS01556"
+        },
+        {
+          "Name": "Bobby Rees",
+          "Reference Number": "BXR00103",
+          "Status": "Active",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/BXR00103"
+        },
+        {
+          "Name": "Thomas Xavier Jacques Bobrie",
+          "Reference Number": "TXB01601",
+          "Status": "Regulatory approval no longer required",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/TXB01601"
+        },
+        {
+          "Name": "Francesco Bobbio",
+          "Reference Number": "FXB76366",
+          "Status": "Regulatory approval no longer required",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/FXB76366"
+        },
+        {
+          "Name": "Alan Richard Boby",
+          "Reference Number": "ARB01276",
+          "Status": "Regulatory approval no longer required",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/ARB01276"
+        },
+        {
+          "Name": "Bobby Chand",
+          "Reference Number": "BXC01613",
+          "Status": "Regulatory approval no longer required",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/BXC01613"
+        },
+        {
+          "Name": "Bobby Satvinder Singh Ojla",
+          "Reference Number": "BSO01003",
+          "Status": "Regulatory approval no longer required",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/BSO01003"
+        },
+        {
+          "Name": "Bobby Chada",
+          "Reference Number": "BXC01132",
+          "Status": "Active",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/BXC01132"
+        },
+        {
+          "Name": "BOBBI JO MAIN",
+          "Reference Number": "BXM00468",
+          "Status": "Active",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/BXM00468"
+        },
+        {
+          "Name": "Bobbie Bradley",
+          "Reference Number": "BXB00001",
+          "Status": "Regulatory approval no longer required",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/BXB00001"
+        },
+        {
+          "Name": "Bobur Ashurov",
+          "Reference Number": "BXA00118",
+          "Status": "Regulatory approval no longer required",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/BXA00118"
+        },
+        {
+          "Name": "Elena Alina Boboc",
+          "Reference Number": "EXB72312",
+          "Status": "Regulatory approval no longer required",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/EXB72312"
+        },
+        {
+          "Name": "Lev Bobovik",
+          "Reference Number": "LXB01442",
+          "Status": "Regulatory approval no longer required",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/LXB01442"
+        },
+        {
+          "Name": "BOBBY RANJIT SINGH",
+          "Reference Number": "BRS01071",
+          "Status": "Active",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/BRS01071"
+        },
+        {
+          "Name": "Bob Wilson",
+          "Reference Number": "BXW01476",
+          "Status": "Regulatory approval no longer required",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/BXW01476"
+        }
+      ],
+      "Message": "Ok. Search successful",
+      "ResultInfo": {
+        "Next": "https://register.fca.org.uk/services/V0.1/Search?q=bob&type=individual&pgnp=9",
+        "Previous": "https://register.fca.org.uk/services/V0.1/Search?q=bob&type=individual&pgnp=7",
+        "page": "8",
+        "per_page": "20",
+        "total_count": "1124"
+      },
+      "Status": "FSR-API-04-01-00"
+    }
+  },
+  "headers": {
+    "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
+    "cf-cache-status": "DYNAMIC",
+    "cf-ray": "9be74478a9ffb16b-LHR",
+    "connection": "keep-alive",
+    "content-encoding": "gzip",
+    "content-type": "application/json;charset=UTF-8",
+    "date": "Thu, 15 Jan 2026 17:59:32 GMT",
+    "server": "cloudflare",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 17:59:31 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 17:59:31 GMT; Max-Age=31536000; secure",
+    "strict-transport-security": "max-age=63072000; includeSubDomains",
+    "transfer-encoding": "chunked",
+    "vary": "Accept-Encoding",
+    "x-content-type-options": "nosniff"
+  },
+  "request": {
+    "headers": {
+      "accept": "application/json",
+      "accept-encoding": "gzip, deflate",
+      "connection": "keep-alive",
+      "user-agent": "python-httpx/0.28.1",
+      "x-auth-email": "user@example.com",
+      "x-auth-key": "00617470e8144a09"
+    },
+    "params": null,
+    "url": "https://register.fca.org.uk/services/V0.1/Search?q=bob&type=individual&pgnp=8"
+  },
+  "status_code": 200,
+  "url": "https://register.fca.org.uk/services/V0.1/Search?q=bob&type=individual&pgnp=8"
+}

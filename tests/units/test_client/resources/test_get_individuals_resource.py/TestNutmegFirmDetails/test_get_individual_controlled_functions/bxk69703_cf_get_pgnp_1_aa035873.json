@@ -1,0 +1,92 @@
+{
+  "content": {
+    "json": {
+      "Data": [
+        {
+          "Current": {
+            "(1)[FCA CF] Client dealing": {
+              "Customer Engagement Method": "",
+              "Effective Date": "02/09/2025",
+              "Firm Name": "Barclays Bank Plc",
+              "Name": "[FCA CF] Client dealing",
+              "Restriction": "",
+              "Suspension / Restriction End Date": "",
+              "Suspension / Restriction Start Date": "",
+              "URL": "https://register.fca.org.uk/services/V0.1/Firm/122702"
+            },
+            "(2)[FCA CF] Client dealing": {
+              "Customer Engagement Method": "",
+              "Effective Date": "02/09/2025",
+              "Firm Name": "Barclays Capital Securities Limited",
+              "Name": "[FCA CF] Client dealing",
+              "Restriction": "",
+              "Suspension / Restriction End Date": "",
+              "Suspension / Restriction Start Date": "",
+              "URL": "https://register.fca.org.uk/services/V0.1/Firm/124431"
+            }
+          },
+          "Previous": {
+            "(1)[FCA CF] Client dealing": {
+              "Customer Engagement Method": "",
+              "Effective Date": "10/02/2020",
+              "End Date": "11/02/2025",
+              "Firm Name": "Barclays Bank Plc",
+              "Name": "[FCA CF] Client dealing",
+              "Restriction": "",
+              "Suspension / Restriction End Date": "",
+              "Suspension / Restriction Start Date": "",
+              "URL": "https://register.fca.org.uk/services/V0.1/Firm/122702"
+            },
+            "(2)[FCA CF] Client dealing": {
+              "Customer Engagement Method": "",
+              "Effective Date": "10/02/2020",
+              "End Date": "11/02/2025",
+              "Firm Name": "Barclays Capital Securities Limited",
+              "Name": "[FCA CF] Client dealing",
+              "Restriction": "",
+              "Suspension / Restriction End Date": "",
+              "Suspension / Restriction Start Date": "",
+              "URL": "https://register.fca.org.uk/services/V0.1/Firm/124431"
+            }
+          }
+        }
+      ],
+      "Message": "Ok. Indiv CF Found",
+      "ResultInfo": {
+        "page": "",
+        "per_page": "",
+        "total_count": "4"
+      },
+      "Status": "FSR-API-03-02-00"
+    }
+  },
+  "headers": {
+    "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
+    "cf-cache-status": "DYNAMIC",
+    "cf-ray": "9be74411fbeb932b-LHR",
+    "connection": "keep-alive",
+    "content-encoding": "gzip",
+    "content-type": "application/json;charset=UTF-8",
+    "date": "Thu, 15 Jan 2026 17:59:16 GMT",
+    "server": "cloudflare",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 17:59:15 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 17:59:15 GMT; Max-Age=31536000; secure",
+    "strict-transport-security": "max-age=63072000; includeSubDomains",
+    "transfer-encoding": "chunked",
+    "vary": "Accept-Encoding",
+    "x-content-type-options": "nosniff"
+  },
+  "request": {
+    "headers": {
+      "accept": "application/json",
+      "accept-encoding": "gzip, deflate",
+      "connection": "keep-alive",
+      "user-agent": "python-httpx/0.28.1",
+      "x-auth-email": "user@example.com",
+      "x-auth-key": "00617470e8144a09"
+    },
+    "params": null,
+    "url": "https://register.fca.org.uk/services/V0.1/Individuals/BXK69703/CF?pgnp=1"
+  },
+  "status_code": 200,
+  "url": "https://register.fca.org.uk/services/V0.1/Individuals/BXK69703/CF?pgnp=1"
+}

@@ -2,60 +2,74 @@
 Usage
 =====
 
-The API client class is :py:class:`~fca_api.api.FinancialServicesRegisterApiClient`. Import it, and create an instance using the signup email, which is the API username, and the API key:
+The library exposes two layers of API clients:
+
+* a **high-level async client** (:py:class:`fca_api.async_api.Client`) that returns typed Pydantic models and handles pagination; and
+* a **low-level raw client** (:py:class:`fca_api.raw_api.RawClient`) that maps closely to the underlying HTTP endpoints and returns thin response wrappers.
+
+In most cases you should use :py:class:`fca_api.async_api.Client`. The raw client is intended for advanced use cases where full control over the HTTP layer or raw payloads is required.
+
+High-level async client
+=======================
+
+The recommended entry point is :py:class:`fca_api.async_api.Client`. It is designed to be used as an async context manager and requires your FCA API username (signup email) and API key:
 
 .. code:: python
 
-   >>> from fca_api.api import FinancialServicesRegisterApiClient
-   >>> client = FinancialServicesRegisterApiClient('<signup email>', '<API key>')
-   >>> client
-   <fca_api.api.FinancialServicesRegisterApiClient at 0x113c10800>
+   import asyncio
+   from fca_api.async_api import Client
 
-Each client instance maintains its own API session state (:py:class:`~fca_api.api.FinancialServicesRegisterApiSession`):
 
-.. code:: python
+   async def main() -> None:
+      async with Client(
+         credentials=("<signup email>", "<API key>"),
+      ) as client:
+         firms = await client.search_frn("revolution")
+         async for firm in firms:
+            print(f"{firm.name} (FRN: {firm.frn})")
 
-   >>> client.api_session
-   <fca_api.api.FinancialServicesRegisterApiSession at 0x113392060>
 
-storing the API username (signup email) and API key. These, and also the API version, are available as properties:
+   if __name__ == "__main__":
+      asyncio.run(main())
 
-.. code:: python
+The high-level client returns rich Pydantic models defined in :mod:`fca_api.types` and uses :class:`fca_api.types.pagination.MultipageList` for all paginated results. See :doc:`../sources/api-reference` for the full API surface.
 
-   >>> client.api_session.api_username
-   '<signup email>'
-   >>> client.api_session.api_key
-   '<API key>'
-   >>> client.api_version
-   'V0.1'
+Low-level raw client
+====================
 
-Almost all public client methods return :py:class:`~fca_api.api.FinancialServicesRegisterApiResponse` objects, which have four properties specific to the API:
+For situations where you want to work directly with the JSON payloads returned by the FCA API, you can use :py:class:`fca_api.raw_api.RawClient`. This client exposes one method per HTTP endpoint and returns :class:`fca_api.raw_api.FcaApiResponse` objects, which wrap an underlying :class:`httpx.Response`.
 
-- :py:attr:`~fca_api.api.FinancialServicesRegisterApiResponse.status` - an API-specific status indicator for the
-  request
-- :py:attr:`~fca_api.api.FinancialServicesRegisterApiResponse.message` - an API-specific status message for the
-  request
-- :py:attr:`~fca_api.api.FinancialServicesRegisterApiResponse.data` - the response data
-- :py:attr:`~fca_api.api.FinancialServicesRegisterApiResponse.resultinfo` - pagination information for the response data
+Each :class:`~fca_api.raw_api.FcaApiResponse` has convenience properties for the four API-specific fields commonly present in responses:
 
-As :py:class:`~fca_api.api.FinancialServicesRegisterApiResponse` is a subclass of :py:class:`requests.Response`, request information can be obtained from the :py:attr:`requests.Response.request` attribute, e.g.
+* :py:attr:`~fca_api.raw_api.FcaApiResponse.fca_api_status` - FCA API status code for the request.
+* :py:attr:`~fca_api.raw_api.FcaApiResponse.message` - human-readable status message.
+* :py:attr:`~fca_api.raw_api.FcaApiResponse.data` - the response payload (usually a mapping or list of mappings).
+* :py:attr:`~fca_api.raw_api.FcaApiResponse.result_info` - pagination metadata when the endpoint is paginated.
 
-.. code:: python
+Example (raw client)::
 
-   >>> res = client.get_firm('805574')
-   >>> res.request
-   <PreparedRequest [GET]>
-   >>> res.request.ok
-   True
-   >>> res.request.headers
-   {'Accept': 'application/json', 'X-Auth-Email': '<API key>', 'X-Auth-Key': '<API username>', 'Cookie': 'CookieConsentPolicy=0:1; LSKey-c$CookieConsentPolicy=0:1'}
+   import asyncio
+   from fca_api.raw_api import RawClient
+
+
+   async def main() -> None:
+      async with RawClient(
+         credentials=("<signup email>", "<API key>"),
+      ) as client:
+         res = await client.get_firm("805574")
+         print(res.fca_api_status, res.message)
+         print(res.data)
+
+
+   if __name__ == "__main__":
+      asyncio.run(main())
 
 .. _usage.common-search:
 
 Common Search
 =============
 
-The common search endpoint can be used via the :py:meth:`~fca_api.api.FinancialServicesRegisterApiClient.common_search()` method to make generic queries for firms, individuals, or funds. It requires two arguments, a resource name (or name substring) to search for, and a resource type which must be one of the following strings: ``"firm"``, ``"individual"``, or ``"fund"``. The method then calls the common search endpoint with a URL-encoded string of the form below:
+The common search HTTP endpoint can be accessed via the low-level :py:meth:`~fca_api.raw_api.RawClient.common_search()` method to make generic queries for firms, individuals, or funds. It requires two arguments, a resource name (or name substring) to search for, and a resource type which must be one of the following strings: ``"firm"``, ``"individual"``, or ``"fund"``. The method then calls the common search endpoint with a URL-encoded string of the form below:
 
 .. code:: bash
 
@@ -67,7 +81,7 @@ Some examples of common search are given below for Barclays Bank Plc.
 
 .. code:: python
 
-   >>> res = client.common_search('barclays bank', 'firm')
+   >>> res = await client.common_search('barclays bank', 'firm')
    >>> res
    <Response [200]>
    >>> res.data
@@ -93,21 +107,21 @@ Here are some further examples of common search for firms, individuals and funds
 
 .. code:: python
 
-   >>> client.common_search('revolut bank', firm').data
+   >>> (await client.common_search('revolut bank', 'firm')).data
    [{'URL': 'https://register.fca.org.uk/services/V0.1/Firm/833790',
      'Status': 'No longer authorised',
      'Reference Number': '833790',
      'Type of business or Individual': 'Firm',
      'Name': 'Revolut Bank UAB'}]
    #
-   >>> client.common_search('mark carney', 'individual').data
+   >>> (await client.common_search('mark carney', 'individual')).data
    [{'URL': 'https://register.fca.org.uk/services/V0.1/Individuals/MXC29012',
      'Status': 'Active',
      'Reference Number': 'MXC29012',
      'Type of business or Individual': 'Individual',
      'Name': 'Mark Carney'}]
    #
-   >>> client.common_search('jupiter asia pacific income', 'fund').data
+   >>> (await client.common_search('jupiter asia pacific income', 'fund')).data
    [{'URL': 'https://register.fca.org.uk/services/V0.1/CIS/635641',
      'Status': 'Recognised',
      'Reference Number': '635641',
@@ -118,7 +132,7 @@ The response data as stored in the :py:attr:`~fca_api.api.FinancialServicesRegis
 
 .. code:: python
 
-   >>> client.common_search('natwest', 'individual').data
+   >>> (await client.common_search('natwest', 'individual')).data
    # Null
 
 .. _usage.regulated-markets:
@@ -126,11 +140,13 @@ The response data as stored in the :py:attr:`~fca_api.api.FinancialServicesRegis
 Regulated Markets
 -----------------
 
-The client implements a `regulated markets <https://www.handbook.fca.org.uk/handbook/glossary/G978.html?date=2007-01-20>`_ search endpoint via the :py:meth:`~fca_api.api.FinancialServicesRegisterApiClient.get_regulated_markets` method:
+The high-level async client implements a `regulated markets <https://www.handbook.fca.org.uk/handbook/glossary/G978.html?date=2007-01-20>`_ search helper via :py:meth:`fca_api.async_api.Client.get_regulated_markets`:
 
 .. code:: python
 
-   >>> c.get_regulated_markets().data
+   >>> markets = await client.get_regulated_markets()
+   >>> len(markets)
+   5
 
    [{'Name': 'The London Metal Exchange',
      'TradingName': '',
@@ -170,24 +186,24 @@ Searching for FRNs, IRNs and PRNs
 
 Generally, firm reference numbers (FRN), individual reference numbers (IRN), and product reference numbers (PRN), may not be known in advance. These can be found via the following client search methods, which return strings in the case of unique matches, or a JSON arrays of matching records if there are non-unique matches:
 
-- :py:meth:`~fca_api.api.FinancialServicesRegisterApiClient.search_frn()` - case-insensitive search for FRNs
-- :py:meth:`~fca_api.api.FinancialServicesRegisterApiClient.search_irn()` - case-insensitive search for IRNs
-- :py:meth:`~fca_api.api.FinancialServicesRegisterApiClient.search_prn()` - case-insensitive search for PRNs
+* :py:meth:`fca_api.async_api.Client.search_frn()` - case-insensitive search for FRNs.
+* :py:meth:`fca_api.async_api.Client.search_irn()` - case-insensitive search for IRNs.
+* :py:meth:`fca_api.async_api.Client.search_prn()` - case-insensitive search for PRNs.
 
-These methods do not directly raise any exceptions, but may indirectly incur the following exceptions: a :py:class:`~fca_api.exceptions.FinancialServicesRegisterApiRequestException` in the case of bad searches, or a :py:class:`~fca_api.exceptions.FinancialServicesRegisterApiResponseException` in the case of non-standard or malformed responses with possibly no data.
+These high-level methods return :class:`fca_api.types.pagination.MultipageList` instances containing typed search result models from :mod:`fca_api.types.search`. On network or API errors they raise exceptions from :mod:`fca_api.exc` (for example :class:`fca_api.exc.FcaRequestError`).
 
 FRNs, IRNs, and PRNs are associated with unique firms, individuals, and funds, respectively, in the Register, whether current or past. The more precise the name substring the more likely is an exact, unique result. Some examples are given below for each type of search, starting with FRNs:
 
 .. code:: python
 
-   >>> client.search_frn('hiscox insurance company limited')
+   >>> await client.search_frn('hiscox insurance company limited')
    '113849'
 
 Imprecise or inadequality specified names in the search can produce non-unique matches, in which all matching records are returned in a JSON array, for example:
 
 .. code:: python
 
-   >>> client.search_frn('hiscox')
+   >>> await client.search_frn('hiscox')
    [{'URL': 'https://register.fca.org.uk/services/V0.1/Firm/812274',
      'Status': 'No longer authorised',
      'Reference Number': '812274',
@@ -202,11 +218,11 @@ Imprecise or inadequality specified names in the search can produce non-unique m
      'Name': 'Hiscox MGA Ltd (Postcode: EC2N 4BQ)'}
    ]
 
-Searches for non-existent firms will trigger an :py:class:`~fca_api.exceptions.FinancialServicesRegisterApiRequestException` indicating that no data found in the Register for the given name:
+Searches for non-existent firms will trigger an exception from :mod:`fca_api.exc` indicating that no data was found in the Register for the given name:
 
 .. code:: python
 
-   >>> client.search_frn('a nonexistent firm')
+   >>> await client.search_frn('a nonexistent firm')
    Traceback (most recent call last):
    ...
    fca_api.api.FinancialServicesRegisterApiResponseException: No data found in FSR API response. Please check the search parameters and try again.
@@ -215,10 +231,10 @@ A few examples are given below of IRN searches.
 
 .. code:: python
 
-   >>> client.search_irn('mark carney')
+   >>> await client.search_irn('mark carney')
    'MXC29012'
    #
-   >>> client.search_irn('mark c')
+   >>> await client.search_irn('mark c')
    [{'URL': 'https://register.fca.org.uk/services/V0.1/Individuals/MWC01033',
      'Status': 'Active',
      'Reference Number': 'MWC01033',
@@ -232,7 +248,7 @@ A few examples are given below of IRN searches.
      'Type of business or Individual': 'Individual',
      'Name': 'Richard Mark Greenfield'}]
    #
-   >>> client.search_irn('a nonexistent individual')
+   >>> await client.search_irn('a nonexistent individual')
    Traceback (most recent call last):
    ...
    fca_api.api.FinancialServicesRegisterApiResponseException: No data found in FSR API response. Please check the search parameters and try again.
@@ -241,10 +257,10 @@ A few examples are given below of PRN searches.
 
 .. code:: python
 
-   >>> client.search_prn('jupiter asia pacific income')
+   >>> await client.search_prn('jupiter asia pacific income')
    '635641'
    #
-   >>> client.search_prn('jupiter asia')
+   >>> await client.search_prn('jupiter asia')
    [{'URL': 'https://register.fca.org.uk/services/V0.1/CIS/718428',
      'Status': 'Authorised',
      'Reference Number': '718428',
@@ -268,93 +284,93 @@ A few examples are given below of PRN searches.
 Firms
 =====
 
-Client methods for firm-specific requests, the associated API endpoints, resource parameters, and returns are summarised in the table below.
+Client methods for firm-specific requests, the associated API endpoints, resource parameters, and high-level return types are summarised in the table below.
 
 .. list-table::
    :align: left
    :widths: 75 75 20 20 20
    :header-rows: 1
 
-   * - Method
-     - API Endpoint
-     - Request Method
-     - Resource Parameters
-     - Return
-   * - :py:meth:`~fca_api.api.FinancialServicesRegisterApiClient.get_firm()`
+    * - Method
+       - API Endpoint
+       - Request Method
+       - Resource Parameters
+       - High-level return type
+    * - :py:meth:`fca_api.async_api.Client.get_firm()`
      - ``/V0.1/Firm/{FRN}``
      - ``GET``
      - FRN (str)
-     - :py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`
-   * - :py:meth:`~fca_api.api.FinancialServicesRegisterApiClient.get_firm_addresses()`
+       - :class:`fca_api.types.firm.FirmDetails`
+    * - :py:meth:`fca_api.async_api.Client.get_firm_addresses()`
      - ``/V0.1/Firm/{FRN}/Address``
      - ``GET``
      - FRN (str)
-     - :py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`
-   * - :py:meth:`~fca_api.api.FinancialServicesRegisterApiClient.get_firm_appointed_representatives()`
+       - :class:`fca_api.types.pagination.MultipageList` of :class:`fca_api.types.firm.FirmAddress`
+    * - :py:meth:`fca_api.async_api.Client.get_firm_appointed_representatives()`
      - ``/V0.1/Firm/{FRN}/AR``
      - ``GET``
      - FRN (str)
-     - :py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`
-   * - :py:meth:`~fca_api.api.FinancialServicesRegisterApiClient.get_firm_controlled_functions()`
+       - :class:`fca_api.types.pagination.MultipageList` of :class:`fca_api.types.firm.FirmAppointedRepresentative`
+    * - :py:meth:`fca_api.async_api.Client.get_firm_controlled_functions()`
      - ``/V0.1/Firm/{FRN}/CF``
      - ``GET``
      - FRN (str)
-     - :py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`
-   * - :py:meth:`~fca_api.api.FinancialServicesRegisterApiClient.get_firm_disciplinary_history()`
+       - :class:`fca_api.types.pagination.MultipageList` of :class:`fca_api.types.firm.FirmControlledFunction`
+    * - :py:meth:`fca_api.async_api.Client.get_firm_disciplinary_history()`
      - ``/V0.1/Firm/{FRN}/DisciplinaryHistory``
      - ``GET``
      - FRN (str)
-     - :py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`
-   * - :py:meth:`~fca_api.api.FinancialServicesRegisterApiClient.get_firm_exclusions()`
+       - :class:`fca_api.types.pagination.MultipageList` of :class:`fca_api.types.firm.FirmDisciplinaryHistory`
+    * - :py:meth:`fca_api.async_api.Client.get_firm_exclusions()`
      - ``/V0.1/Firm/{FRN}/Exclusions``
      - ``GET``
      - FRN (str)
-     - :py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`
-   * - :py:meth:`~fca_api.api.FinancialServicesRegisterApiClient.get_firm_individuals()`
+       - :class:`fca_api.types.pagination.MultipageList` of :class:`fca_api.types.firm.FirmExclusion`
+    * - :py:meth:`fca_api.async_api.Client.get_firm_individuals()`
      - ``/V0.1/Firm/{FRN}/Individuals``
      - ``GET``
      - FRN (str)
-     - :py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`
-   * - :py:meth:`~fca_api.api.FinancialServicesRegisterApiClient.get_firm_names()`
+       - :class:`fca_api.types.pagination.MultipageList` of :class:`fca_api.types.firm.FirmIndividual`
+    * - :py:meth:`fca_api.async_api.Client.get_firm_names()`
      - ``/V0.1/Firm/{FRN}/Names``
      - ``GET``
      - FRN (str)
-     - :py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`
-   * - :py:meth:`~fca_api.api.FinancialServicesRegisterApiClient.get_firm_passports()`
+       - :class:`fca_api.types.pagination.MultipageList` of :class:`fca_api.types.firm.FirmNameAlias`
+    * - :py:meth:`fca_api.async_api.Client.get_firm_passports()`
      - ``/V0.1/Firm/{FRN}/Passports``
      - ``GET``
      - FRN (str)
-     - :py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`
-   * - :py:meth:`~fca_api.api.FinancialServicesRegisterApiClient.get_firm_passport_permissions()`
+       - :class:`fca_api.types.pagination.MultipageList` of :class:`fca_api.types.firm.FirmPassport`
+    * - :py:meth:`fca_api.async_api.Client.get_firm_passport_permissions()`
      - ``/V0.1/Firm/{FRN}/Passports/{Country}/Permission``
      - ``GET``
      - FRN (str), Country (str)
-     - :py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`
-   * - :py:meth:`~fca_api.api.FinancialServicesRegisterApiClient.get_firm_permissions()`
+       - :class:`fca_api.types.pagination.MultipageList` of :class:`fca_api.types.firm.FirmPassportPermission`
+    * - :py:meth:`fca_api.async_api.Client.get_firm_permissions()`
      - ``/V0.1/Firm/{FRN}/Permissions``
      - ``GET``
      - FRN (str)
-     - :py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`
-   * - :py:meth:`~fca_api.api.FinancialServicesRegisterApiClient.get_firm_regulators()`
+       - :class:`fca_api.types.pagination.MultipageList` of :class:`fca_api.types.firm.FirmPermission`
+    * - :py:meth:`fca_api.async_api.Client.get_firm_regulators()`
      - ``/V0.1/Firm/{FRN}/Regulators``
      - ``GET``
      - FRN (str)
-     - :py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`
-   * - :py:meth:`~fca_api.api.FinancialServicesRegisterApiClient.get_firm_requirements()`
+       - :class:`fca_api.types.pagination.MultipageList` of :class:`fca_api.types.firm.FirmRegulator`
+    * - :py:meth:`fca_api.async_api.Client.get_firm_requirements()`
      - ``/V0.1/Firm/{FRN}/Requirements``
      - ``GET``
      - FRN (str)
-     - :py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`
-   * - :py:meth:`~fca_api.api.FinancialServicesRegisterApiClient.get_firm_requirement_investment_types()`
+       - :class:`fca_api.types.pagination.MultipageList` of :class:`fca_api.types.firm.FirmRequirement`
+    * - :py:meth:`fca_api.async_api.Client.get_firm_requirement_investment_types()`
      - ``/V0.1/Firm/{FRN}/Requirements/{ReqRef}/InvestmentTypes``
      - ``GET``
      - FRN (str), Requirement Reference (str)
-     - :py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`
-   * - :py:meth:`~fca_api.api.FinancialServicesRegisterApiClient.get_firm_waivers()`
+       - :class:`fca_api.types.pagination.MultipageList` of :class:`fca_api.types.firm.FirmRequirementInvestmentType`
+    * - :py:meth:`fca_api.async_api.Client.get_firm_waivers()`
      - ``/V0.1/Firm/{FRN}/Waiver``
      - ``GET``
      - FRN (str)
-     - :py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`
+       - :class:`fca_api.types.pagination.MultipageList` of :class:`fca_api.types.firm.FirmWaiver`
 
 Examples are given below for each request type for Barclays Bank Plc (FRN #122702).
 
@@ -479,7 +495,7 @@ Examples are given below for each request type for Barclays Bank Plc (FRN #12270
 
          >>> client.get_firm_exclusions('122702').data
          [{'PSD2_Exclusion_Type': 'Limited Network Exclusion',
-           'Particular_Exclusion_relied_upon': '2(k)(iii) – may be used only to acquire a very limited range of goods or services',
+           'Particular_Exclusion_relied_upon': '2(k)(iii) - may be used only to acquire a very limited range of goods or services',
            'Description_of_services': 'Precision pay Virtual Prepaid - DVLA Service'}]
          #
          >>> client.get_firm_individuals('122702').data
@@ -616,33 +632,33 @@ Examples are given below for each request type for Barclays Bank Plc (FRN #12270
 Individuals
 ===========
 
-Client methods for individual-specific requests, the associated API endpoints, resource parameters, and returns are summarised in the table below.
+Client methods for individual-specific requests, the associated API endpoints, resource parameters, and high-level return types are summarised in the table below.
 
 .. list-table::
    :align: left
    :widths: 75 75 20 20 20
    :header-rows: 1
 
-   * - Method
-     - API Endpoint
-     - Request Method
-     - Parameters
-     - Return
-   * - :py:meth:`~fca_api.api.FinancialServicesRegisterApiClient.get_individual()`
+    * - Method
+       - API Endpoint
+       - Request Method
+       - Parameters
+       - High-level return type
+    * - :py:meth:`fca_api.async_api.Client.get_individual()`
      - ``/V0.1/Individuals/{IRN}``
      - ``GET``
      - IRN (str)
-     - :py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`
-   * - :py:meth:`~fca_api.api.FinancialServicesRegisterApiClient.get_individual_controlled_functions()`
+       - :class:`fca_api.types.individual.IndividualDetails`
+    * - :py:meth:`fca_api.async_api.Client.get_individual_controlled_functions()`
      - ``/V0.1/Individuals/{IRN}/CF``
      - ``GET``
      - IRN (str)
-     - :py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`
-   * - :py:meth:`~fca_api.api.FinancialServicesRegisterApiClient.get_individual_disciplinary_history()`
+       - :class:`fca_api.types.pagination.MultipageList` of :class:`fca_api.types.individual.IndividualControlledFunction`
+    * - :py:meth:`fca_api.async_api.Client.get_individual_disciplinary_history()`
      - ``/V0.1/Individuals/{IRN}/DisciplinaryHistory``
      - ``GET``
      - IRN (str)
-     - :py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`
+       - :class:`fca_api.types.pagination.MultipageList` of :class:`fca_api.types.individual.IndividualDisciplinaryHistory`
 
 Some examples are given below for each type of request for a specific, existing individual, Mark Carney (IRN #MXC29012).
 
@@ -703,33 +719,33 @@ Some examples are given below for each type of request for a specific, existing 
 Funds
 =====
 
-Client methods for fund-specific requests, the associated API endpoints, resource parameters, and returns are summarised in the table below.
+Client methods for fund-specific requests, the associated API endpoints, resource parameters, and high-level return types are summarised in the table below.
 
 .. list-table::
    :align: left
    :widths: 75 75 20 20 20
    :header-rows: 1
 
-   * - Method
-     - API Endpoint
-     - Request Method
-     - Parameters
-     - Return
-   * - :py:meth:`~fca_api.api.FinancialServicesRegisterApiClient.get_fund()`
+    * - Method
+       - API Endpoint
+       - Request Method
+       - Parameters
+       - High-level return type
+    * - :py:meth:`fca_api.async_api.Client.get_fund()`
      - ``/V0.1/CIS/{PRN}``
      - ``GET``
      - PRN (str)
-     - :py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`
-   * - :py:meth:`~fca_api.api.FinancialServicesRegisterApiClient.get_fund_names()`
+       - :class:`fca_api.types.products.ProductDetails`
+    * - :py:meth:`fca_api.async_api.Client.get_fund_names()`
      - ``/V0.1/CIS/{PRN}/Names``
      - ``GET``
      - PRN (str)
-     - :py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`
-   * - :py:meth:`~fca_api.api.FinancialServicesRegisterApiClient.get_fund_subfunds()`
+       - :class:`fca_api.types.pagination.MultipageList` of :class:`fca_api.types.products.ProductNameAlias`
+    * - :py:meth:`fca_api.async_api.Client.get_fund_subfunds()`
      - ``/V0.1/CIS/{PRN}/Subfund``
      - ``GET``
      - PRN (str)
-     - :py:class:`~fca_api.api.FinancialServicesRegisterApiResponse`
+       - :class:`fca_api.types.pagination.MultipageList` of :class:`fca_api.types.products.SubFundDetails`
 
 Some examples are given below for each type of request for a specific, existing fund, abrdn Multi-Asset Fund (PRN #185045).
 

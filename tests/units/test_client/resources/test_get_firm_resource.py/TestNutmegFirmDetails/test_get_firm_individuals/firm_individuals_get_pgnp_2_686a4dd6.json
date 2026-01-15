@@ -1,0 +1,166 @@
+{
+  "content": {
+    "json": {
+      "Data": [
+        {
+          "IRN": "JXM03896",
+          "Name": "James McManus",
+          "Status": "Certified / assessed by firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/JXM03896"
+        },
+        {
+          "IRN": "CXL00322",
+          "Name": "Cullen Clint Larson",
+          "Status": "Certified / assessed by firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/CXL00322"
+        },
+        {
+          "IRN": "MXS00954",
+          "Name": "Matthew Smith",
+          "Status": "Certified / assessed by firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/MXS00954"
+        },
+        {
+          "IRN": "PXH00753",
+          "Name": "Paul Hertzberg",
+          "Status": "Certified / assessed by firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/PXH00753"
+        },
+        {
+          "IRN": "AXA01463",
+          "Name": "Aneeza Ameer",
+          "Status": "Certified / assessed by firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/AXA01463"
+        },
+        {
+          "IRN": "AXL00846",
+          "Name": "Andrew Lee",
+          "Status": "Certified / assessed by firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/AXL00846"
+        },
+        {
+          "IRN": "NXH00534",
+          "Name": "Nicole Hupen-Johnson",
+          "Status": "Certified / assessed by firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/NXH00534"
+        },
+        {
+          "IRN": "CXA00444",
+          "Name": "Christophe W Aba",
+          "Status": "Certified / assessed by firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/CXA00444"
+        },
+        {
+          "IRN": "SXP01135",
+          "Name": "Sudha Paritosh",
+          "Status": "Certified / assessed by firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/SXP01135"
+        },
+        {
+          "IRN": "RSC01110",
+          "Name": "Richard Crozier",
+          "Status": "Certified / assessed by firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RSC01110"
+        },
+        {
+          "IRN": "DXH00972",
+          "Name": "Dominic Howard",
+          "Status": "Certified / assessed by firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/DXH00972"
+        },
+        {
+          "IRN": "CXB00246",
+          "Name": "Claire Louise Exley",
+          "Status": "Certified / assessed by firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/CXB00246"
+        },
+        {
+          "IRN": "SXG00573",
+          "Name": "Scott Gardner",
+          "Status": "Certified / assessed by firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/SXG00573"
+        },
+        {
+          "IRN": "YXY00019",
+          "Name": "Yang Yang",
+          "Status": "Certified / assessed by firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/YXY00019"
+        },
+        {
+          "IRN": "JRC01311",
+          "Name": "Jason Reginald Conan-Davies",
+          "Status": "Certified / assessed by firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/JRC01311"
+        },
+        {
+          "IRN": "LXC01588",
+          "Name": "Lee Cowles",
+          "Status": "Regulatory approval no longer required",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/LXC01588"
+        },
+        {
+          "IRN": "AJC34316",
+          "Name": "Alexa Collinson",
+          "Status": "Regulatory approval no longer required",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/AJC34316"
+        },
+        {
+          "IRN": "SXC01299",
+          "Name": "Stephen Clark",
+          "Status": "Regulatory approval no longer required",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/SXC01299"
+        },
+        {
+          "IRN": "NRA01042",
+          "Name": "Neil Ross Alexander",
+          "Status": "Regulatory approval no longer required",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/NRA01042"
+        },
+        {
+          "IRN": "MXG02692",
+          "Name": "Matthew Gatrell",
+          "Status": "Approved by regulator",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/MXG02692"
+        }
+      ],
+      "Message": "Ok. Firm Individuals found",
+      "ResultInfo": {
+        "Next": "https://register.fca.org.uk/services/V0.1/Firm/552016/Individuals?pgnp=3",
+        "Previous": "https://register.fca.org.uk/services/V0.1/Firm/552016/Individuals?pgnp=1",
+        "page": "2",
+        "per_page": "20",
+        "total_count": "120"
+      },
+      "Status": "FSR-API-02-05-00"
+    }
+  },
+  "headers": {
+    "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
+    "cf-cache-status": "DYNAMIC",
+    "cf-ray": "9be7408f08c3414c-LHR",
+    "connection": "keep-alive",
+    "content-encoding": "gzip",
+    "content-type": "application/json;charset=UTF-8",
+    "date": "Thu, 15 Jan 2026 17:56:52 GMT",
+    "server": "cloudflare",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 17:56:51 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 17:56:51 GMT; Max-Age=31536000; secure",
+    "strict-transport-security": "max-age=63072000; includeSubDomains",
+    "transfer-encoding": "chunked",
+    "vary": "Accept-Encoding",
+    "x-content-type-options": "nosniff"
+  },
+  "request": {
+    "headers": {
+      "accept": "application/json",
+      "accept-encoding": "gzip, deflate",
+      "connection": "keep-alive",
+      "user-agent": "python-httpx/0.28.1",
+      "x-auth-email": "user@example.com",
+      "x-auth-key": "00617470e8144a09"
+    },
+    "params": null,
+    "url": "https://register.fca.org.uk/services/V0.1/Firm/552016/Individuals?pgnp=2"
+  },
+  "status_code": 200,
+  "url": "https://register.fca.org.uk/services/V0.1/Firm/552016/Individuals?pgnp=2"
+}

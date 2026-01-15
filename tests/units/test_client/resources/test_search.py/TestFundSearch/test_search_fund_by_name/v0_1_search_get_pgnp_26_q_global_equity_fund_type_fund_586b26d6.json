@@ -1,0 +1,186 @@
+{
+  "content": {
+    "json": {
+      "Data": [
+        {
+          "Name": "WS ACCESS Global Equity Fund - Capital Group",
+          "Reference Number": "936612",
+          "Status": "Approved",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/936612"
+        },
+        {
+          "Name": "LGPS Central Global Sustainable Equity Active Targeted Fund",
+          "Reference Number": "972240",
+          "Status": "Approved",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/972240"
+        },
+        {
+          "Name": "LGPS Central Global Sustainable Equity Active Thematic Fund",
+          "Reference Number": "972239",
+          "Status": "Approved",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/972239"
+        },
+        {
+          "Name": "LGPS Central Global Sustainable Equity Active Broad Fund",
+          "Reference Number": "972238",
+          "Status": "Approved",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/972238"
+        },
+        {
+          "Name": "Aviva Investors Global Emerging Markets Equity Unconstrained Fund",
+          "Reference Number": "844408",
+          "Status": "Approved",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/844408"
+        },
+        {
+          "Name": "LGPS Central Global Equity Active Multi Manager Fund",
+          "Reference Number": "827670",
+          "Status": "Approved",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/827670"
+        },
+        {
+          "Name": "SCHRODER INTERNATIONAL SELECTION FUND GLOBAL CLIMATE CHANGE EQUITY",
+          "Reference Number": "643310",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/643310"
+        },
+        {
+          "Name": "MARTIN CURRIE IF - GLOBAL EQUITY INCOME FUND",
+          "Reference Number": "641734",
+          "Status": "Terminated",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/641734"
+        },
+        {
+          "Name": "HSBC Global Funds ICAV - Digital Leaders Equity Fund",
+          "Reference Number": "1043199",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1043199"
+        },
+        {
+          "Name": "HSBC Global Funds ICAV - Multi Thematic Equity Fund",
+          "Reference Number": "1043194",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1043194"
+        },
+        {
+          "Name": "HSBC Global Funds ICAV - Multi-Factor EMU Equity Fund",
+          "Reference Number": "1043186",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1043186"
+        },
+        {
+          "Name": "Nordea 2 - BetaPlus Edge Global Sustainable Equity Fund",
+          "Reference Number": "1043170",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1043170"
+        },
+        {
+          "Name": "Invesco Global ex UK Core Equity Index Fund (UK)",
+          "Reference Number": "636747",
+          "Status": "Approved",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/636747"
+        },
+        {
+          "Name": "Border to Coast Global Multi Factor Equity Index Fund",
+          "Reference Number": "1026139",
+          "Status": "Approved",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1026139"
+        },
+        {
+          "Name": "Artemis SmartGARP Global Emerging Markets Ex China Equity Fund",
+          "Reference Number": "1004679",
+          "Status": "Approved",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1004679"
+        },
+        {
+          "Name": "M&G Funds (1) Lazard Global Emerging Markets Equity Fund",
+          "Reference Number": "948675",
+          "Status": "Approved",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/948675"
+        },
+        {
+          "Name": "M&G Funds (1) MFS Global Emerging Markets Equity Fund",
+          "Reference Number": "948676",
+          "Status": "Approved",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/948676"
+        },
+        {
+          "Name": "M&G Funds (1) Invesco Global Emerging Markets Equity Fund",
+          "Reference Number": "948674",
+          "Status": "Approved",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/948674"
+        },
+        {
+          "Name": "M&G Funds (1) GSAM Global Emerging Markets Equity Fund",
+          "Reference Number": "948673",
+          "Status": "Approved",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/948673"
+        },
+        {
+          "Name": "J. Stern & Co. World Stars Global Equity Fund",
+          "Reference Number": "836645",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/836645"
+        }
+      ],
+      "Message": "Ok. Search successful",
+      "ResultInfo": {
+        "Next": "https://register.fca.org.uk/services/V0.1/Search?q=global equity fund&type=fund&pgnp=27",
+        "Previous": "https://register.fca.org.uk/services/V0.1/Search?q=global equity fund&type=fund&pgnp=25",
+        "page": "26",
+        "per_page": "20",
+        "total_count": "577"
+      },
+      "Status": "FSR-API-04-01-00"
+    }
+  },
+  "headers": {
+    "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
+    "cf-cache-status": "DYNAMIC",
+    "cf-ray": "9be745bfaf2888c2-LHR",
+    "connection": "keep-alive",
+    "content-encoding": "gzip",
+    "content-type": "application/json;charset=UTF-8",
+    "date": "Thu, 15 Jan 2026 18:00:24 GMT",
+    "server": "cloudflare",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 18:00:24 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 18:00:24 GMT; Max-Age=31536000; secure",
+    "strict-transport-security": "max-age=63072000; includeSubDomains",
+    "transfer-encoding": "chunked",
+    "vary": "Accept-Encoding",
+    "x-content-type-options": "nosniff"
+  },
+  "request": {
+    "headers": {
+      "accept": "application/json",
+      "accept-encoding": "gzip, deflate",
+      "connection": "keep-alive",
+      "user-agent": "python-httpx/0.28.1",
+      "x-auth-email": "user@example.com",
+      "x-auth-key": "00617470e8144a09"
+    },
+    "params": null,
+    "url": "https://register.fca.org.uk/services/V0.1/Search?q=global+equity+fund&type=fund&pgnp=26"
+  },
+  "status_code": 200,
+  "url": "https://register.fca.org.uk/services/V0.1/Search?q=global+equity+fund&type=fund&pgnp=26"
+}

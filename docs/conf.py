@@ -122,6 +122,9 @@ exclude_patterns = ['_build',
                     'Thumbs.db',
                     '.DS_Store',]
 
+# Suppress specific warnings
+suppress_warnings = ['docutils']
+
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = 'sphinx'
 

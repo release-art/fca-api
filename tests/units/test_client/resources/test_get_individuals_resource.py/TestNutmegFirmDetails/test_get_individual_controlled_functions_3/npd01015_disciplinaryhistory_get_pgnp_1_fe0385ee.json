@@ -1,0 +1,50 @@
+{
+  "content": {
+    "json": {
+      "Data": [
+        {
+          "ActionEffectiveFrom": "23/10/2025",
+          "EnforcementType": "FSMA",
+          "TypeofAction": "Prohibition",
+          "TypeofDescription": "On 13 October 2025, the FCA issued a Final Notice by which it imposed a financial penalty of \u00a3100,281 and a prohibition order against Mr Neil Sedgwick Dwane following his breach of Article 14 of UK MAR. Mr Dwane is no longer approved. https://www.fca.org.uk/publication/final-notices/final-notice-neil-sedgwick-dwane-2025.pdf"
+        }
+      ],
+      "Message": "Ok. Disciplinary history information found",
+      "ResultInfo": {
+        "page": "1",
+        "per_page": "10",
+        "total_count": "1"
+      },
+      "Status": "FSR-API-03-03-00"
+    }
+  },
+  "headers": {
+    "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
+    "cf-cache-status": "DYNAMIC",
+    "cf-ray": "9be744195cdaef58-LHR",
+    "connection": "keep-alive",
+    "content-encoding": "gzip",
+    "content-type": "application/json;charset=UTF-8",
+    "date": "Thu, 15 Jan 2026 17:59:17 GMT",
+    "server": "cloudflare",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 17:59:16 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 17:59:16 GMT; Max-Age=31536000; secure",
+    "strict-transport-security": "max-age=63072000; includeSubDomains",
+    "transfer-encoding": "chunked",
+    "vary": "Accept-Encoding",
+    "x-content-type-options": "nosniff"
+  },
+  "request": {
+    "headers": {
+      "accept": "application/json",
+      "accept-encoding": "gzip, deflate",
+      "connection": "keep-alive",
+      "user-agent": "python-httpx/0.28.1",
+      "x-auth-email": "user@example.com",
+      "x-auth-key": "00617470e8144a09"
+    },
+    "params": null,
+    "url": "https://register.fca.org.uk/services/V0.1/Individuals/NPD01015/DisciplinaryHistory?pgnp=1"
+  },
+  "status_code": 200,
+  "url": "https://register.fca.org.uk/services/V0.1/Individuals/NPD01015/DisciplinaryHistory?pgnp=1"
+}

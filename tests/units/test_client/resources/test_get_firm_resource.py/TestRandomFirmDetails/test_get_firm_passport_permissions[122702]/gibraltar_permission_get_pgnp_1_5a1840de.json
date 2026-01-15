@@ -1,0 +1,376 @@
+{
+  "content": {
+    "json": {
+      "Data": [
+        {
+          "Country": "GIBRALTAR",
+          "Directive": "Banking Consolidation Directive",
+          "PassportDirection": "Passporting Out",
+          "PassportType": "Service",
+          "Permissions": [
+            {
+              "InvestmentTypes": [],
+              "Name": "*  - additional MiFID services and activities subject to mutual recognition under the BCD"
+            },
+            {
+              "InvestmentTypes": [],
+              "Name": "1 - Acceptance of deposits and other repayable funds from the public"
+            },
+            {
+              "InvestmentTypes": [],
+              "Name": "10 - Money broking"
+            },
+            {
+              "InvestmentTypes": [],
+              "Name": "11 - Portfolio management and advice"
+            },
+            {
+              "InvestmentTypes": [],
+              "Name": "12 - Safekeeping and administration of securities"
+            },
+            {
+              "InvestmentTypes": [],
+              "Name": "13 - Credit reference services"
+            },
+            {
+              "InvestmentTypes": [],
+              "Name": "14 - Safe custody services"
+            },
+            {
+              "InvestmentTypes": [],
+              "Name": "15 - Issuing Electronic Money"
+            },
+            {
+              "InvestmentTypes": [],
+              "Name": "2 - Lending including consumer credit, mortgage credit, factoring and financing of commercial transactions"
+            },
+            {
+              "InvestmentTypes": [],
+              "Name": "3 - Financial leasing"
+            },
+            {
+              "InvestmentTypes": [],
+              "Name": "4 - Payment services as defined in Article 4(3) of Directive 2007/64/EC of the European Parliament and of the Council of 13 November 2007 on payment services in the internal market(*)"
+            },
+            {
+              "InvestmentTypes": [],
+              "Name": "5 - Issuing and administering other means of payment (e.g. travellers' cheques and bankers' drafts) insofar as this activity is not covered by point 4"
+            },
+            {
+              "InvestmentTypes": [],
+              "Name": "6 - Guarantees and commitments"
+            },
+            {
+              "InvestmentTypes": [],
+              "Name": "7a - Trading for own account or for account of customers - money market instruments (cheques, bills, CDs etc)"
+            },
+            {
+              "InvestmentTypes": [],
+              "Name": "7b - Trading for own account or for account of customers - foreign exchange"
+            },
+            {
+              "InvestmentTypes": [],
+              "Name": "7c - Trading for own account or for account of customers - financial futures and options"
+            },
+            {
+              "InvestmentTypes": [],
+              "Name": "7d - Trading for own account or for account of customers - exchange and interest rate instruments"
+            },
+            {
+              "InvestmentTypes": [],
+              "Name": "7e - Trading for own account or for account of customers - transferrable securities"
+            },
+            {
+              "InvestmentTypes": [],
+              "Name": "8 - Participation in securities issues and the provision of services related to such issues"
+            },
+            {
+              "InvestmentTypes": [],
+              "Name": "9 - Advice to undertakings on capital structure, industrial strategy and related questions and advice and services relating to mergers and the purchase of undertakings"
+            }
+          ]
+        },
+        {
+          "Country": "GIBRALTAR",
+          "Directive": "Markets in Financial Instruments Directive",
+          "PassportDirection": "Passporting Out",
+          "PassportType": "Service",
+          "Permissions": [
+            {
+              "InvestmentTypes": [
+                "C(1) Transferable securities",
+                "C(10) Other contracts",
+                "C11 \u2013 Emission Allowances",
+                "C(2) Money-market instruments",
+                "C(3) Units in collective investment undertakings",
+                "C(4) Derivatives in Securities, etc",
+                "C(5) Commodities Derivatives - Cash Settled",
+                "C(6) Commodities Derivatives - Physically Settled",
+                "C(7) Non-Commercial commodity Derivatives",
+                "C(8) Derivative instruments for the transfer of credit risk",
+                "C(9) Financial contracts for differences"
+              ],
+              "Name": "A(1) Reception and transmission of orders in relation to one or more financial instruments"
+            },
+            {
+              "InvestmentTypes": [
+                "C(1) Transferable securities",
+                "C(10) Other contracts",
+                "C11 \u2013 Emission Allowances",
+                "C(2) Money-market instruments",
+                "C(3) Units in collective investment undertakings",
+                "C(4) Derivatives in Securities, etc",
+                "C(5) Commodities Derivatives - Cash Settled",
+                "C(6) Commodities Derivatives - Physically Settled",
+                "C(7) Non-Commercial commodity Derivatives",
+                "C(8) Derivative instruments for the transfer of credit risk",
+                "C(9) Financial contracts for differences"
+              ],
+              "Name": "A(2) Execution of orders on behalf of clients"
+            },
+            {
+              "InvestmentTypes": [
+                "C(1) Transferable securities",
+                "C(10) Other contracts",
+                "C11 \u2013 Emission Allowances",
+                "C(2) Money-market instruments",
+                "C(3) Units in collective investment undertakings",
+                "C(4) Derivatives in Securities, etc",
+                "C(5) Commodities Derivatives - Cash Settled",
+                "C(6) Commodities Derivatives - Physically Settled",
+                "C(7) Non-Commercial commodity Derivatives",
+                "C(8) Derivative instruments for the transfer of credit risk",
+                "C(9) Financial contracts for differences"
+              ],
+              "Name": "A(3) Dealing on own account"
+            },
+            {
+              "InvestmentTypes": [
+                "C(1) Transferable securities",
+                "C(10) Other contracts",
+                "C11 \u2013 Emission Allowances",
+                "C(2) Money-market instruments",
+                "C(3) Units in collective investment undertakings",
+                "C(4) Derivatives in Securities, etc",
+                "C(5) Commodities Derivatives - Cash Settled",
+                "C(6) Commodities Derivatives - Physically Settled",
+                "C(7) Non-Commercial commodity Derivatives",
+                "C(8) Derivative instruments for the transfer of credit risk",
+                "C(9) Financial contracts for differences"
+              ],
+              "Name": "A(4) Portfolio management"
+            },
+            {
+              "InvestmentTypes": [
+                "C(1) Transferable securities",
+                "C(10) Other contracts",
+                "C11 \u2013 Emission Allowances",
+                "C(2) Money-market instruments",
+                "C(3) Units in collective investment undertakings",
+                "C(4) Derivatives in Securities, etc",
+                "C(5) Commodities Derivatives - Cash Settled",
+                "C(6) Commodities Derivatives - Physically Settled",
+                "C(7) Non-Commercial commodity Derivatives",
+                "C(8) Derivative instruments for the transfer of credit risk",
+                "C(9) Financial contracts for differences"
+              ],
+              "Name": "A(5) Investment advice"
+            },
+            {
+              "InvestmentTypes": [
+                "C(1) Transferable securities",
+                "C(10) Other contracts",
+                "C11 \u2013 Emission Allowances",
+                "C(2) Money-market instruments",
+                "C(3) Units in collective investment undertakings",
+                "C(4) Derivatives in Securities, etc",
+                "C(5) Commodities Derivatives - Cash Settled",
+                "C(6) Commodities Derivatives - Physically Settled",
+                "C(7) Non-Commercial commodity Derivatives",
+                "C(8) Derivative instruments for the transfer of credit risk",
+                "C(9) Financial contracts for differences"
+              ],
+              "Name": "A(6) Underwriting of financial instruments and/or placing of financial instruments on a firm commitment basis"
+            },
+            {
+              "InvestmentTypes": [
+                "C(1) Transferable securities",
+                "C(10) Other contracts",
+                "C11 \u2013 Emission Allowances",
+                "C(2) Money-market instruments",
+                "C(3) Units in collective investment undertakings",
+                "C(4) Derivatives in Securities, etc",
+                "C(5) Commodities Derivatives - Cash Settled",
+                "C(6) Commodities Derivatives - Physically Settled",
+                "C(7) Non-Commercial commodity Derivatives",
+                "C(8) Derivative instruments for the transfer of credit risk",
+                "C(9) Financial contracts for differences"
+              ],
+              "Name": "A(7) Placing of financial instruments without a firm commitment basis"
+            },
+            {
+              "InvestmentTypes": [
+                "C(1) Transferable securities",
+                "C(10) Other contracts",
+                "C11 \u2013 Emission Allowances",
+                "C(2) Money-market instruments",
+                "C(3) Units in collective investment undertakings",
+                "C(4) Derivatives in Securities, etc",
+                "C(5) Commodities Derivatives - Cash Settled",
+                "C(6) Commodities Derivatives - Physically Settled",
+                "C(7) Non-Commercial commodity Derivatives",
+                "C(8) Derivative instruments for the transfer of credit risk",
+                "C(9) Financial contracts for differences"
+              ],
+              "Name": "B(1) Safekeeping and administration of financial instruments for the account of clients, including custodianship and related services such as cash/collateral management"
+            },
+            {
+              "InvestmentTypes": [
+                "C(1) Transferable securities",
+                "C(10) Other contracts",
+                "C11 \u2013 Emission Allowances",
+                "C(2) Money-market instruments",
+                "C(3) Units in collective investment undertakings",
+                "C(4) Derivatives in Securities, etc",
+                "C(5) Commodities Derivatives - Cash Settled",
+                "C(6) Commodities Derivatives - Physically Settled",
+                "C(7) Non-Commercial commodity Derivatives",
+                "C(8) Derivative instruments for the transfer of credit risk",
+                "C(9) Financial contracts for differences"
+              ],
+              "Name": "B(2) Granting credits or loans to an investor to allow him to carry out a transaction in one or more financial  instruments, where the firm granting the credit or loan is involved in the transaction"
+            },
+            {
+              "InvestmentTypes": [
+                "C(1) Transferable securities",
+                "C(10) Other contracts",
+                "C11 \u2013 Emission Allowances",
+                "C(2) Money-market instruments",
+                "C(3) Units in collective investment undertakings",
+                "C(4) Derivatives in Securities, etc",
+                "C(5) Commodities Derivatives - Cash Settled",
+                "C(6) Commodities Derivatives - Physically Settled",
+                "C(7) Non-Commercial commodity Derivatives",
+                "C(8) Derivative instruments for the transfer of credit risk",
+                "C(9) Financial contracts for differences"
+              ],
+              "Name": "B(3) Advice to undertakings on capital structure, industrial strategy and related matters and advice and services relating to mergers and the purchase of undertakings"
+            },
+            {
+              "InvestmentTypes": [
+                "C(1) Transferable securities",
+                "C(10) Other contracts",
+                "C11 \u2013 Emission Allowances",
+                "C(2) Money-market instruments",
+                "C(3) Units in collective investment undertakings",
+                "C(4) Derivatives in Securities, etc",
+                "C(5) Commodities Derivatives - Cash Settled",
+                "C(6) Commodities Derivatives - Physically Settled",
+                "C(7) Non-Commercial commodity Derivatives",
+                "C(8) Derivative instruments for the transfer of credit risk",
+                "C(9) Financial contracts for differences"
+              ],
+              "Name": "B(4) Foreign exchange services where these are connected to the provision of investment services"
+            },
+            {
+              "InvestmentTypes": [
+                "C(1) Transferable securities",
+                "C(10) Other contracts",
+                "C11 \u2013 Emission Allowances",
+                "C(2) Money-market instruments",
+                "C(3) Units in collective investment undertakings",
+                "C(4) Derivatives in Securities, etc",
+                "C(5) Commodities Derivatives - Cash Settled",
+                "C(6) Commodities Derivatives - Physically Settled",
+                "C(7) Non-Commercial commodity Derivatives",
+                "C(8) Derivative instruments for the transfer of credit risk",
+                "C(9) Financial contracts for differences"
+              ],
+              "Name": "B(5) Investment research and financial analysis or other forms of general recommendation relating to transactions in financial instruments"
+            },
+            {
+              "InvestmentTypes": [
+                "C(1) Transferable securities",
+                "C(10) Other contracts",
+                "C11 \u2013 Emission Allowances",
+                "C(2) Money-market instruments",
+                "C(3) Units in collective investment undertakings",
+                "C(4) Derivatives in Securities, etc",
+                "C(5) Commodities Derivatives - Cash Settled",
+                "C(6) Commodities Derivatives - Physically Settled",
+                "C(7) Non-Commercial commodity Derivatives",
+                "C(8) Derivative instruments for the transfer of credit risk",
+                "C(9) Financial contracts for differences"
+              ],
+              "Name": "B(6) Services related to underwriting"
+            },
+            {
+              "InvestmentTypes": [
+                "C(1) Transferable securities",
+                "C(10) Other contracts",
+                "C11 \u2013 Emission Allowances",
+                "C(2) Money-market instruments",
+                "C(3) Units in collective investment undertakings",
+                "C(4) Derivatives in Securities, etc",
+                "C(5) Commodities Derivatives - Cash Settled",
+                "C(6) Commodities Derivatives - Physically Settled",
+                "C(7) Non-Commercial commodity Derivatives",
+                "C(8) Derivative instruments for the transfer of credit risk",
+                "C(9) Financial contracts for differences"
+              ],
+              "Name": "B(7) Investment services / activities / ancillary services of the type included in Sec. A/ B of Annex 1 related to the underlying of derivatives included under Sec. C - 5, 6, 7 and 10 - where connected to provision of investment or ancillary services"
+            }
+          ]
+        },
+        {
+          "Country": "GIBRALTAR",
+          "Directive": "Insurance Distribution",
+          "PassportDirection": "Passporting Out",
+          "PassportType": "Service",
+          "Permissions": [
+            {
+              "InvestmentTypes": [],
+              "Name": "Insurance Distribution or Reinsurance Distribution"
+            }
+          ]
+        }
+      ],
+      "Message": "Ok. Passport permission found",
+      "ResultInfo": {
+        "page": "1",
+        "per_page": "3",
+        "total_count": "3"
+      },
+      "Status": "FSR-API-02-08-00"
+    }
+  },
+  "headers": {
+    "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
+    "cf-cache-status": "DYNAMIC",
+    "cf-ray": "9be743be6d52bd87-LHR",
+    "connection": "keep-alive",
+    "content-encoding": "gzip",
+    "content-type": "application/json;charset=UTF-8",
+    "date": "Thu, 15 Jan 2026 17:59:02 GMT",
+    "server": "cloudflare",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 17:59:02 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 17:59:02 GMT; Max-Age=31536000; secure",
+    "strict-transport-security": "max-age=63072000; includeSubDomains",
+    "transfer-encoding": "chunked",
+    "vary": "Accept-Encoding",
+    "x-content-type-options": "nosniff"
+  },
+  "request": {
+    "headers": {
+      "accept": "application/json",
+      "accept-encoding": "gzip, deflate",
+      "connection": "keep-alive",
+      "user-agent": "python-httpx/0.28.1",
+      "x-auth-email": "user@example.com",
+      "x-auth-key": "00617470e8144a09"
+    },
+    "params": null,
+    "url": "https://register.fca.org.uk/services/V0.1/Firm/122702/Passports/GIBRALTAR/Permission?pgnp=1"
+  },
+  "status_code": 200,
+  "url": "https://register.fca.org.uk/services/V0.1/Firm/122702/Passports/GIBRALTAR/Permission?pgnp=1"
+}

@@ -1,0 +1,186 @@
+{
+  "content": {
+    "json": {
+      "Data": [
+        {
+          "Name": "Global Core Equity Lower Carbon ESG Screened Fund",
+          "Reference Number": "1035888",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1035888"
+        },
+        {
+          "Name": "State Street ACS Multi-Factor Global Index Equity Fund",
+          "Reference Number": "815240",
+          "Status": "Approved",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/815240"
+        },
+        {
+          "Name": "RBC Funds (Lux) - Global Equity Focus Fund",
+          "Reference Number": "1035210",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1035210"
+        },
+        {
+          "Name": "The Harding Loevner Global Carbon Transition Equity Fund",
+          "Reference Number": "981055",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/981055"
+        },
+        {
+          "Name": "CC&L Q Global Small Cap Equity UCITS Fund",
+          "Reference Number": "1034889",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1034889"
+        },
+        {
+          "Name": "State Street Global Screened Managed Volatility Equity Fund",
+          "Reference Number": "633382",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/633382"
+        },
+        {
+          "Name": "Nomura Funds Ireland - Global Multi-Theme Equity Fund",
+          "Reference Number": "1030838",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1030838"
+        },
+        {
+          "Name": "Nomura Funds Ireland - Global Sustainable Equity Fund",
+          "Reference Number": "1030828",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1030828"
+        },
+        {
+          "Name": "abrdn SICAV II - Global Impact Equity Fund",
+          "Reference Number": "1027760",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1027760"
+        },
+        {
+          "Name": "abrdn SICAV I - Global Sustainable Equity Fund",
+          "Reference Number": "1027699",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1027699"
+        },
+        {
+          "Name": "abrdn SICAV I - Global Innovation Equity Fund",
+          "Reference Number": "1027698",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1027698"
+        },
+        {
+          "Name": "ASHMORE SICAV EMERGING MARKETS GLOBAL SMALL-CAP EQUITY FUND",
+          "Reference Number": "1024755",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1024755"
+        },
+        {
+          "Name": "AI 40:60 Global Equity Index (Custom Screened) Fund",
+          "Reference Number": "780244",
+          "Status": "Approved",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/780244"
+        },
+        {
+          "Name": "LGPS Central Global Equity Dividend Growth Factor Fund",
+          "Reference Number": "801592",
+          "Status": "Approved",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/801592"
+        },
+        {
+          "Name": "LGPS Central Global Ex UK Passive Equity Fund",
+          "Reference Number": "801593",
+          "Status": "Approved",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/801593"
+        },
+        {
+          "Name": "AI 50:50 Global Equity Index (Custom Screened) Fund",
+          "Reference Number": "780243",
+          "Status": "Approved",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/780243"
+        },
+        {
+          "Name": "AI 60:40 Global Equity Index (Custom Screened) Fund",
+          "Reference Number": "780242",
+          "Status": "Approved",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/780242"
+        },
+        {
+          "Name": "MGTS AFH DA Global Emerging Markets Equity Fund",
+          "Reference Number": "785817",
+          "Status": "Approved",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/785817"
+        },
+        {
+          "Name": "TM Natixis Harris Associates Global Concentrated Equity Fund",
+          "Reference Number": "637603",
+          "Status": "Approved",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/637603"
+        },
+        {
+          "Name": "UI I - Montrusco Bolton Global Equity Fund",
+          "Reference Number": "1012687",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1012687"
+        }
+      ],
+      "Message": "Ok. Search successful",
+      "ResultInfo": {
+        "Next": "https://register.fca.org.uk/services/V0.1/Search?q=global equity fund&type=fund&pgnp=26",
+        "Previous": "https://register.fca.org.uk/services/V0.1/Search?q=global equity fund&type=fund&pgnp=24",
+        "page": "25",
+        "per_page": "20",
+        "total_count": "577"
+      },
+      "Status": "FSR-API-04-01-00"
+    }
+  },
+  "headers": {
+    "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
+    "cf-cache-status": "DYNAMIC",
+    "cf-ray": "9be745bd1c9d88c2-LHR",
+    "connection": "keep-alive",
+    "content-encoding": "gzip",
+    "content-type": "application/json;charset=UTF-8",
+    "date": "Thu, 15 Jan 2026 18:00:24 GMT",
+    "server": "cloudflare",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 18:00:23 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 18:00:23 GMT; Max-Age=31536000; secure",
+    "strict-transport-security": "max-age=63072000; includeSubDomains",
+    "transfer-encoding": "chunked",
+    "vary": "Accept-Encoding",
+    "x-content-type-options": "nosniff"
+  },
+  "request": {
+    "headers": {
+      "accept": "application/json",
+      "accept-encoding": "gzip, deflate",
+      "connection": "keep-alive",
+      "user-agent": "python-httpx/0.28.1",
+      "x-auth-email": "user@example.com",
+      "x-auth-key": "00617470e8144a09"
+    },
+    "params": null,
+    "url": "https://register.fca.org.uk/services/V0.1/Search?q=global+equity+fund&type=fund&pgnp=25"
+  },
+  "status_code": 200,
+  "url": "https://register.fca.org.uk/services/V0.1/Search?q=global+equity+fund&type=fund&pgnp=25"
+}

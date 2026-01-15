@@ -1,0 +1,123 @@
+{
+  "content": {
+    "json": {
+      "Data": [
+        {
+          "Rule_ArticleNo": [
+            "CRR Ar 26(2)"
+          ],
+          "Waivers_Discretions": null,
+          "Waivers_Discretions_URL": null
+        },
+        {
+          "Rule_ArticleNo": [
+            "CRR Ar 26(2)"
+          ],
+          "Waivers_Discretions": null,
+          "Waivers_Discretions_URL": null
+        },
+        {
+          "Rule_ArticleNo": [
+            "CRR Ar 363(1)"
+          ],
+          "Waivers_Discretions": null,
+          "Waivers_Discretions_URL": null
+        },
+        {
+          "Rule_ArticleNo": [
+            "CRR Ar 77, Ar 78(1)(b)"
+          ],
+          "Waivers_Discretions": null,
+          "Waivers_Discretions_URL": null
+        },
+        {
+          "Rule_ArticleNo": [
+            "CRR Ar 26(2)"
+          ],
+          "Waivers_Discretions": null,
+          "Waivers_Discretions_URL": null
+        },
+        {
+          "Rule_ArticleNo": [
+            "Perm & Wav - CRR Ru 3.1"
+          ],
+          "Waivers_Discretions": null,
+          "Waivers_Discretions_URL": null
+        },
+        {
+          "Rule_ArticleNo": [
+            "GENPRU 2.1.51",
+            "BIPRU 3.1.1",
+            "BIPRU 8.8",
+            "BIPRU 8.8.1"
+          ],
+          "Waivers_Discretions": "A846179P.pdf",
+          "Waivers_Discretions_URL": "https://register.fca.org.uk/servlet/servlet.FileDownload?file=00Pb0000008iQi0EAE"
+        },
+        {
+          "Rule_ArticleNo": [
+            "BIPRU 6.2.1",
+            "BIPRU 8.8"
+          ],
+          "Waivers_Discretions": "A846183P.pdf",
+          "Waivers_Discretions_URL": "https://register.fca.org.uk/servlet/servlet.FileDownload?file=00Pb0000008iQFCEA2"
+        },
+        {
+          "Rule_ArticleNo": [
+            "CRR Credit Risk N/A",
+            "CRR Credit Risk N/A",
+            "CRR Credit Risk N/A",
+            "CRR Credit Risk Ru 1.2, 3.1, 3.3, 3.4"
+          ],
+          "Waivers_Discretions": "A1979612P.pdf",
+          "Waivers_Discretions_URL": "https://register.fca.org.uk/servlet/servlet.FileDownload?file=00Pb000000S9okyEAB"
+        },
+        {
+          "Rule_ArticleNo": [
+            "Reporting (CRR) Ru 1.2",
+            "Leverage Ratio (CRR) Ru 1.2"
+          ],
+          "Waivers_Discretions": "A4174292P.pdf",
+          "Waivers_Discretions_URL": "https://register.fca.org.uk/servlet/servlet.FileDownload?file=00Pb000000tKqXlEAK"
+        }
+      ],
+      "Message": "Ok. Waiver information found",
+      "ResultInfo": {
+        "Previous": "https://register.fca.org.uk/services/V0.1/Firm/122702/Waivers?pgnp=2",
+        "page": "3",
+        "per_page": "10",
+        "total_count": "30"
+      },
+      "Status": "FSR-API-02-14-00"
+    }
+  },
+  "headers": {
+    "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
+    "cf-cache-status": "DYNAMIC",
+    "cf-ray": "9be743d23ecf5016-LHR",
+    "connection": "keep-alive",
+    "content-encoding": "gzip",
+    "content-type": "application/json;charset=UTF-8",
+    "date": "Thu, 15 Jan 2026 17:59:05 GMT",
+    "server": "cloudflare",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 17:59:05 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 17:59:05 GMT; Max-Age=31536000; secure",
+    "strict-transport-security": "max-age=63072000; includeSubDomains",
+    "transfer-encoding": "chunked",
+    "vary": "Accept-Encoding",
+    "x-content-type-options": "nosniff"
+  },
+  "request": {
+    "headers": {
+      "accept": "application/json",
+      "accept-encoding": "gzip, deflate",
+      "connection": "keep-alive",
+      "user-agent": "python-httpx/0.28.1",
+      "x-auth-email": "user@example.com",
+      "x-auth-key": "00617470e8144a09"
+    },
+    "params": null,
+    "url": "https://register.fca.org.uk/services/V0.1/Firm/122702/Waivers?pgnp=3"
+  },
+  "status_code": 200,
+  "url": "https://register.fca.org.uk/services/V0.1/Firm/122702/Waivers?pgnp=3"
+}

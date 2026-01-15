@@ -1,0 +1,143 @@
+{
+  "content": {
+    "json": {
+      "Data": [
+        {
+          "Name": "Revolution Srl",
+          "Reference Number": "707869",
+          "Status": "No Longer Registered as a PSD Agent",
+          "Type of business or Individual": "Payment services firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Firm/707869"
+        },
+        {
+          "Name": "Revolution Max Ltd (Postcode: BB7 1QJ)",
+          "Reference Number": "710932",
+          "Status": "No longer authorised",
+          "Type of business or Individual": "Firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Firm/710932"
+        },
+        {
+          "Name": "Revolution Car Solutions Limited (Postcode: BA16 9QN)",
+          "Reference Number": "718891",
+          "Status": "Authorised",
+          "Type of business or Individual": "Firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Firm/718891"
+        },
+        {
+          "Name": "Thomas's Cycle Revolution Limited (Postcode: IP3 8ND)",
+          "Reference Number": "720097",
+          "Status": "Authorised",
+          "Type of business or Individual": "Firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Firm/720097"
+        },
+        {
+          "Name": "Revolution Cycles Limited (Postcode: HA4 7BD)",
+          "Reference Number": "726231",
+          "Status": "Authorised",
+          "Type of business or Individual": "Firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Firm/726231"
+        },
+        {
+          "Name": "GIANT U.K. LIMITED (Postcode: LE7 4UZ)",
+          "Reference Number": "729086",
+          "Status": "Authorised",
+          "Type of business or Individual": "Firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Firm/729086"
+        },
+        {
+          "Name": "Revolution Power Ltd (Postcode: DL5 6AY)",
+          "Reference Number": "731406",
+          "Status": "No longer authorised",
+          "Type of business or Individual": "Firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Firm/731406"
+        },
+        {
+          "Name": "Revolution Fuels Ltd (Postcode: TR11 2DS)",
+          "Reference Number": "732612",
+          "Status": "No Longer Registered as a PSD Agent",
+          "Type of business or Individual": "Payment services firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Firm/732612"
+        },
+        {
+          "Name": "The Moving Community Network Ltd (Postcode: RH1 4HW)",
+          "Reference Number": "734325",
+          "Status": "No longer registered as an Appointed Representative",
+          "Type of business or Individual": "Firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Firm/734325"
+        },
+        {
+          "Name": "Revolution Generation Limited (Postcode: BL1 4QR)",
+          "Reference Number": "739688",
+          "Status": "No longer registered as an Appointed Representative",
+          "Type of business or Individual": "Firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Firm/739688"
+        },
+        {
+          "Name": "DD Data Exports Ltd (Postcode: WS13 6LZ)",
+          "Reference Number": "742809",
+          "Status": "No longer authorised",
+          "Type of business or Individual": "Firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Firm/742809"
+        },
+        {
+          "Name": "CAR REVOLUTION LTD (Postcode: NR8 5EF)",
+          "Reference Number": "755390",
+          "Status": "No longer authorised",
+          "Type of business or Individual": "Firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Firm/755390"
+        },
+        {
+          "Name": "Revolution Cars Limited (Postcode: CF72 8HZ)",
+          "Reference Number": "769144",
+          "Status": "No longer authorised",
+          "Type of business or Individual": "Firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Firm/769144"
+        },
+        {
+          "Name": "Solar Revolution North East Ltd (Postcode: SR6 0QA)",
+          "Reference Number": "788237",
+          "Status": "No longer registered as an Appointed Representative",
+          "Type of business or Individual": "Firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Firm/788237"
+        }
+      ],
+      "Message": "Ok. Search successful",
+      "ResultInfo": {
+        "Previous": "https://register.fca.org.uk/services/V0.1/Search?q=revolution&type=firm&pgnp=3",
+        "page": "4",
+        "per_page": "20",
+        "total_count": "74"
+      },
+      "Status": "FSR-API-04-01-00"
+    }
+  },
+  "headers": {
+    "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
+    "cf-cache-status": "DYNAMIC",
+    "cf-ray": "9be7444a8de61520-LHR",
+    "connection": "keep-alive",
+    "content-encoding": "gzip",
+    "content-type": "application/json;charset=UTF-8",
+    "date": "Thu, 15 Jan 2026 17:59:25 GMT",
+    "server": "cloudflare",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 17:59:24 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 17:59:24 GMT; Max-Age=31536000; secure",
+    "strict-transport-security": "max-age=63072000; includeSubDomains",
+    "transfer-encoding": "chunked",
+    "vary": "Accept-Encoding",
+    "x-content-type-options": "nosniff"
+  },
+  "request": {
+    "headers": {
+      "accept": "application/json",
+      "accept-encoding": "gzip, deflate",
+      "connection": "keep-alive",
+      "user-agent": "python-httpx/0.28.1",
+      "x-auth-email": "user@example.com",
+      "x-auth-key": "00617470e8144a09"
+    },
+    "params": null,
+    "url": "https://register.fca.org.uk/services/V0.1/Search?q=revolution&type=firm&pgnp=4"
+  },
+  "status_code": 200,
+  "url": "https://register.fca.org.uk/services/V0.1/Search?q=revolution&type=firm&pgnp=4"
+}
