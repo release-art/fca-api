@@ -23,25 +23,32 @@ a `discussion topic <https://github.com/release-art/fca-api/discussions>`_.
 Repo :fas:`folder`
 ==================
 
-Setting up the project should be fairly simply once you're cloned the repo. A minimum of Python 3.10 is recommended.
+Setting up the project should be straightforward once you have cloned the repository. A minimum of Python 3.11 is required (see ``requires-python`` in ``pyproject.toml``).
 
-It is necessary to have an API username and key from the `FCA developer portal <https://register.fca.org.uk/Developer/ShAPI_LoginPage?ec=302&startURL=%2FDeveloper%2Fs%2F#>`_ first.
+To run examples or tests you will need an API username and key from the `FCA developer portal <https://register.fca.org.uk/Developer/ShAPI_LoginPage?ec=302&startURL=%2FDeveloper%2Fs%2F#>`_.
 
 .. _contributing.dependencies-and-pdm:
 
 Dependencies :fas:`cubes`
 =========================
 
-The only external dependency is `httpx <https://www.python-httpx.org/>`_.
+Runtime dependencies are defined in the ``[project]`` section of ``pyproject.toml``. At the time of writing these are:
 
-Development dependencies are specified in the ``[tool.pdm.dev-dependencies]`` section of the `project TOML <https://github.com/release-art/fca-api/blob/main/pyproject.toml>`_, but these are purely indicative.
+* `httpx <https://www.python-httpx.org/>`_ for asynchronous HTTP communication.
+* `pydantic <https://docs.pydantic.dev/>`_ for data validation and typed models.
+
+Development and tooling dependencies are specified under ``[tool.pdm.dev-dependencies]`` in the `project TOML <https://github.com/release-art/fca-api/blob/main/pyproject.toml>`_.
 
 .. _contributing.tests:
 
 Tests :fas:`microscope`
 =======================
 
-Tests are located in the ``tests`` folder and can be run directly or via there `Makefile <https://github.com/release-art/fca-api/blob/main/Makefile>`_ which provides a ``unittests`` target. Linting is done via Ruff (``make lint``) and there are also doctests (``make doctests``).
+Tests are located in the ``tests`` folder and can be run directly with ``pytest`` or via the `Makefile <https://github.com/release-art/fca-api/blob/main/Makefile>`_, which provides the following targets:
+
+* ``make unittests`` - run the unit test suite with coverage reporting.
+* ``make lint`` - run Ruff over ``src`` and ``tests``.
+* ``make autoformat`` - apply Ruff formatting and autofix lint issues where possible.
 
 
 .. _contributing.documentation:
@@ -49,7 +56,15 @@ Tests are located in the ``tests`` folder and can be run directly or via there `
 Documentation :fas:`book`
 =========================
 
-This documentation site is written, built and deployed using `reStructuredText <https://docutils.sourceforge.io/rst.html>`_, `Sphinx <https://www.sphinx-doc.org/en/master/>`_, and `Read the Docs (RTD) <https://readthedocs.org/>`_ respectively. The Sphinx theme used is `Furo <https://github.com/pradyunsg/furo>`_.
+The documentation is written in `reStructuredText <https://docutils.sourceforge.io/rst.html>`_ and built with `Sphinx <https://www.sphinx-doc.org/en/master/>`_.
+
+HTML documentation is built locally with::
+
+   pdm run doc
+
+which invokes the ``docs`` target in the `Makefile <https://github.com/release-art/fca-api/blob/main/Makefile>`_ and outputs HTML into ``dist/docs/html``.
+
+The Sphinx theme in use is `pydata-sphinx-theme <https://pydata-sphinx-theme.readthedocs.io/>`_.
 
 .. _contributing.ci:
 

@@ -122,4 +122,22 @@ The client accepts either:
 - Defaults to no-op limiter if not provided
 - Implement custom limiters following `LimiterContextT` type
 
+
 When adding new search methods, follow the `_paginated_search` pattern with proper type validation and pagination initialization.
+
+## Documentation Updates
+When adding new modules or types, ensure to update Sphinx docs in `docs/sources/` accordingly, following existing patterns for module documentation.
+
+The sphynx documentation is generated using `pdm run doc` command, which invokes the Makefile target to build the docs. The resulting HTMLs are located in `dist/docs/html/`.
+
+As this is financial software, ensure the appropriate language around compliance and data handling is used in all user-facing documentation.
+
+Do not forget to keep top-level `README.md` and `docs/index.rst` in sync with any major changes to usage or architecture.
+
+Keep docstrings up to date with code changes to maintain high-quality documentation for end users. The docstrings are the primary source of reference for users of this library and should comply to the sphynx syntax.
+
+Do not use:
+    - emojis or informal language in docstrings or documentation.
+    - Long dashes.
+    
+Maintain a professional tone throughout.

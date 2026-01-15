@@ -103,8 +103,8 @@ class Client:
     management, or can be used directly with manual session handling.
 
     Attributes:
-        raw_client (raw.RawClient): Access to the underlying raw API client
-        api_version (str): The API version being used
+        raw_client (raw_api.RawClient): Access to the underlying raw API client.
+        api_version (str): The API version being used.
 
     Example:
         Using as an async context manager::
