@@ -265,3 +265,106 @@ class TestFirmMethods:
                 recv_response.data["CurrentAppointedRepresentatives"],
             ]
         )
+
+    @pytest.mark.asyncio
+    async def test_get_firm_names_with_page_parameter(self, test_client, mock_http_client):
+        """Test get_firm_names with page parameter to cover pagination code path in _get_resource_info."""
+        test_client._api_session = mock_http_client
+        mock_http_client.get.return_value.status_code = 200
+        mock_http_client.get.return_value.is_success = True
+        mock_http_client.get.return_value.reason_phrase = "OK"
+        mock_http_client.get.return_value.json.return_value = {
+            "Status": "FSR-API-02-04-00",
+            "Message": "Ok. Found Brand Names - Request Successful",
+            "Data": [{"Current Names": [{"Name": "Test Firm"}]}],
+        }
+
+        # Call with page parameter to trigger pagination code path
+        result = await test_client.get_firm_names("123456", page=2)
+        assert result.is_success
+        assert result.data
+
+        # Verify the mock was called with correct URL including page parameter
+        mock_http_client.get.assert_called_once()
+        call_args = mock_http_client.get.call_args[0]
+        assert "pgnp=2" in call_args[0]  # Check that page parameter was included
+
+    @pytest.mark.asyncio
+    async def test_get_firm_addresses_with_page_parameter(self, test_client, mock_http_client):
+        """Test get_firm_addresses with page parameter to cover pagination code path in _get_resource_info."""
+        test_client._api_session = mock_http_client
+        mock_http_client.get.return_value.status_code = 200
+        mock_http_client.get.return_value.is_success = True
+        mock_http_client.get.return_value.reason_phrase = "OK"
+        mock_http_client.get.return_value.json.return_value = {
+            "Status": "FSR-API-02-02-00",
+            "Message": "Ok. Firm Address Found - Request Successful",
+            "Data": [{"Address": "Test Address"}],
+        }
+
+        # Call with page parameter to trigger pagination code path
+        result = await test_client.get_firm_addresses("123456", page=1)
+        assert result.is_success
+        assert result.data
+
+        # Verify the mock was called with correct URL including page parameter
+        mock_http_client.get.assert_called_once()
+        call_args = mock_http_client.get.call_args[0]
+        assert "pgnp=1" in call_args[0]  # Check that page parameter was included
+
+    @pytest.mark.asyncio
+    async def test_get_firm_individuals_with_page_parameter(self, test_client, mock_http_client):
+        """Test get_firm_individuals with page parameter to cover pagination code path in _get_resource_info."""
+        test_client._api_session = mock_http_client
+        mock_http_client.get.return_value.status_code = 200
+        mock_http_client.get.return_value.is_success = True
+        mock_http_client.get.return_value.reason_phrase = "OK"
+        mock_http_client.get.return_value.json.return_value = {
+            "Status": "FSR-API-02-05-00",
+            "Message": "Ok. Firm Individuals found - Request Successful",
+            "Data": [{"Name": "Test Individual"}],
+        }
+
+        # Call with page parameter to trigger pagination code path
+        result = await test_client.get_firm_individuals("123456", page=3)
+        assert result.is_success
+        assert result.data
+
+        # Verify the mock was called with correct URL including page parameter
+        mock_http_client.get.assert_called_once()
+        call_args = mock_http_client.get.call_args[0]
+        assert "pgnp=3" in call_args[0]  # Check that page parameter was included
+
+    @pytest.mark.asyncio
+    async def test_get_firm_names_with_fca_error_status_code(self, test_client, mock_http_client):
+        """Test get_firm_names with known FCA error status code to cover error handling path in _get_resource_info."""
+        test_client._api_session = mock_http_client
+        mock_http_client.get.return_value.status_code = 200
+        mock_http_client.get.return_value.is_success = True
+        mock_http_client.get.return_value.reason_phrase = "OK"
+        mock_http_client.get.return_value.json.return_value = {
+            "Status": "FSR-API-02-04-11",  # Known error status code: Brand Name not found
+            "Message": "Brand Name not found - When SOQL returns no record",
+            "Data": None,
+        }
+
+        # This should raise an exception due to the error status code
+        with pytest.raises(fca_api.exc.FcaRequestError, match="API search request failed with FCA API status code"):
+            await test_client.get_firm_names("999999")
+
+    @pytest.mark.asyncio
+    async def test_get_firm_names_with_http_error(self, test_client, mock_http_client):
+        """Test get_firm_names with HTTP error to cover HTTP error handling path in _get_resource_info."""
+        test_client._api_session = mock_http_client
+        mock_http_client.get.return_value.status_code = 500
+        mock_http_client.get.return_value.is_success = False  # This triggers the missing line 417
+        mock_http_client.get.return_value.reason_phrase = "Internal Server Error"
+        mock_http_client.get.return_value.json.return_value = {
+            "Status": "ERROR",
+            "Message": "Internal server error",
+            "Data": None,
+        }
+
+        # This should raise an exception due to HTTP failure
+        with pytest.raises(fca_api.exc.FcaRequestError, match="API search request failed with status code 500"):
+            await test_client.get_firm_names("123456")

@@ -250,3 +250,95 @@ class TestSearchFunctionality:
         assert res.is_success
         assert res.message.lower() == "no search result found"
         assert res.data == []
+
+    @pytest.mark.asyncio
+    async def test_common_search_unknown_fca_status_code_warning(self, test_client, mock_http_client):
+        """Test that unknown FCA API status codes trigger a warning but don't raise an error."""
+        test_client._api_session = mock_http_client
+        mock_http_client.get.return_value.status_code = 200
+        mock_http_client.get.return_value.is_success = True
+        mock_http_client.get.return_value.reason_phrase = "OK"
+        mock_http_client.get.return_value.json.return_value = {
+            "Status": "FSR-API-UNKNOWN-CODE-123",  # Unknown status code
+            "Message": "Success with unknown code",
+            "Data": [{"Name": "Test Result", "Reference Number": "123456"}],
+        }
+
+        # Use pytest.warns to catch and verify the warning
+        with pytest.warns(UserWarning, match="Received unknown FCA API status code: FSR-API-UNKNOWN-CODE-123"):
+            result = await test_client.common_search("test resource", "firm")
+            assert result.is_success
+            assert isinstance(result.data, list)
+            assert len(result.data) == 1
+
+    @pytest.mark.asyncio
+    async def test_search_frn_with_page_parameter(self, test_client, mock_http_client):
+        """Test search_frn with page parameter to cover pagination code path."""
+        test_client._api_session = mock_http_client
+        mock_http_client.get.return_value.status_code = 200
+        mock_http_client.get.return_value.is_success = True
+        mock_http_client.get.return_value.reason_phrase = "OK"
+        mock_http_client.get.return_value.json.return_value = {
+            "Status": "FSR-API-04-01-00",
+            "Message": "Ok. Search successful - Request Successful",
+            "Data": [{"Name": "Test Firm", "Reference Number": "123456"}],
+        }
+
+        # Call with page parameter to trigger pagination code path
+        result = await test_client.search_frn("test firm", page=2)
+        assert result.is_success
+        assert isinstance(result.data, list)
+        assert len(result.data) == 1
+
+        # Verify the mock was called with correct URL including page parameter
+        mock_http_client.get.assert_called_once()
+        call_args = mock_http_client.get.call_args[0]
+        assert "pgnp=2" in call_args[0]  # Check that page parameter was included
+
+    @pytest.mark.asyncio
+    async def test_search_irn_with_page_parameter(self, test_client, mock_http_client):
+        """Test search_irn with page parameter to cover pagination code path."""
+        test_client._api_session = mock_http_client
+        mock_http_client.get.return_value.status_code = 200
+        mock_http_client.get.return_value.is_success = True
+        mock_http_client.get.return_value.reason_phrase = "OK"
+        mock_http_client.get.return_value.json.return_value = {
+            "Status": "FSR-API-04-01-00",
+            "Message": "Ok. Search successful - Request Successful",
+            "Data": [{"Name": "Test Individual", "Reference Number": "ABC123"}],
+        }
+
+        # Call with page parameter to trigger pagination code path
+        result = await test_client.search_irn("test person", page=3)
+        assert result.is_success
+        assert isinstance(result.data, list)
+        assert len(result.data) == 1
+
+        # Verify the mock was called with correct URL including page parameter
+        mock_http_client.get.assert_called_once()
+        call_args = mock_http_client.get.call_args[0]
+        assert "pgnp=3" in call_args[0]  # Check that page parameter was included
+
+    @pytest.mark.asyncio
+    async def test_search_prn_with_page_parameter(self, test_client, mock_http_client):
+        """Test search_prn with page parameter to cover pagination code path."""
+        test_client._api_session = mock_http_client
+        mock_http_client.get.return_value.status_code = 200
+        mock_http_client.get.return_value.is_success = True
+        mock_http_client.get.return_value.reason_phrase = "OK"
+        mock_http_client.get.return_value.json.return_value = {
+            "Status": "FSR-API-04-01-00",
+            "Message": "Ok. Search successful - Request Successful",
+            "Data": [{"Name": "Test Fund", "Reference Number": "PRN123"}],
+        }
+
+        # Call with page parameter to trigger pagination code path
+        result = await test_client.search_prn("test fund", page=1)
+        assert result.is_success
+        assert isinstance(result.data, list)
+        assert len(result.data) == 1
+
+        # Verify the mock was called with correct URL including page parameter
+        mock_http_client.get.assert_called_once()
+        call_args = mock_http_client.get.call_args[0]
+        assert "pgnp=1" in call_args[0]  # Check that page parameter was included
