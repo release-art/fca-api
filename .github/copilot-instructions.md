@@ -5,39 +5,57 @@ This is an async Python client for the UK Financial Conduct Authority's Financia
 - **Raw client** (`src/fca_api/raw.py`): Direct API access with minimal abstraction
 - **High-level client** (`src/fca_api/api.py`): Validated, typed interface with pagination support
 
+The codebase features comprehensive Sphinx-compatible docstrings following Google/NumPy style throughout all user-facing modules, with extensive type hints and usage examples.
+
 ## Architecture Patterns
 
 ### Two-Layer Client Design
 - `raw.RawClient`: Handles HTTP requests, authentication, rate limiting
 - `api.Client`: Wraps raw client with Pydantic validation and pagination
 - Always use `api.Client` for new features unless direct HTTP control is needed
+- Both clients support async context manager pattern with `__aenter__`/`__aexit__`
 
 ### Async-First Design
 - All API methods are `async def` using `httpx.AsyncClient`
-- Use `async with` context managers for client lifecycle
+- Use `async with` context managers for client lifecycle (preferred pattern)
+- Manual session management requires calling `aclose()` for cleanup
 - Test fixtures use `@pytest_asyncio.fixture` for async setup
+
+### Documentation Standards
+- All user-facing code has comprehensive Sphinx-compatible docstrings
+- Follow Google/NumPy docstring style with Args/Returns/Example sections
+- Include usage examples in docstrings for complex patterns
+- Type hints are mandatory for all public APIs
+- Exception handling is documented with Raises sections
 
 ### Custom Pagination System
 - `MultipageList[T]` in `src/fca_api/types/pagination.py` handles lazy-loading API pages
-- Implements `__len__`, `__getitem__`, and `__aiter__` for seamless iteration
-- Call `._asyinc_init()` after creation to fetch first page metadata
+- Implements `__len__`, `__getitem__`, and `__aiter__` for seamless iteration  
+- Call `._async_init()` after creation to fetch first page metadata (note: corrected from typo)
 
 ```python
 # Usage pattern in api.Client methods
-async def search_frn(self, firm_name: str) -> types.pagination.MultipageList[types.api.FirmSearchResult]:
+async def search_frn(self, firm_name: str) -> types.pagination.MultipageList[types.search.FirmSearchResult]:
     out = types.pagination.MultipageList(
         fetch_page=lambda page_idx: self._paginated_search(...)
     )
-    await out._asyinc_init()  # Critical: initializes pagination metadata
+    await out._async_init()  # Critical: initializes pagination metadata
     return out
 ```
+
+### Type System & Validation
+- All types in `src/fca_api/types/` inherit from `pydantic.BaseModel` 
+- Each type defines `_expected_api_version` class attribute for version checking
+- Base classes in `types/base.py` provide common validation patterns
+- Search result types in `types/search.py` for all query responses
+- Use `_check_api_version()` in high-level client methods for version validation
 
 ## Development Workflow
 
 ### Build System: PDM + Make
 - Use `pdm` for dependency management, not pip
-- `bin/test.sh` to run pytest with coverage. You can pass test paths/selectors to it (or any other additional pytest arguments) to restrict or customize the test run.
-<!-- - `make docs` builds Sphinx documentation -->
+- `bin/test.sh` runs pytest with coverage - pass test paths/selectors to restrict runs
+- Makefile handles version extraction and common tasks
 
 ### Sophisticated Testing Infrastructure
 - **Two-tier testing**: `test_raw/` for HTTP layer, `test_client/` for high-level API
@@ -75,12 +93,6 @@ class TestFirmSearch:  # Creates TestFirmSearch/ directory
 - Test both positive (results found) and negative (empty results) scenarios
 - Validate pagination behavior: `len()`, indexing, and `async for` iteration
 - Error testing: HTTP failures, malformed responses, invalid parameters
-
-### Type System
-- All types in `src/fca_api/types/` inherit from `pydantic.BaseModel`
-- Each type defines `_expected_api_version` class attribute
-- Base classes in `types/base.py` provide common validation patterns
-- API response types in `types/api.py` for search results
 
 ## Key Conventions
 
