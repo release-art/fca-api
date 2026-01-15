@@ -547,3 +547,13 @@ class TestRandomFirmDetails:
     async def test_get_firm_exclusions(self, test_client: fca_api.api.Client, frn: str):
         out = await test_client.get_firm_exclusions(frn)
         await out.fetch_all_pages()
+
+    @pytest.mark.asyncio
+    @pytest.mark.parametrize(
+        "frn",
+        LARGE_BANK_FRNS,
+    )
+    async def test_get_firm_disciplinary_history(self, test_client: fca_api.api.Client, frn: str):
+        out = await test_client.get_firm_disciplinary_history(frn)
+        await out.fetch_all_pages()
+        assert len(out) > 1

@@ -507,7 +507,9 @@ class Client:
         await out._async_init()
         return out
 
-    async def get_firm_disciplinary_history(self, frn: str) -> types.pagination.MultipageList[types.firm.FirmDisciplinaryRecord]:
+    async def get_firm_disciplinary_history(
+        self, frn: str
+    ) -> types.pagination.MultipageList[types.firm.FirmDisciplinaryRecord]:
         out = types.pagination.MultipageList(
             fetch_page=PaginatedResponseHandler(
                 lambda page_idx: self._client.get_firm_disciplinary_history(frn, page=page_idx),

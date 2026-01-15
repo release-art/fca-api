@@ -925,5 +925,54 @@ class FirmExclusion(base.Base):
         ),
     ]
 
+
 class FirmDisciplinaryRecord(base.Base):
     """A disciplinary record associated with a firm."""
+
+    type_of_description: Annotated[
+        str,
+        pydantic.Field(
+            description="Description of the disciplinary action taken.",
+            validation_alias=pydantic.AliasChoices("typeofdescription", "type_of_description"),
+            serialization_alias="type_of_description",
+        ),
+        pydantic.StringConstraints(
+            strip_whitespace=True,
+        ),
+    ]
+
+    type_of_action: Annotated[
+        str,
+        pydantic.Field(
+            description="The type of disciplinary action taken.",
+            validation_alias=pydantic.AliasChoices("typeofaction", "type_of_action"),
+            serialization_alias="type_of_action",
+        ),
+        pydantic.StringConstraints(
+            strip_whitespace=True,
+            to_lower=True,
+        ),
+    ]
+
+    enforcement_type: Annotated[
+        str,
+        pydantic.Field(
+            description="The type of enforcement action taken.",
+            validation_alias=pydantic.AliasChoices("enforcementtype", "enforcement_type"),
+            serialization_alias="enforcement_type",
+        ),
+        pydantic.StringConstraints(
+            strip_whitespace=True,
+            to_upper=True,
+        ),
+    ]
+
+    effective_from: Annotated[
+        datetime.datetime,
+        pydantic.Field(
+            description="The date from which the disciplinary action became effective.",
+            validation_alias=pydantic.AliasChoices("actioneffectivefrom", "effective_from"),
+            serialization_alias="effective_from",
+        ),
+        field_parsers.ParseFcaDate,
+    ]

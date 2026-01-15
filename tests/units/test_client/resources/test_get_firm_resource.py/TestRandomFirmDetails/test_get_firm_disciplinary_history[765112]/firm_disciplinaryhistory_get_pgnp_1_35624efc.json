@@ -1,0 +1,56 @@
+{
+  "content": {
+    "json": {
+      "Data": [
+        {
+          "ActionEffectiveFrom": "30/01/2024",
+          "EnforcementType": "FSMA",
+          "TypeofAction": "Fines",
+          "TypeofDescription": "HSBC Bank plc breached PRA Fundamental Rules 2,6,7,8 and Depositor Protection Rules 11,12,14 and 50 HSBC UK Bank plc breached PRA Fundamental Rules 2,6 and Depositor Protection Rules 11,12,14 Both entities were fined a combined \u00a357,417,500 The PRA\u2019s investigation uncovered that there were serious failings at the Firms in relation to the implementation of the DP Rules. The Firms\u2019 failure to organise their affairs responsibly and effectively and to conduct their business with due skill, care and diligence contributed to these failings.\u00a0HBEU failed in its preparations for resolution in respect of DP Rule compliance, and failed to deal with the PRA in an open and co-operative way by reason of it not providing information\u00a0of which the PRA could reasonably have expected notice. See the published Final Notice for more details. https://www.bankofengland.co.uk/-/media/boe/files/prudential-regulation/regulatory-action/final-notice-from-pra-to-hsbc.pdf"
+        },
+        {
+          "ActionEffectiveFrom": "23/05/2024",
+          "EnforcementType": "FSMA",
+          "TypeofAction": "Fines",
+          "TypeofDescription": "On 23 May 2024, the FCA fined HSBC UK Bank plc, HSBC UK Bank plc, Marks and Spencer Financial Services plc (HSBC). The reason for this action is that between 1 June 2017 and 31 October 2018, HSBC breached Principles 3 and 6 of the Authority\u2019s Principles for Businesses, CONC 7.2.1R, 7.3.4R and 7.3.14R from its Consumer Credit sourcebook, and MCOB 13.3.2A from its Mortgages and Home Finance sourcebook for failures in its treatment of customers who were in arrears or experiencing financial difficulty.\u00a0 The FCA\u2019s action took effect on 23 May 2024 and a copy of the Final Notice is displayed on the FCA's web site here: https://www.fca.org.uk/publication/final-notices/hsbc-uk-bank-hsbc-bank-marks-and-spencer-financial-services-2024.pdf"
+        }
+      ],
+      "Message": "Ok. Disciplinary history information found",
+      "ResultInfo": {
+        "page": "1",
+        "per_page": "10",
+        "total_count": "2"
+      },
+      "Status": "FSR-API-02-11-00"
+    }
+  },
+  "headers": {
+    "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
+    "cf-cache-status": "DYNAMIC",
+    "cf-ray": "9be52ccb8f151260-LHR",
+    "connection": "keep-alive",
+    "content-encoding": "gzip",
+    "content-type": "application/json;charset=UTF-8",
+    "date": "Thu, 15 Jan 2026 11:53:51 GMT",
+    "server": "cloudflare",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 11:53:50 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 11:53:50 GMT; Max-Age=31536000; secure",
+    "strict-transport-security": "max-age=63072000; includeSubDomains",
+    "transfer-encoding": "chunked",
+    "vary": "Accept-Encoding",
+    "x-content-type-options": "nosniff"
+  },
+  "request": {
+    "headers": {
+      "accept": "application/json",
+      "accept-encoding": "gzip, deflate",
+      "connection": "keep-alive",
+      "user-agent": "python-httpx/0.28.1",
+      "x-auth-email": "user@example.com",
+      "x-auth-key": "00617470e8144a09"
+    },
+    "params": null,
+    "url": "https://register.fca.org.uk/services/V0.1/Firm/765112/DisciplinaryHistory?pgnp=1"
+  },
+  "status_code": 200,
+  "url": "https://register.fca.org.uk/services/V0.1/Firm/765112/DisciplinaryHistory?pgnp=1"
+}
