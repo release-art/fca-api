@@ -1,5 +1,7 @@
 import pytest
 
+import fca_api
+
 
 class TestFirmMethods:
     @pytest.mark.asyncio
@@ -11,11 +13,12 @@ class TestFirmMethods:
         assert recv_response.data
         assert recv_response.data[0]["Organisation Name"] == "Hiscox Insurance Company Limited"
 
+    @pytest.mark.asyncio
+    async def test_get_firm_failure(self, test_client):
         # Covers the case of a request for the firm details of
         # a non-existent firm
-        recv_response = await test_client.get_firm("1234567890")
-        assert recv_response.is_success
-        assert not recv_response.data
+        with pytest.raises(fca_api.exc.FcaRequestError):
+            await test_client.get_firm("1234567890")
 
     @pytest.mark.asyncio
     async def test_get_firm_names_success(self, test_client):
@@ -27,11 +30,12 @@ class TestFirmMethods:
         assert recv_response.data[0]["Current Names"][0]["Name"] == "Hiscox"
         assert recv_response.data[1]["Previous Names"]
 
+    @pytest.mark.asyncio
+    async def test_get_firm_names_failure(self, test_client):
         # Covers the case of a request for an non-existent firm given by
         # a non-existent FRN 1234567890
-        recv_response = await test_client.get_firm_names("1234567890")
-        assert recv_response.is_success
-        assert not recv_response.data
+        with pytest.raises(fca_api.exc.FcaRequestError):
+            await test_client.get_firm_names("1234567890")
 
     @pytest.mark.asyncio
     async def test_get_firm_addresses_success(self, test_client):
@@ -41,11 +45,12 @@ class TestFirmMethods:
         assert recv_response.is_success
         assert recv_response.data
 
+    @pytest.mark.asyncio
+    async def test_get_firm_addresses_failure(self, test_client):
         # Covers the case of a request for an non-existent firm given by
         # a non-existent FRN 1234567890
-        recv_response = await test_client.get_firm_addresses("1234567890")
-        assert recv_response.is_success
-        assert not recv_response.data
+        with pytest.raises(fca_api.exc.FcaRequestError):
+            await test_client.get_firm_addresses("1234567890")
 
     @pytest.mark.asyncio
     async def test_get_firm_controlled_functions_success(self, test_client):
@@ -55,11 +60,12 @@ class TestFirmMethods:
         assert recv_response.is_success
         assert recv_response.data
 
+    @pytest.mark.asyncio
+    async def test_get_firm_controlled_functions_failure(self, test_client):
         # Covers the case of a request for an non-existent firm given by
         # a non-existent FRN 1234567890
-        recv_response = await test_client.get_firm_controlled_functions("1234567890")
-        assert recv_response.is_success
-        assert not recv_response.data
+        with pytest.raises(fca_api.exc.FcaRequestError):
+            await test_client.get_firm_controlled_functions("1234567890")
 
     @pytest.mark.asyncio
     async def test_get_firm_individuals_success(self, test_client):
@@ -69,11 +75,12 @@ class TestFirmMethods:
         assert recv_response.is_success
         assert recv_response.data
 
+    @pytest.mark.asyncio
+    async def test_get_firm_individuals_failure(self, test_client):
         # Covers the case of a request for an non-existent firm given by
         # a non-existent FRN 1234567890
-        recv_response = await test_client.get_firm_individuals("1234567890")
-        assert recv_response.is_success
-        assert not recv_response.data
+        with pytest.raises(fca_api.exc.FcaRequestError):
+            await test_client.get_firm_individuals("1234567890")
 
     @pytest.mark.asyncio
     async def test_get_firm_permissions_success(self, test_client):
@@ -83,11 +90,12 @@ class TestFirmMethods:
         assert recv_response.is_success
         assert recv_response.data
 
+    @pytest.mark.asyncio
+    async def test_get_firm_permissions_failure(self, test_client):
         # Covers the case of a request for an non-existent firm given by
         # a non-existent FRN 1234567890
-        recv_response = await test_client.get_firm_permissions("1234567890")
-        assert recv_response.is_success
-        assert not recv_response.data
+        with pytest.raises(fca_api.exc.FcaRequestError):
+            await test_client.get_firm_permissions("1234567890")
 
     @pytest.mark.asyncio
     async def test_get_firm_requirements_success(self, test_client):
@@ -97,11 +105,12 @@ class TestFirmMethods:
         assert recv_response.is_success
         assert recv_response.data
 
+    @pytest.mark.asyncio
+    async def test_get_firm_requirements_failure(self, test_client):
         # Covers the case of a request for an non-existent firm given by
         # a non-existent FRN 1234567890
-        recv_response = await test_client.get_firm_requirements("1234567890")
-        assert recv_response.is_success
-        assert not recv_response.data
+        with pytest.raises(fca_api.exc.FcaRequestError):
+            await test_client.get_firm_requirements("1234567890")
 
     @pytest.mark.asyncio
     async def test_get_firm_requirement_investment_types_success(self, test_client):
@@ -111,16 +120,16 @@ class TestFirmMethods:
         assert recv_response.is_success
         assert recv_response.data
 
+    @pytest.mark.asyncio
+    async def test_get_firm_requirement_investment_types_failure(self, test_client):
         # Test with non-existent requirement ID
-        recv_response = await test_client.get_firm_requirement_investment_types("122702", "OR-1234567890")
-        assert recv_response.is_success
-        assert not recv_response.data
+        with pytest.raises(fca_api.exc.FcaRequestError):
+            await test_client.get_firm_requirement_investment_types("122702", "OR-1234567890")
 
         # Covers the case of a request for an non-existent firm given by
         # a non-existent FRN 1234567890
-        recv_response = await test_client.get_firm_requirement_investment_types("1234567890", "OR-0262545")
-        assert recv_response.is_success
-        assert not recv_response.data
+        with pytest.raises(fca_api.exc.FcaRequestError):
+            await test_client.get_firm_requirement_investment_types("1234567890", "OR-0262545")
 
     @pytest.mark.asyncio
     async def test_get_firm_regulators_success(self, test_client):
@@ -130,11 +139,12 @@ class TestFirmMethods:
         assert recv_response.is_success
         assert recv_response.data
 
+    @pytest.mark.asyncio
+    async def test_get_firm_regulators_failure(self, test_client):
         # Covers the case of a request for an non-existent firm given by
         # a non-existent FRN 1234567890
-        recv_response = await test_client.get_firm_regulators("1234567890")
-        assert recv_response.is_success
-        assert not recv_response.data
+        with pytest.raises(fca_api.exc.FcaRequestError):
+            await test_client.get_firm_regulators("1234567890")
 
     @pytest.mark.asyncio
     async def test_get_firm_passports_success(self, test_client):
@@ -144,11 +154,12 @@ class TestFirmMethods:
         assert recv_response.is_success
         assert recv_response.data
 
+    @pytest.mark.asyncio
+    async def test_get_firm_passports_failure(self, test_client):
         # Covers the case of a request for an non-existent firm given by
         # a non-existent FRN 1234567890
-        recv_response = await test_client.get_firm_passports("1234567890")
-        assert recv_response.is_success
-        assert not recv_response.data
+        with pytest.raises(fca_api.exc.FcaRequestError):
+            await test_client.get_firm_passports("1234567890")
 
     @pytest.mark.asyncio
     async def test_get_firm_passport_permissions_success(self, test_client):
@@ -158,34 +169,33 @@ class TestFirmMethods:
         assert recv_response.is_success
         assert recv_response.data
 
-        # Test with country that doesn't have permissions
-        recv_response = await test_client.get_firm_passport_permissions("113849", "Germany")
-        assert recv_response.is_success
-        assert not recv_response.data
+    @pytest.mark.asyncio
+    async def test_get_firm_passport_permissions_failure_no_permissions(self, test_client):
+        # Test with country that doesn't have permissions - this also raises an error
+        with pytest.raises(fca_api.exc.FcaRequestError):
+            await test_client.get_firm_passport_permissions("113849", "Germany")
 
+    @pytest.mark.asyncio
+    async def test_get_firm_passport_permissions_failure(self, test_client):
         # Covers the case of a request for an non-existent firm given by
         # a non-existent FRN 1234567890
-        recv_response = await test_client.get_firm_passport_permissions("1234567890", "Gibraltar")
-        assert recv_response.is_success
-        assert not recv_response.data
+        with pytest.raises(fca_api.exc.FcaRequestError):
+            await test_client.get_firm_passport_permissions("1234567890", "Gibraltar")
 
     @pytest.mark.asyncio
     async def test_get_firm_waivers_success(self, test_client):
         # Covers the case of a request for an existing firm which is
         # Hiscox Insurance Company Limited (FRN 113849)
         recv_response = await test_client.get_firm_waivers("113849")
-        try:
-            assert recv_response.is_success
-            assert recv_response.data
-        except AssertionError:
-            # Some firms may not have waivers
-            pass
+        assert recv_response.is_success
+        # Some firms may not have waivers, so we just check success
 
+    @pytest.mark.asyncio
+    async def test_get_firm_waivers_failure(self, test_client):
         # Covers the case of a request for an non-existent firm given by
         # a non-existent FRN 1234567890
-        recv_response = await test_client.get_firm_waivers("1234567890")
-        assert recv_response.is_success
-        assert not recv_response.data
+        with pytest.raises(fca_api.exc.FcaRequestError):
+            await test_client.get_firm_waivers("1234567890")
 
     @pytest.mark.asyncio
     async def test_get_firm_exclusions_success(self, test_client):
@@ -195,16 +205,18 @@ class TestFirmMethods:
         assert recv_response.is_success
         assert recv_response.data
 
-        # Test with firm that doesn't have exclusions
-        recv_response = await test_client.get_firm_exclusions("113849")
-        assert recv_response.is_success
-        assert not recv_response.data
+    @pytest.mark.asyncio
+    async def test_get_firm_exclusions_failure_no_exclusions(self, test_client):
+        # Test with firm that doesn't have exclusions - this also raises an error
+        with pytest.raises(fca_api.exc.FcaRequestError):
+            await test_client.get_firm_exclusions("113849")
 
+    @pytest.mark.asyncio
+    async def test_get_firm_exclusions_failure(self, test_client):
         # Covers the case of a request for an non-existent firm given by
         # a non-existent FRN 1234567890
-        recv_response = await test_client.get_firm_exclusions("1234567890")
-        assert recv_response.is_success
-        assert not recv_response.data
+        with pytest.raises(fca_api.exc.FcaRequestError):
+            await test_client.get_firm_exclusions("1234567890")
 
     @pytest.mark.asyncio
     async def test_get_firm_disciplinary_history_success(self, test_client):
@@ -214,16 +226,18 @@ class TestFirmMethods:
         assert recv_response.is_success
         assert recv_response.data
 
-        # Test with firm that doesn't have disciplinary history
-        recv_response = await test_client.get_firm_disciplinary_history("113849")
-        assert recv_response.is_success
-        assert not recv_response.data
+    @pytest.mark.asyncio
+    async def test_get_firm_disciplinary_history_failure_no_history(self, test_client):
+        # Test with firm that doesn't have disciplinary history - this also raises an error
+        with pytest.raises(fca_api.exc.FcaRequestError):
+            await test_client.get_firm_disciplinary_history("113849")
 
+    @pytest.mark.asyncio
+    async def test_get_firm_disciplinary_history_failure(self, test_client):
         # Covers the case of a request for an non-existent firm given by
         # a non-existent FRN 1234567890
-        recv_response = await test_client.get_firm_disciplinary_history("1234567890")
-        assert recv_response.is_success
-        assert not recv_response.data
+        with pytest.raises(fca_api.exc.FcaRequestError):
+            await test_client.get_firm_disciplinary_history("1234567890")
 
     @pytest.mark.asyncio
     async def test_get_firm_appointed_representatives_success(self, test_client):
@@ -239,8 +253,10 @@ class TestFirmMethods:
             ]
         )
 
+    @pytest.mark.asyncio
+    async def test_get_firm_appointed_representatives_empty_result(self, test_client):
         # Covers the case of a request for an non-existent firm given by
-        # a non-existent FRN 1234567890
+        # a non-existent FRN 1234567890 - returns empty but doesn't fail
         recv_response = await test_client.get_firm_appointed_representatives("1234567890")
         assert recv_response.is_success
         assert not any(

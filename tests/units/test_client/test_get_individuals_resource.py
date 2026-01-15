@@ -19,3 +19,15 @@ class TestNutmegFirmDetails:
             "status": "certified / assessed by firm",
             "current_roles_and_activities": "https://register.fca.org.uk/services/V0.1/Individuals/BXK69703/CF",
         }
+
+    @pytest.mark.asyncio
+    async def test_get_individual_details(self, test_client: fca_api.api.Client):
+        out = await test_client.get_individual("RBS01054")
+        assert out.model_dump(mode="json") == {
+            "irn": "RBS01054",
+            "full_name": "Bob Seaman",
+            "commonly_used_name": "Bob",
+            "disciplinary_history": "https://register.fca.org.uk/services/V0.1/Individuals/RBS01054/DisciplinaryHistory",
+            "status": "regulatory approval no longer required",
+            "current_roles_and_activities": "https://register.fca.org.uk/services/V0.1/Individuals/RBS01054/CF",
+        }

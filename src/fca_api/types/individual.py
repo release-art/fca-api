@@ -5,7 +5,7 @@ import pydantic
 from . import base, field_parsers
 
 
-class IndividualDetails(base.Base):
+class Individual(base.Base):
     """Individual (physical person) details."""
 
     irn: Annotated[

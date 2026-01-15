@@ -409,9 +409,29 @@ class RawClient:
         try:
             async with self._api_limiter():
                 response = await self.api_session.get(url)
-            return FcaApiResponse(response)
         except httpx.RequestError as e:
             raise exc.FcaRequestError(e) from None
+
+        out = FcaApiResponse(response)
+        if not out.is_success:
+            raise exc.FcaRequestError(
+                f"API search request failed with status code {out.status_code}: "
+                f"{out.reason_phrase}. Please check the search parameters and try again."
+            )
+
+        fca_status_code = out.fca_api_status
+        fca_code_info = raw_status_codes.find_code(fca_status_code)
+        if fca_code_info is None:
+            warnings.warn(
+                f"Received unknown FCA API status code: {fca_status_code}. "
+                "Please ensure that your client is up to date.",
+                stacklevel=2,
+            )
+        elif fca_code_info.is_error:
+            raise exc.FcaRequestError(
+                f"API search request failed with FCA API status code {fca_status_code}: {out.message}"
+            )
+        return out
 
     async def get_firm(self, frn: str) -> FcaApiResponse:
         """:py:class:`~fca_api.raw.FcaApiResponse`:
