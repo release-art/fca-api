@@ -1,6 +1,37 @@
 """High-level Financial Services Register API client.
 
-Performs data validation and transformation on top of the raw API client.
+This module provides the main user-facing interface for interacting with the
+FCA Financial Services Register API. It wraps the low-level raw client to provide:
+
+- **Automatic data validation** using Pydantic models
+- **Pagination handling** with lazy-loading support
+- **Type safety** with comprehensive type hints
+- **Error handling** with meaningful exceptions
+- **Convenient methods** for common API operations
+
+The `Client` class is the primary entry point for most users, offering methods
+for searching firms, individuals, and funds, as well as retrieving detailed
+information about specific entities.
+
+Example:
+    Basic client usage::
+
+        import fca_api.api
+
+        async with fca_api.api.Client(
+            credentials=("email@example.com", "api_key")
+        ) as client:
+            # Search for firms by name
+            firms = await client.search_frn("revolution")
+
+            # Iterate through paginated results
+            async for firm in firms:
+                print(f"{firm.name} (FRN: {firm.frn})")
+
+            # Get detailed firm information
+            if len(firms) > 0:
+                firm_details = await client.get_firm(firms[0].frn)
+                print(f"Status: {firm_details.status}")
 """
 
 import logging
@@ -64,8 +95,44 @@ class PaginatedResponseHandler(typing.Generic[T]):
 class Client:
     """High-level Financial Services Register API client.
 
-    This client wraps the low-level raw client to provide data validation
-    and transformation for easier consumption.
+    This client wraps the low-level raw client to provide data validation,
+    type safety, and convenient pagination handling for the FCA Financial
+    Services Register API.
+
+    The client supports async context manager usage for automatic session
+    management, or can be used directly with manual session handling.
+
+    Attributes:
+        raw_client (raw.RawClient): Access to the underlying raw API client
+        api_version (str): The API version being used
+
+    Example:
+        Using as an async context manager::
+
+            async with Client(
+                credentials=("email@example.com", "api_key")
+            ) as client:
+                results = await client.search_frn("barclays")
+                async for firm in results:
+                    print(firm.name)
+
+        Manual session management::
+
+            client = Client(credentials=("email@example.com", "api_key"))
+            try:
+                results = await client.search_frn("barclays")
+                # Process results...
+            finally:
+                await client.aclose()
+
+    Note:
+        All search methods return `MultipageList` objects that support:
+
+        - Lazy pagination (pages loaded on-demand)
+        - Async iteration with `async for`
+        - Length checking with `len()`
+        - Index access with `[n]`
+        - Manual page fetching with `fetch_all_pages()`
     """
 
     _client: raw.RawClient
@@ -81,9 +148,87 @@ class Client:
         """Initialize the high-level FCA API client.
 
         Args:
-            api_key: The API key to use for authentication.
+            credentials: Authentication credentials. Either:
+                - Tuple of (email, api_key) for automatic session creation
+                - Pre-configured httpx.AsyncClient with auth headers set
+            api_limiter: Optional async context manager for rate limiting.
+                Should be a callable returning an async context manager.
+
+        Example:
+            With email/key tuple::
+
+                client = Client(
+                    credentials=("your.email@example.com", "your_api_key")
+                )
+
+            With pre-configured session::
+
+                session = httpx.AsyncClient(headers={
+                    "X-AUTH-EMAIL": "your.email@example.com",
+                    "X-AUTH-KEY": "your_api_key"
+                })
+                client = Client(credentials=session)
+
+            With rate limiting::
+
+                from asyncio_throttle import Throttler
+                throttler = Throttler(rate_limit=10)  # 10 requests per second
+
+                client = Client(
+                    credentials=("email", "key"),
+                    api_limiter=throttler
+                )
         """
         self._client = raw.RawClient(credentials=credentials, api_limiter=api_limiter)
+
+    async def __aenter__(self) -> "Client":
+        """Async context manager entry.
+
+        Returns:
+            The client instance for use in the async context.
+
+        Example:
+            Using as async context manager::
+
+                async with Client(credentials=("email", "key")) as client:
+                    results = await client.search_frn("test")
+                    async for firm in results:
+                        print(firm.name)
+                # Client automatically closed here
+        """
+        return self
+
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
+        """Async context manager exit.
+
+        Automatically closes the underlying HTTP session when exiting
+        the async context manager.
+
+        Args:
+            exc_type: Exception type (if any)
+            exc_val: Exception value (if any)
+            exc_tb: Exception traceback (if any)
+        """
+        await self.aclose()
+
+    async def aclose(self) -> None:
+        """Close the underlying HTTP session.
+
+        This method should be called when you're finished with the client
+        to properly clean up HTTP connections. When using the client as
+        an async context manager, this is called automatically.
+
+        Example:
+            Manual session management::
+
+                client = Client(credentials=("email", "key"))
+                try:
+                    results = await client.search_frn("test")
+                    # Process results...
+                finally:
+                    await client.aclose()  # Important!
+        """
+        await self._client.api_session.aclose()
 
     @property
     def raw_client(self) -> raw.RawClient:
@@ -109,12 +254,26 @@ class Client:
         page_idx: int,
         result_t: typing.Type[BaseSubclassT],
     ) -> types.pagination.FetchPageRvT[BaseSubclassT]:
-        """Execute a common search-style search with pagination support & validation.
+        """Execute a paginated search with validation.
 
-        Parameters:
-            search_fn: The search function to call (with the page number as an argument).
-            page_idx: The page index to fetch.
-            result_t: The expected type of the result items.
+        This internal method handles the common pattern of paginated search
+        operations by fetching a page, validating the response structure,
+        and converting raw API data to typed model instances.
+
+        Args:
+            search_fn: Async function that performs the actual API search
+                for a given page index.
+            page_idx: The page index to fetch (0-based).
+            result_t: The Pydantic model class to validate each result item.
+
+        Returns:
+            A tuple containing:
+            - PaginatedResultInfo or None (pagination metadata)
+            - List of validated model instances
+
+        Note:
+            This is an internal method used by the public search methods.
+            It should not be called directly by users.
         """
         res = await search_fn(page_idx)
         if res.result_info:
@@ -127,7 +286,42 @@ class Client:
         return (result_info, items)
 
     async def search_frn(self, firm_name: str) -> types.pagination.MultipageList[types.search.FirmSearchResult]:
-        """Search for a firm by its name."""
+        """Search for firms by name.
+
+        Performs a text search across firm names in the Financial Services Register
+        and returns paginated results with automatic validation.
+
+        Args:
+            firm_name: The firm name to search for. Supports partial matches
+                and is case-insensitive.
+
+        Returns:
+            A lazy-loading paginated list of firm search results. Each result
+            contains basic firm information including FRN, name, and status.
+            The list supports async iteration and automatic pagination.
+
+        Example:
+            Search for firms and iterate through results::
+
+                results = await client.search_frn("Barclays")
+                print(f"Found {len(results)} firms")
+
+                async for firm in results:
+                    print(f"{firm.name} (FRN: {firm.frn})")
+                    print(f"Status: {firm.status}")
+
+            Access specific results by index::
+
+                results = await client.search_frn("revolution")
+                if len(results) > 0:
+                    first_firm = results[0]
+                    print(f"First result: {first_firm.name}")
+
+        Note:
+            The search is performed against the FCA's live database and
+            results may change between calls. Large result sets are
+            automatically paginated.
+        """
         out = types.pagination.MultipageList(
             fetch_page=lambda page_idx: self._paginated_search(
                 lambda page_idx: self._client.search_frn(firm_name, page_idx), page_idx, types.search.FirmSearchResult
@@ -139,7 +333,35 @@ class Client:
     async def search_irn(
         self, individual_name: str
     ) -> types.pagination.MultipageList[types.search.IndividualSearchResult]:
-        """Search for an individual by their name."""
+        """Search for individuals by name.
+
+        Performs a text search across individual names in the Financial Services
+        Register and returns paginated results with automatic validation.
+
+        Args:
+            individual_name: The individual name to search for. Supports partial
+                matches and is case-insensitive.
+
+        Returns:
+            A lazy-loading paginated list of individual search results. Each result
+            contains basic individual information including IRN, name, and status.
+            The list supports async iteration and automatic pagination.
+
+        Example:
+            Search for individuals::
+
+                results = await client.search_irn("John Smith")
+                print(f"Found {len(results)} individuals")
+
+                async for individual in results:
+                    print(f"{individual.name} (IRN: {individual.irn})")
+                    print(f"Status: {individual.status}")
+
+        Note:
+            Individual searches may return many results due to common names.
+            Use additional filtering or get detailed individual information
+            to narrow down results.
+        """
         out = types.pagination.MultipageList(
             fetch_page=lambda page_idx: self._paginated_search(
                 lambda page_idx: self._client.search_irn(individual_name, page_idx),
@@ -150,8 +372,35 @@ class Client:
         await out._async_init()
         return out
 
-    async def search_prn(self, fund_name: str) -> types.pagination.MultipageList[types.search.FirmSearchResult]:
-        """Search for a firm by its name."""
+    async def search_prn(self, fund_name: str) -> types.pagination.MultipageList[types.search.FundSearchResult]:
+        """Search for funds by name.
+
+        Performs a text search across fund names in the Financial Services
+        Register and returns paginated results with automatic validation.
+
+        Args:
+            fund_name: The fund name to search for. Supports partial matches
+                and is case-insensitive.
+
+        Returns:
+            A lazy-loading paginated list of fund search results. Each result
+            contains basic fund information including PRN, name, and status.
+            The list supports async iteration and automatic pagination.
+
+        Example:
+            Search for funds::
+
+                results = await client.search_prn("Vanguard")
+                print(f"Found {len(results)} funds")
+
+                async for fund in results:
+                    print(f"{fund.name} (PRN: {fund.prn})")
+                    print(f"Status: {fund.status}")
+
+        Note:
+            Fund searches include various types of collective investment schemes
+            and other financial products registered with the FCA.
+        """
         out = types.pagination.MultipageList(
             fetch_page=lambda page_idx: self._paginated_search(
                 lambda page_idx: self._client.search_prn(fund_name, page_idx), page_idx, types.search.FundSearchResult
@@ -161,13 +410,35 @@ class Client:
         return out
 
     async def get_firm(self, frn: str) -> types.firm.FirmDetails:
-        """Get firm details by FRN.
+        """Get comprehensive firm details by FRN.
+
+        Retrieves detailed information about a specific firm using its
+        Firm Reference Number (FRN).
 
         Args:
-            frn: The firm's FRN.
+            frn: The Firm Reference Number (FRN) of the firm to retrieve.
+                Must be a valid FRN string (typically 6-7 digits).
 
         Returns:
-            The firm's details.
+            Complete firm details including status, permissions, contact
+            information, and regulatory information.
+
+        Raises:
+            AssertionError: If the API response doesn't contain exactly one firm.
+            ValidationError: If the firm data doesn't match expected schema.
+
+        Example:
+            Get detailed firm information::
+
+                firm = await client.get_firm("123456")
+                print(f"Name: {firm.name}")
+                print(f"Status: {firm.status}")
+                print(f"Effective Date: {firm.effective_date}")
+                print(f"Permissions: {len(firm.permissions)}")
+
+        Note:
+            This method requires a valid FRN. Use `search_frn()` first if you
+            only have the firm name.
         """
         res = await self._client.get_firm(frn)
         data = res.data
@@ -394,6 +665,38 @@ class Client:
     async def get_firm_requirement_investment_types(
         self, frn: str, req_ref: str
     ) -> types.pagination.MultipageList[types.firm.FirmRequirementInvestmentType]:
+        """Get investment types for a specific firm requirement.
+
+        Retrieves the investment types associated with a particular firm
+        requirement, identified by its requirement reference.
+
+        Args:
+            frn: The Firm Reference Number (FRN) of the firm.
+            req_ref: The requirement reference identifier.
+
+        Returns:
+            A paginated list of investment types associated with the requirement.
+            Each entry contains details about permitted investment activities.
+
+        Example:
+            Get investment types for a requirement::
+
+                # First get firm requirements
+                requirements = await client.get_firm_requirements("123456")
+                if len(requirements) > 0:
+                    req_ref = requirements[0].requirement_reference
+
+                    # Get investment types for this requirement
+                    investment_types = await client.get_firm_requirement_investment_types(
+                        "123456", req_ref
+                    )
+                    async for inv_type in investment_types:
+                        print(f"Investment Type: {inv_type.investment_type}")
+
+        Note:
+            The req_ref must be obtained from a firm's requirements list.
+            Not all requirements have associated investment types.
+        """
         out = types.pagination.MultipageList(
             fetch_page=PaginatedResponseHandler(
                 lambda page_idx: self._client.get_firm_requirement_investment_types(frn, req_ref, page=page_idx),
@@ -514,6 +817,34 @@ class Client:
     async def get_firm_disciplinary_history(
         self, frn: str
     ) -> types.pagination.MultipageList[types.firm.FirmDisciplinaryRecord]:
+        """Get disciplinary history records for a firm.
+
+        Retrieves all disciplinary actions, warnings, and regulatory measures
+        taken against the firm by the FCA or other regulatory bodies.
+
+        Args:
+            frn: The Firm Reference Number (FRN) of the firm.
+
+        Returns:
+            A paginated list of disciplinary records including dates, types
+            of action, and details of regulatory measures.
+
+        Example:
+            Review a firm's disciplinary history::
+
+                disciplinary_records = await client.get_firm_disciplinary_history("123456")
+                if len(disciplinary_records) > 0:
+                    async for record in disciplinary_records:
+                        print(f"Date: {record.date}")
+                        print(f"Action: {record.action_type}")
+                        print(f"Details: {record.details}")
+                else:
+                    print("No disciplinary history found")
+
+        Note:
+            An empty result indicates the firm has no recorded disciplinary
+            actions, which is common for many firms.
+        """
         out = types.pagination.MultipageList(
             fetch_page=PaginatedResponseHandler(
                 lambda page_idx: self._client.get_firm_disciplinary_history(frn, page=page_idx),
@@ -611,13 +942,32 @@ class Client:
     async def get_individual_controlled_functions(
         self, irn: str
     ) -> types.pagination.MultipageList[types.individual.IndividualControlledFunction]:
-        """Get individual details by IRN.
+        """Get controlled functions for an individual.
+
+        Retrieves all controlled functions (senior management functions and
+        certification functions) held by an individual across all firms.
 
         Args:
-            irn: The individual's IRN.
+            irn: The Individual Reference Number (IRN) of the individual.
 
         Returns:
-            The individual's details.
+            A paginated list of controlled functions including function types,
+            associated firms, and status information.
+
+        Example:
+            Review an individual's controlled functions::
+
+                functions = await client.get_individual_controlled_functions("ABC123")
+                async for function in functions:
+                    print(f"Function: {function.function_name}")
+                    print(f"Firm: {function.firm_name}")
+                    print(f"Status: {function.status}")
+                    print(f"Start Date: {function.start_date}")
+
+        Note:
+            Controlled functions are key regulatory roles that require FCA
+            approval. This includes roles like CEO, CFO, compliance officers,
+            and customer-facing roles.
         """
         out = types.pagination.MultipageList(
             fetch_page=PaginatedResponseHandler(
@@ -631,6 +981,35 @@ class Client:
     async def get_individual_disciplinary_history(
         self, irn: str
     ) -> types.pagination.MultipageList[types.individual.IndividualDisciplinaryRecord]:
+        """Get disciplinary history records for an individual.
+
+        Retrieves all disciplinary actions, warnings, and regulatory measures
+        taken against the individual by the FCA or other regulatory bodies.
+
+        Args:
+            irn: The Individual Reference Number (IRN) of the individual.
+
+        Returns:
+            A paginated list of disciplinary records including dates, types
+            of action, details, and outcomes of regulatory measures.
+
+        Example:
+            Check an individual's disciplinary history::
+
+                records = await client.get_individual_disciplinary_history("ABC123")
+                if len(records) > 0:
+                    async for record in records:
+                        print(f"Date: {record.date}")
+                        print(f"Action: {record.action_type}")
+                        print(f"Outcome: {record.outcome}")
+                else:
+                    print("No disciplinary history found")
+
+        Note:
+            An empty result indicates the individual has no recorded
+            disciplinary actions. Disciplinary records can affect an
+            individual's ability to perform regulated activities.
+        """
         out = types.pagination.MultipageList(
             fetch_page=PaginatedResponseHandler(
                 lambda page_idx: self._client.get_individual_disciplinary_history(irn, page=page_idx),
