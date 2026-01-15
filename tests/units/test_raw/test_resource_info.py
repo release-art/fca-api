@@ -1,6 +1,7 @@
 import httpx
 import pytest
 
+import fca_api
 from fca_api.exc import (
     FcaRequestError,
 )
@@ -64,13 +65,62 @@ class TestResourceInfoFunctionality:
         assert recv_response.data
         assert recv_response.data[0]["Organisation Name"] == "Hiscox Insurance Company Limited"
 
+    @pytest.mark.asyncio
+    async def test_get_firm_resource_info_failure(self, test_client):
         # Covers the case of a request for an non-existent firm given by
         # a non-existent FRN 1234567890
-        recv_response = await test_client._get_resource_info("1234567890", "firm")
-        assert recv_response.is_success
-        assert not recv_response.data
+        with pytest.raises(fca_api.exc.FcaRequestError):
+            await test_client._get_resource_info("1234567890", "firm")
 
-        # Test various modifiers for firm resource info
+    @pytest.mark.asyncio
+    async def test_get_firm_resource_info_modifiers_success(self, test_client):
+        # Test various modifiers for firm resource info with existing firm
+        # Only test modifiers that are expected to succeed for this firm
+        modifiers_to_test = [
+            ("Names",),
+            ("Address",),
+            ("CF",),
+            ("Individuals",),
+            ("Permissions",),
+            ("Regulators",),
+            ("Passports",),
+            ("AR",),
+        ]
+
+        for modifier in modifiers_to_test:
+            # Test with existing firm
+            recv_response = await test_client._get_resource_info("113849", "firm", modifiers=modifier)
+            assert recv_response.is_success
+
+    @pytest.mark.asyncio
+    async def test_get_firm_resource_info_modifiers_success_requirements(self, test_client):
+        # Test requirements modifier that returns data for firm 113849
+        recv_response = await test_client._get_resource_info("113849", "firm", modifiers=("Requirements",))
+        assert recv_response.is_success
+        assert recv_response.data  # This firm actually has requirements data
+
+    @pytest.mark.asyncio
+    async def test_get_firm_resource_info_modifiers_success_waivers(self, test_client):
+        # Test waivers modifier that returns data for firm 113849
+        recv_response = await test_client._get_resource_info("113849", "firm", modifiers=("Waivers",))
+        assert recv_response.is_success
+        assert recv_response.data  # This firm has waivers data
+
+    @pytest.mark.asyncio
+    async def test_get_firm_resource_info_modifiers_failure_disciplinary_history(self, test_client):
+        # Test disciplinary history modifier that fails for firm 113849 (no disciplinary history)
+        with pytest.raises(fca_api.exc.FcaRequestError):
+            recv_response = await test_client._get_resource_info("113849", "firm", modifiers=("DisciplinaryHistory",))
+
+    @pytest.mark.asyncio
+    async def test_get_firm_resource_info_modifiers_failure_exclusions(self, test_client):
+        # Test exclusions modifier that fails for firm 113849 (no exclusions data)
+        with pytest.raises(fca_api.exc.FcaRequestError):
+            recv_response = await test_client._get_resource_info("113849", "firm", modifiers=("Exclusions",))
+
+    @pytest.mark.asyncio
+    async def test_get_firm_resource_info_modifiers_failure(self, test_client):
+        # Test various modifiers for firm resource info with non-existent firm
         modifiers_to_test = [
             ("Names",),
             ("Address",),
@@ -83,23 +133,20 @@ class TestResourceInfoFunctionality:
             ("Waivers",),
             ("Exclusions",),
             ("DisciplinaryHistory",),
-            ("AR",),
         ]
 
         for modifier in modifiers_to_test:
-            # Test with existing firm
-            recv_response = await test_client._get_resource_info("113849", "firm", modifiers=modifier)
-            assert recv_response.is_success
+            # Test with non-existent firm - should raise exception
+            with pytest.raises(fca_api.exc.FcaRequestError):
+                await test_client._get_resource_info("1234567890", "firm", modifiers=modifier)
 
-            # Test with non-existent firm
-            recv_response = await test_client._get_resource_info("1234567890", "firm", modifiers=modifier)
-            assert recv_response.is_success
-            if modifier[0] == "AR":
-                # Special case for appointed representatives
-                assert not recv_response.data["PreviousAppointedRepresentatives"]
-                assert not recv_response.data["CurrentAppointedRepresentatives"]
-            else:
-                assert not recv_response.data
+    @pytest.mark.asyncio
+    async def test_get_firm_resource_info_ar_modifier_empty_result(self, test_client):
+        # Special case for appointed representatives - returns empty but doesn't fail
+        recv_response = await test_client._get_resource_info("1234567890", "firm", modifiers=("AR",))
+        assert recv_response.is_success
+        assert not recv_response.data["PreviousAppointedRepresentatives"]
+        assert not recv_response.data["CurrentAppointedRepresentatives"]
 
     @pytest.mark.asyncio
     async def test_get_fund_resource_info_success(self, test_client):
@@ -109,13 +156,16 @@ class TestResourceInfoFunctionality:
         assert recv_response.is_success
         assert recv_response.data
 
+    @pytest.mark.asyncio
+    async def test_get_fund_resource_info_failure(self, test_client):
         # Covers the case of a request for an non-existent fund given by
         # a non-existent PRN 1234567890
-        recv_response = await test_client._get_resource_info("1234567890", "fund")
-        assert recv_response.is_success
-        assert not recv_response.data
+        with pytest.raises(fca_api.exc.FcaRequestError):
+            await test_client._get_resource_info("1234567890", "fund")
 
-        # Test fund modifiers
+    @pytest.mark.asyncio
+    async def test_get_fund_resource_info_modifiers_success(self, test_client):
+        # Test fund modifiers with existing fund
         fund_modifiers = [("Subfund",), ("Names",)]
 
         for modifier in fund_modifiers:
@@ -123,10 +173,18 @@ class TestResourceInfoFunctionality:
             recv_response = await test_client._get_resource_info("185045", "fund", modifiers=modifier)
             assert recv_response.is_success
 
-            # Test with non-existent fund
-            recv_response = await test_client._get_resource_info("1234567890", "fund", modifiers=modifier)
-            assert recv_response.is_success
-            assert not recv_response.data
+    @pytest.mark.asyncio
+    async def test_get_fund_resource_info_modifiers_failure_nonexistent_names(self, test_client):
+        # Test fund Names modifier with non-existent fund - raises exception
+        with pytest.raises(fca_api.exc.FcaRequestError):
+            await test_client._get_resource_info("1234567890", "fund", modifiers=("Names",))
+
+    @pytest.mark.asyncio
+    async def test_get_fund_resource_info_modifiers_empty_result_subfund(self, test_client):
+        # Test fund Subfund modifier with non-existent fund - returns empty data
+        recv_response = await test_client._get_resource_info("1234567890", "fund", modifiers=("Subfund",))
+        assert recv_response.is_success
+        assert not recv_response.data
 
     @pytest.mark.asyncio
     async def test_get_individual_resource_info_success(self, test_client):
@@ -137,20 +195,38 @@ class TestResourceInfoFunctionality:
         assert recv_response.data
         assert recv_response.data[0]["Details"]["Full Name"] == "Mark Carney"
 
+    @pytest.mark.asyncio
+    async def test_get_individual_resource_info_failure(self, test_client):
         # Covers the case of a request for an non-existent individual
-        recv_response = await test_client._get_resource_info("1234567890", "individual")
-        assert recv_response.is_success
-        assert not recv_response.data
+        with pytest.raises(fca_api.exc.FcaRequestError):
+            await test_client._get_resource_info("1234567890", "individual")
 
-        # Test individual modifiers
-        individual_modifiers = [("CF",), ("DisciplinaryHistory",)]
+    @pytest.mark.asyncio
+    async def test_get_individual_resource_info_modifiers_success(self, test_client):
+        # Test individual modifiers with existing individual
+        # Only test modifiers that work for Mark Carney
+        individual_modifiers = [("CF",)]
 
         for modifier in individual_modifiers:
             # Test with existing individual
             recv_response = await test_client._get_resource_info("MXC29012", "individual", modifiers=modifier)
             assert recv_response.is_success
 
-            # Test with non-existent individual
-            recv_response = await test_client._get_resource_info("1234567890", "individual", modifiers=modifier)
+    @pytest.mark.asyncio
+    async def test_get_individual_resource_info_modifiers_failure_no_data(self, test_client):
+        # Test disciplinary history modifier that fails for Mark Carney (no disciplinary history)
+        with pytest.raises(fca_api.exc.FcaRequestError):
+            recv_response = await test_client._get_resource_info(
+                "MXC29012", "individual", modifiers=("DisciplinaryHistory",)
+            )
             assert recv_response.is_success
-            assert not recv_response.data
+
+    @pytest.mark.asyncio
+    async def test_get_individual_resource_info_modifiers_failure(self, test_client):
+        # Test individual modifiers with non-existent individual
+        individual_modifiers = [("CF",), ("DisciplinaryHistory",)]
+
+        for modifier in individual_modifiers:
+            # Test with non-existent individual - should raise exception
+            with pytest.raises(fca_api.exc.FcaRequestError):
+                await test_client._get_resource_info("1234567890", "individual", modifiers=modifier)

@@ -1,6 +1,7 @@
 """A library of known raw status codes from the FCA API."""
 
 import dataclasses
+import warnings
 
 
 @dataclasses.dataclass(frozen=True, slots=True, kw_only=True)
@@ -335,6 +336,55 @@ ALL_KNOWN_CODES: tuple[Code, ...] = (
         is_error=True,
         description="Bad request. Invalid Input - Search Parameter has random string like * or '",
     ),
+    # Firm Appointed Representatives
+    Code(
+        value="FSR-API-05-04-00",
+        is_error=False,
+        description="Ok. Appointed Representative Found",
+    ),
+    Code(
+        value="FSR-API-05-04-21",
+        is_error=True,
+        description="Bad Request: Invalid Input",
+    ),
+    Code(
+        value="FSR-API-05-04-11",
+        is_error=True,
+        description="Appointed Representative not found",
+    ),
+    Code(
+        value="FSR-API-02-07-22",
+        is_error=False,
+        description="Page Not Found",
+    ),
+    # Get Fund details
+    Code(
+        value="FSR-API-05-01-00",
+        is_error=False,
+        description="Ok. Product Found",
+    ),
+    Code(
+        value="FSR-API-05-01-11",
+        is_error=True,
+        description="Product not found",
+    ),
+    # Get subfund details
+    Code(
+        value="FSR-API-05-03-00",
+        is_error=False,
+        description="Ok. Sub Fund Found",
+    ),
+    # Product other name
+    Code(
+        value="FSR-API-05-02-00",
+        is_error=False,
+        description="Ok. Product Other Name Found",
+    ),
+    Code(
+        value="FSR-API-05-02-11",
+        is_error=True,
+        description="Product Other Name not found",
+    ),
     # Generic Error Messages
     Code(
         value="FSR-API-99-01-01",
@@ -364,4 +414,7 @@ def find_code(value: str) -> Code | None:
         return None
     elif not isinstance(value, str):
         raise TypeError(f"Value must be a string. Got: {value!r}")
-    return ALL_KNOWN_CODES_DICT.get(value.lower().strip(), None)
+    out = ALL_KNOWN_CODES_DICT.get(value.lower().strip(), None)
+    if out is None:
+        warnings.warn(f"Unknown FCA API status code encountered: {value!r}", UserWarning, stacklevel=2)
+    return out
