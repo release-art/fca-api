@@ -3,6 +3,76 @@
     "json": {
       "Data": [
         {
+          "Name": "UBS Global Enhanced Equity Income Fund",
+          "Reference Number": "663079",
+          "Status": "Approved",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/663079"
+        },
+        {
+          "Name": "Vanguard Global Capital Stewards Equity Fund",
+          "Reference Number": "964709",
+          "Status": "Approved",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/964709"
+        },
+        {
+          "Name": "Royal London Global Equity Enhanced Fund",
+          "Reference Number": "1035720",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1035720"
+        },
+        {
+          "Name": "Royal London Global Equity Transitions Fund",
+          "Reference Number": "1035719",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1035719"
+        },
+        {
+          "Name": "VT Vanneck Global Equity Income Fund",
+          "Reference Number": "613235",
+          "Status": "Authorised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/613235"
+        },
+        {
+          "Name": "GLOBAL HIGH DIVIDEND VALUE EQUITY FUND",
+          "Reference Number": "1034908",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1034908"
+        },
+        {
+          "Name": "CC&L Q Global Equity UCITS Fund",
+          "Reference Number": "1034890",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1034890"
+        },
+        {
+          "Name": "Stonehage Global best Ideas Equity Fund",
+          "Reference Number": "1034837",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1034837"
+        },
+        {
+          "Name": "State Street Multi-Factor Global Equity Fund",
+          "Reference Number": "654513",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/654513"
+        },
+        {
+          "Name": "Capital Group Global Equity Fund (LUX)",
+          "Reference Number": "1033750",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1033750"
+        },
+        {
           "Name": "TCW Global Artificial Intelligence Equity Fund",
           "Reference Number": "1033054",
           "Status": "Recognised",
@@ -71,76 +141,6 @@
           "Status": "Recognised",
           "Type of business or Individual": "Collective investment scheme",
           "URL": "https://register.fca.org.uk/services/V0.1/CIS/1028867"
-        },
-        {
-          "Name": "GLOBAL EMERGING MARKETS EQUITY UNCONSTRAINED FUND",
-          "Reference Number": "1028051",
-          "Status": "Recognised",
-          "Type of business or Individual": "Collective investment scheme",
-          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1028051"
-        },
-        {
-          "Name": "VT Asset Intelligence Global Equity Fund",
-          "Reference Number": "1026138",
-          "Status": "Approved",
-          "Type of business or Individual": "Collective investment scheme",
-          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1026138"
-        },
-        {
-          "Name": "Lockhart Asset Management Global Equity Fund",
-          "Reference Number": "1020899",
-          "Status": "Recognised",
-          "Type of business or Individual": "Collective investment scheme",
-          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1020899"
-        },
-        {
-          "Name": "CCLA Better World Global Equity Fund",
-          "Reference Number": "969186",
-          "Status": "Approved",
-          "Type of business or Individual": "Collective investment scheme",
-          "URL": "https://register.fca.org.uk/services/V0.1/CIS/969186"
-        },
-        {
-          "Name": "Liontrust MA Global Equity Income Fund",
-          "Reference Number": "784882",
-          "Status": "Approved",
-          "Type of business or Individual": "Collective investment scheme",
-          "URL": "https://register.fca.org.uk/services/V0.1/CIS/784882"
-        },
-        {
-          "Name": "ACS 60:40 Global Equity Tracker Fund",
-          "Reference Number": "786802",
-          "Status": "Approved",
-          "Type of business or Individual": "Collective investment scheme",
-          "URL": "https://register.fca.org.uk/services/V0.1/CIS/786802"
-        },
-        {
-          "Name": "Quilter Investors Global Dynamic Equity Fund",
-          "Reference Number": "634584",
-          "Status": "Approved",
-          "Type of business or Individual": "Collective investment scheme",
-          "URL": "https://register.fca.org.uk/services/V0.1/CIS/634584"
-        },
-        {
-          "Name": "Quilter Investors Global Unconstrained Equity Fund",
-          "Reference Number": "634579",
-          "Status": "Approved",
-          "Type of business or Individual": "Collective investment scheme",
-          "URL": "https://register.fca.org.uk/services/V0.1/CIS/634579"
-        },
-        {
-          "Name": "WS Canlife Global Equity Income Fund",
-          "Reference Number": "646377",
-          "Status": "Approved",
-          "Type of business or Individual": "Collective investment scheme",
-          "URL": "https://register.fca.org.uk/services/V0.1/CIS/646377"
-        },
-        {
-          "Name": "FTF ClearBridge Global Equity Income Fund",
-          "Reference Number": "634446",
-          "Status": "Approved",
-          "Type of business or Individual": "Collective investment scheme",
-          "URL": "https://register.fca.org.uk/services/V0.1/CIS/634446"
         }
       ],
       "Message": "Ok. Search successful",
@@ -149,7 +149,7 @@
         "Previous": "https://register.fca.org.uk/services/V0.1/Search?q=global equity fund&type=fund&pgnp=15",
         "page": "16",
         "per_page": "20",
-        "total_count": "572"
+        "total_count": "577"
       },
       "Status": "FSR-API-04-01-00"
     }
@@ -157,13 +157,13 @@
   "headers": {
     "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
     "cf-cache-status": "DYNAMIC",
-    "cf-ray": "9bcbd5465c738c31-LHR",
+    "cf-ray": "9be745a38ac088c2-LHR",
     "connection": "keep-alive",
     "content-encoding": "gzip",
     "content-type": "application/json;charset=UTF-8",
-    "date": "Mon, 12 Jan 2026 10:05:02 GMT",
+    "date": "Thu, 15 Jan 2026 18:00:20 GMT",
     "server": "cloudflare",
-    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Tue, 12-Jan-2027 10:05:01 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Tue, 12-Jan-2027 10:05:01 GMT; Max-Age=31536000; secure",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 18:00:19 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 18:00:19 GMT; Max-Age=31536000; secure",
     "strict-transport-security": "max-age=63072000; includeSubDomains",
     "transfer-encoding": "chunked",
     "vary": "Accept-Encoding",

@@ -3,6 +3,13 @@
     "json": {
       "Data": [
         {
+          "Name": "Motorplus Limited (Postcode: NR1 3PA)",
+          "Reference Number": "309657",
+          "Status": "Authorised",
+          "Type of business or Individual": "Firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Firm/309657"
+        },
+        {
           "Name": "Columbus Insurance Services Limited (Postcode: RH16 1DN)",
           "Reference Number": "311897",
           "Status": "No longer authorised",
@@ -134,13 +141,6 @@
           "Status": "Authorised",
           "Type of business or Individual": "Firm",
           "URL": "https://register.fca.org.uk/services/V0.1/Firm/700055"
-        },
-        {
-          "Name": "Revolution Srl",
-          "Reference Number": "707869",
-          "Status": "No Longer Registered as a PSD Agent",
-          "Type of business or Individual": "Payment services firm",
-          "URL": "https://register.fca.org.uk/services/V0.1/Firm/707869"
         }
       ],
       "Message": "Ok. Search successful",
@@ -149,7 +149,7 @@
         "Previous": "https://register.fca.org.uk/services/V0.1/Search?q=revolution&type=firm&pgnp=2",
         "page": "3",
         "per_page": "20",
-        "total_count": "73"
+        "total_count": "74"
       },
       "Status": "FSR-API-04-01-00"
     }
@@ -157,13 +157,13 @@
   "headers": {
     "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
     "cf-cache-status": "DYNAMIC",
-    "cf-ray": "9bcba575cda09db0-LHR",
+    "cf-ray": "9be744434b231520-LHR",
     "connection": "keep-alive",
     "content-encoding": "gzip",
     "content-type": "application/json;charset=UTF-8",
-    "date": "Mon, 12 Jan 2026 09:32:24 GMT",
+    "date": "Thu, 15 Jan 2026 17:59:24 GMT",
     "server": "cloudflare",
-    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Tue, 12-Jan-2027 09:32:23 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Tue, 12-Jan-2027 09:32:23 GMT; Max-Age=31536000; secure",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 17:59:23 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 17:59:23 GMT; Max-Age=31536000; secure",
     "strict-transport-security": "max-age=63072000; includeSubDomains",
     "transfer-encoding": "chunked",
     "vary": "Accept-Encoding",

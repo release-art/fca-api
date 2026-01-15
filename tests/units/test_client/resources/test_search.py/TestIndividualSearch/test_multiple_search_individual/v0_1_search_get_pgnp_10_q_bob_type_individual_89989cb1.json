@@ -3,6 +3,13 @@
     "json": {
       "Data": [
         {
+          "Name": "Robert Emmet De Groot",
+          "Reference Number": "RED01050",
+          "Status": "Regulatory approval no longer required",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RED01050"
+        },
+        {
           "Name": "Robert Cliff",
           "Reference Number": "BXC78430",
           "Status": "Active",
@@ -31,6 +38,13 @@
           "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RPB00041"
         },
         {
+          "Name": "Robert Graham Dench",
+          "Reference Number": "RGD01025",
+          "Status": "Regulatory approval no longer required",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RGD01025"
+        },
+        {
           "Name": "Robert Bidwell Bibow",
           "Reference Number": "RBB01026",
           "Status": "Regulatory approval no longer required",
@@ -52,18 +66,18 @@
           "URL": "https://register.fca.org.uk/services/V0.1/Individuals/JXT01655"
         },
         {
-          "Name": "Robert Bou-Simon",
-          "Reference Number": "RXB01783",
-          "Status": "Regulatory approval no longer required",
-          "Type of business or Individual": "Individual",
-          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RXB01783"
-        },
-        {
           "Name": "Ian Robert Farrington",
           "Reference Number": "IRF00007",
           "Status": "Active",
           "Type of business or Individual": "Individual",
           "URL": "https://register.fca.org.uk/services/V0.1/Individuals/IRF00007"
+        },
+        {
+          "Name": "Robert Bou-Simon",
+          "Reference Number": "RXB01783",
+          "Status": "Regulatory approval no longer required",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RXB01783"
         },
         {
           "Name": "Robert Bullivant",
@@ -87,18 +101,18 @@
           "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RAS01119"
         },
         {
-          "Name": "Robert Fredrick Barker",
-          "Reference Number": "RFB01064",
-          "Status": "Regulatory approval no longer required",
-          "Type of business or Individual": "Individual",
-          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RFB01064"
-        },
-        {
           "Name": "Robert Francis Roach",
           "Reference Number": "RFR01024",
           "Status": "Regulatory approval no longer required",
           "Type of business or Individual": "Individual",
           "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RFR01024"
+        },
+        {
+          "Name": "Robert Fredrick Barker",
+          "Reference Number": "RFB01064",
+          "Status": "Regulatory approval no longer required",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RFB01064"
         },
         {
           "Name": "Robert William Snowdon",
@@ -127,20 +141,6 @@
           "Status": "Active",
           "Type of business or Individual": "Individual",
           "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RXE01385"
-        },
-        {
-          "Name": "Robert Nicholas Barrett",
-          "Reference Number": "RNB01069",
-          "Status": "Regulatory approval no longer required",
-          "Type of business or Individual": "Individual",
-          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RNB01069"
-        },
-        {
-          "Name": "Robert Forbes Fairbairn",
-          "Reference Number": "RFF00008",
-          "Status": "Active",
-          "Type of business or Individual": "Individual",
-          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RFF00008"
         }
       ],
       "Message": "Ok. Search successful",
@@ -149,7 +149,7 @@
         "Previous": "https://register.fca.org.uk/services/V0.1/Search?q=bob&type=individual&pgnp=9",
         "page": "10",
         "per_page": "20",
-        "total_count": "1123"
+        "total_count": "1124"
       },
       "Status": "FSR-API-04-01-00"
     }
@@ -157,13 +157,13 @@
   "headers": {
     "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
     "cf-cache-status": "DYNAMIC",
-    "cf-ray": "9bcba7155d76ecdb-LHR",
+    "cf-ray": "9be74482ebecb16b-LHR",
     "connection": "keep-alive",
     "content-encoding": "gzip",
     "content-type": "application/json;charset=UTF-8",
-    "date": "Mon, 12 Jan 2026 09:33:30 GMT",
+    "date": "Thu, 15 Jan 2026 17:59:34 GMT",
     "server": "cloudflare",
-    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Tue, 12-Jan-2027 09:33:29 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Tue, 12-Jan-2027 09:33:29 GMT; Max-Age=31536000; secure",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 17:59:33 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 17:59:33 GMT; Max-Age=31536000; secure",
     "strict-transport-security": "max-age=63072000; includeSubDomains",
     "transfer-encoding": "chunked",
     "vary": "Accept-Encoding",

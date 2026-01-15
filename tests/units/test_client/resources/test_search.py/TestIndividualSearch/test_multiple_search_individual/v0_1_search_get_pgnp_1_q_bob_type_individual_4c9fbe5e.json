@@ -148,7 +148,7 @@
         "Next": "https://register.fca.org.uk/services/V0.1/Search?q=bob&type=individual&pgnp=2",
         "page": "1",
         "per_page": "20",
-        "total_count": "1123"
+        "total_count": "1124"
       },
       "Status": "FSR-API-04-01-00"
     }
@@ -156,13 +156,13 @@
   "headers": {
     "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
     "cf-cache-status": "DYNAMIC",
-    "cf-ray": "9bcba6e31d5aecdb-LHR",
+    "cf-ray": "9be74451dc23b16b-LHR",
     "connection": "keep-alive",
     "content-encoding": "gzip",
     "content-type": "application/json;charset=UTF-8",
-    "date": "Mon, 12 Jan 2026 09:33:23 GMT",
+    "date": "Thu, 15 Jan 2026 17:59:27 GMT",
     "server": "cloudflare",
-    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Tue, 12-Jan-2027 09:33:21 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Tue, 12-Jan-2027 09:33:21 GMT; Max-Age=31536000; secure",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 17:59:25 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 17:59:25 GMT; Max-Age=31536000; secure",
     "strict-transport-security": "max-age=63072000; includeSubDomains",
     "transfer-encoding": "chunked",
     "vary": "Accept-Encoding",

@@ -115,18 +115,18 @@
           "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RWH01073"
         },
         {
-          "Name": "Robert Mark Ratcliffe",
-          "Reference Number": "RMR01037",
-          "Status": "Regulatory approval no longer required",
-          "Type of business or Individual": "Individual",
-          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RMR01037"
-        },
-        {
           "Name": "Robert Andrew Stevenson",
           "Reference Number": "RAS01195",
           "Status": "Regulatory approval no longer required",
           "Type of business or Individual": "Individual",
           "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RAS01195"
+        },
+        {
+          "Name": "Robert Mark Ratcliffe",
+          "Reference Number": "RMR01037",
+          "Status": "Regulatory approval no longer required",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RMR01037"
         },
         {
           "Name": "Robert MacKenzie Tanner",
@@ -149,7 +149,7 @@
         "Previous": "https://register.fca.org.uk/services/V0.1/Search?q=bob&type=individual&pgnp=23",
         "page": "24",
         "per_page": "20",
-        "total_count": "1123"
+        "total_count": "1124"
       },
       "Status": "FSR-API-04-01-00"
     }
@@ -157,13 +157,13 @@
   "headers": {
     "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
     "cf-cache-status": "DYNAMIC",
-    "cf-ray": "9bcba75edc78ecdb-LHR",
+    "cf-ray": "9be744c94b4db16b-LHR",
     "connection": "keep-alive",
     "content-encoding": "gzip",
     "content-type": "application/json;charset=UTF-8",
-    "date": "Mon, 12 Jan 2026 09:33:42 GMT",
+    "date": "Thu, 15 Jan 2026 17:59:45 GMT",
     "server": "cloudflare",
-    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Tue, 12-Jan-2027 09:33:41 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Tue, 12-Jan-2027 09:33:41 GMT; Max-Age=31536000; secure",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 17:59:44 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 17:59:44 GMT; Max-Age=31536000; secure",
     "strict-transport-security": "max-age=63072000; includeSubDomains",
     "transfer-encoding": "chunked",
     "vary": "Accept-Encoding",

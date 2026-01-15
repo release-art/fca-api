@@ -3,11 +3,11 @@
     "json": {
       "Data": [
         {
-          "Name": "Jupiter Global Value Equity Fund",
-          "Reference Number": "802323",
-          "Status": "Authorised",
+          "Name": "INVESCO GLOBAL EQUITY FUND",
+          "Reference Number": "1042043",
+          "Status": "Recognised",
           "Type of business or Individual": "Collective investment scheme",
-          "URL": "https://register.fca.org.uk/services/V0.1/CIS/802323"
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1042043"
         },
         {
           "Name": "Global Equity Fund",
@@ -15,6 +15,13 @@
           "Status": "Recognised",
           "Type of business or Individual": "Collective investment scheme",
           "URL": "https://register.fca.org.uk/services/V0.1/CIS/1048436"
+        },
+        {
+          "Name": "Jupiter Global Value Equity Fund",
+          "Reference Number": "802323",
+          "Status": "Authorised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/802323"
         },
         {
           "Name": "GLOBAL EQUITY FUND",
@@ -87,6 +94,13 @@
           "URL": "https://register.fca.org.uk/services/V0.1/CIS/796185"
         },
         {
+          "Name": "Schroder Global Equity Fund",
+          "Reference Number": "141036",
+          "Status": "Authorised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/141036"
+        },
+        {
           "Name": "Invesco Global Equity Income Advantage Fund",
           "Reference Number": "1042065",
           "Status": "Recognised",
@@ -99,20 +113,6 @@
           "Status": "Approved",
           "Type of business or Individual": "Collective investment scheme",
           "URL": "https://register.fca.org.uk/services/V0.1/CIS/805924"
-        },
-        {
-          "Name": "Schroder Global Equity Fund",
-          "Reference Number": "141036",
-          "Status": "Authorised",
-          "Type of business or Individual": "Collective investment scheme",
-          "URL": "https://register.fca.org.uk/services/V0.1/CIS/141036"
-        },
-        {
-          "Name": "SCHRODER GLOBAL EQUITY INCOME FUND",
-          "Reference Number": "462470",
-          "Status": "Authorised",
-          "Type of business or Individual": "Collective investment scheme",
-          "URL": "https://register.fca.org.uk/services/V0.1/CIS/462470"
         },
         {
           "Name": "Vanguard Global Equity Fund",
@@ -149,7 +149,7 @@
         "Previous": "https://register.fca.org.uk/services/V0.1/Search?q=global equity fund&type=fund&pgnp=1",
         "page": "2",
         "per_page": "20",
-        "total_count": "572"
+        "total_count": "577"
       },
       "Status": "FSR-API-04-01-00"
     }
@@ -157,13 +157,13 @@
   "headers": {
     "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
     "cf-cache-status": "DYNAMIC",
-    "cf-ray": "9bcbd51bdf9b8c31-LHR",
+    "cf-ray": "9be7457bbcf088c2-LHR",
     "connection": "keep-alive",
     "content-encoding": "gzip",
     "content-type": "application/json;charset=UTF-8",
-    "date": "Mon, 12 Jan 2026 10:04:55 GMT",
+    "date": "Thu, 15 Jan 2026 18:00:13 GMT",
     "server": "cloudflare",
-    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Tue, 12-Jan-2027 10:04:55 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Tue, 12-Jan-2027 10:04:55 GMT; Max-Age=31536000; secure",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 18:00:13 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 18:00:13 GMT; Max-Age=31536000; secure",
     "strict-transport-security": "max-age=63072000; includeSubDomains",
     "transfer-encoding": "chunked",
     "vary": "Accept-Encoding",

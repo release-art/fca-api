@@ -3,6 +3,48 @@
     "json": {
       "Data": [
         {
+          "Name": "FP Vinculum Global Equity Fund",
+          "Reference Number": "644995",
+          "Status": "Terminated",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/644995"
+        },
+        {
+          "Name": "GLOBAL EMERGING MARKETS EQUITY FUND",
+          "Reference Number": "634581",
+          "Status": "Terminated",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/634581"
+        },
+        {
+          "Name": "UBS GLOBAL EQUITY MANAGED FUND",
+          "Reference Number": "634552",
+          "Status": "Terminated",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/634552"
+        },
+        {
+          "Name": "GLOBAL EX UK EQUITY FUND",
+          "Reference Number": "633857",
+          "Status": "Terminated",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/633857"
+        },
+        {
+          "Name": "ALLIANZ CUSTOMISED GLOBAL EQUITY FUND",
+          "Reference Number": "639369",
+          "Status": "Terminated",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/639369"
+        },
+        {
+          "Name": "GARTMORE GLOBAL EQUITY QUANT FUND",
+          "Reference Number": "632669",
+          "Status": "Terminated",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/632669"
+        },
+        {
           "Name": "Gateway Global Equity Income Fund",
           "Reference Number": "637599",
           "Status": "Terminated",
@@ -24,11 +66,11 @@
           "URL": "https://register.fca.org.uk/services/V0.1/CIS/186070"
         },
         {
-          "Name": "WS T. Bailey Global Thematic Equity Fund",
-          "Reference Number": "190261",
-          "Status": "Authorised",
+          "Name": "TM Brunel Global Sustainable Equity Fund",
+          "Reference Number": "935238",
+          "Status": "Approved",
           "Type of business or Individual": "Collective investment scheme",
-          "URL": "https://register.fca.org.uk/services/V0.1/CIS/190261"
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/935238"
         },
         {
           "Name": "LF Global Equity  Personal Pension Fund",
@@ -36,6 +78,20 @@
           "Status": "Terminated",
           "Type of business or Individual": "Collective investment scheme",
           "URL": "https://register.fca.org.uk/services/V0.1/CIS/643413"
+        },
+        {
+          "Name": "Janus Henderson Global Sustainable Equity Fund",
+          "Reference Number": "636467",
+          "Status": "Approved",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/636467"
+        },
+        {
+          "Name": "WS T. Bailey Global Thematic Equity Fund",
+          "Reference Number": "190261",
+          "Status": "Authorised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/190261"
         },
         {
           "Name": "Loomis Sayles Global Growth Equity Fund",
@@ -59,11 +115,11 @@
           "URL": "https://register.fca.org.uk/services/V0.1/CIS/1049291"
         },
         {
-          "Name": "Janus Henderson Global Sustainable Equity Fund",
-          "Reference Number": "636467",
-          "Status": "Approved",
+          "Name": "SCHRODER ADVANCED BETA GLOBAL EQUITY QUALITY FUND",
+          "Reference Number": "729922",
+          "Status": "Authorised",
           "Type of business or Individual": "Collective investment scheme",
-          "URL": "https://register.fca.org.uk/services/V0.1/CIS/636467"
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/729922"
         },
         {
           "Name": "Amity Global Equity Fund for Charities",
@@ -85,62 +141,6 @@
           "Status": "Approved",
           "Type of business or Individual": "Collective investment scheme",
           "URL": "https://register.fca.org.uk/services/V0.1/CIS/636414"
-        },
-        {
-          "Name": "GLOBAL IMPACT VALUE EQUITY STRATEGY SUB-FUND",
-          "Reference Number": "1030706",
-          "Status": "Recognised",
-          "Type of business or Individual": "Collective investment scheme",
-          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1030706"
-        },
-        {
-          "Name": "Quilter Investors Global Equity Value Fund",
-          "Reference Number": "632246",
-          "Status": "Approved",
-          "Type of business or Individual": "Collective investment scheme",
-          "URL": "https://register.fca.org.uk/services/V0.1/CIS/632246"
-        },
-        {
-          "Name": "AVIVA INVESTORS GLOBAL EQUITY INCOME FUND",
-          "Reference Number": "641760",
-          "Status": "Approved",
-          "Type of business or Individual": "Collective investment scheme",
-          "URL": "https://register.fca.org.uk/services/V0.1/CIS/641760"
-        },
-        {
-          "Name": "Lazard Global Equity Franchise CCF Fund",
-          "Reference Number": "1048349",
-          "Status": "Recognised",
-          "Type of business or Individual": "Collective investment scheme",
-          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1048349"
-        },
-        {
-          "Name": "Royal London Global Equity Tilt Fund",
-          "Reference Number": "1048086",
-          "Status": "Approved",
-          "Type of business or Individual": "Collective investment scheme",
-          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1048086"
-        },
-        {
-          "Name": "OLD MUTUAL GLOBAL ISLAMIC EQUITY FUND",
-          "Reference Number": "1047828",
-          "Status": "Recognised",
-          "Type of business or Individual": "Collective investment scheme",
-          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1047828"
-        },
-        {
-          "Name": "Fidelity Responsible Global Equity Income Fund",
-          "Reference Number": "636236",
-          "Status": "Approved",
-          "Type of business or Individual": "Collective investment scheme",
-          "URL": "https://register.fca.org.uk/services/V0.1/CIS/636236"
-        },
-        {
-          "Name": "Mercer Global Small Cap Equity Fund",
-          "Reference Number": "1047777",
-          "Status": "Recognised",
-          "Type of business or Individual": "Collective investment scheme",
-          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1047777"
         }
       ],
       "Message": "Ok. Search successful",
@@ -149,7 +149,7 @@
         "Previous": "https://register.fca.org.uk/services/V0.1/Search?q=global equity fund&type=fund&pgnp=12",
         "page": "13",
         "per_page": "20",
-        "total_count": "572"
+        "total_count": "577"
       },
       "Status": "FSR-API-04-01-00"
     }
@@ -157,13 +157,13 @@
   "headers": {
     "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
     "cf-cache-status": "DYNAMIC",
-    "cf-ray": "9bcbd53daa948c31-LHR",
+    "cf-ray": "9be7459af8f288c2-LHR",
     "connection": "keep-alive",
     "content-encoding": "gzip",
     "content-type": "application/json;charset=UTF-8",
-    "date": "Mon, 12 Jan 2026 10:05:00 GMT",
+    "date": "Thu, 15 Jan 2026 18:00:18 GMT",
     "server": "cloudflare",
-    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Tue, 12-Jan-2027 10:05:00 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Tue, 12-Jan-2027 10:05:00 GMT; Max-Age=31536000; secure",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 18:00:18 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 18:00:18 GMT; Max-Age=31536000; secure",
     "strict-transport-security": "max-age=63072000; includeSubDomains",
     "transfer-encoding": "chunked",
     "vary": "Accept-Encoding",

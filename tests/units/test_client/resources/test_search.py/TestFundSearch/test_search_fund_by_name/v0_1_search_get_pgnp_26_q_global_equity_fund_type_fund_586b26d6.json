@@ -3,6 +3,55 @@
     "json": {
       "Data": [
         {
+          "Name": "WS ACCESS Global Equity Fund - Capital Group",
+          "Reference Number": "936612",
+          "Status": "Approved",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/936612"
+        },
+        {
+          "Name": "LGPS Central Global Sustainable Equity Active Targeted Fund",
+          "Reference Number": "972240",
+          "Status": "Approved",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/972240"
+        },
+        {
+          "Name": "LGPS Central Global Sustainable Equity Active Thematic Fund",
+          "Reference Number": "972239",
+          "Status": "Approved",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/972239"
+        },
+        {
+          "Name": "LGPS Central Global Sustainable Equity Active Broad Fund",
+          "Reference Number": "972238",
+          "Status": "Approved",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/972238"
+        },
+        {
+          "Name": "Aviva Investors Global Emerging Markets Equity Unconstrained Fund",
+          "Reference Number": "844408",
+          "Status": "Approved",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/844408"
+        },
+        {
+          "Name": "LGPS Central Global Equity Active Multi Manager Fund",
+          "Reference Number": "827670",
+          "Status": "Approved",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/827670"
+        },
+        {
+          "Name": "SCHRODER INTERNATIONAL SELECTION FUND GLOBAL CLIMATE CHANGE EQUITY",
+          "Reference Number": "643310",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/643310"
+        },
+        {
           "Name": "MARTIN CURRIE IF - GLOBAL EQUITY INCOME FUND",
           "Reference Number": "641734",
           "Status": "Terminated",
@@ -92,55 +141,6 @@
           "Status": "Recognised",
           "Type of business or Individual": "Collective investment scheme",
           "URL": "https://register.fca.org.uk/services/V0.1/CIS/836645"
-        },
-        {
-          "Name": "State Street Global Emerging Markets Screened Index Equity Fund",
-          "Reference Number": "668952",
-          "Status": "Recognised",
-          "Type of business or Individual": "Collective investment scheme",
-          "URL": "https://register.fca.org.uk/services/V0.1/CIS/668952"
-        },
-        {
-          "Name": "Nordea 1 - Global Stable Equity Fund - Euro Hedged",
-          "Reference Number": "1046798",
-          "Status": "Recognised",
-          "Type of business or Individual": "Collective investment scheme",
-          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1046798"
-        },
-        {
-          "Name": "SCHRODER ADVANCED BETA GLOBAL EQUITY SMALL AND MID CAP FUND",
-          "Reference Number": "729924",
-          "Status": "Authorised",
-          "Type of business or Individual": "Collective investment scheme",
-          "URL": "https://register.fca.org.uk/services/V0.1/CIS/729924"
-        },
-        {
-          "Name": "HSBC Global Funds ICAV - Multi Factor US Equity Fund",
-          "Reference Number": "1043190",
-          "Status": "Recognised",
-          "Type of business or Individual": "Collective investment scheme",
-          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1043190"
-        },
-        {
-          "Name": "HSBC Global Funds ICAV - Multi Factor Worldwide Equity Fund",
-          "Reference Number": "1043183",
-          "Status": "Recognised",
-          "Type of business or Individual": "Collective investment scheme",
-          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1043183"
-        },
-        {
-          "Name": "Nordea 2 - BetaPlus Enhanced Global Developed Sustainable Equity Fund",
-          "Reference Number": "1043169",
-          "Status": "Recognised",
-          "Type of business or Individual": "Collective investment scheme",
-          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1043169"
-        },
-        {
-          "Name": "Nordea 2 - BetaPlus Enhanced Global Small Cap Equity Fund",
-          "Reference Number": "1043162",
-          "Status": "Recognised",
-          "Type of business or Individual": "Collective investment scheme",
-          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1043162"
         }
       ],
       "Message": "Ok. Search successful",
@@ -149,7 +149,7 @@
         "Previous": "https://register.fca.org.uk/services/V0.1/Search?q=global equity fund&type=fund&pgnp=25",
         "page": "26",
         "per_page": "20",
-        "total_count": "572"
+        "total_count": "577"
       },
       "Status": "FSR-API-04-01-00"
     }
@@ -157,13 +157,13 @@
   "headers": {
     "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
     "cf-cache-status": "DYNAMIC",
-    "cf-ray": "9bcbd5654ce28c31-LHR",
+    "cf-ray": "9be745bfaf2888c2-LHR",
     "connection": "keep-alive",
     "content-encoding": "gzip",
     "content-type": "application/json;charset=UTF-8",
-    "date": "Mon, 12 Jan 2026 10:05:07 GMT",
+    "date": "Thu, 15 Jan 2026 18:00:24 GMT",
     "server": "cloudflare",
-    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Tue, 12-Jan-2027 10:05:06 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Tue, 12-Jan-2027 10:05:06 GMT; Max-Age=31536000; secure",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 18:00:24 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 18:00:24 GMT; Max-Age=31536000; secure",
     "strict-transport-security": "max-age=63072000; includeSubDomains",
     "transfer-encoding": "chunked",
     "vary": "Accept-Encoding",

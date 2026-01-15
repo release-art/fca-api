@@ -3,6 +3,55 @@
     "json": {
       "Data": [
         {
+          "Name": "Global Core Equity Lower Carbon ESG Screened Fund",
+          "Reference Number": "1035888",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1035888"
+        },
+        {
+          "Name": "State Street ACS Multi-Factor Global Index Equity Fund",
+          "Reference Number": "815240",
+          "Status": "Approved",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/815240"
+        },
+        {
+          "Name": "RBC Funds (Lux) - Global Equity Focus Fund",
+          "Reference Number": "1035210",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1035210"
+        },
+        {
+          "Name": "The Harding Loevner Global Carbon Transition Equity Fund",
+          "Reference Number": "981055",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/981055"
+        },
+        {
+          "Name": "CC&L Q Global Small Cap Equity UCITS Fund",
+          "Reference Number": "1034889",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1034889"
+        },
+        {
+          "Name": "State Street Global Screened Managed Volatility Equity Fund",
+          "Reference Number": "633382",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/633382"
+        },
+        {
+          "Name": "Nomura Funds Ireland - Global Multi-Theme Equity Fund",
+          "Reference Number": "1030838",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1030838"
+        },
+        {
           "Name": "Nomura Funds Ireland - Global Sustainable Equity Fund",
           "Reference Number": "1030828",
           "Status": "Recognised",
@@ -92,55 +141,6 @@
           "Status": "Recognised",
           "Type of business or Individual": "Collective investment scheme",
           "URL": "https://register.fca.org.uk/services/V0.1/CIS/1012687"
-        },
-        {
-          "Name": "WS ACCESS Global Equity Fund - Capital Group",
-          "Reference Number": "936612",
-          "Status": "Approved",
-          "Type of business or Individual": "Collective investment scheme",
-          "URL": "https://register.fca.org.uk/services/V0.1/CIS/936612"
-        },
-        {
-          "Name": "LGPS Central Global Sustainable Equity Active Targeted Fund",
-          "Reference Number": "972240",
-          "Status": "Approved",
-          "Type of business or Individual": "Collective investment scheme",
-          "URL": "https://register.fca.org.uk/services/V0.1/CIS/972240"
-        },
-        {
-          "Name": "LGPS Central Global Sustainable Equity Active Thematic Fund",
-          "Reference Number": "972239",
-          "Status": "Approved",
-          "Type of business or Individual": "Collective investment scheme",
-          "URL": "https://register.fca.org.uk/services/V0.1/CIS/972239"
-        },
-        {
-          "Name": "LGPS Central Global Sustainable Equity Active Broad Fund",
-          "Reference Number": "972238",
-          "Status": "Approved",
-          "Type of business or Individual": "Collective investment scheme",
-          "URL": "https://register.fca.org.uk/services/V0.1/CIS/972238"
-        },
-        {
-          "Name": "Aviva Investors Global Emerging Markets Equity Unconstrained Fund",
-          "Reference Number": "844408",
-          "Status": "Approved",
-          "Type of business or Individual": "Collective investment scheme",
-          "URL": "https://register.fca.org.uk/services/V0.1/CIS/844408"
-        },
-        {
-          "Name": "LGPS Central Global Equity Active Multi Manager Fund",
-          "Reference Number": "827670",
-          "Status": "Approved",
-          "Type of business or Individual": "Collective investment scheme",
-          "URL": "https://register.fca.org.uk/services/V0.1/CIS/827670"
-        },
-        {
-          "Name": "SCHRODER INTERNATIONAL SELECTION FUND GLOBAL CLIMATE CHANGE EQUITY",
-          "Reference Number": "643310",
-          "Status": "Recognised",
-          "Type of business or Individual": "Collective investment scheme",
-          "URL": "https://register.fca.org.uk/services/V0.1/CIS/643310"
         }
       ],
       "Message": "Ok. Search successful",
@@ -149,7 +149,7 @@
         "Previous": "https://register.fca.org.uk/services/V0.1/Search?q=global equity fund&type=fund&pgnp=24",
         "page": "25",
         "per_page": "20",
-        "total_count": "572"
+        "total_count": "577"
       },
       "Status": "FSR-API-04-01-00"
     }
@@ -157,13 +157,13 @@
   "headers": {
     "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
     "cf-cache-status": "DYNAMIC",
-    "cf-ray": "9bcbd562cf578c31-LHR",
+    "cf-ray": "9be745bd1c9d88c2-LHR",
     "connection": "keep-alive",
     "content-encoding": "gzip",
     "content-type": "application/json;charset=UTF-8",
-    "date": "Mon, 12 Jan 2026 10:05:06 GMT",
+    "date": "Thu, 15 Jan 2026 18:00:24 GMT",
     "server": "cloudflare",
-    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Tue, 12-Jan-2027 10:05:06 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Tue, 12-Jan-2027 10:05:06 GMT; Max-Age=31536000; secure",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 18:00:23 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 18:00:23 GMT; Max-Age=31536000; secure",
     "strict-transport-security": "max-age=63072000; includeSubDomains",
     "transfer-encoding": "chunked",
     "vary": "Accept-Encoding",

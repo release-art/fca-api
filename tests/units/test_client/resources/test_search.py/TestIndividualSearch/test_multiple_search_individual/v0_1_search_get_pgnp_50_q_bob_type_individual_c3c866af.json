@@ -3,18 +3,18 @@
     "json": {
       "Data": [
         {
+          "Name": "Babar Hussain",
+          "Reference Number": "BXH00426",
+          "Status": "Active",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/BXH00426"
+        },
+        {
           "Name": "Tejinder Pal Singh Bakhshi",
           "Reference Number": "TPB01037",
           "Status": "Active",
           "Type of business or Individual": "Individual",
           "URL": "https://register.fca.org.uk/services/V0.1/Individuals/TPB01037"
-        },
-        {
-          "Name": "Jonathan Magee",
-          "Reference Number": "BXM01230",
-          "Status": "Active",
-          "Type of business or Individual": "Individual",
-          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/BXM01230"
         },
         {
           "Name": "Robert James Tipping",
@@ -24,11 +24,11 @@
           "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RJT01077"
         },
         {
-          "Name": "Sukhjinder Singh Rai",
-          "Reference Number": "SXR00030",
-          "Status": "Regulatory approval no longer required",
+          "Name": "Jonathan Magee",
+          "Reference Number": "BXM01230",
+          "Status": "Active",
           "Type of business or Individual": "Individual",
-          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/SXR00030"
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/BXM01230"
         },
         {
           "Name": "Robert Jeremy Nelson",
@@ -136,11 +136,11 @@
           "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RHD01016"
         },
         {
-          "Name": "robert matthews",
-          "Reference Number": "RXM02694",
-          "Status": "Active",
+          "Name": "Sukhjinder Singh Rai",
+          "Reference Number": "SXR00030",
+          "Status": "Regulatory approval no longer required",
           "Type of business or Individual": "Individual",
-          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RXM02694"
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/SXR00030"
         }
       ],
       "Message": "Ok. Search successful",
@@ -149,7 +149,7 @@
         "Previous": "https://register.fca.org.uk/services/V0.1/Search?q=bob&type=individual&pgnp=49",
         "page": "50",
         "per_page": "20",
-        "total_count": "1123"
+        "total_count": "1124"
       },
       "Status": "FSR-API-04-01-00"
     }
@@ -157,13 +157,13 @@
   "headers": {
     "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
     "cf-cache-status": "DYNAMIC",
-    "cf-ray": "9bcba7e8d9e5ecdb-LHR",
+    "cf-ray": "9be74549da01b16b-LHR",
     "connection": "keep-alive",
     "content-encoding": "gzip",
     "content-type": "application/json;charset=UTF-8",
-    "date": "Mon, 12 Jan 2026 09:34:04 GMT",
+    "date": "Thu, 15 Jan 2026 18:00:06 GMT",
     "server": "cloudflare",
-    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Tue, 12-Jan-2027 09:34:03 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Tue, 12-Jan-2027 09:34:03 GMT; Max-Age=31536000; secure",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 18:00:05 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 18:00:05 GMT; Max-Age=31536000; secure",
     "strict-transport-security": "max-age=63072000; includeSubDomains",
     "transfer-encoding": "chunked",
     "vary": "Accept-Encoding",

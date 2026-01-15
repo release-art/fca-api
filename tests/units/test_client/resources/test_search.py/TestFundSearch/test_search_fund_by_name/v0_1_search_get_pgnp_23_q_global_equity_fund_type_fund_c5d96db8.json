@@ -3,6 +3,62 @@
     "json": {
       "Data": [
         {
+          "Name": "State Street Global Climate Transition Equity Fund",
+          "Reference Number": "1013297",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1013297"
+        },
+        {
+          "Name": "Abbey Road Funds \u2013 Global Equity Fund",
+          "Reference Number": "941886",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/941886"
+        },
+        {
+          "Name": "WS ACCESS Global Managed Volatility Equity Fund",
+          "Reference Number": "936609",
+          "Status": "Approved",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/936609"
+        },
+        {
+          "Name": "WS ACCESS Global Equity Fund - Mondrian",
+          "Reference Number": "936608",
+          "Status": "Approved",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/936608"
+        },
+        {
+          "Name": "WS ACCESS Global Alpha Paris-Aligned Equity Fund",
+          "Reference Number": "917115",
+          "Status": "Approved",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/917115"
+        },
+        {
+          "Name": "WS ACCESS Global Equity Fund \u2013 Newton",
+          "Reference Number": "839049",
+          "Status": "Approved",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/839049"
+        },
+        {
+          "Name": "WS ACCESS Global Equity (ex UK) Fund",
+          "Reference Number": "832176",
+          "Status": "Approved",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/832176"
+        },
+        {
+          "Name": "TM Brunel High Alpha Global Equity Fund",
+          "Reference Number": "847674",
+          "Status": "Approved",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/847674"
+        },
+        {
           "Name": "TM Brunel Low Volatility Global Equity Fund",
           "Reference Number": "823032",
           "Status": "Approved",
@@ -85,62 +141,6 @@
           "Status": "Recognised",
           "Type of business or Individual": "Collective investment scheme",
           "URL": "https://register.fca.org.uk/services/V0.1/CIS/643278"
-        },
-        {
-          "Name": "SCHRODER INTERNATIONAL SELECTION FUND GLOBAL EQUITY ALPHA",
-          "Reference Number": "643271",
-          "Status": "Recognised",
-          "Type of business or Individual": "Collective investment scheme",
-          "URL": "https://register.fca.org.uk/services/V0.1/CIS/643271"
-        },
-        {
-          "Name": "Wellington Global Select Capital Appreciation Equity Fund",
-          "Reference Number": "634365",
-          "Status": "Recognised",
-          "Type of business or Individual": "Collective investment scheme",
-          "URL": "https://register.fca.org.uk/services/V0.1/CIS/634365"
-        },
-        {
-          "Name": "PineBridge Global Emerging Markets Focus Equity Fund",
-          "Reference Number": "632952",
-          "Status": "Recognised",
-          "Type of business or Individual": "Collective investment scheme",
-          "URL": "https://register.fca.org.uk/services/V0.1/CIS/632952"
-        },
-        {
-          "Name": "Aberdeen Global Emerging Markets Quantitative Equity Fund",
-          "Reference Number": "700126",
-          "Status": "Terminated",
-          "Type of business or Individual": "Collective investment scheme",
-          "URL": "https://register.fca.org.uk/services/V0.1/CIS/700126"
-        },
-        {
-          "Name": "CF MACQUARIE GLOBAL PRIVATE EQUITY SECURITIES FUND",
-          "Reference Number": "642123",
-          "Status": "Terminated",
-          "Type of business or Individual": "Collective investment scheme",
-          "URL": "https://register.fca.org.uk/services/V0.1/CIS/642123"
-        },
-        {
-          "Name": "CREDIT SUISSE GLOBAL EQUITY (EX-UK) PASSIVE  FUND",
-          "Reference Number": "640668",
-          "Status": "Terminated",
-          "Type of business or Individual": "Collective investment scheme",
-          "URL": "https://register.fca.org.uk/services/V0.1/CIS/640668"
-        },
-        {
-          "Name": "Nordea 1 - Global Stable Equity Plus Fund",
-          "Reference Number": "1048613",
-          "Status": "Recognised",
-          "Type of business or Individual": "Collective investment scheme",
-          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1048613"
-        },
-        {
-          "Name": "Schroder Global ex UK Equity Tracker Component Fund",
-          "Reference Number": "729921",
-          "Status": "Authorised",
-          "Type of business or Individual": "Collective investment scheme",
-          "URL": "https://register.fca.org.uk/services/V0.1/CIS/729921"
         }
       ],
       "Message": "Ok. Search successful",
@@ -149,7 +149,7 @@
         "Previous": "https://register.fca.org.uk/services/V0.1/Search?q=global equity fund&type=fund&pgnp=22",
         "page": "23",
         "per_page": "20",
-        "total_count": "572"
+        "total_count": "577"
       },
       "Status": "FSR-API-04-01-00"
     }
@@ -157,13 +157,13 @@
   "headers": {
     "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
     "cf-cache-status": "DYNAMIC",
-    "cf-ray": "9bcbd55c6a8f8c31-LHR",
+    "cf-ray": "9be745b80f0488c2-LHR",
     "connection": "keep-alive",
     "content-encoding": "gzip",
     "content-type": "application/json;charset=UTF-8",
-    "date": "Mon, 12 Jan 2026 10:05:05 GMT",
+    "date": "Thu, 15 Jan 2026 18:00:23 GMT",
     "server": "cloudflare",
-    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Tue, 12-Jan-2027 10:05:05 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Tue, 12-Jan-2027 10:05:05 GMT; Max-Age=31536000; secure",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 18:00:23 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 18:00:23 GMT; Max-Age=31536000; secure",
     "strict-transport-security": "max-age=63072000; includeSubDomains",
     "transfer-encoding": "chunked",
     "vary": "Accept-Encoding",

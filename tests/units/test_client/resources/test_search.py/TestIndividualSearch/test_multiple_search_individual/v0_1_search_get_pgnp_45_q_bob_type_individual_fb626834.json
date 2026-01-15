@@ -3,20 +3,6 @@
     "json": {
       "Data": [
         {
-          "Name": "Robert John Udy",
-          "Reference Number": "RJU00002",
-          "Status": "Regulatory approval no longer required",
-          "Type of business or Individual": "Individual",
-          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RJU00002"
-        },
-        {
-          "Name": "Robert William Ross",
-          "Reference Number": "RXR00032",
-          "Status": "Regulatory approval no longer required",
-          "Type of business or Individual": "Individual",
-          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RXR00032"
-        },
-        {
           "Name": "Robert Blackwell",
           "Reference Number": "RXB02680",
           "Status": "Regulatory approval no longer required",
@@ -29,6 +15,20 @@
           "Status": "Regulatory approval no longer required",
           "Type of business or Individual": "Individual",
           "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RXD01865"
+        },
+        {
+          "Name": "Robert Lister",
+          "Reference Number": "RXL01654",
+          "Status": "Regulatory approval no longer required",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RXL01654"
+        },
+        {
+          "Name": "Robert Alan Scarff",
+          "Reference Number": "RAS01241",
+          "Status": "Regulatory approval no longer required",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RAS01241"
         },
         {
           "Name": "Robert Kane",
@@ -52,18 +52,18 @@
           "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RPB00038"
         },
         {
-          "Name": "Robert Vivian Squire Morgan",
-          "Reference Number": "RVM01030",
-          "Status": "Regulatory approval no longer required",
-          "Type of business or Individual": "Individual",
-          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RVM01030"
-        },
-        {
           "Name": "Robert Alexander George Griffiths",
           "Reference Number": "RAG00020",
           "Status": "Regulatory approval no longer required",
           "Type of business or Individual": "Individual",
           "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RAG00020"
+        },
+        {
+          "Name": "Robert Vivian Squire Morgan",
+          "Reference Number": "RVM01030",
+          "Status": "Regulatory approval no longer required",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RVM01030"
         },
         {
           "Name": "Robert Jonathan Smeaton",
@@ -149,7 +149,7 @@
         "Previous": "https://register.fca.org.uk/services/V0.1/Search?q=bob&type=individual&pgnp=44",
         "page": "45",
         "per_page": "20",
-        "total_count": "1123"
+        "total_count": "1124"
       },
       "Status": "FSR-API-04-01-00"
     }
@@ -157,13 +157,13 @@
   "headers": {
     "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
     "cf-cache-status": "DYNAMIC",
-    "cf-ray": "9bcba7d02f79ecdb-LHR",
+    "cf-ray": "9be745302f8db16b-LHR",
     "connection": "keep-alive",
     "content-encoding": "gzip",
     "content-type": "application/json;charset=UTF-8",
-    "date": "Mon, 12 Jan 2026 09:34:00 GMT",
+    "date": "Thu, 15 Jan 2026 18:00:02 GMT",
     "server": "cloudflare",
-    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Tue, 12-Jan-2027 09:33:59 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Tue, 12-Jan-2027 09:33:59 GMT; Max-Age=31536000; secure",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 18:00:01 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 18:00:01 GMT; Max-Age=31536000; secure",
     "strict-transport-security": "max-age=63072000; includeSubDomains",
     "transfer-encoding": "chunked",
     "vary": "Accept-Encoding",

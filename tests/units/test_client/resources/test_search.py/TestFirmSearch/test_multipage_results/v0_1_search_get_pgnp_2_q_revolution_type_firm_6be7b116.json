@@ -122,6 +122,13 @@
           "URL": "https://register.fca.org.uk/services/V0.1/Firm/1038587"
         },
         {
+          "Name": "D2 KNR LTD (Postcode: CV21 2AG)",
+          "Reference Number": "1048939",
+          "Status": "Appointed representative - introducer",
+          "Type of business or Individual": "Firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Firm/1048939"
+        },
+        {
           "Name": "Revolution Property Management Limited (Postcode: M5 3ED)",
           "Reference Number": "500003",
           "Status": "No longer registered as an Appointed Representative",
@@ -134,13 +141,6 @@
           "Status": "No Longer Registered as a PSD Agent",
           "Type of business or Individual": "Payment services firm",
           "URL": "https://register.fca.org.uk/services/V0.1/Firm/586345"
-        },
-        {
-          "Name": "Motorplus Limited (Postcode: NR1 3PA)",
-          "Reference Number": "309657",
-          "Status": "Authorised",
-          "Type of business or Individual": "Firm",
-          "URL": "https://register.fca.org.uk/services/V0.1/Firm/309657"
         }
       ],
       "Message": "Ok. Search successful",
@@ -149,7 +149,7 @@
         "Previous": "https://register.fca.org.uk/services/V0.1/Search?q=revolution&type=firm&pgnp=1",
         "page": "2",
         "per_page": "20",
-        "total_count": "73"
+        "total_count": "74"
       },
       "Status": "FSR-API-04-01-00"
     }
@@ -157,13 +157,13 @@
   "headers": {
     "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
     "cf-cache-status": "DYNAMIC",
-    "cf-ray": "9bcba56eadff9db0-LHR",
+    "cf-ray": "9be7443ca9f51520-LHR",
     "connection": "keep-alive",
     "content-encoding": "gzip",
     "content-type": "application/json;charset=UTF-8",
-    "date": "Mon, 12 Jan 2026 09:32:23 GMT",
+    "date": "Thu, 15 Jan 2026 17:59:23 GMT",
     "server": "cloudflare",
-    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Tue, 12-Jan-2027 09:32:22 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Tue, 12-Jan-2027 09:32:22 GMT; Max-Age=31536000; secure",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 17:59:22 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 17:59:22 GMT; Max-Age=31536000; secure",
     "strict-transport-security": "max-age=63072000; includeSubDomains",
     "transfer-encoding": "chunked",
     "vary": "Accept-Encoding",

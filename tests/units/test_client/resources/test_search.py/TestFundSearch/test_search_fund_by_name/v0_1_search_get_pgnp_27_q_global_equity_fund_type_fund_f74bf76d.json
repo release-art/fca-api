@@ -3,6 +3,48 @@
     "json": {
       "Data": [
         {
+          "Name": "State Street Global Emerging Markets Screened Index Equity Fund",
+          "Reference Number": "668952",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/668952"
+        },
+        {
+          "Name": "Nordea 1 - Global Stable Equity Fund - Euro Hedged",
+          "Reference Number": "1046798",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1046798"
+        },
+        {
+          "Name": "HSBC Global Funds ICAV - Multi Factor US Equity Fund",
+          "Reference Number": "1043190",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1043190"
+        },
+        {
+          "Name": "HSBC Global Funds ICAV - Multi Factor Worldwide Equity Fund",
+          "Reference Number": "1043183",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1043183"
+        },
+        {
+          "Name": "Nordea 2 - BetaPlus Enhanced Global Developed Sustainable Equity Fund",
+          "Reference Number": "1043169",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1043169"
+        },
+        {
+          "Name": "Nordea 2 - BetaPlus Enhanced Global Small Cap Equity Fund",
+          "Reference Number": "1043162",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1043162"
+        },
+        {
           "Name": "SPW Asia ex Japan & Global Emerging Markets Equity Fund",
           "Reference Number": "933839",
           "Status": "Approved",
@@ -99,48 +141,6 @@
           "Status": "Recognised",
           "Type of business or Individual": "Collective investment scheme",
           "URL": "https://register.fca.org.uk/services/V0.1/CIS/636948"
-        },
-        {
-          "Name": "T. Rowe Price Funds SICAV - Global Focused Growth Equity Fund",
-          "Reference Number": "636940",
-          "Status": "Recognised",
-          "Type of business or Individual": "Collective investment scheme",
-          "URL": "https://register.fca.org.uk/services/V0.1/CIS/636940"
-        },
-        {
-          "Name": "AMUNDI FUNDS GLOBAL EQUITY CLIMATE",
-          "Reference Number": "1028262",
-          "Status": "Recognised",
-          "Type of business or Individual": "Collective investment scheme",
-          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1028262"
-        },
-        {
-          "Name": "AMUNDI FUNDS GLOBAL EQUITY SELECT",
-          "Reference Number": "1028258",
-          "Status": "Recognised",
-          "Type of business or Individual": "Collective investment scheme",
-          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1028258"
-        },
-        {
-          "Name": "AMUNDI FUNDS GLOBAL EQUITY RESPONSIBLE",
-          "Reference Number": "1028242",
-          "Status": "Recognised",
-          "Type of business or Individual": "Collective investment scheme",
-          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1028242"
-        },
-        {
-          "Name": "Amundi Funds Global Equity Conservative",
-          "Reference Number": "1028300",
-          "Status": "Recognised",
-          "Type of business or Individual": "Collective investment scheme",
-          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1028300"
-        },
-        {
-          "Name": "Goldman Sachs Fund SICAV \u2013 Goldman Sachs Global Future Economic Security Equity",
-          "Reference Number": "1039892",
-          "Status": "Recognised",
-          "Type of business or Individual": "Collective investment scheme",
-          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1039892"
         }
       ],
       "Message": "Ok. Search successful",
@@ -149,7 +149,7 @@
         "Previous": "https://register.fca.org.uk/services/V0.1/Search?q=global equity fund&type=fund&pgnp=26",
         "page": "27",
         "per_page": "20",
-        "total_count": "572"
+        "total_count": "577"
       },
       "Status": "FSR-API-04-01-00"
     }
@@ -157,13 +157,13 @@
   "headers": {
     "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
     "cf-cache-status": "DYNAMIC",
-    "cf-ray": "9bcbd5689c678c31-LHR",
+    "cf-ray": "9be745c2da3588c2-LHR",
     "connection": "keep-alive",
     "content-encoding": "gzip",
     "content-type": "application/json;charset=UTF-8",
-    "date": "Mon, 12 Jan 2026 10:05:07 GMT",
+    "date": "Thu, 15 Jan 2026 18:00:25 GMT",
     "server": "cloudflare",
-    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Tue, 12-Jan-2027 10:05:07 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Tue, 12-Jan-2027 10:05:07 GMT; Max-Age=31536000; secure",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 18:00:24 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 18:00:24 GMT; Max-Age=31536000; secure",
     "strict-transport-security": "max-age=63072000; includeSubDomains",
     "transfer-encoding": "chunked",
     "vary": "Accept-Encoding",
