@@ -45,9 +45,9 @@ Note:
     information about specific entities.
 
 See Also:
-    - `fca_api.api.Client.search_frn`: Search for firms
-    - `fca_api.api.Client.search_irn`: Search for individuals
-    - `fca_api.api.Client.search_prn`: Search for funds
+    - `fca_api.async_api.Client.search_frn`: Search for firms
+    - `fca_api.async_api.Client.search_irn`: Search for individuals
+    - `fca_api.async_api.Client.search_prn`: Search for funds
 """
 
 from typing import Annotated

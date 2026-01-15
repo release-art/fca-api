@@ -10,7 +10,7 @@ import fca_api
 class TestFinancialServicesRegisterApiClientCore:
     @pytest.mark.asyncio
     async def test_client_init_sets_credentials(self, test_api_username, test_api_key):
-        test_client = fca_api.raw.RawClient(credentials=(test_api_username, test_api_key))
+        test_client = fca_api.raw_api.RawClient(credentials=(test_api_username, test_api_key))
         assert test_client.api_session.headers["ACCEPT"] == "application/json"
         assert test_client.api_session.headers["X-AUTH-EMAIL"] == test_api_username
         assert test_client.api_session.headers["X-AUTH-KEY"] == test_api_key
@@ -19,10 +19,10 @@ class TestFinancialServicesRegisterApiClientCore:
     @pytest.mark.asyncio
     async def test_client_init_incorrect(self):
         with pytest.raises(ValueError):
-            fca_api.raw.RawClient(credentials=None)
+            fca_api.raw_api.RawClient(credentials=None)
 
         with pytest.raises(ValueError):
-            fca_api.raw.RawClient(credentials=("only_username",))
+            fca_api.raw_api.RawClient(credentials=("only_username",))
 
     @pytest.mark.asyncio
     async def test_rate_limiter(self, mocker, mock_http_client):
@@ -37,7 +37,7 @@ class TestFinancialServicesRegisterApiClientCore:
             finally:
                 await limiter_exit_mock()
 
-        test_client = fca_api.raw.RawClient(
+        test_client = fca_api.raw_api.RawClient(
             credentials=mock_http_client,
             api_limiter=limiter_mock,
         )
@@ -51,7 +51,7 @@ class TestFinancialServicesRegisterApiClientCore:
     @pytest.mark.asyncio
     async def test_common_search_empty_resource_name(self, mock_http_client):
         """Test that common_search raises ValueError for empty resource name."""
-        test_client = fca_api.raw.RawClient(credentials=mock_http_client)
+        test_client = fca_api.raw_api.RawClient(credentials=mock_http_client)
 
         with pytest.raises(ValueError, match="Resource name must be a non-empty string"):
             await test_client.common_search("", "firm")
@@ -59,7 +59,7 @@ class TestFinancialServicesRegisterApiClientCore:
     @pytest.mark.asyncio
     async def test_common_search_empty_resource_type(self, mock_http_client):
         """Test that common_search raises ValueError for empty resource type."""
-        test_client = fca_api.raw.RawClient(credentials=mock_http_client)
+        test_client = fca_api.raw_api.RawClient(credentials=mock_http_client)
 
         with pytest.raises(ValueError, match="Resource type must be a non-empty string"):
             await test_client.common_search("test", "")
@@ -67,7 +67,7 @@ class TestFinancialServicesRegisterApiClientCore:
     @pytest.mark.asyncio
     async def test_get_regulated_markets_with_page_raises(self, mock_http_client):
         """Test that get_regulated_markets raises NotImplementedError for pagination."""
-        test_client = fca_api.raw.RawClient(credentials=mock_http_client)
+        test_client = fca_api.raw_api.RawClient(credentials=mock_http_client)
 
         with pytest.raises(NotImplementedError, match="Pagination is not supported for regulated markets"):
             await test_client.get_regulated_markets(page=2)

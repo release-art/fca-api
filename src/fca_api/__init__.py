@@ -3,8 +3,8 @@
 This package provides both high-level and low-level Python clients for accessing
 the UK Financial Conduct Authority's Financial Services Register API. It offers:
 
-- **High-level client** (`fca_api.api.Client`): Validated, typed interface with pagination support
-- **Raw client** (`fca_api.raw.RawClient`): Direct API access with minimal abstraction
+- **High-level client** (`fca_api.async_api.Client`): Validated, typed interface with pagination support
+- **Raw client** (`fca_api.raw_api.RawClient`): Direct API access with minimal abstraction
 - **Type system**: Comprehensive Pydantic models for all API responses
 - **Async-first design**: Built on httpx for modern async/await patterns
 
@@ -15,7 +15,7 @@ Example:
         import fca_api
 
         async def main():
-            async with fca_api.api.Client(
+            async with fca_api.async_api.Client(
                 credentials=("your_email@example.com", "your_api_key")
             ) as client:
                 # Search for firms
@@ -30,4 +30,4 @@ See Also:
     - `API Documentation <https://register.fca.org.uk/Developer/s/>`_
 """
 
-from . import __version__, api, const, exc, raw, raw_status_codes, types
+from . import __version__, async_api, const, exc, raw_api, raw_status_codes, types

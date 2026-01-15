@@ -44,7 +44,7 @@ import fca_api
 
 async def main():
     # Using async context manager (recommended)
-    async with fca_api.api.Client(
+    async with fca_api.async_api.Client(
         credentials=("your.email@example.com", "your_api_key")
     ) as client:
         
@@ -72,13 +72,13 @@ if __name__ == "__main__":
 
 The library provides two complementary interfaces:
 
-### High-Level Client (`fca_api.api.Client`)
+### High-Level Client (`fca_api.async_api.Client`)
 - **Type-safe**: All responses are validated with Pydantic models
 - **Pagination**: Automatic lazy-loading pagination with `async for` support
 - **Convenient**: Intuitive methods like `search_frn()`, `get_firm()`, etc.
 - **Error handling**: Meaningful exceptions and validation
 
-### Raw Client (`fca_api.raw.RawClient`) 
+### Raw Client (`fca_api.raw_api.RawClient`) 
 - **Direct access**: Minimal abstraction over HTTP API
 - **Flexible**: For advanced use cases and custom processing
 - **Performance**: Lower overhead for bulk operations
@@ -102,7 +102,7 @@ The library provides two complementary interfaces:
 ```python
 import fca_api
 
-async with fca_api.api.Client(credentials=("email", "key")) as client:
+async with fca_api.async_api.Client(credentials=("email", "key")) as client:
     # Search returns a lazy-loading paginated list
     results = await client.search_frn("revolution")
     
@@ -172,7 +172,7 @@ from asyncio_throttle import Throttler
 # Limit to 10 requests per second
 throttler = Throttler(rate_limit=10)
 
-async with fca_api.api.Client(
+async with fca_api.async_api.Client(
     credentials=("email", "key"),
     api_limiter=throttler
 ) as client:
@@ -187,7 +187,7 @@ For advanced use cases or when you need direct API access:
 ```python
 import fca_api.raw
 
-client = fca_api.raw.RawClient(
+client = fca_api.raw_api.RawClient(
     credentials=("email", "key")
 )
 
@@ -214,8 +214,8 @@ Access documentation in your IDE or Python REPL:
 
 ```python
 import fca_api
-help(fca_api.api.Client)           # High-level client
-help(fca_api.api.Client.search_frn) # Specific method
+help(fca_api.async_api.Client)           # High-level client
+help(fca_api.async_api.Client.search_frn) # Specific method
 help(fca_api.types.firm.FirmDetails) # Response types
 ```
 

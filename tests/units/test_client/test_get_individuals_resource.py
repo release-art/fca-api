@@ -11,7 +11,7 @@ class TestNutmegFirmDetails:
         return "BXK69703"  # MrBob Keijzers
 
     @pytest.mark.asyncio
-    async def test_get_irn(self, test_client: fca_api.api.Client, irn: str):
+    async def test_get_irn(self, test_client: fca_api.async_api.Client, irn: str):
         out = await test_client.get_individual(irn)
         assert out.model_dump(mode="json") == {
             "irn": "BXK69703",
@@ -23,7 +23,7 @@ class TestNutmegFirmDetails:
         }
 
     @pytest.mark.asyncio
-    async def test_get_individual_details(self, test_client: fca_api.api.Client):
+    async def test_get_individual_details(self, test_client: fca_api.async_api.Client):
         out = await test_client.get_individual("RBS01054")
         assert out.model_dump(mode="json") == {
             "irn": "RBS01054",
@@ -35,7 +35,7 @@ class TestNutmegFirmDetails:
         }
 
     @pytest.mark.asyncio
-    async def test_get_individual_controlled_functions(self, test_client: fca_api.api.Client, irn: str):
+    async def test_get_individual_controlled_functions(self, test_client: fca_api.async_api.Client, irn: str):
         out = await test_client.get_individual_controlled_functions(irn)
         await out.fetch_all_pages()
         assert out.model_dump(mode="json") == [
@@ -90,13 +90,13 @@ class TestNutmegFirmDetails:
         ]
 
     @pytest.mark.asyncio
-    async def test_get_individual_controlled_functions_2(self, test_client: fca_api.api.Client, irn: str):
+    async def test_get_individual_controlled_functions_2(self, test_client: fca_api.async_api.Client, irn: str):
         out = await test_client.get_individual_disciplinary_history(irn)
         await out.fetch_all_pages()
         assert len(out) == 0
 
     @pytest.mark.asyncio
-    async def test_get_individual_controlled_functions_3(self, test_client: fca_api.api.Client):
+    async def test_get_individual_controlled_functions_3(self, test_client: fca_api.async_api.Client):
         # Neil Dwane - prohibited from performing regulated activities
         #  https://register.fca.org.uk/s/individual?id=003b000000LUiF4AAL
         out = await test_client.get_individual_disciplinary_history("NPD01015")

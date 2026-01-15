@@ -4,7 +4,7 @@ import httpx
 import pytest
 import pytest_asyncio
 
-from fca_api.raw import (
+from fca_api.raw_api import (
     RawClient,
 )
 

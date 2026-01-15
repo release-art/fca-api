@@ -36,7 +36,7 @@ Usage:
         firm = types.firm.FirmDetails.model_validate(raw_response.data[0])
 
 See Also:
-    - `fca_api.api.Client`: High-level client that returns typed responses
+    - `fca_api.async_api.Client`: High-level client that returns typed responses
     - `Pydantic Documentation <https://docs.pydantic.dev/>`_
 """
 

@@ -74,7 +74,7 @@ async def test_client(caching_session_subclass, test_api_username, test_api_key,
         cache_dir=test_resources_path,
         cache_mode="fetch_missing",
     ) as api_session:
-        yield fca_api.api.Client(credentials=api_session)
+        yield fca_api.async_api.Client(credentials=api_session)
 
 # Test structure follows strict patterns
 class TestFirmSearch:  # Creates TestFirmSearch/ directory

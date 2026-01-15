@@ -45,8 +45,8 @@ Example:
             process_firm(firm)
 
 See Also:
-    - `fca_api.api.Client`: High-level client that returns MultipageList objects
-    - `fca_api.raw.FcaApiResponse`: Raw response wrapper with pagination info
+    - `fca_api.async_api.Client`: High-level client that returns MultipageList objects
+    - `fca_api.raw_api.FcaApiResponse`: Raw response wrapper with pagination info
 """
 
 import asyncio
@@ -228,7 +228,7 @@ class MultipageList(typing.Generic[T]):
 
     See Also:
         - `PaginatedResultInfo`: Pagination metadata
-        - `fca_api.api.Client`: Returns MultipageList from search methods
+        - `fca_api.async_api.Client`: Returns MultipageList from search methods
     """
 
     _pages: typing.List[FetchedPageData[T]]

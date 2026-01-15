@@ -4,7 +4,7 @@ import fca_api
 
 
 @pytest.mark.asyncio
-async def test_get_fund(test_client: fca_api.api.Client):
+async def test_get_fund(test_client: fca_api.async_api.Client):
     out = await test_client.get_fund("185045")
     assert out.model_dump(mode="json") == {
         "type": "ICVC",
@@ -24,7 +24,7 @@ async def test_get_fund(test_client: fca_api.api.Client):
 
 
 @pytest.mark.asyncio
-async def test_get_fund_names(test_client: fca_api.api.Client):
+async def test_get_fund_names(test_client: fca_api.async_api.Client):
     out = await test_client.get_fund_names("185045")
     await out.fetch_all_pages()
     assert out.model_dump(mode="json") == [
@@ -42,7 +42,7 @@ async def test_get_fund_names(test_client: fca_api.api.Client):
 
 
 @pytest.mark.asyncio
-async def test_get_fund_subfunds(test_client: fca_api.api.Client):
+async def test_get_fund_subfunds(test_client: fca_api.async_api.Client):
     out = await test_client.get_fund_subfunds("185045")
     await out.fetch_all_pages()
     assert len(out) == 30

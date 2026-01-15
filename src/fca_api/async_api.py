@@ -16,9 +16,9 @@ information about specific entities.
 Example:
     Basic client usage::
 
-        import fca_api.api
+        import fca_api.async_api
 
-        async with fca_api.api.Client(
+        async with fca_api.async_api.Client(
             credentials=("email@example.com", "api_key")
         ) as client:
             # Search for firms by name
@@ -40,7 +40,7 @@ import typing
 
 import httpx
 
-from . import raw, types
+from . import raw_api, types
 
 logger = logging.getLogger(__name__)
 
@@ -49,12 +49,12 @@ BaseSubclassT = typing.TypeVar("BaseSubclassT", bound=types.base.Base)
 
 
 class PaginatedResponseHandler(typing.Generic[T]):
-    _fetch_page: typing.Callable[[int], typing.Awaitable[raw.FcaApiResponse]]
+    _fetch_page: typing.Callable[[int], typing.Awaitable[raw_api.FcaApiResponse]]
     _parse_data_fn: typing.Callable[[list[dict]], list[T]]
 
     def __init__(
         self,
-        fetch_page: typing.Callable[[int], typing.Awaitable[raw.FcaApiResponse]],
+        fetch_page: typing.Callable[[int], typing.Awaitable[raw_api.FcaApiResponse]],
         parse_data: typing.Callable[[list[dict]], list[T]],
     ) -> None:
         """Initialize the paginated response handler.
@@ -135,7 +135,7 @@ class Client:
         - Manual page fetching with `fetch_all_pages()`
     """
 
-    _client: raw.RawClient
+    _client: raw_api.RawClient
 
     def __init__(
         self,
@@ -143,7 +143,7 @@ class Client:
             typing.Tuple[str, str],
             httpx.AsyncClient,
         ],
-        api_limiter: typing.Optional[raw.LimiterContextT] = None,
+        api_limiter: typing.Optional[raw_api.LimiterContextT] = None,
     ) -> None:
         """Initialize the high-level FCA API client.
 
@@ -179,7 +179,7 @@ class Client:
                     api_limiter=throttler
                 )
         """
-        self._client = raw.RawClient(credentials=credentials, api_limiter=api_limiter)
+        self._client = raw_api.RawClient(credentials=credentials, api_limiter=api_limiter)
 
     async def __aenter__(self) -> "Client":
         """Async context manager entry.
@@ -231,7 +231,7 @@ class Client:
         await self._client.api_session.aclose()
 
     @property
-    def raw_client(self) -> raw.RawClient:
+    def raw_client(self) -> raw_api.RawClient:
         """Get the underlying raw client.
 
         Returns:
@@ -250,7 +250,7 @@ class Client:
 
     async def _paginated_search(
         self,
-        search_fn: typing.Callable[[int], typing.Awaitable[raw.FcaApiResponse]],
+        search_fn: typing.Callable[[int], typing.Awaitable[raw_api.FcaApiResponse]],
         page_idx: int,
         result_t: typing.Type[BaseSubclassT],
     ) -> types.pagination.FetchPageRvT[BaseSubclassT]:
