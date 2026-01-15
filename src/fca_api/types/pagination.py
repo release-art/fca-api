@@ -212,3 +212,12 @@ class MultipageList(typing.Generic[T]):
             A list of dictionaries representing the items.
         """
         return [item.model_dump(mode=mode) for item in self.local_items()]
+
+    async def get_all(self) -> typing.Tuple[T, ...]:
+        """Fetch all pages and return all items as a list.
+
+        Returns:
+            A list of all items.
+        """
+        await self.fetch_all_pages()
+        return self.local_items()

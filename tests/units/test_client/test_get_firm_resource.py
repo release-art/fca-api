@@ -393,6 +393,42 @@ class TestNutmegFirmDetails:
             ),
         }
 
+    @pytest.mark.asyncio
+    async def test_get_firm_requirement_investment_types(self, test_client: fca_api.api.Client, frn: str):
+        out = await test_client.get_firm_requirement_investment_types(frn, "OR-0263614")
+        await out.fetch_all_pages()
+        assert len(out) == 8
+        assert out.model_dump(mode="json") == [
+            {"name": "certificates representing certain securities"},
+            {"name": "debentures"},
+            {"name": "government and public security"},
+            {"name": "listed shares"},
+            {"name": "pensions"},
+            {"name": "rights to or interests in investments"},
+            {"name": "units"},
+            {"name": "warrants"},
+        ]
+
+    @pytest.mark.asyncio
+    async def test_get_firm_regulators(self, test_client: fca_api.api.Client, frn: str):
+        out = await test_client.get_firm_regulators(frn)
+        await out.fetch_all_pages()
+        assert len(out) == 2
+        assert out.model_dump(mode="json") == [
+            {"name": "Financial Conduct Authority", "effective_date": "2013-04-01T00:00:00", "termination_date": None},
+            {
+                "name": "Financial Services Authority",
+                "effective_date": "2011-09-26T00:00:00",
+                "termination_date": "2013-03-31T00:00:00",
+            },
+        ]
+
+    @pytest.mark.asyncio
+    async def test_get_firm_passports(self, test_client: fca_api.api.Client, frn: str):
+        out = await test_client.get_firm_passports(frn)
+        await out.fetch_all_pages()
+        assert len(out) == 0
+
 
 LARGE_BANK_FRNS = [
     "122702",  # Barclays Bank Plc
@@ -407,6 +443,19 @@ class TestRandomFirmDetails:
         out = await test_client.get_firm_permissions("484231")
         await out.fetch_all_pages()
         assert len(out) == 0
+
+    @pytest.mark.asyncio
+    async def test_barclays_passports(self, test_client: fca_api.api.Client):
+        out = await test_client.get_firm_passports("122702")
+        await out.fetch_all_pages()
+        assert len(out) == 1
+        assert out.model_dump(mode="json") == [
+            {
+                "country": "GIBRALTAR",
+                "direction": "out",
+                "permissions": "https://register.fca.org.uk/services/v0.1/firm/122702/passports/gibraltar/permission",
+            }
+        ]
 
     @pytest.mark.asyncio
     @pytest.mark.parametrize(
@@ -429,3 +478,14 @@ class TestRandomFirmDetails:
         out = await test_client.get_firm_requirements(frn)
         await out.fetch_all_pages()
         assert len(out) > 1
+
+    @pytest.mark.asyncio
+    @pytest.mark.parametrize(
+        "frn",
+        LARGE_BANK_FRNS,
+    )
+    async def test_get_firm_passports(self, test_client: fca_api.api.Client, frn):
+        """Test that the data is correcly parsed for the large banks"""
+        out = await test_client.get_firm_passports(frn)
+        await out.fetch_all_pages()
+        assert len(out) > 0

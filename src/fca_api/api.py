@@ -386,3 +386,67 @@ class Client:
         )
         await out._async_init()
         return out
+
+    async def get_firm_requirement_investment_types(
+        self, frn: str, req_ref: str
+    ) -> types.pagination.MultipageList[types.firm.FirmRequirementInvestmentType]:
+        out = types.pagination.MultipageList(
+            fetch_page=PaginatedResponseHandler(
+                lambda page_idx: self._client.get_firm_requirement_investment_types(frn, req_ref, page=page_idx),
+                lambda data: [types.firm.FirmRequirementInvestmentType.model_validate(row) for row in data],
+            ).fetch_page,
+        )
+        await out._async_init()
+        return out
+
+    async def get_firm_regulators(self, frn: str) -> types.pagination.MultipageList[types.firm.FirmRegulator]:
+        """Get firm regulators by FRN.
+
+        Args:
+            frn: The firm's FRN.
+
+        Returns:
+            A list of the firm's regulators.
+        """
+        out = types.pagination.MultipageList(
+            fetch_page=PaginatedResponseHandler(
+                lambda page_idx: self._client.get_firm_regulators(frn, page=page_idx),
+                lambda data: [types.firm.FirmRegulator.model_validate(item) for item in data],
+            ).fetch_page,
+        )
+        await out._async_init()
+        return out
+
+    def _parse_firm_passports_pg(self, data: list[dict]) -> list[types.firm.FirmPassport]:
+        out = []
+        for el in data:
+            if not isinstance(el, dict):
+                logger.warning(f"Unexpected firm passport entry format: {el!r}")
+                continue
+            for key, value in el.items():
+                key = key.lower().strip()
+                if key == "passports":
+                    assert isinstance(value, list)
+                    for value_el in value:
+                        out.append(types.firm.FirmPassport.model_validate(value_el))
+                else:
+                    logger.warning(f"Unexpected firm passport entry field: {key}={value!r}")
+        return out
+
+    async def get_firm_passports(self, frn: str) -> types.pagination.MultipageList[types.firm.FirmPassport]:
+        """Get firm passports by FRN.
+
+        Args:
+            frn: The firm's FRN.
+
+        Returns:
+            A list of the firm's passports.
+        """
+        out = types.pagination.MultipageList(
+            fetch_page=PaginatedResponseHandler(
+                lambda page_idx: self._client.get_firm_passports(frn, page=page_idx),
+                self._parse_firm_passports_pg,
+            ).fetch_page,
+        )
+        await out._async_init()
+        return out

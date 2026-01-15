@@ -632,7 +632,9 @@ class RawClient:
             page=page,
         )
 
-    async def get_firm_requirement_investment_types(self, frn: str, req_ref: str) -> FcaApiResponse:
+    async def get_firm_requirement_investment_types(
+        self, frn: str, req_ref: str, page: int | None = None
+    ) -> FcaApiResponse:
         """:py:class:`~fca_api.raw.FcaApiResponse`:
         Returns a response containing any investment types listed for a specific
         requirement associated with a firm, given its firm reference number
@@ -665,9 +667,10 @@ class RawClient:
             frn,
             const.ResourceTypes.FIRM.value.type_name,
             modifiers=("Requirements", req_ref, "InvestmentTypes"),
+            page=page,
         )
 
-    async def get_firm_regulators(self, frn: str) -> FcaApiResponse:
+    async def get_firm_regulators(self, frn: str, page: int | None = None) -> FcaApiResponse:
         """:py:class:`~fca_api.raw.FcaApiResponse`:
         Returns a response containing the regulators associated with a firm,
         given its firm reference number (FRN).
@@ -696,9 +699,10 @@ class RawClient:
             frn,
             const.ResourceTypes.FIRM.value.type_name,
             modifiers=("Regulators",),
+            page=page,
         )
 
-    async def get_firm_passports(self, frn: str) -> FcaApiResponse:
+    async def get_firm_passports(self, frn: str, page: int | None = None) -> FcaApiResponse:
         """:py:class:`~fca_api.raw.FcaApiResponse`:
         Returns a response containing the passports associated with a firm,
         given its firm reference number (FRN).
@@ -727,6 +731,7 @@ class RawClient:
             frn,
             const.ResourceTypes.FIRM.value.type_name,
             modifiers=("Passports",),
+            page=page,
         )
 
     async def get_firm_passport_permissions(self, frn: str, country: str) -> FcaApiResponse:

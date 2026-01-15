@@ -717,3 +717,94 @@ class FirmRequirement(base.RelaxedBase):
             default=None,
         ),
     ]
+
+
+class FirmRequirementInvestmentType(base.Base):
+    """An investment type associated with a firm requirement."""
+
+    name: Annotated[
+        str,
+        pydantic.Field(
+            description="The name of the investment type.",
+            validation_alias=pydantic.AliasChoices("investment type name", "name"),
+            serialization_alias="name",
+        ),
+        pydantic.StringConstraints(
+            strip_whitespace=True,
+            to_lower=True,
+        ),
+    ]
+
+
+class FirmRegulator(base.Base):
+    """A regulator associated with a firm."""
+
+    name: Annotated[
+        str,
+        pydantic.Field(
+            description="The name of the regulator.",
+            validation_alias=pydantic.AliasChoices("regulator name", "name"),
+            serialization_alias="name",
+        ),
+        pydantic.StringConstraints(
+            strip_whitespace=True,
+        ),
+    ]
+    effective_date: Annotated[
+        datetime.datetime,
+        pydantic.Field(
+            description="The date from which the regulator association became effective.",
+            validation_alias=pydantic.AliasChoices("effective date", "effective_date"),
+            serialization_alias="effective_date",
+        ),
+        field_parsers.ParseFcaDate,
+    ]
+    termination_date: Annotated[
+        Optional[datetime.datetime],
+        pydantic.Field(
+            description="The date on which the regulator association was terminated, if applicable.",
+            validation_alias=pydantic.AliasChoices("termination date", "termination_date"),
+            serialization_alias="termination_date",
+            default=None,
+        ),
+        field_parsers.ParseFcaDate,
+    ]
+
+
+class FirmPassport(base.Base):
+    """A passport associated with a firm."""
+
+    country: Annotated[
+        str,
+        pydantic.Field(
+            description="The country associated with the passport.",
+        ),
+        pydantic.StringConstraints(
+            strip_whitespace=True,
+            to_upper=True,
+        ),
+    ]
+    permissions: Annotated[
+        str,
+        pydantic.Field(
+            description="The permissions granted under the passport.",
+        ),
+        pydantic.StringConstraints(
+            strip_whitespace=True,
+            to_lower=True,
+        ),
+    ]
+    direction: Annotated[
+        Literal["in", "out"],
+        pydantic.Field(
+            description="The direction of the passport (inbound or outbound).",
+            validation_alias=pydantic.AliasChoices("passportdirection", "direction"),
+            serialization_alias="direction",
+        ),
+        pydantic.BeforeValidator(
+            lambda val: {
+                "passporting out": "out",
+                "passporting in": "in",
+            }.get(val.strip().lower(), val)
+        ),
+    ]
