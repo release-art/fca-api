@@ -808,3 +808,61 @@ class FirmPassport(base.Base):
             }.get(val.strip().lower(), val)
         ),
     ]
+
+
+class PassportPermission(base.Base):
+    """A permission associated with a firm passport."""
+
+    name: Annotated[
+        str,
+        pydantic.Field(
+            description="The name of the passport permission.",
+            validation_alias=pydantic.AliasChoices("Name", "name"),
+            serialization_alias="name",
+        ),
+        pydantic.StringConstraints(
+            strip_whitespace=True,
+            to_lower=True,
+        ),
+    ]
+    investment_types: Annotated[
+        list[str],
+        pydantic.Field(
+            description="The investment types associated with the passport permission.",
+            validation_alias=pydantic.AliasChoices("InvestmentTypes", "investment_types"),
+            serialization_alias="investment_types",
+        ),
+    ]
+
+
+class FirmPassportPermission(FirmPassport):
+    """A permission associated with a firm passport."""
+
+    directive: Annotated[
+        str,
+        pydantic.Field(
+            description="The directive under which the passport permission is granted.",
+        ),
+        pydantic.StringConstraints(
+            strip_whitespace=True,
+            to_lower=True,
+        ),
+    ]
+    type: Annotated[
+        str,
+        pydantic.Field(
+            description="The type of the passport.",
+            validation_alias=pydantic.AliasChoices("passporttype", "type"),
+            serialization_alias="type",
+        ),
+        pydantic.StringConstraints(
+            strip_whitespace=True,
+            to_lower=True,
+        ),
+    ]
+    permissions: Annotated[
+        list[PassportPermission],
+        pydantic.Field(
+            description="The specific permissions granted under the passport.",
+        ),
+    ]

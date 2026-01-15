@@ -450,3 +450,23 @@ class Client:
         )
         await out._async_init()
         return out
+
+    async def get_firm_passport_permissions(
+        self, frn: str, country: str
+    ) -> types.pagination.MultipageList[types.firm.FirmPassportPermission]:
+        """Get firm passport permissions by FRN and country.
+
+        Args:
+            frn: The firm's FRN.
+            country: The country code.
+        Returns:
+            A list of the firm's passport permissions for the specified country.
+        """
+        out = types.pagination.MultipageList(
+            fetch_page=PaginatedResponseHandler(
+                lambda page_idx: self._client.get_firm_passport_permissions(frn, country, page=page_idx),
+                lambda data: [types.firm.FirmPassportPermission.model_validate(item) for item in data],
+            ).fetch_page,
+        )
+        await out._async_init()
+        return out

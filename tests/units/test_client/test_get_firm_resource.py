@@ -456,6 +456,10 @@ class TestRandomFirmDetails:
                 "permissions": "https://register.fca.org.uk/services/v0.1/firm/122702/passports/gibraltar/permission",
             }
         ]
+        # Test fetching the permissions for the passport
+        passport_perm = await test_client.get_firm_passport_permissions("122702", "GIBRALTAR")
+        await passport_perm.fetch_all_pages()
+        assert len(passport_perm) == 3
 
     @pytest.mark.asyncio
     @pytest.mark.parametrize(
@@ -489,3 +493,17 @@ class TestRandomFirmDetails:
         out = await test_client.get_firm_passports(frn)
         await out.fetch_all_pages()
         assert len(out) > 0
+
+    @pytest.mark.asyncio
+    @pytest.mark.parametrize(
+        "frn",
+        LARGE_BANK_FRNS,
+    )
+    async def test_get_firm_passport_permissions(self, test_client: fca_api.api.Client, frn):
+        """Test that the data is correcly parsed for the large banks"""
+        out = await test_client.get_firm_passports(frn)
+        await out.fetch_all_pages()
+        for passport in out.local_items():
+            perm_out = await test_client.get_firm_passport_permissions(frn, passport.country)
+            await perm_out.fetch_all_pages()
+            assert len(perm_out) > 0

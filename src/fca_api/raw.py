@@ -734,7 +734,7 @@ class RawClient:
             page=page,
         )
 
-    async def get_firm_passport_permissions(self, frn: str, country: str) -> FcaApiResponse:
+    async def get_firm_passport_permissions(self, frn: str, country: str, page: int | None = None) -> FcaApiResponse:
         """:py:class:`~fca_api.raw.FcaApiResponse`:
         Returns a response containing country-specific passport permissions for
         a firm and a country, given its firm reference number (FRN) and country
@@ -767,6 +767,7 @@ class RawClient:
             frn,
             const.ResourceTypes.FIRM.value.type_name,
             modifiers=("Passports", country, "Permission"),
+            page=page,
         )
 
     async def get_firm_waivers(self, frn: str) -> FcaApiResponse:
