@@ -924,3 +924,6 @@ class FirmExclusion(base.Base):
             description="Details of the particular exclusion relied upon.",
         ),
     ]
+
+class FirmDisciplinaryRecord(base.Base):
+    """A disciplinary record associated with a firm."""

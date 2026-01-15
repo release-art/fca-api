@@ -834,7 +834,7 @@ class RawClient:
             page=page,
         )
 
-    async def get_firm_disciplinary_history(self, frn: str) -> FcaApiResponse:
+    async def get_firm_disciplinary_history(self, frn: str, page: int | None = None) -> FcaApiResponse:
         """:py:class:`~fca_api.raw.FcaApiResponse`:
         Returns a response containing the disciplinary history of a firm, given
         its firm reference number (FRN).
@@ -863,6 +863,7 @@ class RawClient:
             frn,
             const.ResourceTypes.FIRM.value.type_name,
             modifiers=("DisciplinaryHistory",),
+            page=page,
         )
 
     async def get_firm_appointed_representatives(self, frn: str) -> FcaApiResponse:

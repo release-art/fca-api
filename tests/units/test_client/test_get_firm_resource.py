@@ -444,6 +444,12 @@ class TestNutmegFirmDetails:
         await out.fetch_all_pages()
         assert len(out) == 0
 
+    @pytest.mark.asyncio
+    async def test_get_firm_disciplinary_history(self, test_client: fca_api.api.Client, frn: str):
+        out = await test_client.get_firm_disciplinary_history(frn)
+        await out.fetch_all_pages()
+        assert len(out) == 0
+
 
 LARGE_BANK_FRNS = [
     "122702",  # Barclays Bank Plc
