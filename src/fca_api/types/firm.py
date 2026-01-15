@@ -866,3 +866,61 @@ class FirmPassportPermission(FirmPassport):
             description="The specific permissions granted under the passport.",
         ),
     ]
+
+
+class FirmWaiver(base.Base):
+    """A waiver associated with a firm."""
+
+    rule_article_numbers: Annotated[
+        list[str],
+        pydantic.Field(
+            description="The rule or article numbers associated with the waiver.",
+            validation_alias=pydantic.AliasChoices("rule_articleno", "rule_article_numbers"),
+            serialization_alias="rule_article_numbers",
+        ),
+    ]
+    discretions: Annotated[
+        Optional[str],
+        pydantic.Field(
+            description="The discretions granted under the waiver.",
+            validation_alias=pydantic.AliasChoices("waivers_discretions", "discretions"),
+            serialization_alias="discretions",
+        ),
+    ]
+    discretions_url: Annotated[
+        Optional[pydantic.HttpUrl],
+        pydantic.Field(
+            description="URL to fetch more details about the discretions associated with the waiver.",
+            validation_alias=pydantic.AliasChoices("waivers_discretions_url", "discretions_url"),
+            serialization_alias="discretions_url",
+        ),
+    ]
+
+
+class FirmExclusion(base.Base):
+    """An exclusion associated with a firm."""
+
+    type: Annotated[
+        str,
+        pydantic.Field(
+            description="The type of the exclusion.",
+            validation_alias=pydantic.AliasChoices("psd2_exclusion_type", "type"),
+            serialization_alias="type",
+        ),
+        pydantic.StringConstraints(
+            strip_whitespace=True,
+            to_lower=True,
+        ),
+    ]
+    description_of_services: Annotated[
+        str,
+        pydantic.Field(
+            description="Description of the services excluded.",
+        ),
+    ]
+    particular_exclusion_relied_upon: Annotated[
+        Optional[str],
+        pydantic.Field(
+            description="Details of the particular exclusion relied upon.",
+        ),
+    ]

@@ -470,3 +470,39 @@ class Client:
         )
         await out._async_init()
         return out
+
+    async def get_firm_waivers(self, frn: str) -> types.pagination.MultipageList[types.firm.FirmWaiver]:
+        """Get firm waivers by FRN.
+
+        Args:
+            frn: The firm's FRN.
+
+        Returns:
+            A list of the firm's waivers.
+        """
+        out = types.pagination.MultipageList(
+            fetch_page=PaginatedResponseHandler(
+                lambda page_idx: self._client.get_firm_waivers(frn, page=page_idx),
+                lambda data: [types.firm.FirmWaiver.model_validate(item) for item in data],
+            ).fetch_page,
+        )
+        await out._async_init()
+        return out
+
+    async def get_firm_exclusions(self, frn: str) -> types.pagination.MultipageList[types.firm.FirmExclusion]:
+        """Get firm exclusions by FRN.
+
+        Args:
+            frn: The firm's FRN.
+
+        Returns:
+            A list of the firm's exclusions.
+        """
+        out = types.pagination.MultipageList(
+            fetch_page=PaginatedResponseHandler(
+                lambda page_idx: self._client.get_firm_exclusions(frn, page=page_idx),
+                lambda data: [types.firm.FirmExclusion.model_validate(item) for item in data],
+            ).fetch_page,
+        )
+        await out._async_init()
+        return out

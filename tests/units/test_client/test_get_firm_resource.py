@@ -429,6 +429,21 @@ class TestNutmegFirmDetails:
         await out.fetch_all_pages()
         assert len(out) == 0
 
+    @pytest.mark.asyncio
+    async def test_get_firm_waivers(self, test_client: fca_api.api.Client, frn: str):
+        out = await test_client.get_firm_waivers(frn)
+        await out.fetch_all_pages()
+        assert len(out) == 1
+        assert out.model_dump(mode="json") == [
+            {"discretions": None, "discretions_url": None, "rule_article_numbers": ["MIFIDPRU 3.3.3R"]}
+        ]
+
+    @pytest.mark.asyncio
+    async def test_get_firm_exclusions(self, test_client: fca_api.api.Client, frn: str):
+        out = await test_client.get_firm_exclusions(frn)
+        await out.fetch_all_pages()
+        assert len(out) == 0
+
 
 LARGE_BANK_FRNS = [
     "122702",  # Barclays Bank Plc
@@ -507,3 +522,22 @@ class TestRandomFirmDetails:
             perm_out = await test_client.get_firm_passport_permissions(frn, passport.country)
             await perm_out.fetch_all_pages()
             assert len(perm_out) > 0
+
+    @pytest.mark.asyncio
+    @pytest.mark.parametrize(
+        "frn",
+        LARGE_BANK_FRNS,
+    )
+    async def test_get_firm_waivers(self, test_client: fca_api.api.Client, frn: str):
+        out = await test_client.get_firm_waivers(frn)
+        await out.fetch_all_pages()
+        assert len(out) > 1
+
+    @pytest.mark.asyncio
+    @pytest.mark.parametrize(
+        "frn",
+        LARGE_BANK_FRNS,
+    )
+    async def test_get_firm_exclusions(self, test_client: fca_api.api.Client, frn: str):
+        out = await test_client.get_firm_exclusions(frn)
+        await out.fetch_all_pages()

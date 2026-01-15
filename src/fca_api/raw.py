@@ -770,7 +770,7 @@ class RawClient:
             page=page,
         )
 
-    async def get_firm_waivers(self, frn: str) -> FcaApiResponse:
+    async def get_firm_waivers(self, frn: str, page: int | None = None) -> FcaApiResponse:
         """:py:class:`~fca_api.raw.FcaApiResponse`:
         Returns a response containing any waivers applying to a firm, given its
         firm reference number (FRN).
@@ -799,9 +799,10 @@ class RawClient:
             frn,
             const.ResourceTypes.FIRM.value.type_name,
             modifiers=("Waivers",),
+            page=page,
         )
 
-    async def get_firm_exclusions(self, frn: str) -> FcaApiResponse:
+    async def get_firm_exclusions(self, frn: str, page: int | None = None) -> FcaApiResponse:
         """:py:class:`~fca_api.raw.FcaApiResponse`:
         Returns a response containing any exclusions applying to a firm, given
         its firm reference number (FRN).
@@ -830,6 +831,7 @@ class RawClient:
             frn,
             const.ResourceTypes.FIRM.value.type_name,
             modifiers=("Exclusions",),
+            page=page,
         )
 
     async def get_firm_disciplinary_history(self, frn: str) -> FcaApiResponse:
