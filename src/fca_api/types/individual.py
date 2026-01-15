@@ -58,9 +58,9 @@ class Individual(base.Base):
     current_roles_and_activities: Annotated[
         Optional[pydantic.HttpUrl],
         pydantic.Field(
-            description="URL to the individual's disciplinary history, if any.",
-            validation_alias=pydantic.AliasChoices("current roles & activities", "disciplinary_history"),
-            serialization_alias="disciplinary_history",
+            description="URL to the individual's current roles and activities, if available.",
+            validation_alias=pydantic.AliasChoices("current roles & activities", "current_roles_and_activities"),
+            serialization_alias="current_roles_and_activities",
         ),
     ]
 
@@ -101,7 +101,7 @@ class IndividualControlledFunction(base.Base):
     restriction_end_date: Annotated[
         Optional[datetime.datetime],
         pydantic.Field(
-            description="Start date of any restriction associated with the controlled function.",
+            description="End date of any restriction associated with the controlled function.",
             validation_alias=pydantic.AliasChoices("suspension / restriction end date", "restriction_end_date"),
             serialization_alias="restriction_end_date",
         ),

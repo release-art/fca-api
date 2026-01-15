@@ -7,7 +7,12 @@ from . import base, field_parsers
 
 
 class ProductDetails(base.Base):
-    """A financial product (e.g. a fund)"""
+    """Core details for a financial product (for example a fund).
+
+    Captures key attributes of a product as presented in the FCA register,
+    including scheme type, operator and links to related resources such as
+    the operator firm, sub-funds and CIS depositary.
+    """
 
     type: Annotated[
         str,
@@ -133,7 +138,11 @@ class ProductDetails(base.Base):
 
 
 class ProductNameAlias(base.Base):
-    """An alternate or secondary name for a financial product (e.g. a fund)"""
+    """An alternate or secondary name for a financial product.
+
+    The FCA register can list multiple names for the same product over time;
+    this model records the name and the period for which it was effective.
+    """
 
     name: Annotated[
         str,
@@ -164,7 +173,11 @@ class ProductNameAlias(base.Base):
 
 
 class SubFundDetails(base.Base):
-    """Details of a sub-fund within a financial product (e.g. a fund)"""
+    """Details of a sub-fund within a financial product.
+
+    Sub-funds inherit many characteristics from the parent product but have
+    their own name, type and detail page in the register.
+    """
 
     name: Annotated[
         str,

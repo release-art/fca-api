@@ -7,6 +7,17 @@ from . import base, field_parsers
 
 
 class FirmDetails(base.Base):
+    """Core details for a firm on the FCA register.
+
+    This model represents the main firm details returned by the register,
+    including identifiers, status information, key regulatory flags and
+    links to related resources. It is the primary type returned by
+    high-level methods such as ``Client.get_firm``.
+
+    The field definitions handle common FCA patterns such as mixed-case
+    field names, date parsing and normalisation of status and type values.
+    """
+
     frn: Annotated[str, pydantic.Field(alias="frn")]
     name: Annotated[
         str,
@@ -192,7 +203,7 @@ class FirmDetails(base.Base):
     exceptional_info_details: Annotated[
         list,
         pydantic.Field(
-            description="Additional information about the notices associated with the firm.",
+            description="Additional information about exceptional notices associated with the firm.",
             validation_alias=pydantic.AliasChoices("exceptional info details", "exceptional_info_details"),
             serialization_alias="exceptional_info_details",
         ),
@@ -341,7 +352,11 @@ class FirmNameAlias(base.Base):
 
 
 class FirmAddress(base.Base):
-    """A firm address data structure."""
+    """Address details for a firm.
+
+    Includes contact information (such as phone and website) as well as the
+    full postal address as shown in the FCA register.
+    """
 
     type: Annotated[
         str,
@@ -440,7 +455,12 @@ class FirmAddress(base.Base):
 
 
 class FirmControlledFunction(base.Base):
-    """A firm controlled function data structure."""
+    """Details of a controlled function associated with a firm.
+
+    Represents roles such as significant influence or controlled functions
+    that individuals perform for the firm, together with effective dates
+    and any associated restrictions.
+    """
 
     type: Annotated[
         Literal["current", "previous"],
@@ -475,7 +495,7 @@ class FirmControlledFunction(base.Base):
     end_date: Annotated[
         Optional[datetime.datetime],
         pydantic.Field(
-            description="The date from which the controlled function became effective.",
+            description="The date on which the controlled function ended, if applicable.",
             validation_alias=pydantic.AliasChoices("end date", "end_date"),
             serialization_alias="end_date",
             default=None,
@@ -516,7 +536,7 @@ class FirmControlledFunction(base.Base):
     restriction_start_date: Annotated[
         Optional[datetime.datetime],
         pydantic.Field(
-            description="The end date of any restrictions associated with the controlled function.",
+            description="The start date of any restrictions associated with the controlled function.",
             validation_alias=pydantic.AliasChoices("suspension / restriction start date", "restriction_start_date"),
             serialization_alias="restriction_start_date",
             default=None,
@@ -598,7 +618,7 @@ class FirmPermission(base.Base):
     limitation_not_found: Annotated[
         Optional[list[str]],
         pydantic.Field(
-            description="Any missing limitations (?).",
+            description="Limitations referenced in the FCA data but not resolved to a known limitation entry.",
             validation_alias=pydantic.AliasChoices("limitation not found", "limitation_not_found"),
             serialization_alias="limitation_not_found",
             default=None,
@@ -607,7 +627,7 @@ class FirmPermission(base.Base):
     investment_type: Annotated[
         Optional[list[str]],
         pydantic.Field(
-            description="Any limitations associated with the permission.",
+            description="The types of investments the permission relates to.",
             validation_alias=pydantic.AliasChoices("investment type", "investment_type"),
             serialization_alias="investment_type",
             default=None,
@@ -625,7 +645,7 @@ class FirmPermission(base.Base):
     acting_as_cbtl_administrator: Annotated[
         Optional[bool],
         pydantic.Field(
-            description="Indicates whether the permission involves acting as a CBTL advisor.",
+            description="Indicates whether the permission involves acting as a CBTL administrator.",
             validation_alias=pydantic.AliasChoices("acting as a cbtl administrator", "acting_as_cbtl_administrator"),
             serialization_alias="acting_as_cbtl_administrator",
             default=None,
@@ -643,7 +663,7 @@ class FirmPermission(base.Base):
     acting_as_cbtl_lender: Annotated[
         Optional[bool],
         pydantic.Field(
-            description="Indicates whether the permission involves acting as a CBTL lender.",
+            description="Indicates whether the permission involves acting as a CBTL lender or provider of credit.",
             validation_alias=pydantic.AliasChoices("acting as a cbtl lender", "acting_as_cbtl_lender"),
             serialization_alias="acting_as_cbtl_lender",
             default=None,

@@ -425,11 +425,13 @@ class MultipageList(typing.Generic[T]):
         return tuple(tuple(page.items) for page in self._pages)
 
     def __len__(self) -> int:
-        """
-        Return the estimated total number of items available from the API.
+        """Return the total number of items reported by the API.
 
-        Please ntoe that the result_info.total_count may not always be accurate,
-        so it is possible to get an IndexError when accessing an index less than this length.
+        When not all pages have been fetched this uses the ``total_count``
+        value from the pagination metadata returned by the FCA API, so it
+        should be treated as an estimate. In rare cases where the backend
+        metadata is inconsistent it is still possible to receive an
+        ``IndexError`` when accessing an index that is less than this length.
         """
         if self._has_next_page():
             # while the list was not fully fetched,

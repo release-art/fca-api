@@ -139,7 +139,39 @@ class FirmSearchResult(base.Base):
 
 
 class IndividualSearchResult(base.Base):
-    """A model representing an individual search result."""
+    """Search result for an individual from the FCA register.
+
+    Represents a single individual found in search results, containing core
+    identification and status information. This is returned by individual
+    name searches and provides the essential data needed to identify and
+    access detailed individual information.
+
+    Attributes:
+        url: Direct link to the individual's page in the FCA register (may be None)
+        irn: The individual's unique Individual Reference Number (IRN)
+        name: The individual's full name as shown in the register
+        status: Current regulatory status of the individual
+        type: Type of individual entry (for example, "approved person")
+
+    Example:
+        Access individual search result data::
+
+            individuals = await client.search_irn("Jane Smith")
+            if len(individuals) > 0:
+                person = individuals[0]
+
+                print(f"Found: {person.name}")
+                print(f"IRN: {person.irn}")
+                print(f"Status: {person.status}")
+                print(f"Type: {person.type}")
+
+                if person.url:
+                    print(f"Details: {person.url}")
+
+    Note:
+        The ``irn`` field is the key identifier for retrieving detailed
+        individual information using ``client.get_individual()``.
+    """
 
     url: Annotated[
         pydantic.HttpUrl | None,
@@ -187,18 +219,50 @@ class IndividualSearchResult(base.Base):
 
 
 class FundSearchResult(base.Base):
-    """A model representing a fund search result."""
+    """Search result for a fund or other financial product.
+
+    Represents a single product found in search results, containing core
+    identification and status information. This is returned by product
+    name searches and provides the essential data needed to identify and
+    access detailed product information.
+
+    Attributes:
+        url: Direct link to the product's page in the FCA register (may be None)
+        prn: The product's unique Product Reference Number (PRN)
+        status: Current regulatory status of the product
+        type: Type of product (for example, "UCITS", "AIF")
+        name: The product's name
+
+    Example:
+        Access product search result data::
+
+            funds = await client.search_prn("Vanguard")
+            if len(funds) > 0:
+                product = funds[0]
+
+                print(f"Found: {product.name}")
+                print(f"PRN: {product.prn}")
+                print(f"Status: {product.status}")
+                print(f"Type: {product.type}")
+
+                if product.url:
+                    print(f"Details: {product.url}")
+
+    Note:
+        The ``prn`` field is the key identifier for retrieving detailed
+        product information using ``client.get_fund()``.
+    """
 
     url: Annotated[
         pydantic.HttpUrl | None,
         pydantic.Field(
-            description="The URL of the firm's record in the FCA register.",
+            description="The URL of the product's record in the FCA register.",
         ),
     ]
     prn: Annotated[
         str,
         pydantic.Field(
-            description="The fund's Financial Reference Number (FRN).",
+            description="The product's reference number (PRN).",
             validation_alias=pydantic.AliasChoices("reference number", "prn"),
             serialization_alias="prn",
         ),
@@ -206,7 +270,7 @@ class FundSearchResult(base.Base):
     status: Annotated[
         str,
         pydantic.Field(
-            description="The firm's status.",
+            description="The product's status.",
         ),
         pydantic.StringConstraints(
             to_lower=True,
@@ -228,6 +292,6 @@ class FundSearchResult(base.Base):
     name: Annotated[
         str,
         pydantic.Field(
-            description="The firm's name.",
+            description="The product's name.",
         ),
     ]

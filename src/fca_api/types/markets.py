@@ -6,7 +6,12 @@ from . import base, field_parsers
 
 
 class RegulatedMarket(base.Base):
-    """Regulated market details."""
+    """Details of a regulated market on the FCA register.
+
+    This model is used by high-level helpers such as
+    ``Client.get_regulated_markets`` to provide a typed view over the
+    regulated markets dataset.
+    """
 
     name: Annotated[
         str,
