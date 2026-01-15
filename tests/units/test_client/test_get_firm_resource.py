@@ -472,10 +472,10 @@ class TestRandomFirmDetails:
         assert len(out) == 0
 
     @pytest.mark.asyncio
-    async def test_j_l_bikes_ar(self, test_client: fca_api.api.Client):
-        out = await test_client.get_firm_appointed_representatives("482398")
+    async def test_sbg_ar(self, test_client: fca_api.api.Client):
+        out = await test_client.get_firm_appointed_representatives("454811")
         await out.fetch_all_pages()
-        assert len(out) == 0
+        assert len(out) > 1500
 
     @pytest.mark.asyncio
     async def test_barclays_passports(self, test_client: fca_api.api.Client):

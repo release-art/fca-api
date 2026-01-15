@@ -534,10 +534,6 @@ class Client:
             assert isinstance(items, list), items
             for item in items:
                 out.append(types.firm.FirmAppointedRepresentative.model_validate({"fca_api_lst_type": key} | item))
-        for el in data:
-            if not isinstance(el, dict):
-                logger.warning(f"Unexpected firm appointed representative entry format: {el!r}")
-                continue
         return out
 
     async def get_firm_appointed_representatives(
