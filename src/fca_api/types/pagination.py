@@ -8,8 +8,10 @@ import typing
 
 import pydantic
 
+from . import settings
+
 logger = logging.getLogger(__name__)
-T = typing.TypeVar("T")
+T = typing.TypeVar("T", bound=pydantic.BaseModel)
 
 
 class PaginatedResultInfo(pydantic.BaseModel):
@@ -26,7 +28,9 @@ class PaginatedResultInfo(pydantic.BaseModel):
 
     @classmethod
     def model_validate(cls, data: dict) -> "PaginatedResultInfo":
-        return super().model_validate({key.lower().strip(): value for (key, value) in data.items()})
+        return super().model_validate(
+            {key.lower().strip(): value for (key, value) in data.items()}, extra=settings.model_validate_extra
+        )
 
 
 FetchPageRvT = typing.Tuple[
@@ -105,6 +109,7 @@ class MultipageList(typing.Generic[T]):
                 try:
                     (new_page_info, new_items) = await self._fetch_page_cb(last_fetched_page + 1)
                 except Exception as exc:
+                    raise
                     logger.exception(f"Failed to fetch page {last_fetched_page + 1}: {exc}")
                     if last_fetched_page == 0:
                         self._result_info = SpecialResultInfoState.FIRST_PAGE_FETCH_FAILED
@@ -193,3 +198,11 @@ class MultipageList(typing.Generic[T]):
 
     def __repr__(self) -> str:
         return f"MultipageList({self._pages})"
+
+    def model_dump(self, mode: typing.Literal["json", "python"] = "json") -> typing.List[typing.Dict[str, typing.Any]]:
+        """Dump the items in the list to a list of dictionaries.
+
+        Returns:
+            A list of dictionaries representing the items.
+        """
+        return [item.model_dump(mode=mode) for item in self.local_items()]

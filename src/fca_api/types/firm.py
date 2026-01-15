@@ -1,5 +1,5 @@
 import datetime
-from typing import Annotated, Optional
+from typing import Annotated, Literal, Optional
 
 import pydantic
 
@@ -65,7 +65,7 @@ class FirmDetails(base.Base):
             validation_alias=pydantic.AliasChoices("system timestamp", "timestamp"),
             serialization_alias="timestamp",
         ),
-        pydantic.BeforeValidator(field_parsers.parse_date),
+        field_parsers.ParseFcaDate,
     ]
     status_effective_date: Annotated[
         Optional[datetime.datetime],
@@ -74,7 +74,7 @@ class FirmDetails(base.Base):
             validation_alias=pydantic.AliasChoices("status effective date", "status_effective_date"),
             serialization_alias="status_effective_date",
         ),
-        pydantic.BeforeValidator(field_parsers.parse_date),
+        field_parsers.ParseFcaDate,
     ]
     sub_status: Annotated[
         Optional[str],
@@ -95,7 +95,7 @@ class FirmDetails(base.Base):
             validation_alias=pydantic.AliasChoices("sub status effective from", "sub_status_effective_from"),
             serialization_alias="sub_status_effective_from",
         ),
-        pydantic.BeforeValidator(field_parsers.parse_date),
+        field_parsers.ParseFcaDate,
     ]
     mutual_society_number: Annotated[
         Optional[str],
@@ -124,7 +124,7 @@ class FirmDetails(base.Base):
             validation_alias=pydantic.AliasChoices("mlrs status effective date", "mlrs_status_effective_date"),
             serialization_alias="mlrs_status_effective_date",
         ),
-        pydantic.BeforeValidator(field_parsers.parse_date),
+        field_parsers.ParseFcaDate,
     ]
     e_money_agent_status: Annotated[
         Optional[str],
@@ -145,7 +145,7 @@ class FirmDetails(base.Base):
             validation_alias=pydantic.AliasChoices("e-money agent effective date", "e_money_agent_effective_date"),
             serialization_alias="e_money_agent_effective_date",
         ),
-        pydantic.BeforeValidator(field_parsers.parse_date),
+        field_parsers.ParseFcaDate,
     ]
     psd_emd_status: Annotated[
         Optional[str],
@@ -166,7 +166,7 @@ class FirmDetails(base.Base):
             validation_alias=pydantic.AliasChoices("psd / emd effective date", "psd_emd_effective_date"),
             serialization_alias="psd_emd_effective_date",
         ),
-        pydantic.BeforeValidator(field_parsers.parse_date),
+        field_parsers.ParseFcaDate,
     ]
     psd_agent_status: Annotated[
         Optional[str],
@@ -187,7 +187,7 @@ class FirmDetails(base.Base):
             validation_alias=pydantic.AliasChoices("psd agent effective date", "psd_agent_effective_date"),
             serialization_alias="psd_agent_effective_date",
         ),
-        pydantic.BeforeValidator(field_parsers.parse_date),
+        field_parsers.ParseFcaDate,
     ]
     exceptional_info_details: Annotated[
         list,
@@ -317,7 +317,7 @@ class CurrentFirmNameAlias(base.Base):
             validation_alias=pydantic.AliasChoices("effective from", "effective_from"),
             serialization_alias="effective_from",
         ),
-        pydantic.BeforeValidator(field_parsers.parse_date),
+        field_parsers.ParseFcaDate,
     ]
 
 
@@ -331,7 +331,7 @@ class PreviousFirmNameAlias(CurrentFirmNameAlias):
             validation_alias=pydantic.AliasChoices("effective to", "effective_to"),
             serialization_alias="effective_to",
         ),
-        pydantic.BeforeValidator(field_parsers.parse_date),
+        field_parsers.ParseFcaDate,
     ]
 
 
@@ -397,6 +397,16 @@ class FirmAddress(base.Base):
             strip_whitespace=True,
         ),
         pydantic.Field(
+            description="The county of the address.",
+        ),
+    ]
+    country: Annotated[
+        str,
+        pydantic.StringConstraints(
+            to_lower=True,
+            strip_whitespace=True,
+        ),
+        pydantic.Field(
             description="The country of the address.",
         ),
     ]
@@ -408,8 +418,17 @@ class FirmAddress(base.Base):
             validation_alias=pydantic.AliasChoices("website address", "website_url"),
             serialization_alias="website_url",
         ),
-        pydantic.BeforeValidator(lambda v: None if not v else v),
+        field_parsers.StrOrNone,
     ]
+    individual: Annotated[
+        Optional[str],
+        pydantic.Field(
+            description="The individual associated with the address, if available.",
+            default=None,
+        ),
+        field_parsers.StrOrNone,
+    ]
+
     address_url: Annotated[
         pydantic.HttpUrl,
         pydantic.Field(
@@ -424,3 +443,95 @@ class FirmAddressesResponse(base.Base):
     """An representation of firm addresses response."""
 
     addresses: list[FirmAddress]
+
+
+class FirmControlledFunction(base.Base):
+    """A firm controlled function data structure."""
+
+    type: Annotated[
+        Literal["current", "previous"],
+        pydantic.StringConstraints(
+            to_lower=True,
+            strip_whitespace=True,
+        ),
+        pydantic.Field(
+            description="The type of the controlled function.",
+            validation_alias=pydantic.AliasChoices("fca_api_lst_type", "type"),
+            serialization_alias="type",
+        ),
+    ]
+    name: Annotated[
+        str,
+        pydantic.StringConstraints(
+            strip_whitespace=True,
+        ),
+        pydantic.Field(
+            description="The name of the controlled function.",
+        ),
+    ]
+    effective_date: Annotated[
+        datetime.datetime,
+        pydantic.Field(
+            description="The date from which the controlled function became effective.",
+            validation_alias=pydantic.AliasChoices("effective date", "effective_date"),
+            serialization_alias="effective_date",
+        ),
+        field_parsers.ParseFcaDate,
+    ]
+    end_date: Annotated[
+        Optional[datetime.datetime],
+        pydantic.Field(
+            description="The date from which the controlled function became effective.",
+            validation_alias=pydantic.AliasChoices("end date", "end_date"),
+            serialization_alias="end_date",
+            default=None,
+        ),
+        field_parsers.ParseFcaDate,
+    ]
+    individual_name: Annotated[
+        str,
+        pydantic.StringConstraints(
+            strip_whitespace=True,
+        ),
+        pydantic.Field(
+            description="The name of the individual associated with the controlled function.",
+            validation_alias=pydantic.AliasChoices("individual name", "individual_name"),
+            serialization_alias="individual_name",
+        ),
+    ]
+    restriction: Annotated[
+        Optional[str],
+        pydantic.StringConstraints(
+            strip_whitespace=True,
+        ),
+        pydantic.Field(
+            description="Any restrictions associated with the controlled function.",
+        ),
+        field_parsers.StrOrNone,
+    ]
+    restriction_end_date: Annotated[
+        Optional[datetime.datetime],
+        pydantic.Field(
+            description="The end date of any restrictions associated with the controlled function.",
+            validation_alias=pydantic.AliasChoices("suspension / restriction end date", "restriction_end_date"),
+            serialization_alias="restriction_end_date",
+            default=None,
+        ),
+        field_parsers.ParseFcaDate,
+    ]
+    restriction_start_date: Annotated[
+        Optional[datetime.datetime],
+        pydantic.Field(
+            description="The end date of any restrictions associated with the controlled function.",
+            validation_alias=pydantic.AliasChoices("suspension / restriction start date", "restriction_start_date"),
+            serialization_alias="restriction_start_date",
+            default=None,
+        ),
+        field_parsers.ParseFcaDate,
+    ]
+    url: Annotated[
+        pydantic.HttpUrl,
+        pydantic.Field(
+            description="The URL of the controlled function record in the FCA register.",
+        ),
+    ]

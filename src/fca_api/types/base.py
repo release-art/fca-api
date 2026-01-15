@@ -4,6 +4,8 @@ import typing
 
 import pydantic
 
+from . import settings
+
 
 class Base(pydantic.BaseModel):
     """Base class for FCA API types."""
@@ -18,4 +20,4 @@ class Base(pydantic.BaseModel):
                     key = key.lower().strip()
                 updated_data[key] = value
             data = updated_data
-        return super().model_validate(data)
+        return super().model_validate(data, extra=settings.model_validate_extra)

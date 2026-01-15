@@ -2,8 +2,15 @@
 
 import datetime
 
+import pydantic
 
-def parse_date(date_str: str) -> datetime.datetime | None:
+
+@pydantic.BeforeValidator
+def ParseFcaDate(date_str: str) -> datetime.datetime | None:
+    """Parse FCA date strings into datetime objects."""
+    if not isinstance(date_str, str):
+        raise TypeError(f"Expected a string, got {type(date_str).__name__}")
+    date_str = date_str.strip()
     if not date_str:
         return None
     for dt_format in (
@@ -19,3 +26,11 @@ def parse_date(date_str: str) -> datetime.datetime | None:
         except ValueError:
             continue
     raise ValueError(f"Date {date_str!r} is not in a recognized format")
+
+
+@pydantic.BeforeValidator
+def StrOrNone(value: str) -> str | None:
+    """Convert empty strings to None, otherwise strip whitespace."""
+    if not value or not value.strip():
+        return None
+    return value.strip()

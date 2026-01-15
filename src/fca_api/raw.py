@@ -300,7 +300,11 @@ class RawClient:
         return await self.common_search(firm_name, const.ResourceTypes.FIRM.value.type_name, page=page)
 
     async def _get_resource_info(
-        self, resource_ref_number: str, resource_type: str, modifiers: tuple[str] = None
+        self,
+        resource_ref_number: str,
+        resource_type: str,
+        modifiers: tuple[str] = None,
+        page: int | None = None,
     ) -> FcaApiResponse:
         """:py:class:`~fca_api.raw.FcaApiResponse`:
         A private, base handler for resource information API handlers.
@@ -384,6 +388,12 @@ class RawClient:
         if resource_type not in const.ResourceTypes.all_types():
             raise ValueError('Resource type must be one of the strings ``"firm"``, ``"fund"``, or ``"individual"``')
 
+        query_params = {}
+        assert page is None or page > 0, f"Invalid page number: {page}"
+        if page is not None:
+            assert isinstance(page, int) and page >= 1, page
+            query_params["pgnp"] = page
+
         resource_type_info = const.ResourceTypes.from_type_name(resource_type)
         resource_endpoint_base = resource_type_info.endpoint_base
 
@@ -391,6 +401,10 @@ class RawClient:
 
         if modifiers:
             url += f"/{'/'.join(modifiers)}"
+
+        if query_params:
+            search_str = urlencode(query_params)
+            url += f"?{search_str}"
 
         try:
             async with self._api_limiter():
@@ -488,7 +502,7 @@ class RawClient:
             modifiers=("Address",),
         )
 
-    async def get_firm_controlled_functions(self, frn: str) -> FcaApiResponse:
+    async def get_firm_controlled_functions(self, frn: str, page: int | None = None) -> FcaApiResponse:
         """:py:class:`~fca_api.raw.FcaApiResponse`:
         Returns a response containing the controlled functions associated with a
         firm, given its firm reference number (FRN).
@@ -517,6 +531,7 @@ class RawClient:
             frn,
             const.ResourceTypes.FIRM.value.type_name,
             modifiers=("CF",),
+            page=page,
         )
 
     async def get_firm_individuals(self, frn: str) -> FcaApiResponse:

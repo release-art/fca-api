@@ -17,6 +17,43 @@ T = typing.TypeVar("T")
 BaseSubclassT = typing.TypeVar("BaseSubclassT", bound=types.base.Base)
 
 
+class PaginatedResponseHandler(typing.Generic[T]):
+    _fetch_page: typing.Callable[[int], typing.Awaitable[raw.FcaApiResponse]]
+    _parse_data_fn: typing.Callable[[list[dict]], list[T]]
+
+    def __init__(
+        self,
+        fetch_page: typing.Callable[[int], typing.Awaitable[raw.FcaApiResponse]],
+        parse_data: typing.Callable[[list[dict]], list[T]],
+    ) -> None:
+        """Initialize the paginated response handler.
+
+        Args:
+            fetch_page: A callable that fetches a page of results given a page index.
+        """
+        self._fetch_page = fetch_page
+        self._parse_data_fn = parse_data
+
+    async def fetch_page(self, page_idx: int) -> types.pagination.FetchPageRvT[BaseSubclassT]:
+        """Fetch a page of results.
+
+        Args:
+            page_idx: The index of the page to fetch.
+
+        Returns:
+            A tuple containing the paginated result info and a list of result items.
+        """
+        res = await self._fetch_page(page_idx)
+        if res.result_info:
+            result_info = types.pagination.PaginatedResultInfo.model_validate(res.result_info)
+        else:
+            result_info = None
+        data = res.data
+        assert isinstance(data, list)
+        items = self._parse_data_fn(res.data)
+        return (result_info, items)
+
+
 class Client:
     """High-level Financial Services Register API client.
 
@@ -130,7 +167,7 @@ class Client:
         assert isinstance(data, list) and len(data) == 1, "Expected a single firm detail object in the response data."
         return types.firm.FirmDetails.model_validate(data[0])
 
-    async def get_firm_names(self, frn: str):
+    async def get_firm_names(self, frn: str) -> types.firm.FirmNamesResponse:
         """Get firm names by FRN.
 
         Args:
@@ -166,7 +203,7 @@ class Client:
             }
         )
 
-    async def get_firm_addresses(self, frn: str):
+    async def get_firm_addresses(self, frn: str) -> types.firm.FirmAddressesResponse:
         """Get firm addresses by FRN.
 
         Args:
@@ -196,3 +233,53 @@ class Client:
         return types.firm.FirmAddressesResponse.model_validate(
             {"addresses": [types.firm.FirmAddress.model_validate(item) for item in data]}
         )
+
+    def _parse_firm_controlled_functions_pg(self, data: list[dict]) -> list[types.firm.FirmControlledFunction]:
+        """Get firm controlled functions by FRN.
+
+        Args:
+            frn: The firm's FRN.
+
+        Returns:
+            A list of the firm's controlled functions.
+        """
+        out_items: list[types.firm.FirmControlledFunction] = []
+        for data_row in data:
+            item_data = {}
+            if not isinstance(data_row, dict):
+                logger.warning(f"Unexpected firm controlled function entry format: {data_row!r}")
+                continue
+            for key, value in data_row.items():
+                item_data["fca_api_lst_type"] = key.lower().strip()
+                if not isinstance(value, dict):
+                    logger.warning(f"Unexpected firm controlled function entry value format: {value!r}")
+                    continue
+                for subkey, subvalue in value.items():
+                    subkey_el = subkey.lower().strip()
+                    subval_name_el = subvalue.get("name", subkey_el).lower().strip()
+                    if subkey_el != subval_name_el:
+                        logger.warning(
+                            f"Mismatch in controlled function subkey and name: {subkey_el!r} != {subval_name_el!r}"
+                        )
+                    out_items.append(types.firm.FirmControlledFunction.model_validate(item_data | subvalue))
+        return out_items
+
+    async def get_firm_controlled_functions(
+        self, frn: str
+    ) -> types.pagination.MultipageList[types.firm.FirmControlledFunction]:
+        """Get firm controlled functions by FRN.
+
+        Args:
+            frn: The firm's FRN.
+
+        Returns:
+            A list of the firm's controlled functions.
+        """
+        out = types.pagination.MultipageList(
+            fetch_page=PaginatedResponseHandler(
+                lambda page_idx: self._client.get_firm_controlled_functions(frn, page=page_idx),
+                self._parse_firm_controlled_functions_pg,
+            ).fetch_page,
+        )
+        await out._asyinc_init()
+        return out
