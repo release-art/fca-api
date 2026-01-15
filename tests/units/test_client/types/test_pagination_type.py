@@ -2,8 +2,10 @@ import asyncio
 from typing import Optional, Sequence, Tuple
 from unittest.mock import AsyncMock
 
+import httpx
 import pytest
 
+import fca_api.exc as fca_exc
 import fca_api.types.pagination as pagination
 
 
@@ -594,10 +596,10 @@ class TestErrorHandlingEdgeCases:
 
     @pytest.mark.asyncio
     async def test_fetch_page_callback_exception_first_page(self):
-        """Test graceful handling when fetch_page callback raises exception on first page."""
+        """Test graceful handling when fetch_page callback raises httpx exception on first page."""
 
         async def failing_fetch_page(page_num: int):
-            raise ValueError("API connection failed")
+            raise httpx.RequestError("API connection failed")
 
         mpl = pagination.MultipageList(fetch_page=failing_fetch_page)
 
@@ -612,7 +614,7 @@ class TestErrorHandlingEdgeCases:
 
     @pytest.mark.asyncio
     async def test_fetch_page_callback_exception_subsequent_page(self):
-        """Test graceful handling when fetch_page callback raises exception on subsequent pages."""
+        """Test graceful handling when fetch_page callback raises httpx exception on subsequent pages."""
         call_count = 0
 
         async def mixed_fetch_page(page_num: int):
@@ -625,7 +627,7 @@ class TestErrorHandlingEdgeCases:
                 ), ["item1", "item2"]
             else:
                 # Subsequent pages fail
-                raise ConnectionError("Network timeout")
+                raise httpx.RequestError("Network timeout")
 
         mpl = pagination.MultipageList(fetch_page=mixed_fetch_page)
         await mpl._asyinc_init()
@@ -646,7 +648,7 @@ class TestErrorHandlingEdgeCases:
 
     @pytest.mark.asyncio
     async def test_fetch_page_callback_mixed_exceptions_and_success(self):
-        """Test handling when some pages fail and others succeed."""
+        """Test handling when some pages fail with httpx exceptions and others succeed."""
 
         async def intermittent_fetch_page(page_num: int):
             if page_num == 1:
@@ -655,7 +657,7 @@ class TestErrorHandlingEdgeCases:
                 ), ["item1", "item2"]
             elif page_num == 2:
                 # Second page fails
-                raise TimeoutError("Request timeout")
+                raise httpx.RequestError("Request timeout")
             else:
                 # This should not be called due to failure on page 2
                 return pagination.PaginatedResultInfo(page=3, per_page=2, total_count=6, next=None), ["item5", "item6"]
@@ -675,11 +677,9 @@ class TestErrorHandlingEdgeCases:
         assert mpl.local_len() == 2  # Only first page items
 
     @pytest.mark.asyncio
-    @pytest.mark.parametrize(
-        "exception_type", [ValueError, ConnectionError, TimeoutError, RuntimeError, KeyError, TypeError]
-    )
-    async def test_fetch_page_callback_various_exception_types(self, exception_type):
-        """Test graceful handling of different types of exceptions."""
+    @pytest.mark.parametrize("exception_type", [httpx.RequestError, fca_exc.FcaBaseError, fca_exc.FcaRequestError])
+    async def test_fetch_page_callback_handled_exception_types(self, exception_type):
+        """Test graceful handling of httpx and FCA exceptions that should be caught."""
 
         async def failing_fetch_page(page_num: int):
             raise exception_type("Simulated fetch_page exception")
@@ -687,10 +687,26 @@ class TestErrorHandlingEdgeCases:
         mpl = pagination.MultipageList(fetch_page=failing_fetch_page)
         await mpl._asyinc_init()
 
-        # Should handle any exception gracefully
+        # Should handle these exceptions gracefully
         assert mpl._result_info == pagination.SpecialResultInfoState.FIRST_PAGE_FETCH_FAILED
         assert len(mpl) == 0
         assert not mpl._has_next_page()
+
+    @pytest.mark.asyncio
+    @pytest.mark.parametrize(
+        "exception_type", [ValueError, ConnectionError, TimeoutError, RuntimeError, KeyError, TypeError]
+    )
+    async def test_fetch_page_callback_unhandled_exception_types(self, exception_type):
+        """Test that other exception types are re-raised and not handled gracefully."""
+
+        async def failing_fetch_page(page_num: int):
+            raise exception_type("Simulated fetch_page exception")
+
+        mpl = pagination.MultipageList(fetch_page=failing_fetch_page)
+
+        # These exceptions should be re-raised, not handled gracefully
+        with pytest.raises(exception_type):
+            await mpl._asyinc_init()
 
     @pytest.mark.asyncio
     async def test_fetch_page_callback_exception_during_iteration(self):
@@ -702,7 +718,7 @@ class TestErrorHandlingEdgeCases:
                     page=1, per_page=2, total_count=4, next="http://example.com/page2"
                 ), ["item1", "item2"]
             else:
-                raise OSError("Disk full")
+                raise httpx.RequestError("Disk full")
 
         mpl = pagination.MultipageList(fetch_page=failing_after_first_fetch_page)
         await mpl._asyinc_init()
@@ -726,7 +742,7 @@ class TestErrorHandlingEdgeCases:
                     page=1, per_page=2, total_count=4, next="http://example.com/page2"
                 ), ["item1", "item2"]
             else:
-                raise MemoryError("Out of memory")
+                raise httpx.RequestError("Out of memory")
 
         mpl = pagination.MultipageList(fetch_page=failing_second_page_fetch_page)
         await mpl._asyinc_init()
@@ -745,14 +761,14 @@ class TestErrorHandlingEdgeCases:
 
     @pytest.mark.asyncio
     async def test_fetch_page_callback_exception_logging(self, caplog):
-        """Test that exceptions are properly logged when they occur."""
+        """Test that httpx exceptions are properly logged when they occur."""
         import logging
 
         async def failing_fetch_page(page_num: int):
             if page_num == 1:
-                raise ValueError("Critical API failure")
+                raise httpx.RequestError("Critical API failure")
             else:
-                raise ConnectionError("Network down")
+                raise httpx.RequestError("Network down")
 
         mpl = pagination.MultipageList(fetch_page=failing_fetch_page)
 
@@ -775,7 +791,7 @@ class TestErrorHandlingEdgeCases:
                     page=1, per_page=2, total_count=4, next="http://example.com/page2"
                 ), ["item1", "item2"]
             else:
-                raise TimeoutError("Request timeout on page 2")
+                raise httpx.RequestError("Request timeout on page 2")
 
         mpl2 = pagination.MultipageList(fetch_page=mixed_logging_fetch_page)
         await mpl2._asyinc_init()
@@ -789,6 +805,53 @@ class TestErrorHandlingEdgeCases:
         assert len(caplog.records) == 1
         assert "Failed to fetch page 2" in caplog.records[0].message
         assert "Request timeout on page 2" in caplog.records[0].message
+
+    @pytest.mark.asyncio
+    async def test_unhandled_exceptions_during_iteration(self):
+        """Test that unhandled exceptions are re-raised during async iteration."""
+
+        async def failing_after_first_fetch_page(page_num: int):
+            if page_num == 1:
+                return pagination.PaginatedResultInfo(
+                    page=1, per_page=2, total_count=4, next="http://example.com/page2"
+                ), ["item1", "item2"]
+            else:
+                raise ValueError("This should be re-raised")
+
+        mpl = pagination.MultipageList(fetch_page=failing_after_first_fetch_page)
+        await mpl._asyinc_init()
+
+        items = []
+        # This should re-raise the ValueError when trying to fetch the second page
+        with pytest.raises(ValueError, match="This should be re-raised"):
+            async for item in mpl:
+                items.append(item)
+
+        # Should have gotten the items from the first page before the exception
+        assert items == ["item1", "item2"]
+
+    @pytest.mark.asyncio
+    async def test_unhandled_exceptions_during_getitem_access(self):
+        """Test that unhandled exceptions are re-raised during getitem access."""
+
+        async def failing_second_page_fetch_page(page_num: int):
+            if page_num == 1:
+                return pagination.PaginatedResultInfo(
+                    page=1, per_page=2, total_count=4, next="http://example.com/page2"
+                ), ["item1", "item2"]
+            else:
+                raise RuntimeError("This should be re-raised")
+
+        mpl = pagination.MultipageList(fetch_page=failing_second_page_fetch_page)
+        await mpl._asyinc_init()
+
+        # Access items from first page should work
+        assert await mpl[0] == "item1"
+        assert await mpl[1] == "item2"
+
+        # Access item that would require second page should re-raise the exception
+        with pytest.raises(RuntimeError, match="This should be re-raised"):
+            await mpl[2]
 
     @pytest.mark.asyncio
     async def test_fetch_page_returns_invalid_data(self):

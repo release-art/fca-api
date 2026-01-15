@@ -6,8 +6,10 @@ import enum
 import logging
 import typing
 
+import httpx
 import pydantic
 
+from .. import exc
 from . import settings
 
 logger = logging.getLogger(__name__)
@@ -108,9 +110,8 @@ class MultipageList(typing.Generic[T]):
 
                 try:
                     (new_page_info, new_items) = await self._fetch_page_cb(last_fetched_page + 1)
-                except Exception as exc:
-                    raise
-                    logger.exception(f"Failed to fetch page {last_fetched_page + 1}: {exc}")
+                except (httpx.RequestError, exc.FcaBaseError) as e:
+                    logger.exception(f"Failed to fetch page {last_fetched_page + 1}: {e}")
                     if last_fetched_page == 0:
                         self._result_info = SpecialResultInfoState.FIRST_PAGE_FETCH_FAILED
                     else:
