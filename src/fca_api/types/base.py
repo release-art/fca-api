@@ -18,6 +18,9 @@ class Base(pydantic.BaseModel):
             for key, value in data.items():
                 if isinstance(key, str):
                     key = key.lower().strip()
+                    if "[notinuse]" in key:
+                        # Skip fields that are marked as not in use
+                        continue
                 updated_data[key] = value
             data = updated_data
         if cls.model_config and cls.model_config.get("extra"):

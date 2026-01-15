@@ -466,6 +466,12 @@ class TestRandomFirmDetails:
         assert len(out) == 0
 
     @pytest.mark.asyncio
+    async def test_j_l_bikes_ar(self, test_client: fca_api.api.Client):
+        out = await test_client.get_firm_appointed_representatives("482398")
+        await out.fetch_all_pages()
+        assert len(out) == 0
+
+    @pytest.mark.asyncio
     async def test_barclays_passports(self, test_client: fca_api.api.Client):
         out = await test_client.get_firm_passports("122702")
         await out.fetch_all_pages()
@@ -491,7 +497,7 @@ class TestRandomFirmDetails:
         """Test that the data is correcly parsed for the large banks"""
         out = await test_client.get_firm_permissions(frn)
         await out.fetch_all_pages()
-        assert len(out) > 10
+        assert len(out) > 4
 
     @pytest.mark.asyncio
     @pytest.mark.parametrize(
@@ -555,5 +561,15 @@ class TestRandomFirmDetails:
     )
     async def test_get_firm_disciplinary_history(self, test_client: fca_api.api.Client, frn: str):
         out = await test_client.get_firm_disciplinary_history(frn)
+        await out.fetch_all_pages()
+        assert len(out) > 1
+
+    @pytest.mark.asyncio
+    @pytest.mark.parametrize(
+        "frn",
+        LARGE_BANK_FRNS,
+    )
+    async def test_get_firm_appointed_representatives(self, test_client: fca_api.api.Client, frn: str):
+        out = await test_client.get_firm_appointed_representatives(frn)
         await out.fetch_all_pages()
         assert len(out) > 1

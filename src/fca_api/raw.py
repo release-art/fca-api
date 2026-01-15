@@ -866,7 +866,7 @@ class RawClient:
             page=page,
         )
 
-    async def get_firm_appointed_representatives(self, frn: str) -> FcaApiResponse:
+    async def get_firm_appointed_representatives(self, frn: str, page: int | None = None) -> FcaApiResponse:
         """:py:class:`~fca_api.raw.FcaApiResponse`:
         Returns a response containing information on the appointed
         representatives of a firm, given its firm reference number (FRN).
@@ -895,6 +895,7 @@ class RawClient:
             frn,
             const.ResourceTypes.FIRM.value.type_name,
             modifiers=("AR",),
+            page=page,
         )
 
     async def search_irn(self, individual_name: str, page: int | None = None) -> FcaApiResponse[list[dict[str, str]]]:

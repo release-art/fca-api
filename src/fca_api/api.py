@@ -518,3 +518,44 @@ class Client:
         )
         await out._async_init()
         return out
+
+    def _parse_firm_appointed_representatives_pg(
+        self, data: dict[list[dict]]
+    ) -> list[types.firm.FirmAppointedRepresentative]:
+        out = []
+        for key, items in data.items():
+            if not items:
+                continue
+            key = key.lower().strip()
+            key = {
+                "currentappointedrepresentatives": "current",
+                "previousappointedrepresentatives": "previous",
+            }.get(key, key)
+            assert isinstance(items, list), items
+            for item in items:
+                out.append(types.firm.FirmAppointedRepresentative.model_validate({"fca_api_lst_type": key} | item))
+        for el in data:
+            if not isinstance(el, dict):
+                logger.warning(f"Unexpected firm appointed representative entry format: {el!r}")
+                continue
+        return out
+
+    async def get_firm_appointed_representatives(
+        self, frn: str
+    ) -> types.pagination.MultipageList[types.firm.FirmAppointedRepresentative]:
+        """Get firm appointed representatives by FRN.
+
+        Args:
+            frn: The firm's FRN.
+
+        Returns:
+            A list of the firm's appointed representatives.
+        """
+        out = types.pagination.MultipageList(
+            fetch_page=PaginatedResponseHandler(
+                lambda page_idx: self._client.get_firm_appointed_representatives(frn, page=page_idx),
+                self._parse_firm_appointed_representatives_pg,
+            ).fetch_page,
+        )
+        await out._async_init()
+        return out

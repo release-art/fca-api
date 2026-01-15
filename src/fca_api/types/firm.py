@@ -976,3 +976,102 @@ class FirmDisciplinaryRecord(base.Base):
         ),
         field_parsers.ParseFcaDate,
     ]
+
+
+class FirmAppointedRepresentative(base.Base):
+    """An appointed representative associated with a firm."""
+
+    type: Annotated[
+        Literal["current", "previous"],
+        pydantic.Field(
+            description="The type of the appointed representative.",
+            validation_alias=pydantic.AliasChoices("fca_api_lst_type", "type"),
+            serialization_alias="type",
+        ),
+    ]
+    subtype: Annotated[
+        str,
+        pydantic.StringConstraints(
+            strip_whitespace=True,
+        ),
+        pydantic.Field(
+            description="The subtype of the appointed representative.",
+            validation_alias=pydantic.AliasChoices("recordsubtype", "subtype"),
+            serialization_alias="subtype",
+        ),
+    ]
+    name: Annotated[
+        str,
+        pydantic.StringConstraints(
+            strip_whitespace=True,
+        ),
+        pydantic.Field(
+            description="The name of the appointed representative.",
+        ),
+    ]
+    url: Annotated[
+        pydantic.HttpUrl,
+        pydantic.Field(
+            description="The URL of the appointed representative record in the FCA register.",
+        ),
+    ]
+    frn: Annotated[
+        str,
+        pydantic.Field(
+            description="The firm reference number (FRN) of the appointed representative.",
+        ),
+    ]
+    principal_frn: Annotated[
+        str,
+        pydantic.Field(
+            description="The firm reference number (FRN) of the principal firm.",
+            validation_alias=pydantic.AliasChoices("principal frn", "principal_frn"),
+            serialization_alias="principal_frn",
+        ),
+    ]
+    principal_firm_name: Annotated[
+        str,
+        pydantic.StringConstraints(
+            strip_whitespace=True,
+        ),
+        pydantic.Field(
+            description="The name of the principal firm.",
+            validation_alias=pydantic.AliasChoices("principal firm name", "principal_firm_name"),
+            serialization_alias="principal_firm_name",
+        ),
+    ]
+    effective_date: Annotated[
+        datetime.datetime,
+        pydantic.Field(
+            description="The date from which the appointed representative became effective.",
+            validation_alias=pydantic.AliasChoices("effective date", "effective_date"),
+            serialization_alias="effective_date",
+        ),
+        field_parsers.ParseFcaDate,
+    ]
+    termination_date: Annotated[
+        Optional[datetime.datetime],
+        pydantic.Field(
+            description="The date on which the appointed representative was terminated, if applicable.",
+            validation_alias=pydantic.AliasChoices("termination date", "termination_date"),
+            serialization_alias="termination_date",
+            default=None,
+        ),
+        field_parsers.ParseFcaDate,
+    ]
+    tied_agent: Annotated[
+        bool,
+        pydantic.Field(
+            description="Indicates whether the appointed representative is a tied agent.",
+            validation_alias=pydantic.AliasChoices("tied agent", "tied_agent"),
+            serialization_alias="tied_agent",
+        ),
+    ]
+    eea_tied_agent: Annotated[
+        bool,
+        pydantic.Field(
+            description="Indicates whether the appointed representative is a tied agent.",
+            validation_alias=pydantic.AliasChoices("eea tied agent", "eea_tied_agent"),
+            serialization_alias="eea_tied_agent",
+        ),
+    ]
