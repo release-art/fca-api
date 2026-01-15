@@ -77,6 +77,28 @@ class IndividualSearchResult(base.Base):
             trim_whitespace=True,
         ),
     ]
+    status: Annotated[
+        str,
+        pydantic.Field(
+            description="The individual's status.",
+        ),
+        pydantic.StringConstraints(
+            to_lower=True,
+            strip_whitespace=True,
+        ),
+    ]
+    type: Annotated[
+        str,
+        pydantic.Field(
+            description="The individual's type.",
+            validation_alias=pydantic.AliasChoices("type of business or individual", "type"),
+            serialization_alias="type",
+        ),
+        pydantic.StringConstraints(
+            to_lower=True,
+            strip_whitespace=True,
+        ),
+    ]
 
 
 class FundSearchResult(base.Base):
@@ -102,8 +124,10 @@ class FundSearchResult(base.Base):
         str,
         pydantic.Field(
             description="The firm's status.",
+        ),
+        pydantic.StringConstraints(
             to_lower=True,
-            trim_whitespace=True,
+            strip_whitespace=True,
         ),
     ]
     type: Annotated[
@@ -112,14 +136,15 @@ class FundSearchResult(base.Base):
             description="The type of the resource.",
             validation_alias=pydantic.AliasChoices("type of business or individual", "type"),
             serialization_alias="type",
+        ),
+        pydantic.StringConstraints(
             to_lower=True,
-            trim_whitespace=True,
+            strip_whitespace=True,
         ),
     ]
     name: Annotated[
         str,
         pydantic.Field(
             description="The firm's name.",
-            trim_whitespace=True,
         ),
     ]

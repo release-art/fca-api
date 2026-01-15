@@ -289,7 +289,7 @@ class FirmDetails(base.Base):
     ]
 
 
-class CurrentFirmNameAlias(base.Base):
+class FirmNameAlias(base.Base):
     """Current or trading name/brand name of a firm."""
 
     name: Annotated[
@@ -298,6 +298,14 @@ class CurrentFirmNameAlias(base.Base):
             description="The name of the firm.",
             validation_alias=pydantic.AliasChoices("name", "organisation name"),
             serialization_alias="name",
+        ),
+    ]
+    type: Annotated[
+        Literal["current", "previous"],
+        pydantic.Field(
+            description="The type of the name (current or previous).",
+            validation_alias=pydantic.AliasChoices("fca_api_address_type", "type"),
+            serialization_alias="type",
         ),
     ]
     status: Annotated[
@@ -320,24 +328,16 @@ class CurrentFirmNameAlias(base.Base):
         field_parsers.ParseFcaDate,
     ]
 
-
-class PreviousFirmNameAlias(CurrentFirmNameAlias):
-    """Previous name/brand name of a firm, now ceased."""
-
     effective_to: Annotated[
-        datetime.datetime,
+        Optional[datetime.datetime],
         pydantic.Field(
             description="The date until which the name was effective.",
             validation_alias=pydantic.AliasChoices("effective to", "effective_to"),
             serialization_alias="effective_to",
+            default=None,
         ),
         field_parsers.ParseFcaDate,
     ]
-
-
-class FirmNamesResponse(base.Base):
-    current: list[CurrentFirmNameAlias]
-    previous: list[PreviousFirmNameAlias]
 
 
 class FirmAddress(base.Base):
@@ -437,12 +437,6 @@ class FirmAddress(base.Base):
             serialization_alias="address_url",
         ),
     ]
-
-
-class FirmAddressesResponse(base.Base):
-    """An representation of firm addresses response."""
-
-    addresses: list[FirmAddress]
 
 
 class FirmControlledFunction(base.Base):

@@ -440,7 +440,7 @@ class RawClient:
         """
         return await self._get_resource_info(frn, const.ResourceTypes.FIRM.value.type_name)
 
-    async def get_firm_names(self, frn: str) -> FcaApiResponse:
+    async def get_firm_names(self, frn: str, page: int | None = None) -> FcaApiResponse:
         """:py:class:`~fca_api.raw.FcaApiResponse`:
         Returns a response containing the alternative or secondary trading name
         details of a firm, given its firm reference number (FRN).
@@ -469,9 +469,10 @@ class RawClient:
             frn,
             const.ResourceTypes.FIRM.value.type_name,
             modifiers=("Names",),
+            page=page,
         )
 
-    async def get_firm_addresses(self, frn: str) -> FcaApiResponse:
+    async def get_firm_addresses(self, frn: str, page: int | None = None) -> FcaApiResponse:
         """:py:class:`~fca_api.raw.FcaApiResponse`:
         Returns a response containing the address details of a firm, given its
         firm reference number (FRN).
@@ -500,6 +501,7 @@ class RawClient:
             frn,
             const.ResourceTypes.FIRM.value.type_name,
             modifiers=("Address",),
+            page=page,
         )
 
     async def get_firm_controlled_functions(self, frn: str, page: int | None = None) -> FcaApiResponse:

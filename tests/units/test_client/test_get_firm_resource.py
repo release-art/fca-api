@@ -1,5 +1,7 @@
 """Test get firm resources"""
 
+import unittest
+
 import pytest
 
 import fca_api
@@ -20,7 +22,7 @@ class TestNutmegFirmDetails:
             "type": "regulated",
             "companies_house_number": "07503666",
             "client_money_permission": "hold and control client money",
-            "timestamp": "2026-01-14T15:38:00",
+            "timestamp": unittest.mock.ANY,
             "status_effective_date": "2011-10-06T00:00:00",
             "sub_status": "",
             "sub_status_effective_from": None,
@@ -50,76 +52,73 @@ class TestNutmegFirmDetails:
     @pytest.mark.asyncio
     async def test_get_firm_names(self, test_client: fca_api.api.Client, frn: str):
         names = await test_client.get_firm_names(frn)
-        assert names.model_dump(mode="json") == {
-            "current": [
-                {
-                    "name": "J.P. Morgan Personal Investing",
-                    "status": "trading",
-                    "effective_from": "2025-11-03T00:00:00",
-                },
-                {
-                    "name": "J.P. MORGAN PERSONAL INVESTING LIMITED",
-                    "status": "registered",
-                    "effective_from": "2025-11-03T00:00:00",
-                },
-            ],
-            "previous": [
-                {
-                    "name": "Nutmeg",
-                    "status": "trading",
-                    "effective_from": "2011-05-24T00:00:00",
-                    "effective_to": "2025-11-03T00:00:00",
-                },
-                {
-                    "name": "Nutmeg Saving and Investment Limited",
-                    "status": "registered",
-                    "effective_from": "2012-05-25T00:00:00",
-                    "effective_to": "2025-11-03T00:00:00",
-                },
-                {
-                    "name": "Hungry Finance Limited",
-                    "status": "registered",
-                    "effective_from": "2011-10-06T00:00:00",
-                    "effective_to": "2012-05-25T00:00:00",
-                },
-            ],
-        }
+        assert names.model_dump(mode="json") == [
+            {
+                "name": "J.P. Morgan Personal Investing",
+                "type": "current",
+                "status": "trading",
+                "effective_from": "2025-11-03T00:00:00",
+                "effective_to": None,
+            },
+            {
+                "name": "J.P. MORGAN PERSONAL INVESTING LIMITED",
+                "type": "current",
+                "status": "registered",
+                "effective_from": "2025-11-03T00:00:00",
+                "effective_to": None,
+            },
+            {
+                "name": "Nutmeg",
+                "type": "previous",
+                "status": "trading",
+                "effective_from": "2011-05-24T00:00:00",
+                "effective_to": "2025-11-03T00:00:00",
+            },
+            {
+                "name": "Nutmeg Saving and Investment Limited",
+                "type": "previous",
+                "status": "registered",
+                "effective_from": "2012-05-25T00:00:00",
+                "effective_to": "2025-11-03T00:00:00",
+            },
+            {
+                "name": "Hungry Finance Limited",
+                "type": "previous",
+                "status": "registered",
+                "effective_from": "2011-10-06T00:00:00",
+                "effective_to": "2012-05-25T00:00:00",
+            },
+        ]
 
     @pytest.mark.asyncio
     async def test_get_firm_addresses(self, test_client: fca_api.api.Client, frn: str):
         addresses = await test_client.get_firm_addresses(frn)
-        assert addresses.model_dump(mode="json") == {
-            "addresses": [
-                {
-                    "address_lines": [
-                        "25 Bank Street",
-                    ],
-                    "address_url": "https://register.fca.org.uk/services/V0.1/Firm/552016/Address?Type=PPOB",
-                    "country": "united kingdom",
-                    "county": "",
-                    "individual": None,
-                    "phone_number": "+442035981515",
-                    "postcode": "E14 5JP",
-                    "town": "london",
-                    "type": "principal place of business",
-                    "website": "https://www.personalinvesting.jpmorgan.com/",
-                },
-                {
-                    "address_lines": [
-                        "25 Bank Street",
-                    ],
-                    "address_url": "https://register.fca.org.uk/services/V0.1/Firm/552016/Address?Type=Complaint",
-                    "country": "united kingdom",
-                    "county": "",
-                    "individual": "Anders Fries",
-                    "phone_number": "+442035981515",
-                    "postcode": "E14 5JP",
-                    "town": "london",
-                    "type": "complaints contact",
-                    "website": None,
-                },
-            ]
-        }
+        assert addresses.model_dump(mode="json") == [
+            {
+                "type": "principal place of business",
+                "phone_number": "+442035981515",
+                "address_lines": ["25 Bank Street"],
+                "town": "london",
+                "postcode": "E14 5JP",
+                "county": "",
+                "country": "united kingdom",
+                "website": "https://www.personalinvesting.jpmorgan.com/",
+                "individual": None,
+                "address_url": "https://register.fca.org.uk/services/V0.1/Firm/552016/Address?Type=PPOB",
+            },
+            {
+                "type": "complaints contact",
+                "phone_number": "+442035981515",
+                "address_lines": ["25 Bank Street"],
+                "town": "london",
+                "postcode": "E14 5JP",
+                "county": "",
+                "country": "united kingdom",
+                "website": None,
+                "individual": "Anders Fries",
+                "address_url": "https://register.fca.org.uk/services/V0.1/Firm/552016/Address?Type=Complaint",
+            },
+        ]
 
     @pytest.mark.asyncio
     async def test_get_firm_cf(self, test_client: fca_api.api.Client, frn: str):

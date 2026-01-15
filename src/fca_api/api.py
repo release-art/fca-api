@@ -167,20 +167,8 @@ class Client:
         assert isinstance(data, list) and len(data) == 1, "Expected a single firm detail object in the response data."
         return types.firm.FirmDetails.model_validate(data[0])
 
-    async def get_firm_names(self, frn: str) -> types.firm.FirmNamesResponse:
-        """Get firm names by FRN.
-
-        Args:
-            frn: The firm's FRN.
-
-        Returns:
-            A list of the firm's names.
-        """
-        res = await self._client.get_firm_names(frn)
-        data = res.data
-        assert isinstance(data, list), "Expected a list of firm name objects in the response data."
-        current_names = []
-        previous_names = []
+    def _parse_firm_names_pg(self, data: list[dict]) -> list[types.firm.FirmNameAlias]:
+        out = []
         for el in data:
             if not isinstance(el, dict):
                 logger.warning(f"Unexpected firm name entry format: {el!r}")
@@ -189,21 +177,36 @@ class Client:
                 key = key.lower().strip()
                 if key == "previous names":
                     assert isinstance(value, list)
-                    previous_names.extend(value)
+                    for value_el in value:
+                        out.append(value_el | {"fca_api_address_type": "previous"})
                 elif key == "current names":
                     assert isinstance(value, list)
-                    current_names.extend(value)
+                    for value_el in value:
+                        out.append(value_el | {"fca_api_address_type": "current"})
                 else:
                     logger.warning(f"Unexpected firm name entry field: {key}={value!r}")
 
-        return types.firm.FirmNamesResponse.model_validate(
-            {
-                "current": [types.firm.CurrentFirmNameAlias.model_validate(item) for item in current_names],
-                "previous": [types.firm.PreviousFirmNameAlias.model_validate(item) for item in previous_names],
-            }
-        )
+        return [types.firm.FirmNameAlias.model_validate(el) for el in out]
 
-    async def get_firm_addresses(self, frn: str) -> types.firm.FirmAddressesResponse:
+    async def get_firm_names(self, frn: str) -> types.pagination.MultipageList[types.firm.FirmNameAlias]:
+        """Get firm names by FRN.
+
+        Args:
+            frn: The firm's FRN.
+
+        Returns:
+            A list of the firm's names.
+        """
+        out = types.pagination.MultipageList(
+            fetch_page=PaginatedResponseHandler(
+                lambda page_idx: self._client.get_firm_names(frn, page=page_idx),
+                self._parse_firm_names_pg,
+            ).fetch_page,
+        )
+        await out._asyinc_init()
+        return out
+
+    def _parse_firm_addresses_pg(self, data: list[dict]) -> list[types.firm.FirmAddress]:
         """Get firm addresses by FRN.
 
         Args:
@@ -213,10 +216,7 @@ class Client:
             A list of the firm's addresses.
         """
         address_line_re = re.compile(r"address \s+ line \s+ (\d+)", re.IGNORECASE | re.VERBOSE)
-        res = await self._client.get_firm_addresses(frn)
-        data = res.data
-        assert isinstance(data, list), "Expected a list of firm address objects in the response data."
-        # Process address lines
+        out_items = []
         for raw_row in data:
             address_lines: list[tuple[int, str]] = []
             for key in tuple(raw_row.keys()):
@@ -230,9 +230,25 @@ class Client:
                         continue
                     address_lines.append((line_idx, line_value))
             raw_row["address_lines"] = [line for _idx, line in sorted(address_lines, key=lambda x: x[0])]
-        return types.firm.FirmAddressesResponse.model_validate(
-            {"addresses": [types.firm.FirmAddress.model_validate(item) for item in data]}
+        return [types.firm.FirmAddress.model_validate(item) for item in data]
+
+    async def get_firm_addresses(self, frn: str) -> types.pagination.MultipageList[types.firm.FirmAddress]:
+        """Get firm addresses by FRN.
+
+        Args:
+            frn: The firm's FRN.
+
+        Returns:
+            A list of the firm's addresses.
+        """
+        out = types.pagination.MultipageList(
+            fetch_page=PaginatedResponseHandler(
+                lambda page_idx: self._client.get_firm_addresses(frn, page=page_idx),
+                self._parse_firm_addresses_pg,
+            ).fetch_page,
         )
+        await out._asyinc_init()
+        return out
 
     def _parse_firm_controlled_functions_pg(self, data: list[dict]) -> list[types.firm.FirmControlledFunction]:
         """Get firm controlled functions by FRN.
