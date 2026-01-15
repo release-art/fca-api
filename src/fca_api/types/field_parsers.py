@@ -33,4 +33,6 @@ def StrOrNone(value: str) -> str | None:
     """Convert empty strings to None, otherwise strip whitespace."""
     if not value or not value.strip():
         return None
+    if value.lower() in {"n/a", "na", "none"}:
+        return None
     return value.strip()

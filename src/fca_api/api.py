@@ -555,3 +555,19 @@ class Client:
         )
         await out._async_init()
         return out
+
+    async def get_individual(self, irn: str) -> types.individual.IndividualDetails:
+        """Get individual details by IRN.
+
+        Args:
+            irn: The individual's IRN.
+
+        Returns:
+            The individual's details.
+        """
+        res = await self._client.get_individual(irn)
+        data = res.data
+        assert isinstance(data, list) and len(data) == 1, (
+            "Expected a single individual detail object in the response data."
+        )
+        return types.individual.IndividualDetails.model_validate(data[0]["Details"])

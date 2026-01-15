@@ -1,0 +1,300 @@
+{
+  "content": {
+    "json": {
+      "Data": {
+        "CurrentAppointedRepresentatives": [
+          {
+            "EEA Tied Agent": "false",
+            "Effective Date": "24/02/2024",
+            "FRN": "1009042",
+            "Name": "Jackson Mortgage Brokers Limited",
+            "Principal FRN": "454811",
+            "Principal Firm Name": "Stonebridge Mortgage Solutions Ltd",
+            "RecordSubType": "Full",
+            "Tied Agent": "false",
+            "URL": "https://register.fca.org.uk/services/V0.1/Firm/1009042",
+            "[NotinUse] Insurance Distribution": "true"
+          },
+          {
+            "EEA Tied Agent": "false",
+            "Effective Date": "13/10/2022",
+            "FRN": "985274",
+            "Name": "Jahidu Jaman",
+            "Principal FRN": "454811",
+            "Principal Firm Name": "Stonebridge Mortgage Solutions Ltd",
+            "RecordSubType": "Full",
+            "Tied Agent": "false",
+            "URL": "https://register.fca.org.uk/services/V0.1/Firm/985274",
+            "[NotinUse] Insurance Distribution": "true"
+          },
+          {
+            "EEA Tied Agent": "false",
+            "Effective Date": "03/07/2024",
+            "FRN": "1016561",
+            "Name": "Jake Cole Financial Solutions Limited",
+            "Principal FRN": "454811",
+            "Principal Firm Name": "Stonebridge Mortgage Solutions Ltd",
+            "RecordSubType": "Full",
+            "Tied Agent": "false",
+            "URL": "https://register.fca.org.uk/services/V0.1/Firm/1016561",
+            "[NotinUse] Insurance Distribution": "true"
+          },
+          {
+            "EEA Tied Agent": "false",
+            "Effective Date": "30/05/2014",
+            "FRN": "624433",
+            "Name": "Jake Morton",
+            "Principal FRN": "454811",
+            "Principal Firm Name": "Stonebridge Mortgage Solutions Ltd",
+            "RecordSubType": "Full",
+            "Tied Agent": "false",
+            "URL": "https://register.fca.org.uk/services/V0.1/Firm/624433",
+            "[NotinUse] Insurance Distribution": "true"
+          },
+          {
+            "EEA Tied Agent": "false",
+            "Effective Date": "10/02/2012",
+            "FRN": "574899",
+            "Name": "James Alexander Financial Services Ltd.",
+            "Principal FRN": "454811",
+            "Principal Firm Name": "Stonebridge Mortgage Solutions Ltd",
+            "RecordSubType": "Full",
+            "Tied Agent": "false",
+            "URL": "https://register.fca.org.uk/services/V0.1/Firm/574899",
+            "[NotinUse] Insurance Distribution": "true"
+          },
+          {
+            "EEA Tied Agent": "false",
+            "Effective Date": "20/10/2021",
+            "FRN": "960898",
+            "Name": "James Bernard Scully",
+            "Principal FRN": "454811",
+            "Principal Firm Name": "Stonebridge Mortgage Solutions Ltd",
+            "RecordSubType": "Full",
+            "Tied Agent": "false",
+            "URL": "https://register.fca.org.uk/services/V0.1/Firm/960898",
+            "[NotinUse] Insurance Distribution": "true"
+          },
+          {
+            "EEA Tied Agent": "false",
+            "Effective Date": "27/10/2020",
+            "FRN": "937175",
+            "Name": "James Kaslik",
+            "Principal FRN": "454811",
+            "Principal Firm Name": "Stonebridge Mortgage Solutions Ltd",
+            "RecordSubType": "Full",
+            "Tied Agent": "false",
+            "URL": "https://register.fca.org.uk/services/V0.1/Firm/937175",
+            "[NotinUse] Insurance Distribution": "true"
+          },
+          {
+            "EEA Tied Agent": "false",
+            "Effective Date": "13/05/2021",
+            "FRN": "951011",
+            "Name": "James Ling Wong",
+            "Principal FRN": "454811",
+            "Principal Firm Name": "Stonebridge Mortgage Solutions Ltd",
+            "RecordSubType": "Full",
+            "Tied Agent": "false",
+            "URL": "https://register.fca.org.uk/services/V0.1/Firm/951011",
+            "[NotinUse] Insurance Distribution": "true"
+          },
+          {
+            "EEA Tied Agent": "false",
+            "Effective Date": "12/01/2021",
+            "FRN": "542083",
+            "Name": "James Mark Shields",
+            "Principal FRN": "454811",
+            "Principal Firm Name": "Stonebridge Mortgage Solutions Ltd",
+            "RecordSubType": "Full",
+            "Tied Agent": "false",
+            "URL": "https://register.fca.org.uk/services/V0.1/Firm/542083",
+            "[NotinUse] Insurance Distribution": "true"
+          },
+          {
+            "EEA Tied Agent": "false",
+            "Effective Date": "27/03/2022",
+            "FRN": "534042",
+            "Name": "James Miller Financial Planning Limited",
+            "Principal FRN": "454811",
+            "Principal Firm Name": "Stonebridge Mortgage Solutions Ltd",
+            "RecordSubType": "Full",
+            "Tied Agent": "false",
+            "URL": "https://register.fca.org.uk/services/V0.1/Firm/534042",
+            "[NotinUse] Insurance Distribution": "true"
+          }
+        ],
+        "PreviousAppointedRepresentatives": [
+          {
+            "EEA Tied Agent": "false",
+            "Effective Date": "20/10/2016",
+            "FRN": "762349",
+            "Name": "Harmony Financial Services Ltd",
+            "Principal FRN": "454811",
+            "Principal Firm Name": "Stonebridge Mortgage Solutions Ltd",
+            "RecordSubType": "Full",
+            "Termination Date": "06/02/2024",
+            "Tied Agent": "false",
+            "URL": "https://register.fca.org.uk/services/V0.1/Firm/762349",
+            "[NotinUse] Insurance Distribution": "true"
+          },
+          {
+            "EEA Tied Agent": "false",
+            "Effective Date": "13/03/2019",
+            "FRN": "836317",
+            "Name": "Harper Williams Estate Agents Ltd",
+            "Principal FRN": "454811",
+            "Principal Firm Name": "Stonebridge Mortgage Solutions Ltd",
+            "RecordSubType": "Introducer",
+            "Termination Date": "17/05/2022",
+            "Tied Agent": "false",
+            "URL": "https://register.fca.org.uk/services/V0.1/Firm/836317",
+            "[NotinUse] Insurance Distribution": "true"
+          },
+          {
+            "EEA Tied Agent": "false",
+            "Effective Date": "01/03/2018",
+            "FRN": "803195",
+            "Name": "Harris & Wood (Property Agency) Ltd",
+            "Principal FRN": "454811",
+            "Principal Firm Name": "Stonebridge Mortgage Solutions Ltd",
+            "RecordSubType": "Introducer",
+            "Termination Date": "17/05/2022",
+            "Tied Agent": "false",
+            "URL": "https://register.fca.org.uk/services/V0.1/Firm/803195",
+            "[NotinUse] Insurance Distribution": "true"
+          },
+          {
+            "EEA Tied Agent": "false",
+            "Effective Date": "01/03/2018",
+            "FRN": "796832",
+            "Name": "Harris and Wood (Lettings Services) Limited",
+            "Principal FRN": "454811",
+            "Principal Firm Name": "Stonebridge Mortgage Solutions Ltd",
+            "RecordSubType": "Introducer",
+            "Termination Date": "17/05/2022",
+            "Tied Agent": "false",
+            "URL": "https://register.fca.org.uk/services/V0.1/Firm/796832",
+            "[NotinUse] Insurance Distribution": "true"
+          },
+          {
+            "EEA Tied Agent": "false",
+            "Effective Date": "19/04/2023",
+            "FRN": "995105",
+            "Name": "Harris And Wood Mortgage Services Ltd",
+            "Principal FRN": "454811",
+            "Principal Firm Name": "Stonebridge Mortgage Solutions Ltd",
+            "RecordSubType": "Full",
+            "Termination Date": "13/09/2023",
+            "Tied Agent": "false",
+            "URL": "https://register.fca.org.uk/services/V0.1/Firm/995105",
+            "[NotinUse] Insurance Distribution": "false"
+          },
+          {
+            "EEA Tied Agent": "false",
+            "Effective Date": "31/03/2021",
+            "FRN": "948386",
+            "Name": "Harwich Villiage Homes",
+            "Principal FRN": "454811",
+            "Principal Firm Name": "Stonebridge Mortgage Solutions Ltd",
+            "RecordSubType": "Introducer",
+            "Termination Date": "17/05/2022",
+            "Tied Agent": "false",
+            "URL": "https://register.fca.org.uk/services/V0.1/Firm/948386",
+            "[NotinUse] Insurance Distribution": "true"
+          },
+          {
+            "EEA Tied Agent": "false",
+            "Effective Date": "07/10/2022",
+            "FRN": "984929",
+            "Name": "Hashtag Mortgages Ltd",
+            "Principal FRN": "454811",
+            "Principal Firm Name": "Stonebridge Mortgage Solutions Ltd",
+            "RecordSubType": "Full",
+            "Termination Date": "14/12/2022",
+            "Tied Agent": "false",
+            "URL": "https://register.fca.org.uk/services/V0.1/Firm/984929",
+            "[NotinUse] Insurance Distribution": "true"
+          },
+          {
+            "EEA Tied Agent": "false",
+            "Effective Date": "20/04/2020",
+            "FRN": "924703",
+            "Name": "Hassan Shakoor",
+            "Principal FRN": "454811",
+            "Principal Firm Name": "Stonebridge Mortgage Solutions Ltd",
+            "RecordSubType": "Full",
+            "Termination Date": "05/02/2021",
+            "Tied Agent": "false",
+            "URL": "https://register.fca.org.uk/services/V0.1/Firm/924703",
+            "[NotinUse] Insurance Distribution": "true"
+          },
+          {
+            "EEA Tied Agent": "false",
+            "Effective Date": "09/05/2018",
+            "FRN": "808595",
+            "Name": "Hawk Mortgages Ltd",
+            "Principal FRN": "454811",
+            "Principal Firm Name": "Stonebridge Mortgage Solutions Ltd",
+            "RecordSubType": "Full",
+            "Termination Date": "12/02/2024",
+            "Tied Agent": "false",
+            "URL": "https://register.fca.org.uk/services/V0.1/Firm/808595",
+            "[NotinUse] Insurance Distribution": "true"
+          },
+          {
+            "EEA Tied Agent": "false",
+            "Effective Date": "17/12/2020",
+            "FRN": "941255",
+            "Name": "Hayden Estate Ltd",
+            "Principal FRN": "454811",
+            "Principal Firm Name": "Stonebridge Mortgage Solutions Ltd",
+            "RecordSubType": "Introducer",
+            "Termination Date": "17/05/2022",
+            "Tied Agent": "false",
+            "URL": "https://register.fca.org.uk/services/V0.1/Firm/941255",
+            "[NotinUse] Insurance Distribution": "true"
+          }
+        ]
+      },
+      "Message": "Ok. Appointed Representative Found",
+      "ResultInfo": {
+        "Next": "https://register.fca.org.uk/services/V0.1/Firm/454811/AR?pgnp=30",
+        "Previous": "https://register.fca.org.uk/services/V0.1/Firm/454811/AR?pgnp=28",
+        "page": "29",
+        "per_page": "10",
+        "total_count": "1531"
+      },
+      "Status": "FSR-API-05-04-00"
+    }
+  },
+  "headers": {
+    "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
+    "cf-cache-status": "DYNAMIC",
+    "cf-ray": "9be587f28efe6538-LHR",
+    "connection": "keep-alive",
+    "content-encoding": "gzip",
+    "content-type": "application/json;charset=UTF-8",
+    "date": "Thu, 15 Jan 2026 12:56:05 GMT",
+    "server": "cloudflare",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 12:56:04 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 12:56:04 GMT; Max-Age=31536000; secure",
+    "strict-transport-security": "max-age=63072000; includeSubDomains",
+    "transfer-encoding": "chunked",
+    "vary": "Accept-Encoding",
+    "x-content-type-options": "nosniff"
+  },
+  "request": {
+    "headers": {
+      "accept": "application/json",
+      "accept-encoding": "gzip, deflate",
+      "connection": "keep-alive",
+      "user-agent": "python-httpx/0.28.1",
+      "x-auth-email": "user@example.com",
+      "x-auth-key": "00617470e8144a09"
+    },
+    "params": null,
+    "url": "https://register.fca.org.uk/services/V0.1/Firm/454811/AR?pgnp=29"
+  },
+  "status_code": 200,
+  "url": "https://register.fca.org.uk/services/V0.1/Firm/454811/AR?pgnp=29"
+}
