@@ -1,7 +1,7 @@
 =======================================
-``fca_api.raw``
+``fca_api.types.products``
 =======================================
 
-.. automodule:: fca_api.raw
+.. automodule:: fca_api.types.products
     :members:
     :special-members:
