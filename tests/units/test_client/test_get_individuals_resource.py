@@ -31,3 +31,7 @@ class TestNutmegFirmDetails:
             "status": "regulatory approval no longer required",
             "current_roles_and_activities": "https://register.fca.org.uk/services/V0.1/Individuals/RBS01054/CF",
         }
+
+    @pytest.mark.asyncio
+    async def test_get_individual_controlled_functions(self, test_client: fca_api.api.Client, irn: str):
+        out = await test_client.get_individual_controlled_functions(irn)

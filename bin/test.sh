@@ -15,6 +15,7 @@ exec op run --no-masking --  pdm run pytest \
     --cov=src \
     --cov-report=term-missing:skip-covered \
     -ra \
+    --no-cov-on-fail \
     --tb=native \
     --verbosity=3 \
     "${@:-tests/}"

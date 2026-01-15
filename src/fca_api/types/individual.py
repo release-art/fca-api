@@ -1,4 +1,5 @@
-from typing import Annotated, Optional
+import datetime
+from typing import Annotated, Literal, Optional
 
 import pydantic
 
@@ -60,5 +61,95 @@ class Individual(base.Base):
             description="URL to the individual's disciplinary history, if any.",
             validation_alias=pydantic.AliasChoices("current roles & activities", "disciplinary_history"),
             serialization_alias="disciplinary_history",
+        ),
+    ]
+
+
+class IndividualControlledFunction(base.Base):
+    """Individual Controlled Function details."""
+
+    type: Annotated[
+        Literal["current", "previous"],
+        pydantic.Field(
+            description="Type of controlled function - current or previous.",
+            validation_alias=pydantic.AliasChoices("fca_api_lst_type", "type"),
+            serialization_alias="type",
+        ),
+    ]
+    name: Annotated[
+        str,
+        pydantic.Field(
+            description="Name of the controlled function.",
+        ),
+    ]
+    restriction: Annotated[
+        Optional[str],
+        pydantic.Field(
+            description="Any restrictions associated with the controlled function.",
+        ),
+        field_parsers.StrOrNone,
+    ]
+    restriction_start_date: Annotated[
+        Optional[datetime.datetime],
+        pydantic.Field(
+            description="Start date of any restriction associated with the controlled function.",
+            validation_alias=pydantic.AliasChoices("suspension / restriction start date", "restriction_start_date"),
+            serialization_alias="restriction_start_date",
+        ),
+        field_parsers.ParseFcaDate,
+    ]
+    restriction_end_date: Annotated[
+        Optional[datetime.datetime],
+        pydantic.Field(
+            description="Start date of any restriction associated with the controlled function.",
+            validation_alias=pydantic.AliasChoices("suspension / restriction end date", "restriction_end_date"),
+            serialization_alias="restriction_end_date",
+        ),
+        field_parsers.ParseFcaDate,
+    ]
+    customer_engagement_method: Annotated[
+        str,
+        pydantic.Field(
+            description="Method of customer engagement for the controlled function.",
+            validation_alias=pydantic.AliasChoices("customer engagement method", "customer_engagement_method"),
+            serialization_alias="customer_engagement_method",
+        ),
+        pydantic.StringConstraints(
+            to_lower=True,
+            strip_whitespace=True,
+        ),
+    ]
+    effective_date: Annotated[
+        datetime.datetime,
+        pydantic.Field(
+            description="Effective date of the controlled function.",
+            validation_alias=pydantic.AliasChoices("effective date", "effective_date"),
+            serialization_alias="effective_date",
+        ),
+        field_parsers.ParseFcaDate,
+    ]
+    firm_name: Annotated[
+        str,
+        pydantic.Field(
+            description="Name of the firm associated with the controlled function.",
+            validation_alias=pydantic.AliasChoices("firm name", "firm_name"),
+            serialization_alias="firm_name",
+        ),
+    ]
+    end_date: Annotated[
+        Optional[datetime.datetime],
+        pydantic.Field(
+            description="End date of any restriction associated with the controlled function.",
+            validation_alias=pydantic.AliasChoices("end date", "end_date"),
+            serialization_alias="end_date",
+            default=None,
+        ),
+        field_parsers.ParseFcaDate,
+    ]
+
+    url: Annotated[
+        pydantic.HttpUrl,
+        pydantic.Field(
+            description="URL to the controlled function details.",
         ),
     ]

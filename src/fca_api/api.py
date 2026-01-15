@@ -567,9 +567,49 @@ class Client:
         """
         res = await self._client.get_individual(irn)
         data = res.data
-        print(res.json())
         assert isinstance(data, list) and len(data) == 1, (
             "Expected a single individual detail object in the response data."
         )
-        print(data[0])
         return types.individual.Individual.model_validate(data[0]["Details"])
+
+    async def get_individual_controlled_functions(
+        self, irn: str
+    ) -> list[types.individual.IndividualControlledFunction]:
+        """Get individual details by IRN.
+
+        Args:
+            irn: The individual's IRN.
+
+        Returns:
+            The individual's details.
+        """
+        res = await self._client.get_individual_controlled_functions(irn)
+        data = res.data
+        assert isinstance(data, list) and len(data) == 1, (
+            "Expected a single individual detail object in the response data."
+        )
+        out = []
+        for row in data:
+            if not isinstance(row, dict):
+                logger.warning(f"Unexpected individual controlled function entry format: {row!r}")
+                continue
+            for key, value in row.items():
+                key = key.lower().strip()
+                if not isinstance(value, dict):
+                    logger.warning(f"Unexpected individual controlled function entry value format: {value!r}")
+                    continue
+                for fn_name, fn_data in value.items():
+                    if fn_name != fn_data.get("Name", None):
+                        logger.warning(
+                            "Mismatch in controlled function name and data name: "
+                            f"{fn_name!r} != {fn_data.get('name')!r}"
+                        )
+                    out.append(
+                        types.individual.IndividualControlledFunction.model_validate(
+                            {
+                                "fca_api_lst_type": key,
+                            }
+                            | fn_data
+                        )
+                    )
+        return out
