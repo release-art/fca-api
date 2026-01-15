@@ -129,7 +129,7 @@ class Client:
                 lambda page_idx: self._client.search_frn(firm_name, page_idx), page_idx, types.search.FirmSearchResult
             ),
         )
-        await out._asyinc_init()
+        await out._async_init()
         return out
 
     async def search_irn(
@@ -143,7 +143,7 @@ class Client:
                 types.search.IndividualSearchResult,
             ),
         )
-        await out._asyinc_init()
+        await out._async_init()
         return out
 
     async def search_prn(self, fund_name: str) -> types.pagination.MultipageList[types.search.FirmSearchResult]:
@@ -153,7 +153,7 @@ class Client:
                 lambda page_idx: self._client.search_prn(fund_name, page_idx), page_idx, types.search.FundSearchResult
             ),
         )
-        await out._asyinc_init()
+        await out._async_init()
         return out
 
     async def get_firm(self, frn: str) -> types.firm.FirmDetails:
@@ -206,7 +206,7 @@ class Client:
                 self._parse_firm_names_pg,
             ).fetch_page,
         )
-        await out._asyinc_init()
+        await out._async_init()
         return out
 
     def _parse_firm_addresses_pg(self, data: list[dict]) -> list[types.firm.FirmAddress]:
@@ -250,7 +250,7 @@ class Client:
                 self._parse_firm_addresses_pg,
             ).fetch_page,
         )
-        await out._asyinc_init()
+        await out._async_init()
         return out
 
     def _parse_firm_controlled_functions_pg(self, data: list[dict]) -> list[types.firm.FirmControlledFunction]:
@@ -300,7 +300,7 @@ class Client:
                 self._parse_firm_controlled_functions_pg,
             ).fetch_page,
         )
-        await out._asyinc_init()
+        await out._async_init()
         return out
 
     async def get_firm_individuals(self, frn: str) -> types.pagination.MultipageList[types.firm.FirmIndividual]:
@@ -318,7 +318,7 @@ class Client:
                 lambda data: [types.firm.FirmIndividual.model_validate(item) for item in data],
             ).fetch_page,
         )
-        await out._asyinc_init()
+        await out._async_init()
         return out
 
     def _parse_firm_permissions_pg(self, data: dict) -> list[types.firm.FirmPermission]:
@@ -366,5 +366,23 @@ class Client:
                 self._parse_firm_permissions_pg,
             ).fetch_page,
         )
-        await out._asyinc_init()
+        await out._async_init()
+        return out
+
+    async def get_firm_requirements(self, frn: str) -> types.pagination.MultipageList[types.firm.FirmRequirement]:
+        """Get firm requirements by FRN.
+
+        Args:
+            frn: The firm's FRN.
+
+        Returns:
+            A list of the firm's requirements.
+        """
+        out = types.pagination.MultipageList(
+            fetch_page=PaginatedResponseHandler(
+                lambda page_idx: self._client.get_firm_requirements(frn, page=page_idx),
+                lambda data: [types.firm.FirmRequirement.model_validate(row) for row in data],
+            ).fetch_page,
+        )
+        await out._async_init()
         return out

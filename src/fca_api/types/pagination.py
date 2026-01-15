@@ -87,7 +87,7 @@ class MultipageList(typing.Generic[T]):
         assert isinstance(self._result_info, PaginatedResultInfo)
         return (self._result_info.page < self._result_info.total_pages) and self._result_info.next is not None
 
-    async def _asyinc_init(self) -> None:
+    async def _async_init(self) -> None:
         # Fetch the first page to initialize the result info.
         await self._fetch_page_to_item_idx(0)
 

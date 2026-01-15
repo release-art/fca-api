@@ -1,0 +1,292 @@
+{
+  "content": {
+    "json": {
+      "Data": {
+        "Advising on P2P agreements": [
+          {
+            "Customer Type": [
+              "Eligible Counterparty",
+              "Retail (Investment)",
+              "Professional"
+            ]
+          }
+        ],
+        "Advising on investments (except on Pension Transfers and Pension Opt Outs)": [
+          {
+            "Customer Type": [
+              "Eligible Counterparty",
+              "Retail (Investment)",
+              "Professional"
+            ]
+          },
+          {
+            "Investment Type": [
+              "Personal pension scheme",
+              "Rights to or interests in investments (Security)",
+              "Debenture",
+              "Share",
+              "Government and public security",
+              "Warrant",
+              "Unit"
+            ]
+          },
+          {
+            "Limitation": [
+              "Investment activity in \"rights to or interests in investments (security)\" is limited to the investment types granted for this activity."
+            ]
+          }
+        ],
+        "Agreeing to carry on a regulated activity": [
+          {
+            "Limitation": [
+              "The firm can only agree to carry on the regulated activities specified in this Notice."
+            ]
+          }
+        ],
+        "Arranging (bringing about) deals in investments": [
+          {
+            "Customer Type": [
+              "Retail (Investment)",
+              "Professional",
+              "Eligible Counterparty"
+            ]
+          },
+          {
+            "Investment Type": [
+              "Unit",
+              "Warrant",
+              "Share",
+              "Rights to or interests in investments (Security)",
+              "Government and public security",
+              "Debenture",
+              "Certificates representing certain security",
+              "Personal pension scheme"
+            ]
+          },
+          {
+            "Limitation": [
+              "Investment activity in \"rights to or interests in investments (security)\" is limited to the investment types granted for this activity."
+            ]
+          }
+        ],
+        "Arranging safeguarding and administration of assets": [
+          {
+            "Customer Type": [
+              "Professional",
+              "Retail (Investment)",
+              "Eligible Counterparty"
+            ]
+          },
+          {
+            "Investment Type": [
+              "Certificates representing certain security",
+              "Warrant",
+              "Unit",
+              "Rights to or interests in investments (Security)",
+              "Debenture",
+              "Government and public security",
+              "Share",
+              "Personal pension scheme"
+            ]
+          },
+          {
+            "Limitation": [
+              "Investment activity in \"rights to or interests in investments (security)\" is limited to the investment types granted for this activity."
+            ]
+          }
+        ],
+        "Dealing in investments as agent": [
+          {
+            "Customer Type": [
+              "Retail (Investment)",
+              "Professional",
+              "Eligible Counterparty"
+            ]
+          },
+          {
+            "Investment Type": [
+              "Warrant",
+              "Unit",
+              "Share",
+              "Rights to or interests in investments (Security)",
+              "Government and public security",
+              "Debenture",
+              "Certificates representing certain security",
+              "Personal pension scheme"
+            ]
+          },
+          {
+            "Limitation": [
+              "Investment activity in \"rights to or interests in investments (security)\" is limited to the investment types granted for this activity."
+            ]
+          }
+        ],
+        "Dealing in investments as principal": [
+          {
+            "Customer Type": [
+              "Eligible Counterparty",
+              "Professional",
+              "Retail (Investment)"
+            ]
+          },
+          {
+            "Investment Type": [
+              "Warrant",
+              "Government and public security",
+              "Personal pension scheme",
+              "Debenture",
+              "Share",
+              "Unit",
+              "Certificates representing certain security",
+              "Rights to or interests in investments (Security)"
+            ]
+          },
+          {
+            "Limitation": [
+              "Investment activity in \"rights to or interests in investments (security)\" is limited to the investment types granted for this activity."
+            ]
+          }
+        ],
+        "Making arrangements with a view to transactions in investments": [
+          {
+            "Customer Type": [
+              "Retail (Investment)",
+              "Eligible Counterparty",
+              "Professional"
+            ]
+          },
+          {
+            "Investment Type": [
+              "Warrant",
+              "Unit",
+              "Share",
+              "Rights to or interests in investments (Security)",
+              "Government and public security",
+              "Debenture",
+              "Certificates representing certain security",
+              "Personal pension scheme"
+            ]
+          },
+          {
+            "Limitation": [
+              "Investment activity in \"rights to or interests in investments (security)\" is limited to the investment types granted for this activity."
+            ]
+          }
+        ],
+        "Managing investments": [
+          {
+            "Customer Type": [
+              "Retail (Investment)",
+              "Professional"
+            ]
+          },
+          {
+            "Investment Type": [
+              "Warrant",
+              "Unit",
+              "Rights to or interests in investments (Security)",
+              "Debenture",
+              "Certificates representing certain security",
+              "Share",
+              "Government and public security",
+              "Personal pension scheme"
+            ]
+          },
+          {
+            "Limitation": [
+              "Investment activity in \"rights to or interests in investments (security)\" is limited to the investment types granted for this activity."
+            ]
+          }
+        ],
+        "Safeguarding and administration of assets (without arranging)": [
+          {
+            "Customer Type": [
+              "Retail (Investment)",
+              "Professional",
+              "Eligible Counterparty"
+            ]
+          },
+          {
+            "Investment Type": [
+              "Personal pension scheme",
+              "Rights to or interests in investments (Security)",
+              "Debenture",
+              "Government and public security",
+              "Share",
+              "Warrant",
+              "Certificates representing certain security",
+              "Unit"
+            ]
+          },
+          {
+            "Limitation": [
+              "Investment activity in \"rights to or interests in investments (security)\" is limited to the investment types granted for this activity."
+            ]
+          }
+        ],
+        "Sending dematerialised instructions": [
+          {
+            "Customer Type": [
+              "Eligible Counterparty",
+              "Professional",
+              "Retail (Investment)"
+            ]
+          },
+          {
+            "Investment Type": [
+              "Certificates representing certain security",
+              "Government and public security",
+              "Personal pension scheme",
+              "Warrant",
+              "Share",
+              "Unit",
+              "Rights to or interests in investments (Security)",
+              "Debenture"
+            ]
+          },
+          {
+            "Limitation": [
+              "Investment activity in \"rights to or interests in investments (security)\" is limited to the investment types granted for this activity."
+            ]
+          }
+        ]
+      },
+      "Message": "Ok. Firm permission found",
+      "ResultInfo": {
+        "page": "1",
+        "per_page": "20",
+        "total_count": "11"
+      },
+      "Status": "FSR-API-02-03-00"
+    }
+  },
+  "headers": {
+    "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
+    "cf-cache-status": "DYNAMIC",
+    "cf-ray": "9be4768efa476545-LHR",
+    "connection": "keep-alive",
+    "content-encoding": "gzip",
+    "content-type": "application/json;charset=UTF-8",
+    "date": "Thu, 15 Jan 2026 09:49:26 GMT",
+    "server": "cloudflare",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 09:49:26 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 09:49:26 GMT; Max-Age=31536000; secure",
+    "strict-transport-security": "max-age=63072000; includeSubDomains",
+    "transfer-encoding": "chunked",
+    "vary": "Accept-Encoding",
+    "x-content-type-options": "nosniff"
+  },
+  "request": {
+    "headers": {
+      "accept": "application/json",
+      "accept-encoding": "gzip, deflate",
+      "connection": "keep-alive",
+      "user-agent": "python-httpx/0.28.1",
+      "x-auth-email": "user@example.com",
+      "x-auth-key": "00617470e8144a09"
+    },
+    "params": null,
+    "url": "https://register.fca.org.uk/services/V0.1/Firm/552016/Permissions?pgnp=1"
+  },
+  "status_code": 200,
+  "url": "https://register.fca.org.uk/services/V0.1/Firm/552016/Permissions?pgnp=1"
+}

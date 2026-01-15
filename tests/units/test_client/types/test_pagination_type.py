@@ -55,7 +55,7 @@ class TestMultipageList:
         fetch_page = self.create_mock_fetch_page(pages_data)
         mpl = pagination.MultipageList(fetch_page=fetch_page)
 
-        await mpl._asyinc_init()
+        await mpl._async_init()
 
         assert len(mpl._pages) == 1
         assert len(mpl.local_items()) == 3
@@ -73,7 +73,7 @@ class TestMultipageList:
             return None, []
 
         mpl = pagination.MultipageList(fetch_page=failing_fetch_page)
-        await mpl._asyinc_init()
+        await mpl._async_init()
 
         assert mpl._result_info == pagination.SpecialResultInfoState.FIRST_PAGE_FETCH_FAILED
         assert mpl.local_len() == 0
@@ -175,7 +175,7 @@ class TestMultipageList:
         mpl = pagination.MultipageList(fetch_page=bad_fetch_page)
 
         with pytest.raises(AssertionError):
-            await mpl._asyinc_init()
+            await mpl._async_init()
 
     @pytest.mark.asyncio
     async def test_getitem_single_item(self):
@@ -207,7 +207,7 @@ class TestMultipageList:
         ]
         fetch_page = self.create_mock_fetch_page(pages_data)
         mpl = pagination.MultipageList(fetch_page=fetch_page)
-        await mpl._asyinc_init()
+        await mpl._async_init()
 
         items = []
         async for item in mpl:
@@ -266,7 +266,7 @@ class TestMultipageList:
         assert mpl.local_items() == ()
 
         # After fetching
-        await mpl._asyinc_init()
+        await mpl._async_init()
         assert mpl.local_items() == ("item1", "item2", "item3")
 
     @pytest.mark.asyncio
@@ -284,7 +284,7 @@ class TestMultipageList:
         fetch_page = self.create_mock_fetch_page(pages_data)
         mpl = pagination.MultipageList(fetch_page=fetch_page)
 
-        await mpl._asyinc_init()
+        await mpl._async_init()
 
         result = mpl.local_pages()
         assert result == (("item1", "item2", "item3"),)
@@ -303,7 +303,7 @@ class TestMultipageList:
         fetch_page = self.create_mock_fetch_page(pages_data)
         mpl = pagination.MultipageList(fetch_page=fetch_page)
 
-        await mpl._asyinc_init()
+        await mpl._async_init()
 
         # Initially only first page is cached
         result = mpl.local_pages()
@@ -328,7 +328,7 @@ class TestMultipageList:
         fetch_page = self.create_mock_fetch_page(pages_data)
         mpl = pagination.MultipageList(fetch_page=fetch_page)
 
-        await mpl._asyinc_init()
+        await mpl._async_init()
 
         result = mpl.local_pages()
         assert result == ((),)
@@ -342,7 +342,7 @@ class TestMultipageList:
         fetch_page = self.create_mock_fetch_page(pages_data)
         mpl = pagination.MultipageList(fetch_page=fetch_page)
 
-        await mpl._asyinc_init()
+        await mpl._async_init()
 
         result1 = mpl.local_pages()
         result2 = mpl.local_pages()
@@ -367,7 +367,7 @@ class TestMultipageList:
             return None, []
 
         mpl = pagination.MultipageList(fetch_page=failing_fetch_page)
-        await mpl._asyinc_init()
+        await mpl._async_init()
 
         # First page should be available
         result = mpl.local_pages()
@@ -394,7 +394,7 @@ class TestMultipageList:
         ]
         fetch_page = self.create_mock_fetch_page(pages_data)
         mpl = pagination.MultipageList(fetch_page=fetch_page)
-        await mpl._asyinc_init()
+        await mpl._async_init()
 
         # Should return total_count from result_info since there are more pages
         assert len(mpl) == 25
@@ -447,7 +447,7 @@ class TestMultipageList:
         pages_data = [({"page": 1, "per_page": 10, "total_count": 0}, [])]
         fetch_page = self.create_mock_fetch_page(pages_data)
         mpl = pagination.MultipageList(fetch_page=fetch_page)
-        await mpl._asyinc_init()
+        await mpl._async_init()
 
         assert len(mpl) == 0
         assert mpl.local_items() == ()
@@ -464,7 +464,7 @@ class TestMultipageList:
         ]
         fetch_page = self.create_mock_fetch_page(pages_data)
         mpl = pagination.MultipageList(fetch_page=fetch_page)
-        await mpl._asyinc_init()
+        await mpl._async_init()
 
         # Initially reports total_count because there appears to be a next page
         assert len(mpl) == 100
@@ -483,7 +483,7 @@ class TestMultipageList:
         ]
         fetch_page = self.create_mock_fetch_page(pages_data)
         mpl = pagination.MultipageList(fetch_page=fetch_page)
-        await mpl._asyinc_init()
+        await mpl._async_init()
 
         # Should not attempt to fetch more pages when next is None
         assert not mpl._has_next_page()
@@ -604,7 +604,7 @@ class TestErrorHandlingEdgeCases:
         mpl = pagination.MultipageList(fetch_page=failing_fetch_page)
 
         # Should handle exception gracefully, not raise it
-        await mpl._asyinc_init()
+        await mpl._async_init()
 
         # Should be marked as failed
         assert mpl._result_info == pagination.SpecialResultInfoState.FIRST_PAGE_FETCH_FAILED
@@ -630,7 +630,7 @@ class TestErrorHandlingEdgeCases:
                 raise httpx.RequestError("Network timeout")
 
         mpl = pagination.MultipageList(fetch_page=mixed_fetch_page)
-        await mpl._asyinc_init()
+        await mpl._async_init()
 
         # First page should work fine
         assert mpl.local_len() == 2
@@ -663,7 +663,7 @@ class TestErrorHandlingEdgeCases:
                 return pagination.PaginatedResultInfo(page=3, per_page=2, total_count=6, next=None), ["item5", "item6"]
 
         mpl = pagination.MultipageList(fetch_page=intermittent_fetch_page)
-        await mpl._asyinc_init()
+        await mpl._async_init()
 
         # First page loads successfully
         assert mpl.local_len() == 2
@@ -685,7 +685,7 @@ class TestErrorHandlingEdgeCases:
             raise exception_type("Simulated fetch_page exception")
 
         mpl = pagination.MultipageList(fetch_page=failing_fetch_page)
-        await mpl._asyinc_init()
+        await mpl._async_init()
 
         # Should handle these exceptions gracefully
         assert mpl._result_info == pagination.SpecialResultInfoState.FIRST_PAGE_FETCH_FAILED
@@ -706,7 +706,7 @@ class TestErrorHandlingEdgeCases:
 
         # These exceptions should be re-raised, not handled gracefully
         with pytest.raises(exception_type):
-            await mpl._asyinc_init()
+            await mpl._async_init()
 
     @pytest.mark.asyncio
     async def test_fetch_page_callback_exception_during_iteration(self):
@@ -721,7 +721,7 @@ class TestErrorHandlingEdgeCases:
                 raise httpx.RequestError("Disk full")
 
         mpl = pagination.MultipageList(fetch_page=failing_after_first_fetch_page)
-        await mpl._asyinc_init()
+        await mpl._async_init()
 
         items = []
         # This should iterate through available items and stop gracefully when exception occurs
@@ -745,7 +745,7 @@ class TestErrorHandlingEdgeCases:
                 raise httpx.RequestError("Out of memory")
 
         mpl = pagination.MultipageList(fetch_page=failing_second_page_fetch_page)
-        await mpl._asyinc_init()
+        await mpl._async_init()
 
         # Access items from first page should work
         assert await mpl[0] == "item1"
@@ -776,7 +776,7 @@ class TestErrorHandlingEdgeCases:
         caplog.clear()
 
         with caplog.at_level(logging.ERROR):
-            await mpl._asyinc_init()
+            await mpl._async_init()
 
         # Should have logged the exception
         assert len(caplog.records) == 1
@@ -794,7 +794,7 @@ class TestErrorHandlingEdgeCases:
                 raise httpx.RequestError("Request timeout on page 2")
 
         mpl2 = pagination.MultipageList(fetch_page=mixed_logging_fetch_page)
-        await mpl2._asyinc_init()
+        await mpl2._async_init()
 
         caplog.clear()
         with caplog.at_level(logging.ERROR):
@@ -819,7 +819,7 @@ class TestErrorHandlingEdgeCases:
                 raise ValueError("This should be re-raised")
 
         mpl = pagination.MultipageList(fetch_page=failing_after_first_fetch_page)
-        await mpl._asyinc_init()
+        await mpl._async_init()
 
         items = []
         # This should re-raise the ValueError when trying to fetch the second page
@@ -843,7 +843,7 @@ class TestErrorHandlingEdgeCases:
                 raise RuntimeError("This should be re-raised")
 
         mpl = pagination.MultipageList(fetch_page=failing_second_page_fetch_page)
-        await mpl._asyinc_init()
+        await mpl._async_init()
 
         # Access items from first page should work
         assert await mpl[0] == "item1"
@@ -865,7 +865,7 @@ class TestErrorHandlingEdgeCases:
 
         # This should raise an error due to invalid return type when trying to access page info
         with pytest.raises((AttributeError, TypeError)):
-            await mpl._asyinc_init()
+            await mpl._async_init()
 
     @pytest.mark.asyncio
     @pytest.mark.parametrize("invalid_index", [-1, -5, -10])
@@ -874,7 +874,7 @@ class TestErrorHandlingEdgeCases:
         pages_data = [({"page": 1, "per_page": 10, "total_count": 25}, ["item1", "item2", "item3"])]
         fetch_page = self.create_mock_fetch_page(pages_data)
         mpl = pagination.MultipageList(fetch_page=fetch_page)
-        await mpl._asyinc_init()
+        await mpl._async_init()
 
         with pytest.raises(IndexError):
             await mpl[invalid_index]
@@ -946,7 +946,7 @@ class TestErrorHandlingEdgeCases:
                 return None, []
 
         mpl = pagination.MultipageList(fetch_page=inconsistent_fetch_page)
-        await mpl._asyinc_init()
+        await mpl._async_init()
 
         # Initial length based on first page
         initial_len = len(mpl)

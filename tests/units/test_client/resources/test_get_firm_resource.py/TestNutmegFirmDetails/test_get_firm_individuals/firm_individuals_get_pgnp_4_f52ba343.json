@@ -1,0 +1,166 @@
+{
+  "content": {
+    "json": {
+      "Data": [
+        {
+          "IRN": "OXM00037",
+          "Name": "Oliver Mitchell",
+          "Status": "Regulatory approval no longer required",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/OXM00037"
+        },
+        {
+          "IRN": "EXH00140",
+          "Name": "Eleanor Hill",
+          "Status": "Regulatory approval no longer required",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/EXH00140"
+        },
+        {
+          "IRN": "PXH00395",
+          "Name": "Paul Hillis",
+          "Status": "Regulatory approval no longer required",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/PXH00395"
+        },
+        {
+          "IRN": "NXA00136",
+          "Name": "Neil Alexander",
+          "Status": "Regulatory approval no longer required",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/NXA00136"
+        },
+        {
+          "IRN": "DXA00191",
+          "Name": "Daniel Al-Hariri",
+          "Status": "Regulatory approval no longer required",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/DXA00191"
+        },
+        {
+          "IRN": "PXS01455",
+          "Name": "Peter Spyrides",
+          "Status": "Regulatory approval no longer required",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/PXS01455"
+        },
+        {
+          "IRN": "SXS25246",
+          "Name": "Sanjiv Somani",
+          "Status": "Regulatory approval no longer required",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/SXS25246"
+        },
+        {
+          "IRN": "RXP00453",
+          "Name": "Ryan Patch",
+          "Status": "Regulatory approval no longer required",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RXP00453"
+        },
+        {
+          "IRN": "CXT45817",
+          "Name": "Colin Tham",
+          "Status": "Certified / assessed by firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/CXT45817"
+        },
+        {
+          "IRN": "JXM80416",
+          "Name": "Jane Masen",
+          "Status": "Regulatory approval no longer required",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/JXM80416"
+        },
+        {
+          "IRN": "MXC00255",
+          "Name": "Mhari Colvin",
+          "Status": "Regulatory approval no longer required",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/MXC00255"
+        },
+        {
+          "IRN": "DFH01043",
+          "Name": "David Hudson",
+          "Status": "Regulatory approval no longer required",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/DFH01043"
+        },
+        {
+          "IRN": "MXM04488",
+          "Name": "Michael Manning",
+          "Status": "Certified / assessed by firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/MXM04488"
+        },
+        {
+          "IRN": "RPP01036",
+          "Name": "Robert Peter Plant",
+          "Status": "Certified / assessed by firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RPP01036"
+        },
+        {
+          "IRN": "DJP01134",
+          "Name": "David John Pye",
+          "Status": "Regulatory approval no longer required",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/DJP01134"
+        },
+        {
+          "IRN": "DXR00261",
+          "Name": "Dominic Russo",
+          "Status": "Regulatory approval no longer required",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/DXR00261"
+        },
+        {
+          "IRN": "TXK01692",
+          "Name": "Thomas Kieldsen",
+          "Status": "Regulatory approval no longer required",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/TXK01692"
+        },
+        {
+          "IRN": "SPP01074",
+          "Name": "Shaun Port",
+          "Status": "Certified / assessed by firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/SPP01074"
+        },
+        {
+          "IRN": "WXA08063",
+          "Name": "William Henry Askew",
+          "Status": "Regulatory approval no longer required",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/WXA08063"
+        },
+        {
+          "IRN": "CXR00261",
+          "Name": "Conor Renshaw-Weber",
+          "Status": "Regulatory approval no longer required",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/CXR00261"
+        }
+      ],
+      "Message": "Ok. Firm Individuals found",
+      "ResultInfo": {
+        "Next": "https://register.fca.org.uk/services/V0.1/Firm/552016/Individuals?pgnp=5",
+        "Previous": "https://register.fca.org.uk/services/V0.1/Firm/552016/Individuals?pgnp=3",
+        "page": "4",
+        "per_page": "20",
+        "total_count": "120"
+      },
+      "Status": "FSR-API-02-05-00"
+    }
+  },
+  "headers": {
+    "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
+    "cf-cache-status": "DYNAMIC",
+    "cf-ray": "9be46f929bad3eb9-LHR",
+    "connection": "keep-alive",
+    "content-encoding": "gzip",
+    "content-type": "application/json;charset=UTF-8",
+    "date": "Thu, 15 Jan 2026 09:44:40 GMT",
+    "server": "cloudflare",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 09:44:40 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 09:44:40 GMT; Max-Age=31536000; secure",
+    "strict-transport-security": "max-age=63072000; includeSubDomains",
+    "transfer-encoding": "chunked",
+    "vary": "Accept-Encoding",
+    "x-content-type-options": "nosniff"
+  },
+  "request": {
+    "headers": {
+      "accept": "application/json",
+      "accept-encoding": "gzip, deflate",
+      "connection": "keep-alive",
+      "user-agent": "python-httpx/0.28.1",
+      "x-auth-email": "user@example.com",
+      "x-auth-key": "00617470e8144a09"
+    },
+    "params": null,
+    "url": "https://register.fca.org.uk/services/V0.1/Firm/552016/Individuals?pgnp=4"
+  },
+  "status_code": 200,
+  "url": "https://register.fca.org.uk/services/V0.1/Firm/552016/Individuals?pgnp=4"
+}

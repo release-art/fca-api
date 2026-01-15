@@ -1,0 +1,165 @@
+{
+  "content": {
+    "json": {
+      "Data": [
+        {
+          "IRN": "JSB01062",
+          "Name": "Jeremy Stephen Beckwith",
+          "Status": "Regulatory approval no longer required",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/JSB01062"
+        },
+        {
+          "IRN": "JHH01094",
+          "Name": "Jonathan Henry Grenville Hey",
+          "Status": "Regulatory approval no longer required",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/JHH01094"
+        },
+        {
+          "IRN": "EBE01002",
+          "Name": "Evrin Bilge Erdem",
+          "Status": "Regulatory approval no longer required",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/EBE01002"
+        },
+        {
+          "IRN": "DSA01030",
+          "Name": "Daniel Simon Aegerter",
+          "Status": "Regulatory approval no longer required",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/DSA01030"
+        },
+        {
+          "IRN": "YXC12211",
+          "Name": "Yao-Hui Cheng",
+          "Status": "Regulatory approval no longer required",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/YXC12211"
+        },
+        {
+          "IRN": "KJD01123",
+          "Name": "Kenneth John Davies",
+          "Status": "Regulatory approval no longer required",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/KJD01123"
+        },
+        {
+          "IRN": "TXS01830",
+          "Name": "Tracy Sambrook",
+          "Status": "Regulatory approval no longer required",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/TXS01830"
+        },
+        {
+          "IRN": "PXO01284",
+          "Name": "Patrick O'Donovan",
+          "Status": "Regulatory approval no longer required",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/PXO01284"
+        },
+        {
+          "IRN": "SFC01055",
+          "Name": "Sarah Felicity Alexandra Crouch",
+          "Status": "Regulatory approval no longer required",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/SFC01055"
+        },
+        {
+          "IRN": "JXC03125",
+          "Name": "Johnny Chen",
+          "Status": "Regulatory approval no longer required",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/JXC03125"
+        },
+        {
+          "IRN": "IXH01479",
+          "Name": "I-Meng Huang",
+          "Status": "Regulatory approval no longer required",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/IXH01479"
+        },
+        {
+          "IRN": "AXL02157",
+          "Name": "Alexander Longton",
+          "Status": "Regulatory approval no longer required",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/AXL02157"
+        },
+        {
+          "IRN": "CXM02333",
+          "Name": "Chikako Matsumoto",
+          "Status": "Regulatory approval no longer required",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/CXM02333"
+        },
+        {
+          "IRN": "WDP01018",
+          "Name": "William David Packman",
+          "Status": "Regulatory approval no longer required",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/WDP01018"
+        },
+        {
+          "IRN": "EXS01673",
+          "Name": "Ewan Silver",
+          "Status": "Regulatory approval no longer required",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/EXS01673"
+        },
+        {
+          "IRN": "CML01033",
+          "Name": "Christopher Melton Leach",
+          "Status": "Regulatory approval no longer required",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/CML01033"
+        },
+        {
+          "IRN": "DJM00100",
+          "Name": "Dermot John McKeever",
+          "Status": "Regulatory approval no longer required",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/DJM00100"
+        },
+        {
+          "IRN": "MFK01018",
+          "Name": "Maureen Frances Kirwan",
+          "Status": "Regulatory approval no longer required",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/MFK01018"
+        },
+        {
+          "IRN": "MXP01762",
+          "Name": "Maria Pasquale",
+          "Status": "Regulatory approval no longer required",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/MXP01762"
+        },
+        {
+          "IRN": "NWH01021",
+          "Name": "Nicholas Walter Hungerford",
+          "Status": "Regulatory approval no longer required",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/NWH01021"
+        }
+      ],
+      "Message": "Ok. Firm Individuals found",
+      "ResultInfo": {
+        "Previous": "https://register.fca.org.uk/services/V0.1/Firm/552016/Individuals?pgnp=5",
+        "page": "6",
+        "per_page": "20",
+        "total_count": "120"
+      },
+      "Status": "FSR-API-02-05-00"
+    }
+  },
+  "headers": {
+    "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
+    "cf-cache-status": "DYNAMIC",
+    "cf-ray": "9be46f9909d43eb9-LHR",
+    "connection": "keep-alive",
+    "content-encoding": "gzip",
+    "content-type": "application/json;charset=UTF-8",
+    "date": "Thu, 15 Jan 2026 09:44:41 GMT",
+    "server": "cloudflare",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 09:44:41 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 09:44:41 GMT; Max-Age=31536000; secure",
+    "strict-transport-security": "max-age=63072000; includeSubDomains",
+    "transfer-encoding": "chunked",
+    "vary": "Accept-Encoding",
+    "x-content-type-options": "nosniff"
+  },
+  "request": {
+    "headers": {
+      "accept": "application/json",
+      "accept-encoding": "gzip, deflate",
+      "connection": "keep-alive",
+      "user-agent": "python-httpx/0.28.1",
+      "x-auth-email": "user@example.com",
+      "x-auth-key": "00617470e8144a09"
+    },
+    "params": null,
+    "url": "https://register.fca.org.uk/services/V0.1/Firm/552016/Individuals?pgnp=6"
+  },
+  "status_code": 200,
+  "url": "https://register.fca.org.uk/services/V0.1/Firm/552016/Individuals?pgnp=6"
+}

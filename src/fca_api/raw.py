@@ -600,7 +600,7 @@ class RawClient:
             page=page,
         )
 
-    async def get_firm_requirements(self, frn: str) -> FcaApiResponse:
+    async def get_firm_requirements(self, frn: str, page: int | None = None) -> FcaApiResponse:
         """:py:class:`~fca_api.raw.FcaApiResponse`:
         Returns a response containing the requirements associated with a firm,
         given its firm reference number (FRN).
@@ -629,6 +629,7 @@ class RawClient:
             frn,
             const.ResourceTypes.FIRM.value.type_name,
             modifiers=("Requirements",),
+            page=page,
         )
 
     async def get_firm_requirement_investment_types(self, frn: str, req_ref: str) -> FcaApiResponse:

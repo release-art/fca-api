@@ -631,6 +631,24 @@ class FirmPermission(base.Base):
             default=None,
         ),
     ]
+    acting_as_cbtl_arranger: Annotated[
+        Optional[bool],
+        pydantic.Field(
+            description="Indicates whether the permission involves acting as a CBTL arranger.",
+            validation_alias=pydantic.AliasChoices("acting as a cbtl arranger", "acting_as_cbtl_arranger"),
+            serialization_alias="acting_as_cbtl_arranger",
+            default=None,
+        ),
+    ]
+    acting_as_cbtl_lender: Annotated[
+        Optional[bool],
+        pydantic.Field(
+            description="Indicates whether the permission involves acting as a CBTL lender.",
+            validation_alias=pydantic.AliasChoices("acting as a cbtl lender", "acting_as_cbtl_lender"),
+            serialization_alias="acting_as_cbtl_lender",
+            default=None,
+        ),
+    ]
     cbtl_effective_date: Annotated[
         Optional[datetime.datetime],
         pydantic.Field(
@@ -650,21 +668,52 @@ class FirmPermission(base.Base):
             default=None,
         ),
     ]
-    acting_as_cbtl_arranger: Annotated[
-        Optional[bool],
+
+
+class FirmRequirement(base.RelaxedBase):
+    """A requirement associated with a firm."""
+
+    model_config = pydantic.ConfigDict(extra="allow")
+
+    reference: Annotated[
+        str,
         pydantic.Field(
-            description="Indicates whether the permission involves acting as a CBTL arranger.",
-            validation_alias=pydantic.AliasChoices("acting as a cbtl arranger", "acting_as_cbtl_arranger"),
-            serialization_alias="acting_as_cbtl_arranger",
-            default=None,
+            description="The reference identifier for the requirement.",
+            validation_alias=pydantic.AliasChoices("requirement reference", "reference"),
+            serialization_alias="reference",
+        ),
+        pydantic.StringConstraints(
+            strip_whitespace=True,
+            to_upper=True,
         ),
     ]
-    acting_as_cbtl_lender: Annotated[
-        Optional[bool],
+    effective_date: Annotated[
+        datetime.datetime,
         pydantic.Field(
-            description="Indicates whether the permission involves acting as a CBTL lender.",
-            validation_alias=pydantic.AliasChoices("acting as a cbtl lender", "acting_as_cbtl_lender"),
-            serialization_alias="acting_as_cbtl_lender",
+            description="The date from which the requirement became effective.",
+            validation_alias=pydantic.AliasChoices("effective date", "effective_date"),
+            serialization_alias="effective_date",
+        ),
+        field_parsers.ParseFcaDate,
+    ]
+    financial_promotions_requirement: Annotated[
+        bool,
+        pydantic.Field(
+            description="Indicates whether the requirement is related to financial promotions.",
+            validation_alias=pydantic.AliasChoices(
+                "financial promotions requirement", "financial_promotions_requirement"
+            ),
+            serialization_alias="financial_promotions_requirement",
+        ),
+    ]
+    financial_promotions_investment_types: Annotated[
+        Optional[pydantic.HttpUrl],
+        pydantic.Field(
+            description="URL to fetch the investment types associated with the requirement.",
+            validation_alias=pydantic.AliasChoices(
+                "financial promotions investment types", "financial_promotions_investment_types"
+            ),
+            serialization_alias="financial_promotions_investment_types",
             default=None,
         ),
     ]

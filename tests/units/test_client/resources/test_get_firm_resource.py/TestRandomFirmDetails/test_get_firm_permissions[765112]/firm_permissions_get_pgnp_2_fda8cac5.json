@@ -1,0 +1,292 @@
+{
+  "content": {
+    "json": {
+      "Data": {
+        "Acting as a CBTL administrator": [
+          {
+            "Acting as a CBTL administrator": [
+              "1"
+            ]
+          }
+        ],
+        "Acting as a CBTL advisor": [
+          {
+            "Acting as a CBTL advisor": [
+              "1"
+            ]
+          }
+        ],
+        "Acting as a CBTL lender": [
+          {
+            "Acting as a CBTL lender": [
+              "1"
+            ]
+          }
+        ],
+        "Advising on P2P agreements": [
+          {
+            "Customer Type": [
+              "Commercial",
+              "Retail (Investment)",
+              "Professional",
+              "Eligible Counterparty",
+              "Retail (Non-Investment Insurance)"
+            ]
+          }
+        ],
+        "Advising on Pension Transfers and Pension Opt Outs": [
+          {
+            "Customer Type": [
+              "Professional",
+              "Retail (Investment)"
+            ]
+          },
+          {
+            "Investment Type": [
+              "Life Policy",
+              "Personal pension scheme",
+              "Rights to or interests in investments (Security)",
+              "Rights to or interests in investments (Contractually Based Investments)",
+              "Stakeholder pension scheme",
+              "Unit"
+            ]
+          },
+          {
+            "Limitation": [
+              "Investment activity in \"rights to or interests in investments (security)\" and \"rights to or interests in investments (contractually based investment)\" is limited to the investment types granted for this activity.",
+              "This activity is limited to the provision of advice on the conversion or transfer of benefits from pension policies with a guaranteed annuity rate."
+            ]
+          }
+        ],
+        "Agreeing to carry on a regulated activity": [
+          {
+            "Limitation": [
+              "The firm can only agree to carry on the regulated activities specified in this Notice."
+            ]
+          }
+        ],
+        "CBTL Effective Date": [
+          {
+            "CBTL Effective Date": [
+              "10/07/2017"
+            ]
+          }
+        ],
+        "CBTL Status": [
+          {
+            "CBTL Status": [
+              "Registered"
+            ]
+          }
+        ],
+        "Causing dematerialised instructions to be sent": [
+          {
+            "Customer Type": [
+              "Eligible Counterparty",
+              "Professional",
+              "Retail (Investment)"
+            ]
+          },
+          {
+            "Investment Type": [
+              "Alternative Debenture",
+              "Certificates representing certain security",
+              "Debenture",
+              "Government and public security",
+              "Personal pension scheme",
+              "Rights to or interests in investments (Security)",
+              "Share",
+              "Stakeholder pension scheme",
+              "Unit",
+              "Warrant"
+            ]
+          },
+          {
+            "Limitation": [
+              "Investment activity in \"rights to or interests in investments (security)\" is limited to the investment types granted for this activity."
+            ]
+          }
+        ],
+        "Dealing in investments as principal": [
+          {
+            "Customer Type": [
+              "Retail (Investment)",
+              "Professional",
+              "Eligible Counterparty"
+            ]
+          },
+          {
+            "Investment Type": [
+              "Personal pension scheme",
+              "Share",
+              "Debenture",
+              "Government and public security",
+              "Warrant",
+              "Certificates representing certain security",
+              "Unit",
+              "Rights to or interests in investments (Security)",
+              "Alternative Debenture",
+              "Option (excluding a commodity option and an option on a commodity future)",
+              "Commodity option and option on commodity future",
+              "Future (excluding a commodity future and a rolling spot forex contract)",
+              "Commodity Future",
+              "Contract for Differences (excluding a spread bet and, a rolling spot forex contract and a binary bet)",
+              "Rolling spot forex contract",
+              "Rights to or interests in investments (Contractually Based Investments)"
+            ]
+          },
+          {
+            "Limitation": [
+              "Investment activity in \"rights to or interests in investments (security)\" and \"rights to or interests in investments (contractually based investment)\" is limited to the investment types granted for this activity."
+            ]
+          }
+        ],
+        "Debt-counselling": [
+          {
+            "Limitation": [
+              "This permission is limited to debt counselling with no debt management activity"
+            ]
+          }
+        ],
+        "Entering into Regulated Consumer Hire Agreements as owner": [
+          {
+            "Limitation Not Found": [
+              "Valid limitation not present"
+            ]
+          }
+        ],
+        "Entering into regulated credit agreement as Lender (Excluding high-cost short-term credit, bill of sale agreement, and home collected credit agreement)": [
+          {
+            "Limitation Not Found": [
+              "Valid limitation not present"
+            ]
+          }
+        ],
+        "Establishing/operating/winding up a personal pension scheme": [
+          {
+            "Customer Type": [
+              "Retail (Investment)"
+            ]
+          },
+          {
+            "Investment Type": [
+              "Personal pension scheme"
+            ]
+          }
+        ],
+        "Exercising or having the right to exercise the owner's rights and duties under a regulated consumer hire agreement": [
+          {
+            "Limitation Not Found": [
+              "Valid limitation not present"
+            ]
+          }
+        ],
+        "Exercising/having right to exercise lender's rights and duties under a regulated credit agreement (excluding high-cost short-term credit, bill of sale agreement, and home collected credit agreement)": [
+          {
+            "Limitation Not Found": [
+              "Valid limitation not present"
+            ]
+          }
+        ],
+        "Managing investments": [
+          {
+            "Customer Type": [
+              "Retail (Investment)",
+              "Professional",
+              "Eligible Counterparty"
+            ]
+          },
+          {
+            "Investment Type": [
+              "Share",
+              "Debenture",
+              "Government and public security",
+              "Warrant",
+              "Certificates representing certain security",
+              "Unit",
+              "Rights to or interests in investments (Security)",
+              "Option (excluding a commodity option and an option on a commodity future)",
+              "Commodity option and option on commodity future",
+              "Future (excluding a commodity future and a rolling spot forex contract)",
+              "Commodity Future",
+              "Contract for Differences (excluding a spread bet and, a rolling spot forex contract and a binary bet)",
+              "Rolling spot forex contract",
+              "Rights to or interests in investments (Contractually Based Investments)",
+              "Life Policy"
+            ]
+          },
+          {
+            "Limitation": [
+              "Investment activity in \"rights to or interests in investments (security)\" and \"rights to or interests in investments (contractually based investment)\" is limited to the investment types granted for this activity."
+            ]
+          }
+        ],
+        "Sending dematerialised instructions": [
+          {
+            "Customer Type": [
+              "Retail (Investment)",
+              "Professional",
+              "Eligible Counterparty"
+            ]
+          },
+          {
+            "Investment Type": [
+              "Personal pension scheme",
+              "Stakeholder pension scheme",
+              "Share",
+              "Debenture",
+              "Government and public security",
+              "Warrant",
+              "Certificates representing certain security",
+              "Unit",
+              "Rights to or interests in investments (Security)",
+              "Alternative Debenture"
+            ]
+          },
+          {
+            "Limitation": [
+              "Investment activity in \"rights to or interests in investments (security)\" is limited to the investment types granted for this activity."
+            ]
+          }
+        ]
+      },
+      "Message": "Ok. Firm permission found",
+      "ResultInfo": {
+        "Previous": "https://register.fca.org.uk/services/V0.1/Firm/765112/Permissions?pgnp=1",
+        "page": "2",
+        "per_page": "20",
+        "total_count": "38"
+      },
+      "Status": "FSR-API-02-03-00"
+    }
+  },
+  "headers": {
+    "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
+    "cf-cache-status": "DYNAMIC",
+    "cf-ray": "9be4a6f51acfa6f7-LHR",
+    "connection": "keep-alive",
+    "content-encoding": "gzip",
+    "content-type": "application/json;charset=UTF-8",
+    "date": "Thu, 15 Jan 2026 10:22:29 GMT",
+    "server": "cloudflare",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 10:22:28 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 10:22:28 GMT; Max-Age=31536000; secure",
+    "strict-transport-security": "max-age=63072000; includeSubDomains",
+    "transfer-encoding": "chunked",
+    "vary": "Accept-Encoding",
+    "x-content-type-options": "nosniff"
+  },
+  "request": {
+    "headers": {
+      "accept": "application/json",
+      "accept-encoding": "gzip, deflate",
+      "connection": "keep-alive",
+      "user-agent": "python-httpx/0.28.1",
+      "x-auth-email": "user@example.com",
+      "x-auth-key": "00617470e8144a09"
+    },
+    "params": null,
+    "url": "https://register.fca.org.uk/services/V0.1/Firm/765112/Permissions?pgnp=2"
+  },
+  "status_code": 200,
+  "url": "https://register.fca.org.uk/services/V0.1/Firm/765112/Permissions?pgnp=2"
+}

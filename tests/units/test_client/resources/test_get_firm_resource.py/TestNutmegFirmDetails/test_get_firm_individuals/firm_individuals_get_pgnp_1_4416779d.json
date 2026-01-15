@@ -1,0 +1,165 @@
+{
+  "content": {
+    "json": {
+      "Data": [
+        {
+          "IRN": "RXR00422",
+          "Name": "Robert George Rule",
+          "Status": "Approved by regulator",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RXR00422"
+        },
+        {
+          "IRN": "MXG02692",
+          "Name": "Matthew Gatrell",
+          "Status": "Approved by regulator",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/MXG02692"
+        },
+        {
+          "IRN": "JXP00417",
+          "Name": "Joanne Helen Phizacklea",
+          "Status": "Approved by regulator",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/JXP00417"
+        },
+        {
+          "IRN": "MPM01145",
+          "Name": "Matthew Paul Melling",
+          "Status": "Approved by regulator",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/MPM01145"
+        },
+        {
+          "IRN": "EXO00003",
+          "Name": "Eileen O'Connell",
+          "Status": "Approved by regulator;Certified / assessed by firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/EXO00003"
+        },
+        {
+          "IRN": "CPA01034",
+          "Name": "Clive Peter Adamson",
+          "Status": "Approved by regulator;Certified / assessed by firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/CPA01034"
+        },
+        {
+          "IRN": "SXK02084",
+          "Name": "Karine Sweeney",
+          "Status": "Approved by regulator;Certified / assessed by firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/SXK02084"
+        },
+        {
+          "IRN": "MMM01132",
+          "Name": "Mary McIntosh",
+          "Status": "Approved by regulator;Certified / assessed by firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/MMM01132"
+        },
+        {
+          "IRN": "MXS05156",
+          "Name": "Michelle Silwonuk",
+          "Status": "Approved by regulator;Certified / assessed by firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/MXS05156"
+        },
+        {
+          "IRN": "CXE45891",
+          "Name": "Claire Edwards",
+          "Status": "Approved by regulator;Certified / assessed by firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/CXE45891"
+        },
+        {
+          "IRN": "HFG01009",
+          "Name": "Holly Francesca Elisabeth Graham",
+          "Status": "Certified / assessed by firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/HFG01009"
+        },
+        {
+          "IRN": "CXL09940",
+          "Name": "Christopher Liebetrau",
+          "Status": "Certified / assessed by firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/CXL09940"
+        },
+        {
+          "IRN": "BXH01478",
+          "Name": "Bradley Holland",
+          "Status": "Certified / assessed by firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/BXH01478"
+        },
+        {
+          "IRN": "SVC01008",
+          "Name": "Shanaka Viranjan Cristofoli",
+          "Status": "Certified / assessed by firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/SVC01008"
+        },
+        {
+          "IRN": "JPE01063",
+          "Name": "James Patrick Egan",
+          "Status": "Certified / assessed by firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/JPE01063"
+        },
+        {
+          "IRN": "BXO00041",
+          "Name": "Bolanle Onifade",
+          "Status": "Certified / assessed by firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/BXO00041"
+        },
+        {
+          "IRN": "PPB01030",
+          "Name": "Pacome Breton",
+          "Status": "Certified / assessed by firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/PPB01030"
+        },
+        {
+          "IRN": "DXM01258",
+          "Name": "Dayna Morgan",
+          "Status": "Certified / assessed by firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/DXM01258"
+        },
+        {
+          "IRN": "GXF00221",
+          "Name": "Giovanni Fazio",
+          "Status": "Certified / assessed by firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/GXF00221"
+        },
+        {
+          "IRN": "AXW00465",
+          "Name": "Alice Wang",
+          "Status": "Certified / assessed by firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/AXW00465"
+        }
+      ],
+      "Message": "Ok. Firm Individuals found",
+      "ResultInfo": {
+        "Next": "https://register.fca.org.uk/services/V0.1/Firm/552016/Individuals?pgnp=2",
+        "page": "1",
+        "per_page": "20",
+        "total_count": "120"
+      },
+      "Status": "FSR-API-02-05-00"
+    }
+  },
+  "headers": {
+    "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
+    "cf-cache-status": "DYNAMIC",
+    "cf-ray": "9be46e876fc0ce7b-LHR",
+    "connection": "keep-alive",
+    "content-encoding": "gzip",
+    "content-type": "application/json;charset=UTF-8",
+    "date": "Thu, 15 Jan 2026 09:43:57 GMT",
+    "server": "cloudflare",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 09:43:57 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 09:43:57 GMT; Max-Age=31536000; secure",
+    "strict-transport-security": "max-age=63072000; includeSubDomains",
+    "transfer-encoding": "chunked",
+    "vary": "Accept-Encoding",
+    "x-content-type-options": "nosniff"
+  },
+  "request": {
+    "headers": {
+      "accept": "application/json",
+      "accept-encoding": "gzip, deflate",
+      "connection": "keep-alive",
+      "user-agent": "python-httpx/0.28.1",
+      "x-auth-email": "user@example.com",
+      "x-auth-key": "00617470e8144a09"
+    },
+    "params": null,
+    "url": "https://register.fca.org.uk/services/V0.1/Firm/552016/Individuals?pgnp=1"
+  },
+  "status_code": 200,
+  "url": "https://register.fca.org.uk/services/V0.1/Firm/552016/Individuals?pgnp=1"
+}

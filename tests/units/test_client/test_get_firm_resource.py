@@ -364,6 +364,42 @@ class TestNutmegFirmDetails:
         await out.fetch_all_pages()
         assert len(out) >= 10
 
+    @pytest.mark.asyncio
+    async def test_get_firm_requirements(self, test_client: fca_api.api.Client, frn: str):
+        out = await test_client.get_firm_requirements(frn)
+        await out.fetch_all_pages()
+        assert len(out) == 1
+        assert out.model_dump(mode="json") == [
+            {
+                "reference": "OR-0263614",
+                "effective_date": "2025-01-30T00:00:00",
+                "financial_promotions_requirement": True,
+                "financial_promotions_investment_types": "https://register.fca.org.uk/services/V0.1/Firm/552016/Requirements/OR-0263614/InvestmentTypes",
+                "financial promotion for other unauthorised clients": (
+                    "This firm can: (1) approve its own financial promotions as well as those of members "
+                    "of its wider group and, in certain circumstances, those of its appointed representatives; "
+                    "and (2) approve financial promotions for other unauthorised persons for the following types "
+                    "of investment:"
+                ),
+            }
+        ]
+        el_one = await out[0]
+        assert el_one.get_additional_fields() == {
+            "financial promotion for other unauthorised clients": (
+                "This firm can: (1) approve its own financial promotions as well as those of members "
+                "of its wider group and, in certain circumstances, those of its appointed representatives; "
+                "and (2) approve financial promotions for other unauthorised persons for the following types "
+                "of investment:"
+            ),
+        }
+
+
+LARGE_BANK_FRNS = [
+    "122702",  # Barclays Bank Plc
+    "759676",  # Barclays Bank UK PLC
+    "765112",  # HSBC UK Bank Plc
+]
+
 
 class TestRandomFirmDetails:
     @pytest.mark.asyncio
@@ -375,14 +411,21 @@ class TestRandomFirmDetails:
     @pytest.mark.asyncio
     @pytest.mark.parametrize(
         "frn",
-        [
-            "122702",  # Barclays Bank Plc
-            "759676",  # Barclays Bank UK PLC
-            "765112", # HSBC UK Bank Plc
-        ],
+        LARGE_BANK_FRNS,
     )
     async def test_get_firm_permissions(self, test_client: fca_api.api.Client, frn):
         """Test that the data is correcly parsed for the large banks"""
         out = await test_client.get_firm_permissions(frn)
         await out.fetch_all_pages()
         assert len(out) > 10
+
+    @pytest.mark.asyncio
+    @pytest.mark.parametrize(
+        "frn",
+        LARGE_BANK_FRNS,
+    )
+    async def test_get_firm_requirements(self, test_client: fca_api.api.Client, frn):
+        """Test that the data is correcly parsed for the large banks"""
+        out = await test_client.get_firm_requirements(frn)
+        await out.fetch_all_pages()
+        assert len(out) > 1
