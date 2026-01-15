@@ -54,8 +54,6 @@ class FirmSearchResult(base.Base):
 class IndividualSearchResult(base.Base):
     """A model representing an individual search result."""
 
-    _expected_api_version = "FSR-API-04-01-00"
-
     url: Annotated[
         pydantic.HttpUrl | None,
         pydantic.Field(
@@ -103,8 +101,6 @@ class IndividualSearchResult(base.Base):
 
 class FundSearchResult(base.Base):
     """A model representing a fund search result."""
-
-    _expected_api_version = "FSR-API-04-01-00"
 
     url: Annotated[
         pydantic.HttpUrl | None,
