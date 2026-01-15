@@ -1,3 +1,5 @@
+import unittest.mock
+
 import pytest
 
 import fca_api
@@ -35,7 +37,8 @@ class TestNutmegFirmDetails:
     @pytest.mark.asyncio
     async def test_get_individual_controlled_functions(self, test_client: fca_api.api.Client, irn: str):
         out = await test_client.get_individual_controlled_functions(irn)
-        assert [cf.model_dump(mode="json") for cf in out] == [
+        await out.fetch_all_pages()
+        assert out.model_dump(mode="json") == [
             {
                 "type": "current",
                 "name": "[FCA CF] Client dealing",
@@ -87,6 +90,23 @@ class TestNutmegFirmDetails:
         ]
 
     @pytest.mark.asyncio
-    async def test_get_individual_controlled_functions(self, test_client: fca_api.api.Client, irn: str):
+    async def test_get_individual_controlled_functions_2(self, test_client: fca_api.api.Client, irn: str):
         out = await test_client.get_individual_disciplinary_history(irn)
-        1 / 0
+        await out.fetch_all_pages()
+        assert len(out) == 0
+
+    @pytest.mark.asyncio
+    async def test_get_individual_controlled_functions_3(self, test_client: fca_api.api.Client):
+        # Neil Dwane - prohibited from performing regulated activities
+        #  https://register.fca.org.uk/s/individual?id=003b000000LUiF4AAL
+        out = await test_client.get_individual_disciplinary_history("NPD01015")
+        await out.fetch_all_pages()
+        assert len(out) == 1
+        assert out.model_dump(mode="json") == [
+            {
+                "type_of_action": "prohibition",
+                "enforcement_type": "fsma",
+                "type_of_description": unittest.mock.ANY,
+                "action_effective_from": "2025-10-23T00:00:00",
+            }
+        ]

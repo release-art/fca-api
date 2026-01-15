@@ -970,7 +970,7 @@ class RawClient:
         """
         return await self._get_resource_info(irn, const.ResourceTypes.INDIVIDUAL.value.type_name)
 
-    async def get_individual_controlled_functions(self, irn: str) -> FcaApiResponse:
+    async def get_individual_controlled_functions(self, irn: str, page: int | None = None) -> FcaApiResponse:
         """:py:class:`~fca_api.raw.FcaApiResponse` :
         Returns a response containing the controlled functions associated with
         an individual, given their individual reference number (FRN).
@@ -999,9 +999,10 @@ class RawClient:
             irn,
             const.ResourceTypes.INDIVIDUAL.value.type_name,
             modifiers=("CF",),
+            page=page,
         )
 
-    async def get_individual_disciplinary_history(self, irn: str) -> FcaApiResponse:
+    async def get_individual_disciplinary_history(self, irn: str, page: int | None = None) -> FcaApiResponse:
         """:py:class:`~fca_api.raw.FcaApiResponse` :
         Returns a response containing the disciplinary history of an
         individual, given their individual reference number (FRN).
@@ -1030,6 +1031,7 @@ class RawClient:
             irn,
             const.ResourceTypes.INDIVIDUAL.value.type_name,
             modifiers=("DisciplinaryHistory",),
+            page=page,
         )
 
     async def search_prn(self, fund_name: str, page: int | None = None) -> FcaApiResponse[list[dict[str, str]]]:
@@ -1080,7 +1082,7 @@ class RawClient:
         """
         return await self._get_resource_info(prn, const.ResourceTypes.FUND.value.type_name)
 
-    async def get_fund_names(self, prn: str) -> FcaApiResponse:
+    async def get_fund_names(self, prn: str, page: int | None = None) -> FcaApiResponse:
         """:py:class:`~fca_api.raw.FcaApiResponse` :
         Returns a response containing the alternative or secondary trading name
         details of a fund (or collective investment scheme (CIS)), given its
@@ -1110,9 +1112,10 @@ class RawClient:
             prn,
             const.ResourceTypes.FUND.value.type_name,
             modifiers=("Names",),
+            page=page,
         )
 
-    async def get_fund_subfunds(self, prn: str) -> FcaApiResponse:
+    async def get_fund_subfunds(self, prn: str, page: int | None = None) -> FcaApiResponse:
         """:py:class:`~fca_api.raw.FcaApiResponse` :
         Returns a response containing the subfund details of a fund (or
         collective investment scheme (CIS)), given its product reference number
@@ -1142,9 +1145,10 @@ class RawClient:
             prn,
             const.ResourceTypes.FUND.value.type_name,
             modifiers=("Subfund",),
+            page=page,
         )
 
-    async def get_regulated_markets(self) -> FcaApiResponse:
+    async def get_regulated_markets(self, page: int | None = None) -> FcaApiResponse:
         """:py:class:`~fca_api.raw.FcaApiResponse` :
         Returns a response containing details of all current regulated markets,
         as defined in UK and EU / EEA financial services legislation.
@@ -1163,6 +1167,8 @@ class RawClient:
             Wrapper of the API response object - there may be no data in
             the response if the common search query produces no results.
         """
+        if page not in (None, 1):
+            raise NotImplementedError("Pagination is not supported for regulated markets at this time.")
         url = f"{const.ApiConstants.BASEURL.value}/CommonSearch?{urlencode({'q': 'RM'})}"
 
         async with self._api_limiter():

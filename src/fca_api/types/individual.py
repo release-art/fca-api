@@ -154,5 +154,51 @@ class IndividualControlledFunction(base.Base):
         ),
     ]
 
+
 class IndividualDisciplinaryRecord(base.Base):
     """Individual Disciplinary Record details."""
+
+    type_of_action: Annotated[
+        str,
+        pydantic.Field(
+            description="Type of disciplinary action taken.",
+            validation_alias=pydantic.AliasChoices("typeofaction", "type_of_action"),
+            serialization_alias="type_of_action",
+        ),
+        pydantic.StringConstraints(
+            to_lower=True,
+            strip_whitespace=True,
+        ),
+    ]
+    enforcement_type: Annotated[
+        str,
+        pydantic.Field(
+            description="Type of disciplinary action taken.",
+            validation_alias=pydantic.AliasChoices("enforcementtype", "enforcement_type"),
+            serialization_alias="enforcement_type",
+        ),
+        pydantic.StringConstraints(
+            to_lower=True,
+            strip_whitespace=True,
+        ),
+    ]
+    type_of_description: Annotated[
+        str,
+        pydantic.Field(
+            description="Description of the disciplinary action taken.",
+            validation_alias=pydantic.AliasChoices("typeofdescription", "type_of_description"),
+            serialization_alias="type_of_description",
+        ),
+        pydantic.StringConstraints(
+            strip_whitespace=True,
+        ),
+    ]
+    action_effective_from: Annotated[
+        datetime.datetime,
+        pydantic.Field(
+            description="Date when the disciplinary action became effective.",
+            validation_alias=pydantic.AliasChoices("actioneffectivefrom", "action_effective_from"),
+            serialization_alias="action_effective_from",
+        ),
+        field_parsers.ParseFcaDate,
+    ]

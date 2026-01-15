@@ -44,8 +44,12 @@ class PaginatedResponseHandler(typing.Generic[T]):
             A tuple containing the paginated result info and a list of result items.
         """
         res = await self._fetch_page(page_idx)
-        if res.result_info:
-            result_info = types.pagination.PaginatedResultInfo.model_validate(res.result_info)
+        if raw_result_info := res.result_info:
+            if not raw_result_info.get("page"):
+                # No pagination info present
+                result_info = None
+            else:
+                result_info = types.pagination.PaginatedResultInfo.model_validate(raw_result_info)
         else:
             result_info = None
         data = res.data
@@ -572,19 +576,9 @@ class Client:
         )
         return types.individual.Individual.model_validate(data[0]["Details"])
 
-    async def get_individual_controlled_functions(
-        self, irn: str
+    def _parse_individual_controlled_functions_pg(
+        self, data: list[dict]
     ) -> list[types.individual.IndividualControlledFunction]:
-        """Get individual details by IRN.
-
-        Args:
-            irn: The individual's IRN.
-
-        Returns:
-            The individual's details.
-        """
-        res = await self._client.get_individual_controlled_functions(irn)
-        data = res.data
         assert isinstance(data, list) and len(data) == 1, (
             "Expected a single individual detail object in the response data."
         )
@@ -614,6 +608,26 @@ class Client:
                     )
         return out
 
+    async def get_individual_controlled_functions(
+        self, irn: str
+    ) -> types.pagination.MultipageList[types.individual.IndividualControlledFunction]:
+        """Get individual details by IRN.
+
+        Args:
+            irn: The individual's IRN.
+
+        Returns:
+            The individual's details.
+        """
+        out = types.pagination.MultipageList(
+            fetch_page=PaginatedResponseHandler(
+                lambda page_idx: self._client.get_individual_controlled_functions(irn, page=page_idx),
+                self._parse_individual_controlled_functions_pg,
+            ).fetch_page,
+        )
+        await out._async_init()
+        return out
+
     async def get_individual_disciplinary_history(
         self, irn: str
     ) -> types.pagination.MultipageList[types.individual.IndividualDisciplinaryRecord]:
@@ -621,6 +635,70 @@ class Client:
             fetch_page=PaginatedResponseHandler(
                 lambda page_idx: self._client.get_individual_disciplinary_history(irn, page=page_idx),
                 lambda data: [types.individual.IndividualDisciplinaryRecord.model_validate(item) for item in data],
+            ).fetch_page,
+        )
+        await out._async_init()
+        return out
+
+    async def get_fund(self, prn: str) -> types.products.ProductDetails:
+        """Get fund details by PRN.
+
+        Args:
+            prn: The fund's PRN.
+
+        Returns:
+            The fund's details.
+        """
+        res = await self._client.get_fund(prn)
+        data = res.data
+        assert isinstance(data, list) and len(data) == 1, "Expected a single fund detail object in the response data."
+        return types.products.ProductDetails.model_validate(data[0])
+
+    async def get_fund_names(self, prn: str) -> types.pagination.MultipageList[types.products.ProductNameAlias]:
+        """Get fund names by PRN.
+
+        Args:
+            prn: The fund's PRN.
+
+        Returns:
+            A list of the fund's names.
+        """
+        out = types.pagination.MultipageList(
+            fetch_page=PaginatedResponseHandler(
+                lambda page_idx: self._client.get_fund_names(prn, page=page_idx),
+                lambda data: [types.products.ProductNameAlias.model_validate(item) for item in data],
+            ).fetch_page,
+        )
+        await out._async_init()
+        return out
+
+    async def get_fund_subfunds(self, prn: str) -> types.pagination.MultipageList[types.products.SubFundDetails]:
+        """Get fund sub-funds by PRN.
+
+        Args:
+            prn: The fund's PRN.
+        Returns:
+            A list of the fund's sub-funds.
+        """
+        out = types.pagination.MultipageList(
+            fetch_page=PaginatedResponseHandler(
+                lambda page_idx: self._client.get_fund_subfunds(prn, page=page_idx),
+                lambda data: [types.products.SubFundDetails.model_validate(item) for item in data],
+            ).fetch_page,
+        )
+        await out._async_init()
+        return out
+
+    async def get_regulated_markets(self) -> types.pagination.MultipageList[types.markets.RegulatedMarket]:
+        """Get regulated markets.
+
+        Returns:
+            A list of regulated markets.
+        """
+        out = types.pagination.MultipageList(
+            fetch_page=PaginatedResponseHandler(
+                lambda page_idx: self._client.get_regulated_markets(page=page_idx),
+                lambda data: [types.markets.RegulatedMarket.model_validate(item) for item in data],
             ).fetch_page,
         )
         await out._async_init()

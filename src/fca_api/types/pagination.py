@@ -123,6 +123,7 @@ class MultipageList(typing.Generic[T]):
                         self._result_info = SpecialResultInfoState.PAGE_FETCH_FAILED
                     return None
                 self._max_fetched_page = last_fetched_page + 1
+                self._pages.append(FetchedPageData(items=new_items, page_info=new_page_info))
                 if new_page_info is None:
                     if last_fetched_page == 0:
                         self._result_info = SpecialResultInfoState.FIRST_PAGE_FETCH_FAILED
@@ -133,7 +134,6 @@ class MultipageList(typing.Generic[T]):
                         new_page_info.page,
                         last_fetched_page + 1,
                     )
-                    self._pages.append(FetchedPageData(items=new_items, page_info=new_page_info))
                     self._result_info = new_page_info
         return new_page_info
 
