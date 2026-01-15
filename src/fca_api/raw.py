@@ -536,7 +536,7 @@ class RawClient:
             page=page,
         )
 
-    async def get_firm_individuals(self, frn: str) -> FcaApiResponse:
+    async def get_firm_individuals(self, frn: str, page: int | None = None) -> FcaApiResponse:
         """:py:class:`~fca_api.raw.FcaApiResponse`:
         Returns a response containing the individuals associated with a firm,
         given its firm reference number (FRN).
@@ -565,9 +565,10 @@ class RawClient:
             frn,
             const.ResourceTypes.FIRM.value.type_name,
             modifiers=("Individuals",),
+            page=page,
         )
 
-    async def get_firm_permissions(self, frn: str) -> FcaApiResponse:
+    async def get_firm_permissions(self, frn: str, page: int | None = None) -> FcaApiResponse:
         """:py:class:`~fca_api.raw.FcaApiResponse`:
         Returns a response containing the permissions associated with a firm,
         given its firm reference number (FRN).
@@ -596,6 +597,7 @@ class RawClient:
             frn,
             const.ResourceTypes.FIRM.value.type_name,
             modifiers=("Permissions",),
+            page=page,
         )
 
     async def get_firm_requirements(self, frn: str) -> FcaApiResponse:

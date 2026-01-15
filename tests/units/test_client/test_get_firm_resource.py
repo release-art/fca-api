@@ -345,3 +345,43 @@ class TestNutmegFirmDetails:
                 "url": "https://register.fca.org.uk/services/V0.1/Individuals/LXC01588",
             },
         ]
+
+    @pytest.mark.asyncio
+    async def test_get_firm_individuals(self, test_client: fca_api.api.Client, frn: str):
+        out = await test_client.get_firm_individuals(frn)
+        await out.fetch_all_pages()
+        assert len(out) >= 120
+        assert out.model_dump(mode="json")[0] == {
+            "irn": "RXR00422",
+            "name": "Robert George Rule",
+            "status": "approved by regulator",
+            "url": "https://register.fca.org.uk/services/V0.1/Individuals/RXR00422",
+        }
+
+    @pytest.mark.asyncio
+    async def test_get_firm_permissions(self, test_client: fca_api.api.Client, frn: str):
+        out = await test_client.get_firm_permissions(frn)
+        await out.fetch_all_pages()
+        assert len(out) >= 10
+
+
+class TestRandomFirmDetails:
+    @pytest.mark.asyncio
+    async def test_mortgage_1st_perms(self, test_client: fca_api.api.Client):
+        out = await test_client.get_firm_permissions("484231")
+        await out.fetch_all_pages()
+        assert len(out) == 0
+
+    @pytest.mark.asyncio
+    @pytest.mark.parametrize(
+        "frn",
+        [
+            "122702",  # Barclays Bank Plc
+            "759676",  # Barclays Bank UK PLC
+        ],
+    )
+    async def test_get_firm_permissions(self, test_client: fca_api.api.Client, frn):
+        """Test that the data is correcly parsed for the large banks"""
+        out = await test_client.get_firm_permissions(frn)
+        await out.fetch_all_pages()
+        assert len(out) > 10

@@ -91,6 +91,11 @@ class MultipageList(typing.Generic[T]):
         # Fetch the first page to initialize the result info.
         await self._fetch_page_to_item_idx(0)
 
+    async def fetch_all_pages(self) -> None:
+        """Fetch all pages from the API."""
+        while self._has_next_page():
+            await self._fetch_page_to_item_idx(self.local_len() + 1)
+
     async def _fetch_page_to_item_idx(self, desired_item_idx: int) -> typing.Optional[PaginatedResultInfo]:
         """Fetch a specific page from the API if it is not already cached.
 

@@ -529,3 +529,142 @@ class FirmControlledFunction(base.Base):
             description="The URL of the controlled function record in the FCA register.",
         ),
     ]
+
+
+class FirmIndividual(base.Base):
+    """An individual associated with a firm."""
+
+    irn: Annotated[
+        str,
+        pydantic.Field(
+            description="The individual reference number (IRN) of the individual.",
+        ),
+    ]
+    name: Annotated[
+        str,
+        pydantic.StringConstraints(
+            strip_whitespace=True,
+        ),
+        pydantic.Field(
+            description="The name of the individual.",
+        ),
+    ]
+    status: Annotated[
+        str,
+        pydantic.StringConstraints(
+            to_lower=True,
+            strip_whitespace=True,
+        ),
+        pydantic.Field(
+            description="The status of the individual.",
+        ),
+    ]
+
+    url: Annotated[
+        pydantic.HttpUrl,
+        pydantic.Field(
+            description="The URL of the individual record in the FCA register.",
+        ),
+    ]
+
+
+class FirmPermission(base.Base):
+    """A permission associated with a firm."""
+
+    name: Annotated[
+        str,
+        pydantic.Field(
+            description="The name of the permission.",
+            validation_alias=pydantic.AliasChoices("fca_api_permission_name", "name"),
+            serialization_alias="name",
+        ),
+    ]
+    customer_type: Annotated[
+        Optional[list[str]],
+        pydantic.Field(
+            description="The types of customers the permission applies to.",
+            validation_alias=pydantic.AliasChoices("customer type", "customer_type"),
+            serialization_alias="customer_type",
+            default=None,
+        ),
+    ]
+    limitation: Annotated[
+        Optional[list[str]],
+        pydantic.Field(
+            description="Any limitations associated with the permission.",
+            default=None,
+        ),
+    ]
+    limitation_not_found: Annotated[
+        Optional[list[str]],
+        pydantic.Field(
+            description="Any missing limitations (?).",
+            validation_alias=pydantic.AliasChoices("limitation not found", "limitation_not_found"),
+            serialization_alias="limitation_not_found",
+            default=None,
+        ),
+    ]
+    investment_type: Annotated[
+        Optional[list[str]],
+        pydantic.Field(
+            description="Any limitations associated with the permission.",
+            validation_alias=pydantic.AliasChoices("investment type", "investment_type"),
+            serialization_alias="investment_type",
+            default=None,
+        ),
+    ]
+    acting_as_cbtl_advisor: Annotated[
+        Optional[bool],
+        pydantic.Field(
+            description="Indicates whether the permission involves acting as a CBTL advisor.",
+            validation_alias=pydantic.AliasChoices("acting as a cbtl advisor", "acting_as_cbtl_advisor"),
+            serialization_alias="acting_as_cbtl_advisor",
+            default=None,
+        ),
+    ]
+    acting_as_cbtl_administrator: Annotated[
+        Optional[bool],
+        pydantic.Field(
+            description="Indicates whether the permission involves acting as a CBTL advisor.",
+            validation_alias=pydantic.AliasChoices("acting as a cbtl administrator", "acting_as_cbtl_administrator"),
+            serialization_alias="acting_as_cbtl_administrator",
+            default=None,
+        ),
+    ]
+    cbtl_effective_date: Annotated[
+        Optional[datetime.datetime],
+        pydantic.Field(
+            description="The effective date for CBTL-related permissions.",
+            validation_alias=pydantic.AliasChoices("cbtl effective date", "cbtl_effective_date"),
+            serialization_alias="cbtl_effective_date",
+            default=None,
+        ),
+        field_parsers.ParseFcaDate,
+    ]
+    cbtl_status: Annotated[
+        Optional[str],
+        pydantic.Field(
+            description="The status for CBTL-related permissions.",
+            validation_alias=pydantic.AliasChoices("cbtl status", "cbtl_status"),
+            serialization_alias="cbtl_status",
+            default=None,
+        ),
+    ]
+    acting_as_cbtl_arranger: Annotated[
+        Optional[bool],
+        pydantic.Field(
+            description="Indicates whether the permission involves acting as a CBTL arranger.",
+            validation_alias=pydantic.AliasChoices("acting as a cbtl arranger", "acting_as_cbtl_arranger"),
+            serialization_alias="acting_as_cbtl_arranger",
+            default=None,
+        ),
+    ]
+    acting_as_cbtl_lender: Annotated[
+        Optional[bool],
+        pydantic.Field(
+            description="Indicates whether the permission involves acting as a CBTL lender.",
+            validation_alias=pydantic.AliasChoices("acting as a cbtl lender", "acting_as_cbtl_lender"),
+            serialization_alias="acting_as_cbtl_lender",
+            default=None,
+        ),
+    ]

@@ -49,8 +49,11 @@ class PaginatedResponseHandler(typing.Generic[T]):
         else:
             result_info = None
         data = res.data
-        assert isinstance(data, list)
-        items = self._parse_data_fn(res.data)
+        if data is None:
+            items = []
+        else:
+            assert isinstance(data, list | dict)
+            items = self._parse_data_fn(res.data)
         return (result_info, items)
 
 
@@ -295,6 +298,72 @@ class Client:
             fetch_page=PaginatedResponseHandler(
                 lambda page_idx: self._client.get_firm_controlled_functions(frn, page=page_idx),
                 self._parse_firm_controlled_functions_pg,
+            ).fetch_page,
+        )
+        await out._asyinc_init()
+        return out
+
+    async def get_firm_individuals(self, frn: str) -> types.pagination.MultipageList[types.firm.FirmIndividual]:
+        """Get firm individuals by FRN.
+
+        Args:
+            frn: The firm's FRN.
+
+        Returns:
+            A list of the firm's individuals.
+        """
+        out = types.pagination.MultipageList(
+            fetch_page=PaginatedResponseHandler(
+                lambda page_idx: self._client.get_firm_individuals(frn, page=page_idx),
+                lambda data: [types.firm.FirmIndividual.model_validate(item) for item in data],
+            ).fetch_page,
+        )
+        await out._asyinc_init()
+        return out
+
+    def _parse_firm_permissions_pg(self, data: dict) -> list[types.firm.FirmPermission]:
+        out = []
+        unwrap_fields = [
+            "cbtl status",
+            "cbtl effective date",
+            "acting as a cbtl administrator",
+            "acting as a cbtl advisor",
+            "acting as a cbtl arranger",
+            "acting as a cbtl lender",
+        ]
+        for perm_name, perm_data in data.items():
+            perm_record = {"fca_api_permission_name": perm_name}
+            if not isinstance(perm_data, list):
+                logger.warning(f"Unexpected firm permission entry format: {perm_data!r}")
+                continue
+            for perm_data_el in perm_data:
+                if not isinstance(perm_data_el, dict):
+                    logger.warning(f"Unexpected firm permission data element format: {perm_data_el!r}")
+                    continue
+                perm_record = perm_record | perm_data_el
+            for key, value in list(perm_record.items()):
+                key_lower = key.lower().strip()
+                if key_lower in unwrap_fields:
+                    assert isinstance(value, list) and len(value) == 1, (
+                        f"Expected a single value list for field {key_lower!r}"
+                    )
+                    perm_record[key] = value[0]
+            out.append(types.firm.FirmPermission.model_validate(perm_record))
+        return out
+
+    async def get_firm_permissions(self, frn: str) -> types.pagination.MultipageList[types.firm.FirmPermission]:
+        """Get firm permissions by FRN.
+
+        Args:
+            frn: The firm's FRN.
+
+        Returns:
+            A list of the firm's permissions.
+        """
+        out = types.pagination.MultipageList(
+            fetch_page=PaginatedResponseHandler(
+                lambda page_idx: self._client.get_firm_permissions(frn, page=page_idx),
+                self._parse_firm_permissions_pg,
             ).fetch_page,
         )
         await out._asyinc_init()
