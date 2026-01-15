@@ -35,3 +35,5 @@ class TestNutmegFirmDetails:
     @pytest.mark.asyncio
     async def test_get_individual_controlled_functions(self, test_client: fca_api.api.Client, irn: str):
         out = await test_client.get_individual_controlled_functions(irn)
+        assert [cf.model_dump(mode="json") for cf in out] == [
+        ]
