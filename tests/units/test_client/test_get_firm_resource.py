@@ -378,6 +378,7 @@ class TestRandomFirmDetails:
         [
             "122702",  # Barclays Bank Plc
             "759676",  # Barclays Bank UK PLC
+            "765112", # HSBC UK Bank Plc
         ],
     )
     async def test_get_firm_permissions(self, test_client: fca_api.api.Client, frn):
