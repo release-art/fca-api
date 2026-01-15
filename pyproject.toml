@@ -241,4 +241,5 @@ docs = [
     "sphinx-copybutton",
     "sphinx-design>=0.6.1",
     "pydata-sphinx-theme>=0.16.1",
+    "autodoc-pydantic>=2.2.0",
 ]
