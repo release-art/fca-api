@@ -88,6 +88,7 @@ extensions = [
     'sphinx.ext.viewcode',
     'sphinx_copybutton',
     'sphinx_design',
+    'sphinxcontrib.autodoc_pydantic'
 ]
 
 # Autodoc settings -
@@ -99,6 +100,19 @@ autodoc_default_options = {
     'private-members': False,
     'special-members': '__init__,__new__'
 }
+
+autodoc_pydantic_model_show_json = True
+autodoc_pydantic_settings_show_json = False
+autodoc_pydantic_model_show_config_summary = False
+autodoc_pydantic_model_hide_paramlist = True
+autodoc_pydantic_model_show_field_summary = True
+autodoc_pydantic_settings_hide_paramlist = True
+autodoc_pydantic_settings_show_validator_members = False
+autodoc_pydantic_field_list_validators = False
+autodoc_pydantic_field_show_constraints = False
+autodoc_pydantic_field_show_default = False
+autodoc_pydantic_field_show_required = False
+autodoc_pydantic_field_show_optional = False
 
 # Sphinx autodoc autosummary settings
 autosummary_generate = False

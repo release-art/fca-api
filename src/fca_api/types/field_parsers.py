@@ -1,4 +1,4 @@
-"""Custom field parsers for FCA API types."""
+"""Custom field parsers and field types for FCA API models."""
 
 import datetime
 
@@ -52,3 +52,26 @@ def StrOrNone(value: str) -> str | None:
     if value.strip().lower() in {"n/a", "na", "none"}:
         return None
     return value.strip()
+
+
+@pydantic.BeforeValidator
+def FixIncompleteUrl(value: str) -> str | None:
+    """Fix incomplete URLs from FCA API.
+
+    The FCA API sometimes returns URLs without protocol prefix
+    (e.g., 'www.example.com' instead of 'https://www.example.com').
+    This validator adds 'https://' prefix when missing.
+
+    Empty strings and common "not available" markers are converted to None.
+    """
+    if not value or not value.strip():
+        return None
+    value = value.strip()
+    if value.lower() in {"n/a", "na", "none"}:
+        return None
+    # Add https:// if no protocol specified
+    if "://" not in value:
+        return f"https://{value}"
+    else:
+        assert value.startswith(("http://", "https://")), "URL must start with http:// or https://"
+    return value
