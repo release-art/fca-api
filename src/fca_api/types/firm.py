@@ -428,12 +428,12 @@ class FirmAddress(base.Base):
 
     website: Annotated[
         Optional[pydantic.HttpUrl],
+        field_parsers.FixIncompleteUrl,
         pydantic.Field(
             description="The website URL associated with the address, if available.",
             validation_alias=pydantic.AliasChoices("website address", "website_url"),
             serialization_alias="website_url",
         ),
-        field_parsers.StrOrNone,
     ]
     individual: Annotated[
         Optional[str],
