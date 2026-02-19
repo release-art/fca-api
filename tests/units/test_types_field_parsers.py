@@ -25,19 +25,17 @@ class TestParseFcaDate:
             result = field_parsers.ParseFcaDate.func(date_str)
             assert result == expected, f"Failed to parse {date_str}"
 
-    def test_empty_string_returns_none(self):
+    @pytest.mark.parametrize("input_str", ["", "   ", "\t\n", None])
+    def test_empty_string_returns_none(self, input_str):
         """Test that empty strings return None."""
-        assert field_parsers.ParseFcaDate.func("") is None
-        assert field_parsers.ParseFcaDate.func("   ") is None
-        assert field_parsers.ParseFcaDate.func("\t\n") is None
+        assert field_parsers.ParseFcaDate.func(input_str) is None
 
-    def test_non_string_input_raises_type_error(self):
+    @pytest.mark.parametrize("input_str", [123, [], {}, 12.34, datetime.datetime.now()])
+    def test_non_string_input_raises_type_error(self, input_str):
         """Test that non-string inputs raise TypeError."""
-        invalid_inputs = [123, None, [], {}, 12.34, datetime.datetime.now()]
 
-        for invalid_input in invalid_inputs:
-            with pytest.raises(TypeError, match=f"Expected a string, got {type(invalid_input).__name__}"):
-                field_parsers.ParseFcaDate.func(invalid_input)
+        with pytest.raises(TypeError, match=f"Expected a string, got {type(input_str).__name__}"):
+            field_parsers.ParseFcaDate.func(input_str)
 
     def test_unrecognized_format_raises_value_error(self):
         """Test that unrecognized date formats raise ValueError."""

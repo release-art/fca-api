@@ -54,7 +54,7 @@ from typing import Annotated
 
 import pydantic
 
-from . import base
+from . import annotations, base
 
 
 class FirmSearchResult(base.Base):
@@ -102,6 +102,7 @@ class FirmSearchResult(base.Base):
         pydantic.Field(
             description="The URL of the firm's record in the FCA register.",
         ),
+        annotations.FcaApiUrl(),
     ]
     frn: Annotated[
         str,
@@ -178,6 +179,7 @@ class IndividualSearchResult(base.Base):
         pydantic.Field(
             description="The URL of the individual's record in the FCA register.",
         ),
+        annotations.FcaApiUrl(),
     ]
     irn: Annotated[
         str,
@@ -258,6 +260,7 @@ class FundSearchResult(base.Base):
         pydantic.Field(
             description="The URL of the product's record in the FCA register.",
         ),
+        annotations.FcaApiUrl(),
     ]
     prn: Annotated[
         str,

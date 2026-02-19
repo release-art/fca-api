@@ -3,7 +3,7 @@ from typing import Annotated, Literal, Optional
 
 import pydantic
 
-from . import base, field_parsers
+from . import annotations, base, field_parsers
 
 
 class Individual(base.Base):
@@ -44,6 +44,7 @@ class Individual(base.Base):
             validation_alias=pydantic.AliasChoices("disciplinary history", "disciplinary_history"),
             serialization_alias="disciplinary_history",
         ),
+        annotations.FcaApiUrl(),
     ]
     status: Annotated[
         str,
@@ -62,6 +63,7 @@ class Individual(base.Base):
             validation_alias=pydantic.AliasChoices("current roles & activities", "current_roles_and_activities"),
             serialization_alias="current_roles_and_activities",
         ),
+        annotations.FcaApiUrl(),
     ]
 
 
@@ -152,6 +154,7 @@ class IndividualControlledFunction(base.Base):
         pydantic.Field(
             description="URL to the controlled function details.",
         ),
+        annotations.FcaApiUrl(),
     ]
 
 

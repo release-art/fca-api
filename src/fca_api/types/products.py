@@ -3,7 +3,7 @@ from typing import Annotated, Optional
 
 import pydantic
 
-from . import base, field_parsers
+from . import annotations, base, field_parsers
 
 
 class ProductDetails(base.Base):
@@ -110,6 +110,7 @@ class ProductDetails(base.Base):
             validation_alias=pydantic.AliasChoices("operator", "operator_url"),
             serialization_alias="operator_url",
         ),
+        annotations.FcaApiUrl(),
     ]
     sub_funds_url: Annotated[
         pydantic.HttpUrl,
@@ -118,6 +119,7 @@ class ProductDetails(base.Base):
             validation_alias=pydantic.AliasChoices("sub-funds", "sub_funds_url"),
             serialization_alias="sub_funds_url",
         ),
+        annotations.FcaApiUrl(),
     ]
     other_name_url: Annotated[
         pydantic.HttpUrl,
@@ -126,6 +128,7 @@ class ProductDetails(base.Base):
             validation_alias=pydantic.AliasChoices("other name", "other_name_url"),
             serialization_alias="other_name_url",
         ),
+        annotations.FcaApiUrl(),
     ]
     cis_depositary_url: Annotated[
         pydantic.HttpUrl,
@@ -134,6 +137,7 @@ class ProductDetails(base.Base):
             validation_alias=pydantic.AliasChoices("cis depositary", "cis_depositary_url"),
             serialization_alias="cis_depositary_url",
         ),
+        annotations.FcaApiUrl(),
     ]
 
 
@@ -204,4 +208,5 @@ class SubFundDetails(base.Base):
         pydantic.Field(
             description="URL to the sub-fund details.",
         ),
+        annotations.FcaApiUrl(),
     ]
