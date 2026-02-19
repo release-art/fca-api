@@ -25,11 +25,10 @@ class TestParseFcaDate:
             result = field_parsers.ParseFcaDate.func(date_str)
             assert result == expected, f"Failed to parse {date_str}"
 
-    def test_empty_string_returns_none(self):
+    @pytest.mark.parametrize("input_str", ["", "   ", "\t\n", None])
+    def test_empty_string_returns_none(self, input_str):
         """Test that empty strings return None."""
-        assert field_parsers.ParseFcaDate.func("") is None
-        assert field_parsers.ParseFcaDate.func("   ") is None
-        assert field_parsers.ParseFcaDate.func("\t\n") is None
+        assert field_parsers.ParseFcaDate.func(input_str) is None
 
     @pytest.mark.parametrize("input_str", [123, [], {}, 12.34, datetime.datetime.now()])
     def test_non_string_input_raises_type_error(self, input_str):
