@@ -6,7 +6,7 @@ import pydantic
 
 
 @pydantic.BeforeValidator
-def ParseFcaDate(date_str: str) -> datetime.datetime | None:
+def ParseFcaDate(date_str: str | None) -> datetime.datetime | None:
     """Parse FCA date strings into ``datetime`` objects.
 
     The FCA API returns dates in a variety of formats. This helper tries

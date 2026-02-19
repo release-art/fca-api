@@ -2,7 +2,7 @@ from typing import Annotated, Optional
 
 import pydantic
 
-from . import base, field_parsers
+from . import annotations, base, field_parsers
 
 
 class RegulatedMarket(base.Base):
@@ -68,4 +68,5 @@ class RegulatedMarket(base.Base):
             validation_alias=pydantic.AliasChoices("firmurl", "firm_url"),
             serialization_alias="firm_url",
         ),
+        annotations.FcaApiUrl(),
     ]

@@ -40,4 +40,4 @@ See Also:
     - `Pydantic Documentation <https://docs.pydantic.dev/>`_
 """
 
-from . import base, field_parsers, firm, individual, markets, pagination, products, search, settings
+from . import annotations, base, field_parsers, firm, individual, markets, pagination, products, search, settings

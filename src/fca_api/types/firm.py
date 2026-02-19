@@ -3,7 +3,7 @@ from typing import Annotated, Literal, Optional
 
 import pydantic
 
-from . import base, field_parsers
+from . import annotations, base, field_parsers
 
 
 class FirmDetails(base.Base):
@@ -217,6 +217,7 @@ class FirmDetails(base.Base):
             validation_alias=pydantic.AliasChoices("name", "names_url"),
             serialization_alias="names_url",
         ),
+        annotations.FcaApiUrl(),
     ]
     individuals_url: Annotated[
         pydantic.HttpUrl,
@@ -225,6 +226,7 @@ class FirmDetails(base.Base):
             validation_alias=pydantic.AliasChoices("individuals", "individuals_url"),
             serialization_alias="individuals_url",
         ),
+        annotations.FcaApiUrl(),
     ]
     requirements_url: Annotated[
         pydantic.HttpUrl,
@@ -233,6 +235,7 @@ class FirmDetails(base.Base):
             validation_alias=pydantic.AliasChoices("requirements", "requirements_url"),
             serialization_alias="requirements_url",
         ),
+        annotations.FcaApiUrl(),
     ]
     permissions_url: Annotated[
         pydantic.HttpUrl,
@@ -241,6 +244,7 @@ class FirmDetails(base.Base):
             validation_alias=pydantic.AliasChoices("permission", "permissions_url"),
             serialization_alias="permissions_url",
         ),
+        annotations.FcaApiUrl(),
     ]
     passports_url: Annotated[
         pydantic.HttpUrl,
@@ -249,6 +253,7 @@ class FirmDetails(base.Base):
             validation_alias=pydantic.AliasChoices("passport", "passports_url"),
             serialization_alias="passports_url",
         ),
+        annotations.FcaApiUrl(),
     ]
     regulators_url: Annotated[
         pydantic.HttpUrl,
@@ -257,6 +262,7 @@ class FirmDetails(base.Base):
             validation_alias=pydantic.AliasChoices("regulators", "regulators_url"),
             serialization_alias="regulators_url",
         ),
+        annotations.FcaApiUrl(),
     ]
     waivers_url: Annotated[
         pydantic.HttpUrl,
@@ -265,6 +271,7 @@ class FirmDetails(base.Base):
             validation_alias=pydantic.AliasChoices("waivers", "waivers_url"),
             serialization_alias="waivers_url",
         ),
+        annotations.FcaApiUrl(),
     ]
     exclusions_url: Annotated[
         pydantic.HttpUrl,
@@ -273,6 +280,7 @@ class FirmDetails(base.Base):
             validation_alias=pydantic.AliasChoices("exclusions", "exclusions_url"),
             serialization_alias="exclusions_url",
         ),
+        annotations.FcaApiUrl(),
     ]
     address_url: Annotated[
         pydantic.HttpUrl,
@@ -281,6 +289,7 @@ class FirmDetails(base.Base):
             validation_alias=pydantic.AliasChoices("address", "address_url"),
             serialization_alias="address_url",
         ),
+        annotations.FcaApiUrl(),
     ]
     appointed_representative_url: Annotated[
         pydantic.HttpUrl,
@@ -289,6 +298,7 @@ class FirmDetails(base.Base):
             validation_alias=pydantic.AliasChoices("appointed representative", "appointed_representative_url"),
             serialization_alias="appointed_representative_url",
         ),
+        annotations.FcaApiUrl(),
     ]
     disciplinary_history_url: Annotated[
         pydantic.HttpUrl,
@@ -297,6 +307,7 @@ class FirmDetails(base.Base):
             validation_alias=pydantic.AliasChoices("disciplinaryhistory", "disciplinary_history_url"),
             serialization_alias="disciplinary_history_url",
         ),
+        annotations.FcaApiUrl(),
     ]
 
 
@@ -451,6 +462,7 @@ class FirmAddress(base.Base):
             validation_alias=pydantic.AliasChoices("url", "address_url"),
             serialization_alias="address_url",
         ),
+        annotations.FcaApiUrl(),
     ]
 
 
@@ -548,6 +560,7 @@ class FirmControlledFunction(base.Base):
         pydantic.Field(
             description="The URL of the controlled function record in the FCA register.",
         ),
+        annotations.FcaApiUrl(),
     ]
 
 
@@ -585,6 +598,7 @@ class FirmIndividual(base.Base):
         pydantic.Field(
             description="The URL of the individual record in the FCA register.",
         ),
+        annotations.FcaApiUrl(),
     ]
 
 
@@ -736,6 +750,7 @@ class FirmRequirement(base.RelaxedBase):
             serialization_alias="financial_promotions_investment_types",
             default=None,
         ),
+        annotations.FcaApiUrl(),
     ]
 
 
@@ -914,6 +929,7 @@ class FirmWaiver(base.Base):
             validation_alias=pydantic.AliasChoices("waivers_discretions_url", "discretions_url"),
             serialization_alias="discretions_url",
         ),
+        annotations.FcaApiUrl(),
     ]
 
 
@@ -1034,6 +1050,7 @@ class FirmAppointedRepresentative(base.Base):
         pydantic.Field(
             description="The URL of the appointed representative record in the FCA register.",
         ),
+        annotations.FcaApiUrl(),
     ]
     frn: Annotated[
         str,
