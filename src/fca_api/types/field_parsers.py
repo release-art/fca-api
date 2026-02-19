@@ -18,7 +18,9 @@ def ParseFcaDate(date_str: str) -> datetime.datetime | None:
         TypeError: If the input is not a string.
         ValueError: If the value cannot be parsed using any known format.
     """
-    if not isinstance(date_str, str):
+    if date_str is None:
+        return None
+    elif not isinstance(date_str, str):
         raise TypeError(f"Expected a string, got {type(date_str).__name__}")
     date_str = date_str.strip()
     if not date_str:
