@@ -36,6 +36,7 @@ Example:
 
 import logging
 import re
+import threading
 import typing
 
 import httpx
@@ -136,6 +137,8 @@ class Client:
     """
 
     _client: raw_api.RawClient
+    _lock: threading.Lock
+    _ctx_enter_count: int
 
     def __init__(
         self,
@@ -180,6 +183,8 @@ class Client:
                 )
         """
         self._client = raw_api.RawClient(credentials=credentials, api_limiter=api_limiter)
+        self._lock = threading.Lock()
+        self._ctx_enter_count = 0
 
     async def __aenter__(self) -> "Client":
         """Async context manager entry.
@@ -196,6 +201,8 @@ class Client:
                         print(firm.name)
                 # Client automatically closed here
         """
+        with self._lock:
+            self._ctx_enter_count += 1
         return self
 
     async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
@@ -209,7 +216,11 @@ class Client:
             exc_val: Exception value (if any)
             exc_tb: Exception traceback (if any)
         """
-        await self.aclose()
+        with self._lock:
+            self._ctx_enter_count -= 1
+            if self._ctx_enter_count <= 0:
+                logger.debug("Context manager exit: closing HTTP session")
+                await self.aclose()
 
     async def aclose(self) -> None:
         """Close the underlying HTTP session.
