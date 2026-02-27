@@ -23,8 +23,8 @@ class FirmDetails(base.Base):
         str,
         pydantic.Field(
             description="Name of the company.",
-            validation_alias=pydantic.AliasChoices("organisation name", "name"),
-            serialization_alias="name",
+            validation_alias=pydantic.AliasChoices("organisation name", "firm_name"),
+            serialization_alias="firm_name",
         ),
     ]
     status: Annotated[
