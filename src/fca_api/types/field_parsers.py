@@ -30,6 +30,10 @@ def ParseFcaDate(date_str: str | None) -> datetime.datetime | None:
         "%d/%m/%Y %H:%M",
         "%d/%m/%Y",
         "%Y-%m-%d",
+        "%Y-%m-%dT%H:%M:%S",  # ISO 8601 without timezone
+        "%Y-%m-%dT%H:%M:%S.%f",  # ISO 8601 with microseconds
+        "%Y-%m-%dT%H:%M:%S%z",  # ISO 8601 with timezone
+        "%Y-%m-%dT%H:%M:%S.%f%z",  # ISO 8601 with microseconds and timezone
         "%a %b %d %H:%M:%S %Z %Y",  # Found in FCA docs
         "%a %b %d %y",
     ):
