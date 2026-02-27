@@ -3,22 +3,10 @@
     "json": {
       "Data": [
         {
-          "IRN": "JXM03896",
-          "Name": "James McManus",
+          "IRN": "AXL00846",
+          "Name": "Andrew Lee",
           "Status": "Certified / assessed by firm",
-          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/JXM03896"
-        },
-        {
-          "IRN": "CXL00322",
-          "Name": "Cullen Clint Larson",
-          "Status": "Certified / assessed by firm",
-          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/CXL00322"
-        },
-        {
-          "IRN": "MXS00954",
-          "Name": "Matthew Smith",
-          "Status": "Certified / assessed by firm",
-          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/MXS00954"
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/AXL00846"
         },
         {
           "IRN": "PXH00753",
@@ -33,10 +21,10 @@
           "URL": "https://register.fca.org.uk/services/V0.1/Individuals/AXA01463"
         },
         {
-          "IRN": "AXL00846",
-          "Name": "Andrew Lee",
+          "IRN": "AXW00465",
+          "Name": "Alice Wang",
           "Status": "Certified / assessed by firm",
-          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/AXL00846"
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/AXW00465"
         },
         {
           "IRN": "NXH00534",
@@ -69,10 +57,10 @@
           "URL": "https://register.fca.org.uk/services/V0.1/Individuals/DXH00972"
         },
         {
-          "IRN": "CXB00246",
-          "Name": "Claire Louise Exley",
+          "IRN": "DXM01258",
+          "Name": "Dayna Morgan",
           "Status": "Certified / assessed by firm",
-          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/CXB00246"
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/DXM01258"
         },
         {
           "IRN": "SXG00573",
@@ -93,34 +81,46 @@
           "URL": "https://register.fca.org.uk/services/V0.1/Individuals/JRC01311"
         },
         {
+          "IRN": "HFG01009",
+          "Name": "Holly Francesca Elisabeth Graham",
+          "Status": "Certified / assessed by firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/HFG01009"
+        },
+        {
           "IRN": "LXC01588",
           "Name": "Lee Cowles",
           "Status": "Regulatory approval no longer required",
           "URL": "https://register.fca.org.uk/services/V0.1/Individuals/LXC01588"
         },
         {
-          "IRN": "AJC34316",
-          "Name": "Alexa Collinson",
+          "IRN": "MXG14592",
+          "Name": "Melissa Gallagher",
           "Status": "Regulatory approval no longer required",
-          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/AJC34316"
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/MXG14592"
         },
         {
-          "IRN": "SXC01299",
-          "Name": "Stephen Clark",
+          "IRN": "DPG01071",
+          "Name": "Darragh Patrick Geraghty",
           "Status": "Regulatory approval no longer required",
-          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/SXC01299"
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/DPG01071"
         },
         {
-          "IRN": "NRA01042",
-          "Name": "Neil Ross Alexander",
+          "IRN": "TBB01004",
+          "Name": "Timothy Brian Bunting",
           "Status": "Regulatory approval no longer required",
-          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/NRA01042"
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/TBB01004"
         },
         {
-          "IRN": "MXG02692",
-          "Name": "Matthew Gatrell",
+          "IRN": "GJJ01008",
+          "Name": "Guy Jonathan Barton Jackson",
+          "Status": "Regulatory approval no longer required",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/GJJ01008"
+        },
+        {
+          "IRN": "WFR01010",
+          "Name": "William Frederick Reeve",
           "Status": "Approved by regulator",
-          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/MXG02692"
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/WFR01010"
         }
       ],
       "Message": "Ok. Firm Individuals found",
@@ -129,7 +129,7 @@
         "Previous": "https://register.fca.org.uk/services/V0.1/Firm/552016/Individuals?pgnp=1",
         "page": "2",
         "per_page": "20",
-        "total_count": "120"
+        "total_count": "119"
       },
       "Status": "FSR-API-02-05-00"
     }
@@ -137,13 +137,13 @@
   "headers": {
     "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
     "cf-cache-status": "DYNAMIC",
-    "cf-ray": "9be7408f08c3414c-LHR",
+    "cf-ray": "9d474c6c8d3dae4b-LHR",
     "connection": "keep-alive",
     "content-encoding": "gzip",
     "content-type": "application/json;charset=UTF-8",
-    "date": "Thu, 15 Jan 2026 17:56:52 GMT",
+    "date": "Fri, 27 Feb 2026 11:21:25 GMT",
     "server": "cloudflare",
-    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 17:56:51 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 17:56:51 GMT; Max-Age=31536000; secure",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Sat, 27-Feb-2027 11:21:25 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Sat, 27-Feb-2027 11:21:25 GMT; Max-Age=31536000; secure",
     "strict-transport-security": "max-age=63072000; includeSubDomains",
     "transfer-encoding": "chunked",
     "vary": "Accept-Encoding",

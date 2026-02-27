@@ -3,18 +3,18 @@
     "json": {
       "Data": [
         {
+          "Name": "Robert William Adams",
+          "Reference Number": "RXA00169",
+          "Status": "Regulatory approval no longer required",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RXA00169"
+        },
+        {
           "Name": "Robert Steven Geoffrey Smith",
           "Reference Number": "RSS01128",
           "Status": "Active",
           "Type of business or Individual": "Individual",
           "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RSS01128"
-        },
-        {
-          "Name": "Robert Frederick Geldof",
-          "Reference Number": "RFG01026",
-          "Status": "Active",
-          "Type of business or Individual": "Individual",
-          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RFG01026"
         },
         {
           "Name": "Robert Lang Steel",
@@ -59,18 +59,18 @@
           "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RDP01094"
         },
         {
-          "Name": "Robert Bernard Devine",
-          "Reference Number": "RBD01021",
-          "Status": "Regulatory approval no longer required",
-          "Type of business or Individual": "Individual",
-          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RBD01021"
-        },
-        {
           "Name": "Ziheng Pan",
           "Reference Number": "ZXP01018",
           "Status": "Regulatory approval no longer required",
           "Type of business or Individual": "Individual",
           "URL": "https://register.fca.org.uk/services/V0.1/Individuals/ZXP01018"
+        },
+        {
+          "Name": "Robert Bernard Devine",
+          "Reference Number": "RBD01021",
+          "Status": "Regulatory approval no longer required",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RBD01021"
         },
         {
           "Name": "ROBERT DAVID JACKSON",
@@ -85,13 +85,6 @@
           "Status": "Deceased",
           "Type of business or Individual": "Individual",
           "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RDR01026"
-        },
-        {
-          "Name": "Robert Lee",
-          "Reference Number": "RXL01494",
-          "Status": "Regulatory approval no longer required",
-          "Type of business or Individual": "Individual",
-          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RXL01494"
         },
         {
           "Name": "Robert Edwin Hicks",
@@ -141,6 +134,13 @@
           "Status": "Regulatory approval no longer required",
           "Type of business or Individual": "Individual",
           "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RXP01468"
+        },
+        {
+          "Name": "Robert Kenney",
+          "Reference Number": "RXK01274",
+          "Status": "Regulatory approval no longer required",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RXK01274"
         }
       ],
       "Message": "Ok. Search successful",
@@ -157,13 +157,13 @@
   "headers": {
     "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
     "cf-cache-status": "DYNAMIC",
-    "cf-ray": "9be7453fc8d1b16b-LHR",
+    "cf-ray": "9d47516abcfceef7-LHR",
     "connection": "keep-alive",
     "content-encoding": "gzip",
     "content-type": "application/json;charset=UTF-8",
-    "date": "Thu, 15 Jan 2026 18:00:04 GMT",
+    "date": "Fri, 27 Feb 2026 11:24:50 GMT",
     "server": "cloudflare",
-    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 18:00:03 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 18:00:03 GMT; Max-Age=31536000; secure",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Sat, 27-Feb-2027 11:24:49 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Sat, 27-Feb-2027 11:24:49 GMT; Max-Age=31536000; secure",
     "strict-transport-security": "max-age=63072000; includeSubDomains",
     "transfer-encoding": "chunked",
     "vary": "Accept-Encoding",

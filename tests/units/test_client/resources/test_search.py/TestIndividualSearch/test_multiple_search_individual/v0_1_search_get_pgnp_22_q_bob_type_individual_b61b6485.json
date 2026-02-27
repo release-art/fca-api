@@ -3,13 +3,6 @@
     "json": {
       "Data": [
         {
-          "Name": "Robert Hughes",
-          "Reference Number": "RXH78517",
-          "Status": "Active",
-          "Type of business or Individual": "Individual",
-          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RXH78517"
-        },
-        {
           "Name": "Robert Charles Evans",
           "Reference Number": "RCE00010",
           "Status": "Active",
@@ -66,13 +59,6 @@
           "URL": "https://register.fca.org.uk/services/V0.1/Individuals/DGH00026"
         },
         {
-          "Name": "Sarbjit Singh Kullar",
-          "Reference Number": "SSK01022",
-          "Status": "Regulatory approval no longer required",
-          "Type of business or Individual": "Individual",
-          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/SSK01022"
-        },
-        {
           "Name": "Robert Minicus",
           "Reference Number": "RXM35064",
           "Status": "Regulatory approval no longer required",
@@ -99,13 +85,6 @@
           "Status": "Active",
           "Type of business or Individual": "Individual",
           "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RXT00102"
-        },
-        {
-          "Name": "Robert White",
-          "Reference Number": "RXW01376",
-          "Status": "Active",
-          "Type of business or Individual": "Individual",
-          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RXW01376"
         },
         {
           "Name": "Robert Spencer",
@@ -141,6 +120,27 @@
           "Status": "Regulatory approval no longer required",
           "Type of business or Individual": "Individual",
           "URL": "https://register.fca.org.uk/services/V0.1/Individuals/ARH01097"
+        },
+        {
+          "Name": "Robert James Metcalfe",
+          "Reference Number": "RJM01395",
+          "Status": "Active",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RJM01395"
+        },
+        {
+          "Name": "Robert Keith Loft",
+          "Reference Number": "RKL01022",
+          "Status": "Regulatory approval no longer required",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RKL01022"
+        },
+        {
+          "Name": "Robert Peter Morgan",
+          "Reference Number": "RPM01135",
+          "Status": "Regulatory approval no longer required",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RPM01135"
         }
       ],
       "Message": "Ok. Search successful",
@@ -157,13 +157,13 @@
   "headers": {
     "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
     "cf-cache-status": "DYNAMIC",
-    "cf-ray": "9be744bf0ae3b16b-LHR",
+    "cf-ray": "9d4750d6da78eef7-LHR",
     "connection": "keep-alive",
     "content-encoding": "gzip",
     "content-type": "application/json;charset=UTF-8",
-    "date": "Thu, 15 Jan 2026 17:59:43 GMT",
+    "date": "Fri, 27 Feb 2026 11:24:27 GMT",
     "server": "cloudflare",
-    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 17:59:43 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 17:59:43 GMT; Max-Age=31536000; secure",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Sat, 27-Feb-2027 11:24:26 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Sat, 27-Feb-2027 11:24:26 GMT; Max-Age=31536000; secure",
     "strict-transport-security": "max-age=63072000; includeSubDomains",
     "transfer-encoding": "chunked",
     "vary": "Accept-Encoding",

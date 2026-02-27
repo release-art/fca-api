@@ -68,5 +68,5 @@ class RegulatedMarket(base.Base):
             validation_alias=pydantic.AliasChoices("firmurl", "firm_url"),
             serialization_alias="firm_url",
         ),
-        annotations.FcaApiUrl(),
+        annotations.FcaApiFieldInfo(marks=[annotations.FcaApiField.InternalUrl]),
     ]

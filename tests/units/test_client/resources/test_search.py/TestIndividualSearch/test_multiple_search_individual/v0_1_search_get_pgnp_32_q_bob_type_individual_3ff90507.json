@@ -3,6 +3,41 @@
     "json": {
       "Data": [
         {
+          "Name": "Robert King",
+          "Reference Number": "RXK01283",
+          "Status": "Regulatory approval no longer required",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RXK01283"
+        },
+        {
+          "Name": "Robert Wiliam Long",
+          "Reference Number": "RWL01044",
+          "Status": "Regulatory approval no longer required",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RWL01044"
+        },
+        {
+          "Name": "Robert Smith",
+          "Reference Number": "RXS01737",
+          "Status": "Regulatory approval no longer required",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RXS01737"
+        },
+        {
+          "Name": "Harjeet Singh Jolly",
+          "Reference Number": "HSJ01009",
+          "Status": "Regulatory approval no longer required",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/HSJ01009"
+        },
+        {
+          "Name": "Robert George Weller",
+          "Reference Number": "RGW01085",
+          "Status": "Regulatory approval no longer required",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RGW01085"
+        },
+        {
           "Name": "Robert Nicholas Kershaw Taylor",
           "Reference Number": "RNT01011",
           "Status": "Regulatory approval no longer required",
@@ -10,11 +45,53 @@
           "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RNT01011"
         },
         {
+          "Name": "Robert John Burbidge",
+          "Reference Number": "RJB01395",
+          "Status": "Regulatory approval no longer required",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RJB01395"
+        },
+        {
           "Name": "Robert MacGauchie Scullion",
           "Reference Number": "RMS01161",
           "Status": "Regulatory approval no longer required",
           "Type of business or Individual": "Individual",
           "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RMS01161"
+        },
+        {
+          "Name": "Robert Fredrick Miles",
+          "Reference Number": "RFM01053",
+          "Status": "Regulatory approval no longer required",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RFM01053"
+        },
+        {
+          "Name": "Robert Rudge",
+          "Reference Number": "RXR01288",
+          "Status": "Regulatory approval no longer required",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RXR01288"
+        },
+        {
+          "Name": "Robert Leonard Potter",
+          "Reference Number": "RLP01047",
+          "Status": "Regulatory approval no longer required",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RLP01047"
+        },
+        {
+          "Name": "Robert Hewson Prestwood",
+          "Reference Number": "RHP01051",
+          "Status": "Regulatory approval no longer required",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RHP01051"
+        },
+        {
+          "Name": "Robert Paul Francis",
+          "Reference Number": "RPF01035",
+          "Status": "Regulatory approval no longer required",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RPF01035"
         },
         {
           "Name": "Robert McPherson Wilson",
@@ -64,83 +141,6 @@
           "Status": "Regulatory approval no longer required",
           "Type of business or Individual": "Individual",
           "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RLC01044"
-        },
-        {
-          "Name": "Robert Harold Taplin",
-          "Reference Number": "RHT01028",
-          "Status": "Regulatory approval no longer required",
-          "Type of business or Individual": "Individual",
-          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RHT01028"
-        },
-        {
-          "Name": "Robert Alfredo Carmine Valente",
-          "Reference Number": "RAV01012",
-          "Status": "Regulatory approval no longer required",
-          "Type of business or Individual": "Individual",
-          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RAV01012"
-        },
-        {
-          "Name": "Robert Williams",
-          "Reference Number": "RXW01362",
-          "Status": "Regulatory approval no longer required",
-          "Type of business or Individual": "Individual",
-          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RXW01362"
-        },
-        {
-          "Name": "Robert Thomas Hausler",
-          "Reference Number": "RTH01026",
-          "Status": "Regulatory approval no longer required",
-          "Type of business or Individual": "Individual",
-          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RTH01026"
-        },
-        {
-          "Name": "Robert Henry Oliver",
-          "Reference Number": "RHO01012",
-          "Status": "Regulatory approval no longer required",
-          "Type of business or Individual": "Individual",
-          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RHO01012"
-        },
-        {
-          "Name": "Robert Barrington Cockin",
-          "Reference Number": "RBC01038",
-          "Status": "Regulatory approval no longer required",
-          "Type of business or Individual": "Individual",
-          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RBC01038"
-        },
-        {
-          "Name": "Robert Dowson",
-          "Reference Number": "RXD01305",
-          "Status": "Regulatory approval no longer required",
-          "Type of business or Individual": "Individual",
-          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RXD01305"
-        },
-        {
-          "Name": "Robert Peter Taylor",
-          "Reference Number": "RPT01039",
-          "Status": "Regulatory approval no longer required",
-          "Type of business or Individual": "Individual",
-          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RPT01039"
-        },
-        {
-          "Name": "Robert John Cuthill",
-          "Reference Number": "RJC01229",
-          "Status": "Regulatory approval no longer required",
-          "Type of business or Individual": "Individual",
-          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RJC01229"
-        },
-        {
-          "Name": "Robert Foster",
-          "Reference Number": "RXF01214",
-          "Status": "Regulatory approval no longer required",
-          "Type of business or Individual": "Individual",
-          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RXF01214"
-        },
-        {
-          "Name": "Robert John Headrick",
-          "Reference Number": "RJH01462",
-          "Status": "Regulatory approval no longer required",
-          "Type of business or Individual": "Individual",
-          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RJH01462"
         }
       ],
       "Message": "Ok. Search successful",
@@ -157,13 +157,13 @@
   "headers": {
     "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
     "cf-cache-status": "DYNAMIC",
-    "cf-ray": "9be744f05eddb16b-LHR",
+    "cf-ray": "9d4751124ea6eef7-LHR",
     "connection": "keep-alive",
     "content-encoding": "gzip",
     "content-type": "application/json;charset=UTF-8",
-    "date": "Thu, 15 Jan 2026 17:59:51 GMT",
+    "date": "Fri, 27 Feb 2026 11:24:36 GMT",
     "server": "cloudflare",
-    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 17:59:51 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 17:59:51 GMT; Max-Age=31536000; secure",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Sat, 27-Feb-2027 11:24:35 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Sat, 27-Feb-2027 11:24:35 GMT; Max-Age=31536000; secure",
     "strict-transport-security": "max-age=63072000; includeSubDomains",
     "transfer-encoding": "chunked",
     "vary": "Accept-Encoding",

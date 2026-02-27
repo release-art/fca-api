@@ -5,6 +5,18 @@
         "CurrentAppointedRepresentatives": [
           {
             "EEA Tied Agent": "false",
+            "Effective Date": "17/10/2019",
+            "FRN": "915337",
+            "Name": "Busy Bee Mortgage and Protection Solutions Limited",
+            "Principal FRN": "454811",
+            "Principal Firm Name": "Stonebridge Mortgage Solutions Ltd",
+            "RecordSubType": "Full",
+            "Tied Agent": "false",
+            "URL": "https://register.fca.org.uk/services/V0.1/Firm/915337",
+            "[NotinUse] Insurance Distribution": "true"
+          },
+          {
+            "EEA Tied Agent": "false",
             "Effective Date": "16/08/2021",
             "FRN": "956972",
             "Name": "C & S Investment Options Ltd",
@@ -25,18 +37,6 @@
             "RecordSubType": "Full",
             "Tied Agent": "false",
             "URL": "https://register.fca.org.uk/services/V0.1/Firm/985463",
-            "[NotinUse] Insurance Distribution": "true"
-          },
-          {
-            "EEA Tied Agent": "false",
-            "Effective Date": "24/12/2024",
-            "FRN": "1024376",
-            "Name": "Campbell Mortgage Solutions Ltd",
-            "Principal FRN": "454811",
-            "Principal Firm Name": "Stonebridge Mortgage Solutions Ltd",
-            "RecordSubType": "Full",
-            "Tied Agent": "false",
-            "URL": "https://register.fca.org.uk/services/V0.1/Firm/1024376",
             "[NotinUse] Insurance Distribution": "true"
           },
           {
@@ -127,6 +127,19 @@
         "PreviousAppointedRepresentatives": [
           {
             "EEA Tied Agent": "false",
+            "Effective Date": "13/08/2012",
+            "FRN": "484696",
+            "Name": "Cadman Homes UK Ltd",
+            "Principal FRN": "454811",
+            "Principal Firm Name": "Stonebridge Mortgage Solutions Ltd",
+            "RecordSubType": "Introducer",
+            "Termination Date": "01/04/2022",
+            "Tied Agent": "false",
+            "URL": "https://register.fca.org.uk/services/V0.1/Firm/484696",
+            "[NotinUse] Insurance Distribution": "true"
+          },
+          {
+            "EEA Tied Agent": "false",
             "Effective Date": "18/03/2024",
             "FRN": "1011225",
             "Name": "Campbell Clifford Mortgages",
@@ -136,6 +149,19 @@
             "Termination Date": "31/08/2025",
             "Tied Agent": "false",
             "URL": "https://register.fca.org.uk/services/V0.1/Firm/1011225",
+            "[NotinUse] Insurance Distribution": "false"
+          },
+          {
+            "EEA Tied Agent": "false",
+            "Effective Date": "23/12/2024",
+            "FRN": "1024376",
+            "Name": "Campbell Mortgage Solutions Ltd",
+            "Principal FRN": "454811",
+            "Principal Firm Name": "Stonebridge Mortgage Solutions Ltd",
+            "RecordSubType": "Full",
+            "Termination Date": "24/02/2026",
+            "Tied Agent": "false",
+            "URL": "https://register.fca.org.uk/services/V0.1/Firm/1024376",
             "[NotinUse] Insurance Distribution": "false"
           },
           {
@@ -228,32 +254,6 @@
             "Tied Agent": "false",
             "URL": "https://register.fca.org.uk/services/V0.1/Firm/832791",
             "[NotinUse] Insurance Distribution": "true"
-          },
-          {
-            "EEA Tied Agent": "false",
-            "Effective Date": "04/03/2021",
-            "FRN": "946318",
-            "Name": "Century 21 Chingford & Woodford",
-            "Principal FRN": "454811",
-            "Principal Firm Name": "Stonebridge Mortgage Solutions Ltd",
-            "RecordSubType": "Introducer",
-            "Termination Date": "17/05/2022",
-            "Tied Agent": "false",
-            "URL": "https://register.fca.org.uk/services/V0.1/Firm/946318",
-            "[NotinUse] Insurance Distribution": "true"
-          },
-          {
-            "EEA Tied Agent": "false",
-            "Effective Date": "25/08/2015",
-            "FRN": "714976",
-            "Name": "CFS Mortgage & Protection Ltd",
-            "Principal FRN": "454811",
-            "Principal Firm Name": "Stonebridge Mortgage Solutions Ltd",
-            "RecordSubType": "Full",
-            "Termination Date": "19/02/2018",
-            "Tied Agent": "false",
-            "URL": "https://register.fca.org.uk/services/V0.1/Firm/714976",
-            "[NotinUse] Insurance Distribution": "false"
           }
         ]
       },
@@ -263,7 +263,7 @@
         "Previous": "https://register.fca.org.uk/services/V0.1/Firm/454811/AR?pgnp=10",
         "page": "11",
         "per_page": "10",
-        "total_count": "1531"
+        "total_count": "1544"
       },
       "Status": "FSR-API-05-04-00"
     }
@@ -271,13 +271,13 @@
   "headers": {
     "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
     "cf-cache-status": "DYNAMIC",
-    "cf-ray": "9be74117fe74bb05-LHR",
+    "cf-ray": "9d474cf95bf20039-LHR",
     "connection": "keep-alive",
     "content-encoding": "gzip",
     "content-type": "application/json;charset=UTF-8",
-    "date": "Thu, 15 Jan 2026 17:57:14 GMT",
+    "date": "Fri, 27 Feb 2026 11:21:49 GMT",
     "server": "cloudflare",
-    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 17:57:13 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 17:57:13 GMT; Max-Age=31536000; secure",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Sat, 27-Feb-2027 11:21:47 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Sat, 27-Feb-2027 11:21:47 GMT; Max-Age=31536000; secure",
     "strict-transport-security": "max-age=63072000; includeSubDomains",
     "transfer-encoding": "chunked",
     "vary": "Accept-Encoding",

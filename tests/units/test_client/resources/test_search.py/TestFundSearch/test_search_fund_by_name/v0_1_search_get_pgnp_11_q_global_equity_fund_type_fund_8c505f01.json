@@ -3,11 +3,53 @@
     "json": {
       "Data": [
         {
-          "Name": "WS Canlife Global Equity Fund",
-          "Reference Number": "646381",
+          "Name": "abrdn Global Focused Equity Fund",
+          "Reference Number": "636185",
           "Status": "Approved",
           "Type of business or Individual": "Collective investment scheme",
-          "URL": "https://register.fca.org.uk/services/V0.1/CIS/646381"
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/636185"
+        },
+        {
+          "Name": "WS Lancaster Global Equity Fund",
+          "Reference Number": "645175",
+          "Status": "Approved",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/645175"
+        },
+        {
+          "Name": "CCLA Charity Global Equity Fund",
+          "Reference Number": "1020546",
+          "Status": "Approved",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1020546"
+        },
+        {
+          "Name": "EF Brompton Global Equity Fund",
+          "Reference Number": "646511",
+          "Status": "Approved",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/646511"
+        },
+        {
+          "Name": "Global Brands Equity Income Fund",
+          "Reference Number": "757428",
+          "Status": "Approved",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/757428"
+        },
+        {
+          "Name": "AI STRATEGIC GLOBAL EQUITY FUND",
+          "Reference Number": "658314",
+          "Status": "Approved",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/658314"
+        },
+        {
+          "Name": "AI Global Equity Growth Fund",
+          "Reference Number": "658313",
+          "Status": "Approved",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/658313"
         },
         {
           "Name": "Fundamental Index Global Equity Fund",
@@ -99,48 +141,6 @@
           "Status": "Recognised",
           "Type of business or Individual": "Collective investment scheme",
           "URL": "https://register.fca.org.uk/services/V0.1/CIS/1013367"
-        },
-        {
-          "Name": "TOBAM Global Blockchain Equity Fund",
-          "Reference Number": "1010295",
-          "Status": "Recognised",
-          "Type of business or Individual": "Collective investment scheme",
-          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1010295"
-        },
-        {
-          "Name": "Responsible Global Growth Equity Fund",
-          "Reference Number": "955937",
-          "Status": "Approved",
-          "Type of business or Individual": "Collective investment scheme",
-          "URL": "https://register.fca.org.uk/services/V0.1/CIS/955937"
-        },
-        {
-          "Name": "Collidr Global Equity UCITS Fund",
-          "Reference Number": "926025",
-          "Status": "Recognised",
-          "Type of business or Individual": "Collective investment scheme",
-          "URL": "https://register.fca.org.uk/services/V0.1/CIS/926025"
-        },
-        {
-          "Name": "AXA Global Equity Income Fund",
-          "Reference Number": "1004702",
-          "Status": "Approved",
-          "Type of business or Individual": "Collective investment scheme",
-          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1004702"
-        },
-        {
-          "Name": "Thornburg Global Growth Equity Fund",
-          "Reference Number": "639288",
-          "Status": "Recognised",
-          "Type of business or Individual": "Collective investment scheme",
-          "URL": "https://register.fca.org.uk/services/V0.1/CIS/639288"
-        },
-        {
-          "Name": "WEALTH DEFENDER GLOBAL EQUITY FUND",
-          "Reference Number": "925991",
-          "Status": "Recognised",
-          "Type of business or Individual": "Collective investment scheme",
-          "URL": "https://register.fca.org.uk/services/V0.1/CIS/925991"
         }
       ],
       "Message": "Ok. Search successful",
@@ -149,7 +149,7 @@
         "Previous": "https://register.fca.org.uk/services/V0.1/Search?q=global equity fund&type=fund&pgnp=10",
         "page": "11",
         "per_page": "20",
-        "total_count": "577"
+        "total_count": "575"
       },
       "Status": "FSR-API-04-01-00"
     }
@@ -157,13 +157,13 @@
   "headers": {
     "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
     "cf-cache-status": "DYNAMIC",
-    "cf-ray": "9be745958a8888c2-LHR",
+    "cf-ray": "9d4751c4ff37c0cf-LHR",
     "connection": "keep-alive",
     "content-encoding": "gzip",
     "content-type": "application/json;charset=UTF-8",
-    "date": "Thu, 15 Jan 2026 18:00:17 GMT",
+    "date": "Fri, 27 Feb 2026 11:25:04 GMT",
     "server": "cloudflare",
-    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 18:00:17 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 18:00:17 GMT; Max-Age=31536000; secure",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Sat, 27-Feb-2027 11:25:04 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Sat, 27-Feb-2027 11:25:04 GMT; Max-Age=31536000; secure",
     "strict-transport-security": "max-age=63072000; includeSubDomains",
     "transfer-encoding": "chunked",
     "vary": "Accept-Encoding",

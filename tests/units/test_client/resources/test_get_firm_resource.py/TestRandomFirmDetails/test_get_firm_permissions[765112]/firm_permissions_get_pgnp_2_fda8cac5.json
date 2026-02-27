@@ -54,7 +54,7 @@
           {
             "Limitation": [
               "Investment activity in \"rights to or interests in investments (security)\" and \"rights to or interests in investments (contractually based investment)\" is limited to the investment types granted for this activity.",
-              "This activity is limited to the provision of advice on the conversion or transfer of benefits from pension policies with a guaranteed annuity rate."
+              "This activity is limited to the provision of advice in relation to the conversion or transfer of benefits from pension policies with a Guaranteed Annuity Rate."
             ]
           }
         ],
@@ -263,13 +263,13 @@
   "headers": {
     "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
     "cf-cache-status": "DYNAMIC",
-    "cf-ray": "9be743a13f5929c1-LHR",
+    "cf-ray": "9d474fadde416c94-LHR",
     "connection": "keep-alive",
     "content-encoding": "gzip",
     "content-type": "application/json;charset=UTF-8",
-    "date": "Thu, 15 Jan 2026 17:58:58 GMT",
+    "date": "Fri, 27 Feb 2026 11:23:39 GMT",
     "server": "cloudflare",
-    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 17:58:57 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 17:58:57 GMT; Max-Age=31536000; secure",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Sat, 27-Feb-2027 11:23:38 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Sat, 27-Feb-2027 11:23:38 GMT; Max-Age=31536000; secure",
     "strict-transport-security": "max-age=63072000; includeSubDomains",
     "transfer-encoding": "chunked",
     "vary": "Accept-Encoding",

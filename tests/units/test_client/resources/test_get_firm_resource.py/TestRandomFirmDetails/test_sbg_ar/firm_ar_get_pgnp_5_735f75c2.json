@@ -5,6 +5,18 @@
         "CurrentAppointedRepresentatives": [
           {
             "EEA Tied Agent": "false",
+            "Effective Date": "15/03/2018",
+            "FRN": "804140",
+            "Name": "Amulet Mortgages Ltd",
+            "Principal FRN": "454811",
+            "Principal Firm Name": "Stonebridge Mortgage Solutions Ltd",
+            "RecordSubType": "Full",
+            "Tied Agent": "false",
+            "URL": "https://register.fca.org.uk/services/V0.1/Firm/804140",
+            "[NotinUse] Insurance Distribution": "true"
+          },
+          {
+            "EEA Tied Agent": "false",
             "Effective Date": "22/07/2010",
             "FRN": "462195",
             "Name": "AMW Finance Limited",
@@ -109,18 +121,6 @@
             "RecordSubType": "Full",
             "Tied Agent": "false",
             "URL": "https://register.fca.org.uk/services/V0.1/Firm/917977",
-            "[NotinUse] Insurance Distribution": "true"
-          },
-          {
-            "EEA Tied Agent": "false",
-            "Effective Date": "01/04/2022",
-            "FRN": "973335",
-            "Name": "Antcliff Mortgages & Protection Ltd",
-            "Principal FRN": "454811",
-            "Principal Firm Name": "Stonebridge Mortgage Solutions Ltd",
-            "RecordSubType": "Full",
-            "Tied Agent": "false",
-            "URL": "https://register.fca.org.uk/services/V0.1/Firm/973335",
             "[NotinUse] Insurance Distribution": "true"
           }
         ],
@@ -263,7 +263,7 @@
         "Previous": "https://register.fca.org.uk/services/V0.1/Firm/454811/AR?pgnp=4",
         "page": "5",
         "per_page": "10",
-        "total_count": "1531"
+        "total_count": "1544"
       },
       "Status": "FSR-API-05-04-00"
     }
@@ -271,13 +271,13 @@
   "headers": {
     "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
     "cf-cache-status": "DYNAMIC",
-    "cf-ray": "9be740e53c11bb05-LHR",
+    "cf-ray": "9d474cbf6eb30039-LHR",
     "connection": "keep-alive",
     "content-encoding": "gzip",
     "content-type": "application/json;charset=UTF-8",
-    "date": "Thu, 15 Jan 2026 17:57:06 GMT",
+    "date": "Fri, 27 Feb 2026 11:21:39 GMT",
     "server": "cloudflare",
-    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 17:57:05 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 17:57:05 GMT; Max-Age=31536000; secure",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Sat, 27-Feb-2027 11:21:38 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Sat, 27-Feb-2027 11:21:38 GMT; Max-Age=31536000; secure",
     "strict-transport-security": "max-age=63072000; includeSubDomains",
     "transfer-encoding": "chunked",
     "vary": "Accept-Encoding",

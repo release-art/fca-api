@@ -32,7 +32,7 @@
           "Status Effective Date": "06/10/2011",
           "Sub Status Effective from": "",
           "Sub-Status": "",
-          "System Timestamp": "15/01/2026 17:56",
+          "System Timestamp": "27/02/2026 11:21",
           "Waivers": "https://register.fca.org.uk/services/V0.1/Firm/552016/Waivers"
         }
       ],
@@ -48,13 +48,13 @@
   "headers": {
     "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
     "cf-cache-status": "DYNAMIC",
-    "cf-ray": "9be7407b9b5ab6d8-LHR",
+    "cf-ray": "9d474c5b9c110bf8-LHR",
     "connection": "keep-alive",
     "content-encoding": "gzip",
     "content-type": "application/json",
-    "date": "Thu, 15 Jan 2026 17:56:49 GMT",
+    "date": "Fri, 27 Feb 2026 11:21:23 GMT",
     "server": "cloudflare",
-    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 17:56:48 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 17:56:48 GMT; Max-Age=31536000; secure",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Sat, 27-Feb-2027 11:21:22 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Sat, 27-Feb-2027 11:21:22 GMT; Max-Age=31536000; secure",
     "strict-transport-security": "max-age=63072000; includeSubDomains",
     "transfer-encoding": "chunked",
     "vary": "Accept-Encoding",

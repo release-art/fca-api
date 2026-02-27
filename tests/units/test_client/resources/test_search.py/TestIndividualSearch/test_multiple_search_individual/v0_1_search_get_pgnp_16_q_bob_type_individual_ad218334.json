@@ -3,11 +3,18 @@
     "json": {
       "Data": [
         {
-          "Name": "Robert Paul Brandon Michaelson",
-          "Reference Number": "RXM01472",
+          "Name": "Robert MacDonald",
+          "Reference Number": "RXM02460",
           "Status": "Regulatory approval no longer required",
           "Type of business or Individual": "Individual",
-          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RXM01472"
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RXM02460"
+        },
+        {
+          "Name": "Robert Alan Johnson",
+          "Reference Number": "BXJ01185",
+          "Status": "Active",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/BXJ01185"
         },
         {
           "Name": "Robert Stoner Szechenyi",
@@ -17,13 +24,6 @@
           "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RXS01359"
         },
         {
-          "Name": "Robert James Wilson Catto",
-          "Reference Number": "RJC01153",
-          "Status": "Regulatory approval no longer required",
-          "Type of business or Individual": "Individual",
-          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RJC01153"
-        },
-        {
           "Name": "Robert McGuire",
           "Reference Number": "RXM01552",
           "Status": "Active",
@@ -31,11 +31,18 @@
           "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RXM01552"
         },
         {
-          "Name": "Robert Joseph Brannock",
-          "Reference Number": "RXB00058",
-          "Status": "Active",
+          "Name": "Robert William Hammick",
+          "Reference Number": "RWH00042",
+          "Status": "Regulatory approval no longer required",
           "Type of business or Individual": "Individual",
-          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RXB00058"
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RWH00042"
+        },
+        {
+          "Name": "Robert O'Meara",
+          "Reference Number": "RXO01094",
+          "Status": "Regulatory approval no longer required",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RXO01094"
         },
         {
           "Name": "Robert Edwin Bunker",
@@ -43,13 +50,6 @@
           "Status": "Regulatory approval no longer required",
           "Type of business or Individual": "Individual",
           "URL": "https://register.fca.org.uk/services/V0.1/Individuals/REB01107"
-        },
-        {
-          "Name": "Robert John Sykes",
-          "Reference Number": "RJS00146",
-          "Status": "Active",
-          "Type of business or Individual": "Individual",
-          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RJS00146"
         },
         {
           "Name": "Robert Eisenberg",
@@ -80,18 +80,25 @@
           "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RXY43569"
         },
         {
+          "Name": "John Robert Hughes",
+          "Reference Number": "JRH01176",
+          "Status": "Regulatory approval no longer required",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/JRH01176"
+        },
+        {
+          "Name": "Robert Neill",
+          "Reference Number": "RXN00023",
+          "Status": "Regulatory approval no longer required",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RXN00023"
+        },
+        {
           "Name": "Robert Neil Berriman",
           "Reference Number": "RXB01810",
           "Status": "Regulatory approval no longer required",
           "Type of business or Individual": "Individual",
           "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RXB01810"
-        },
-        {
-          "Name": "Robert O'Meara",
-          "Reference Number": "RXO01094",
-          "Status": "Regulatory approval no longer required",
-          "Type of business or Individual": "Individual",
-          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RXO01094"
         },
         {
           "Name": "Robert Wice",
@@ -108,13 +115,6 @@
           "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RCH00029"
         },
         {
-          "Name": "Robert John Stevenson",
-          "Reference Number": "RJS01342",
-          "Status": "Regulatory approval no longer required",
-          "Type of business or Individual": "Individual",
-          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RJS01342"
-        },
-        {
           "Name": "Robert Henry Cast",
           "Reference Number": "RHC01014",
           "Status": "Regulatory approval no longer required",
@@ -129,11 +129,11 @@
           "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RXS01799"
         },
         {
-          "Name": "Robert Anthony Giles",
-          "Reference Number": "RAG01090",
-          "Status": "Regulatory approval no longer required",
+          "Name": "Robert Joseph Brannock",
+          "Reference Number": "RXB00058",
+          "Status": "Active",
           "Type of business or Individual": "Individual",
-          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RAG01090"
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RXB00058"
         },
         {
           "Name": "Robert Young",
@@ -157,13 +157,13 @@
   "headers": {
     "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
     "cf-cache-status": "DYNAMIC",
-    "cf-ray": "9be744a16890b16b-LHR",
+    "cf-ray": "9d4750b2fa55eef7-LHR",
     "connection": "keep-alive",
     "content-encoding": "gzip",
     "content-type": "application/json;charset=UTF-8",
-    "date": "Thu, 15 Jan 2026 17:59:39 GMT",
+    "date": "Fri, 27 Feb 2026 11:24:21 GMT",
     "server": "cloudflare",
-    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 17:59:38 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 17:59:38 GMT; Max-Age=31536000; secure",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Sat, 27-Feb-2027 11:24:20 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Sat, 27-Feb-2027 11:24:20 GMT; Max-Age=31536000; secure",
     "strict-transport-security": "max-age=63072000; includeSubDomains",
     "transfer-encoding": "chunked",
     "vary": "Accept-Encoding",

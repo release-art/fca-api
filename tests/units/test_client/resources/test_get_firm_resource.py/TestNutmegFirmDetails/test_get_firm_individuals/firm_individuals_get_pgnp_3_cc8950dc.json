@@ -3,40 +3,34 @@
     "json": {
       "Data": [
         {
-          "IRN": "SXV01411",
-          "Name": "Sanoke Viswanathan",
-          "Status": "Regulatory approval no longer required",
-          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/SXV01411"
-        },
-        {
-          "IRN": "WFR01010",
-          "Name": "William Frederick Reeve",
-          "Status": "Approved by regulator",
-          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/WFR01010"
-        },
-        {
-          "IRN": "MXG14592",
-          "Name": "Melissa Gallagher",
-          "Status": "Regulatory approval no longer required",
-          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/MXG14592"
-        },
-        {
           "IRN": "PRB01186",
           "Name": "Phillip Robert John Bungey",
           "Status": "Approved by regulator",
           "URL": "https://register.fca.org.uk/services/V0.1/Individuals/PRB01186"
         },
         {
-          "IRN": "TBB01004",
-          "Name": "Timothy Brian Bunting",
+          "IRN": "SXC01299",
+          "Name": "Stephen Clark",
           "Status": "Regulatory approval no longer required",
-          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/TBB01004"
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/SXC01299"
         },
         {
-          "IRN": "GJJ01008",
-          "Name": "Guy Jonathan Barton Jackson",
+          "IRN": "AJC34316",
+          "Name": "Alexa Collinson",
           "Status": "Regulatory approval no longer required",
-          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/GJJ01008"
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/AJC34316"
+        },
+        {
+          "IRN": "NRA01042",
+          "Name": "Neil Ross Alexander",
+          "Status": "Regulatory approval no longer required",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/NRA01042"
+        },
+        {
+          "IRN": "MXG02692",
+          "Name": "Matthew Gatrell",
+          "Status": "Regulatory approval no longer required",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/MXG02692"
         },
         {
           "IRN": "RXP01395",
@@ -45,16 +39,16 @@
           "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RXP01395"
         },
         {
-          "IRN": "DPG01071",
-          "Name": "Darragh Patrick Geraghty",
-          "Status": "Regulatory approval no longer required",
-          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/DPG01071"
+          "IRN": "JXM03896",
+          "Name": "James McManus",
+          "Status": "Approved by regulator",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/JXM03896"
         },
         {
-          "IRN": "CBA01015",
-          "Name": "Craig Brian Anderson",
-          "Status": "Approved by regulator;Certified / assessed by firm",
-          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/CBA01015"
+          "IRN": "SXV01411",
+          "Name": "Sanoke Viswanathan",
+          "Status": "Regulatory approval no longer required",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/SXV01411"
         },
         {
           "IRN": "RXY12212",
@@ -63,16 +57,22 @@
           "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RXY12212"
         },
         {
-          "IRN": "TWF01029",
-          "Name": "Thomas Francis",
-          "Status": "Approved by regulator;Certified / assessed by firm",
-          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/TWF01029"
-        },
-        {
           "IRN": "MCS01185",
           "Name": "Martin Clive Stead",
           "Status": "Approved by regulator;Certified / assessed by firm",
           "URL": "https://register.fca.org.uk/services/V0.1/Individuals/MCS01185"
+        },
+        {
+          "IRN": "CBA01015",
+          "Name": "Craig Brian Anderson",
+          "Status": "Approved by regulator;Certified / assessed by firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/CBA01015"
+        },
+        {
+          "IRN": "TWF01029",
+          "Name": "Thomas Francis",
+          "Status": "Approved by regulator;Certified / assessed by firm",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/TWF01029"
         },
         {
           "IRN": "MXT01142",
@@ -85,12 +85,6 @@
           "Name": "Sarah Butcher",
           "Status": "Approved by regulator;Certified / assessed by firm",
           "URL": "https://register.fca.org.uk/services/V0.1/Individuals/SXC02062"
-        },
-        {
-          "IRN": "SXC00685",
-          "Name": "Stephen Craig",
-          "Status": "Regulatory approval no longer required",
-          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/SXC00685"
         },
         {
           "IRN": "RMF01027",
@@ -121,6 +115,12 @@
           "Name": "Chandni Gupta",
           "Status": "Regulatory approval no longer required",
           "URL": "https://register.fca.org.uk/services/V0.1/Individuals/CXG00241"
+        },
+        {
+          "IRN": "OXM00037",
+          "Name": "Oliver Mitchell",
+          "Status": "Regulatory approval no longer required",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/OXM00037"
         }
       ],
       "Message": "Ok. Firm Individuals found",
@@ -129,7 +129,7 @@
         "Previous": "https://register.fca.org.uk/services/V0.1/Firm/552016/Individuals?pgnp=2",
         "page": "3",
         "per_page": "20",
-        "total_count": "120"
+        "total_count": "119"
       },
       "Status": "FSR-API-02-05-00"
     }
@@ -137,13 +137,13 @@
   "headers": {
     "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
     "cf-cache-status": "DYNAMIC",
-    "cf-ray": "9be740923c05414c-LHR",
+    "cf-ray": "9d474c6edb91ae4b-LHR",
     "connection": "keep-alive",
     "content-encoding": "gzip",
     "content-type": "application/json;charset=UTF-8",
-    "date": "Thu, 15 Jan 2026 17:56:52 GMT",
+    "date": "Fri, 27 Feb 2026 11:21:26 GMT",
     "server": "cloudflare",
-    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 17:56:52 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 17:56:52 GMT; Max-Age=31536000; secure",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Sat, 27-Feb-2027 11:21:25 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Sat, 27-Feb-2027 11:21:25 GMT; Max-Age=31536000; secure",
     "strict-transport-security": "max-age=63072000; includeSubDomains",
     "transfer-encoding": "chunked",
     "vary": "Accept-Encoding",

@@ -5,6 +5,66 @@
         "CurrentAppointedRepresentatives": [
           {
             "EEA Tied Agent": "false",
+            "Effective Date": "01/04/2020",
+            "FRN": "923706",
+            "Name": "Isk Complete Mortgages Ltd",
+            "Principal FRN": "454811",
+            "Principal Firm Name": "Stonebridge Mortgage Solutions Ltd",
+            "RecordSubType": "Full",
+            "Tied Agent": "false",
+            "URL": "https://register.fca.org.uk/services/V0.1/Firm/923706",
+            "[NotinUse] Insurance Distribution": "true"
+          },
+          {
+            "EEA Tied Agent": "false",
+            "Effective Date": "06/01/2025",
+            "FRN": "1022993",
+            "Name": "Island Mortgages Ltd",
+            "Principal FRN": "454811",
+            "Principal Firm Name": "Stonebridge Mortgage Solutions Ltd",
+            "RecordSubType": "Full",
+            "Tied Agent": "false",
+            "URL": "https://register.fca.org.uk/services/V0.1/Firm/1022993",
+            "[NotinUse] Insurance Distribution": "true"
+          },
+          {
+            "EEA Tied Agent": "false",
+            "Effective Date": "04/02/2026",
+            "FRN": "788708",
+            "Name": "Isuna Financial Solutions Limited",
+            "Principal FRN": "454811",
+            "Principal Firm Name": "Stonebridge Mortgage Solutions Ltd",
+            "RecordSubType": "Full",
+            "Tied Agent": "false",
+            "URL": "https://register.fca.org.uk/services/V0.1/Firm/788708",
+            "[NotinUse] Insurance Distribution": "true"
+          },
+          {
+            "EEA Tied Agent": "false",
+            "Effective Date": "25/02/2022",
+            "FRN": "970787",
+            "Name": "Its My Mortgage Ltd",
+            "Principal FRN": "454811",
+            "Principal Firm Name": "Stonebridge Mortgage Solutions Ltd",
+            "RecordSubType": "Full",
+            "Tied Agent": "false",
+            "URL": "https://register.fca.org.uk/services/V0.1/Firm/970787",
+            "[NotinUse] Insurance Distribution": "true"
+          },
+          {
+            "EEA Tied Agent": "false",
+            "Effective Date": "04/12/2023",
+            "FRN": "1004138",
+            "Name": "Jack Johnson Financial Services Limited",
+            "Principal FRN": "454811",
+            "Principal Firm Name": "Stonebridge Mortgage Solutions Ltd",
+            "RecordSubType": "Full",
+            "Tied Agent": "false",
+            "URL": "https://register.fca.org.uk/services/V0.1/Firm/1004138",
+            "[NotinUse] Insurance Distribution": "true"
+          },
+          {
+            "EEA Tied Agent": "false",
             "Effective Date": "24/02/2024",
             "FRN": "1009042",
             "Name": "Jackson Mortgage Brokers Limited",
@@ -62,69 +122,22 @@
             "Tied Agent": "false",
             "URL": "https://register.fca.org.uk/services/V0.1/Firm/574899",
             "[NotinUse] Insurance Distribution": "true"
-          },
-          {
-            "EEA Tied Agent": "false",
-            "Effective Date": "20/10/2021",
-            "FRN": "960898",
-            "Name": "James Bernard Scully",
-            "Principal FRN": "454811",
-            "Principal Firm Name": "Stonebridge Mortgage Solutions Ltd",
-            "RecordSubType": "Full",
-            "Tied Agent": "false",
-            "URL": "https://register.fca.org.uk/services/V0.1/Firm/960898",
-            "[NotinUse] Insurance Distribution": "true"
-          },
-          {
-            "EEA Tied Agent": "false",
-            "Effective Date": "27/10/2020",
-            "FRN": "937175",
-            "Name": "James Kaslik",
-            "Principal FRN": "454811",
-            "Principal Firm Name": "Stonebridge Mortgage Solutions Ltd",
-            "RecordSubType": "Full",
-            "Tied Agent": "false",
-            "URL": "https://register.fca.org.uk/services/V0.1/Firm/937175",
-            "[NotinUse] Insurance Distribution": "true"
-          },
-          {
-            "EEA Tied Agent": "false",
-            "Effective Date": "13/05/2021",
-            "FRN": "951011",
-            "Name": "James Ling Wong",
-            "Principal FRN": "454811",
-            "Principal Firm Name": "Stonebridge Mortgage Solutions Ltd",
-            "RecordSubType": "Full",
-            "Tied Agent": "false",
-            "URL": "https://register.fca.org.uk/services/V0.1/Firm/951011",
-            "[NotinUse] Insurance Distribution": "true"
-          },
-          {
-            "EEA Tied Agent": "false",
-            "Effective Date": "12/01/2021",
-            "FRN": "542083",
-            "Name": "James Mark Shields",
-            "Principal FRN": "454811",
-            "Principal Firm Name": "Stonebridge Mortgage Solutions Ltd",
-            "RecordSubType": "Full",
-            "Tied Agent": "false",
-            "URL": "https://register.fca.org.uk/services/V0.1/Firm/542083",
-            "[NotinUse] Insurance Distribution": "true"
-          },
-          {
-            "EEA Tied Agent": "false",
-            "Effective Date": "27/03/2022",
-            "FRN": "534042",
-            "Name": "James Miller Financial Planning Limited",
-            "Principal FRN": "454811",
-            "Principal Firm Name": "Stonebridge Mortgage Solutions Ltd",
-            "RecordSubType": "Full",
-            "Tied Agent": "false",
-            "URL": "https://register.fca.org.uk/services/V0.1/Firm/534042",
-            "[NotinUse] Insurance Distribution": "true"
           }
         ],
         "PreviousAppointedRepresentatives": [
+          {
+            "EEA Tied Agent": "false",
+            "Effective Date": "12/12/2022",
+            "FRN": "988656",
+            "Name": "Hargun Bespoke Mortgages Ltd",
+            "Principal FRN": "454811",
+            "Principal Firm Name": "Stonebridge Mortgage Solutions Ltd",
+            "RecordSubType": "Full",
+            "Termination Date": "27/01/2023",
+            "Tied Agent": "false",
+            "URL": "https://register.fca.org.uk/services/V0.1/Firm/988656",
+            "[NotinUse] Insurance Distribution": "true"
+          },
           {
             "EEA Tied Agent": "false",
             "Effective Date": "20/10/2016",
@@ -241,19 +254,6 @@
             "Tied Agent": "false",
             "URL": "https://register.fca.org.uk/services/V0.1/Firm/808595",
             "[NotinUse] Insurance Distribution": "true"
-          },
-          {
-            "EEA Tied Agent": "false",
-            "Effective Date": "17/12/2020",
-            "FRN": "941255",
-            "Name": "Hayden Estate Ltd",
-            "Principal FRN": "454811",
-            "Principal Firm Name": "Stonebridge Mortgage Solutions Ltd",
-            "RecordSubType": "Introducer",
-            "Termination Date": "17/05/2022",
-            "Tied Agent": "false",
-            "URL": "https://register.fca.org.uk/services/V0.1/Firm/941255",
-            "[NotinUse] Insurance Distribution": "true"
           }
         ]
       },
@@ -263,7 +263,7 @@
         "Previous": "https://register.fca.org.uk/services/V0.1/Firm/454811/AR?pgnp=28",
         "page": "29",
         "per_page": "10",
-        "total_count": "1531"
+        "total_count": "1544"
       },
       "Status": "FSR-API-05-04-00"
     }
@@ -271,13 +271,13 @@
   "headers": {
     "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
     "cf-cache-status": "DYNAMIC",
-    "cf-ray": "9be741b3ffcabb05-LHR",
+    "cf-ray": "9d474da1acd70039-LHR",
     "connection": "keep-alive",
     "content-encoding": "gzip",
     "content-type": "application/json;charset=UTF-8",
-    "date": "Thu, 15 Jan 2026 17:57:40 GMT",
+    "date": "Fri, 27 Feb 2026 11:22:16 GMT",
     "server": "cloudflare",
-    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 17:57:38 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 17:57:38 GMT; Max-Age=31536000; secure",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Sat, 27-Feb-2027 11:22:14 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Sat, 27-Feb-2027 11:22:14 GMT; Max-Age=31536000; secure",
     "strict-transport-security": "max-age=63072000; includeSubDomains",
     "transfer-encoding": "chunked",
     "vary": "Accept-Encoding",

@@ -3,53 +3,11 @@
     "json": {
       "Data": [
         {
-          "Name": "T. Rowe Price Funds SICAV - Global Focused Growth Equity Fund",
-          "Reference Number": "636940",
+          "Name": "UBS (Irl) Investor Selection - Global Equity Long Short Fund",
+          "Reference Number": "640521",
           "Status": "Recognised",
           "Type of business or Individual": "Collective investment scheme",
-          "URL": "https://register.fca.org.uk/services/V0.1/CIS/636940"
-        },
-        {
-          "Name": "AMUNDI FUNDS GLOBAL EQUITY CLIMATE",
-          "Reference Number": "1028262",
-          "Status": "Recognised",
-          "Type of business or Individual": "Collective investment scheme",
-          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1028262"
-        },
-        {
-          "Name": "AMUNDI FUNDS GLOBAL EQUITY SELECT",
-          "Reference Number": "1028258",
-          "Status": "Recognised",
-          "Type of business or Individual": "Collective investment scheme",
-          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1028258"
-        },
-        {
-          "Name": "AMUNDI FUNDS GLOBAL EQUITY RESPONSIBLE",
-          "Reference Number": "1028242",
-          "Status": "Recognised",
-          "Type of business or Individual": "Collective investment scheme",
-          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1028242"
-        },
-        {
-          "Name": "Amundi Funds Global Equity Conservative",
-          "Reference Number": "1028300",
-          "Status": "Recognised",
-          "Type of business or Individual": "Collective investment scheme",
-          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1028300"
-        },
-        {
-          "Name": "Goldman Sachs Fund SICAV \u2013 Goldman Sachs Global Future Economic Security Equity",
-          "Reference Number": "1039892",
-          "Status": "Recognised",
-          "Type of business or Individual": "Collective investment scheme",
-          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1039892"
-        },
-        {
-          "Name": "abrdn SICAV I \u2013 Global Small & Mid - Cap SDG Horizons Equity Fund",
-          "Reference Number": "1027710",
-          "Status": "Recognised",
-          "Type of business or Individual": "Collective investment scheme",
-          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1027710"
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/640521"
         },
         {
           "Name": "LO Funds - TargetNetZero Global Equity",
@@ -66,13 +24,6 @@
           "URL": "https://register.fca.org.uk/services/V0.1/CIS/1028243"
         },
         {
-          "Name": "GlobalAccess Emerging Market Equity Fund",
-          "Reference Number": "1036242",
-          "Status": "Recognised",
-          "Type of business or Individual": "Collective investment scheme",
-          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1036242"
-        },
-        {
           "Name": "20UGS (UCITS) FUNDS PINESTONE GLOBAL EQUITY",
           "Reference Number": "744820",
           "Status": "Recognised",
@@ -80,11 +31,32 @@
           "URL": "https://register.fca.org.uk/services/V0.1/CIS/744820"
         },
         {
-          "Name": "Mercer Passive Fundamental Indexation Global Equity UCITS CCF",
-          "Reference Number": "1047850",
+          "Name": "Nordea 2 - BetaPlus Enhanced Global Sustainable Small Cap Equity Fund",
+          "Reference Number": "1043167",
           "Status": "Recognised",
           "Type of business or Individual": "Collective investment scheme",
-          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1047850"
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1043167"
+        },
+        {
+          "Name": "New Fund Name FI Institutional Global Developed Concentrated Equity Selection Fund",
+          "Reference Number": "1032290",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1032290"
+        },
+        {
+          "Name": "GlobalAccess Emerging Market Equity Fund",
+          "Reference Number": "1036242",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1036242"
+        },
+        {
+          "Name": "Goldman Sachs Fund SICAV \u2013 Goldman Sachs Global Future Economic Security Equity",
+          "Reference Number": "1039892",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1039892"
         },
         {
           "Name": "Amundi Funds Global Equity Dynamic Multi Factors",
@@ -94,11 +66,18 @@
           "URL": "https://register.fca.org.uk/services/V0.1/CIS/1028311"
         },
         {
-          "Name": "RAM (LUX) SYSTEMATIC FUNDS \u2013 GLOBAL EQUITY LOW CARBON",
-          "Reference Number": "925232",
+          "Name": "abrdn SICAV I \u2013 Global Small & Mid - Cap SDG Horizons Equity Fund",
+          "Reference Number": "1027710",
           "Status": "Recognised",
           "Type of business or Individual": "Collective investment scheme",
-          "URL": "https://register.fca.org.uk/services/V0.1/CIS/925232"
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1027710"
+        },
+        {
+          "Name": "Mercer Passive Fundamental Indexation Global Equity UCITS CCF",
+          "Reference Number": "1047850",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1047850"
         },
         {
           "Name": "Artemis Funds (Lux) - SmartGARP Global Emerging Markets Equity",
@@ -115,18 +94,18 @@
           "URL": "https://register.fca.org.uk/services/V0.1/CIS/1030321"
         },
         {
-          "Name": "RAM (LUX) SYSTEMATIC FUNDS \u2013 GLOBAL MARKET NEUTRAL EQUITY",
-          "Reference Number": "767576",
-          "Status": "Recognised",
-          "Type of business or Individual": "Collective investment scheme",
-          "URL": "https://register.fca.org.uk/services/V0.1/CIS/767576"
-        },
-        {
           "Name": "GlobalAccess US Small & Mid Cap Equity Fund",
           "Reference Number": "1036244",
           "Status": "Recognised",
           "Type of business or Individual": "Collective investment scheme",
           "URL": "https://register.fca.org.uk/services/V0.1/CIS/1036244"
+        },
+        {
+          "Name": "Artemis Funds (Lux) - SmartGARP Global Emerging Markets Ex China Equity",
+          "Reference Number": "1049424",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1049424"
         },
         {
           "Name": "Aegon Sustainable Equity Fund",
@@ -141,6 +120,27 @@
           "Status": "Terminated",
           "Type of business or Individual": "Collective investment scheme",
           "URL": "https://register.fca.org.uk/services/V0.1/CIS/639370"
+        },
+        {
+          "Name": "Artemis Global Capital Fund",
+          "Reference Number": "681795",
+          "Status": "Terminated",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/681795"
+        },
+        {
+          "Name": "BlackRock Developed Markets Equity Fund (UK)",
+          "Reference Number": "190628",
+          "Status": "Authorised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/190628"
+        },
+        {
+          "Name": "CT (Lux) Responsible Global Equity",
+          "Reference Number": "636056",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/636056"
         }
       ],
       "Message": "Ok. Search successful",
@@ -149,7 +149,7 @@
         "Previous": "https://register.fca.org.uk/services/V0.1/Search?q=global equity fund&type=fund&pgnp=27",
         "page": "28",
         "per_page": "20",
-        "total_count": "577"
+        "total_count": "575"
       },
       "Status": "FSR-API-04-01-00"
     }
@@ -157,13 +157,13 @@
   "headers": {
     "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
     "cf-cache-status": "DYNAMIC",
-    "cf-ray": "9be745c5fd6988c2-LHR",
+    "cf-ray": "9d4751f95a11c0cf-LHR",
     "connection": "keep-alive",
     "content-encoding": "gzip",
     "content-type": "application/json;charset=UTF-8",
-    "date": "Thu, 15 Jan 2026 18:00:25 GMT",
+    "date": "Fri, 27 Feb 2026 11:25:12 GMT",
     "server": "cloudflare",
-    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 18:00:25 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 18:00:25 GMT; Max-Age=31536000; secure",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Sat, 27-Feb-2027 11:25:12 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Sat, 27-Feb-2027 11:25:12 GMT; Max-Age=31536000; secure",
     "strict-transport-security": "max-age=63072000; includeSubDomains",
     "transfer-encoding": "chunked",
     "vary": "Accept-Encoding",
