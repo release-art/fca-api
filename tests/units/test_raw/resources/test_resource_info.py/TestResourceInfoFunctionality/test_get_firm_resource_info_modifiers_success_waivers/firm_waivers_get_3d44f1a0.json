@@ -4,7 +4,23 @@
       "Data": [
         {
           "Rule_ArticleNo": [
-            "Group Sup - SII Ru 4.2, 4.4, 5-19"
+            "Group Sup - SII Ru 4.2",
+            "Group Sup - SII Ru 5",
+            "Group Sup - SII Ru 4.4",
+            "Group Sup - SII Ru 6",
+            "Group Sup - SII Ru 7",
+            "Group Sup - SII Ru 8",
+            "Group Sup - SII Ru 9",
+            "Group Sup - SII Ru 10",
+            "Group Sup - SII Ru 11",
+            "Group Sup - SII Ru 12",
+            "Group Sup - SII Ru 13",
+            "Group Sup - SII Ru 18",
+            "Group Sup - SII Ru 14",
+            "Group Sup - SII Ru 15",
+            "Group Sup - SII Ru 16",
+            "Group Sup - SII Ru 17",
+            "Group Sup - SII Ru 19"
           ],
           "Waivers_Discretions": null,
           "Waivers_Discretions_URL": null
@@ -22,13 +38,13 @@
   "headers": {
     "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
     "cf-cache-status": "DYNAMIC",
-    "cf-ray": "9be746a998257d93-LHR",
+    "cf-ray": "9d4752d07e1cbd8c-LHR",
     "connection": "keep-alive",
     "content-encoding": "gzip",
     "content-type": "application/json;charset=UTF-8",
-    "date": "Thu, 15 Jan 2026 18:01:02 GMT",
+    "date": "Fri, 27 Feb 2026 11:25:47 GMT",
     "server": "cloudflare",
-    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 18:01:01 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 18:01:01 GMT; Max-Age=31536000; secure",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Sat, 27-Feb-2027 11:25:47 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Sat, 27-Feb-2027 11:25:47 GMT; Max-Age=31536000; secure",
     "strict-transport-security": "max-age=63072000; includeSubDomains",
     "transfer-encoding": "chunked",
     "vary": "Accept-Encoding",

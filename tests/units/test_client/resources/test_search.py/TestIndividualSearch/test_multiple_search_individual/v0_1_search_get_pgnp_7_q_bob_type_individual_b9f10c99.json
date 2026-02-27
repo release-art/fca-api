@@ -3,13 +3,6 @@
     "json": {
       "Data": [
         {
-          "Name": "Bobby Gill",
-          "Reference Number": "BXG01138",
-          "Status": "Active",
-          "Type of business or Individual": "Individual",
-          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/BXG01138"
-        },
-        {
           "Name": "Bobby Gurr",
           "Reference Number": "BXG00184",
           "Status": "Active",
@@ -50,13 +43,6 @@
           "Status": "Regulatory approval no longer required",
           "Type of business or Individual": "Individual",
           "URL": "https://register.fca.org.uk/services/V0.1/Individuals/BXH00246"
-        },
-        {
-          "Name": "Bobby Console-Verma",
-          "Reference Number": "BXC01140",
-          "Status": "Regulatory approval no longer required",
-          "Type of business or Individual": "Individual",
-          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/BXC01140"
         },
         {
           "Name": "Bobby Jagprit Singh",
@@ -141,6 +127,20 @@
           "Status": "Regulatory approval no longer required",
           "Type of business or Individual": "Individual",
           "URL": "https://register.fca.org.uk/services/V0.1/Individuals/PXB01632"
+        },
+        {
+          "Name": "Zacharias Bobolakis",
+          "Reference Number": "ZSB01001",
+          "Status": "Active",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/ZSB01001"
+        },
+        {
+          "Name": "Vladimir Bobryashov",
+          "Reference Number": "VXB01224",
+          "Status": "Regulatory approval no longer required",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/VXB01224"
         }
       ],
       "Message": "Ok. Search successful",
@@ -157,13 +157,13 @@
   "headers": {
     "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
     "cf-cache-status": "DYNAMIC",
-    "cf-ray": "9be744738dadb16b-LHR",
+    "cf-ray": "9d475082fe3deef7-LHR",
     "connection": "keep-alive",
     "content-encoding": "gzip",
     "content-type": "application/json;charset=UTF-8",
-    "date": "Thu, 15 Jan 2026 17:59:31 GMT",
+    "date": "Fri, 27 Feb 2026 11:24:13 GMT",
     "server": "cloudflare",
-    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 17:59:31 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 17:59:31 GMT; Max-Age=31536000; secure",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Sat, 27-Feb-2027 11:24:12 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Sat, 27-Feb-2027 11:24:12 GMT; Max-Age=31536000; secure",
     "strict-transport-security": "max-age=63072000; includeSubDomains",
     "transfer-encoding": "chunked",
     "vary": "Accept-Encoding",

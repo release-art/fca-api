@@ -110,7 +110,7 @@ class ProductDetails(base.Base):
             validation_alias=pydantic.AliasChoices("operator", "operator_url"),
             serialization_alias="operator_url",
         ),
-        annotations.FcaApiUrl(),
+        annotations.FcaApiFieldInfo(marks=[annotations.FcaApiField.InternalUrl]),
     ]
     sub_funds_url: Annotated[
         pydantic.HttpUrl,
@@ -119,7 +119,7 @@ class ProductDetails(base.Base):
             validation_alias=pydantic.AliasChoices("sub-funds", "sub_funds_url"),
             serialization_alias="sub_funds_url",
         ),
-        annotations.FcaApiUrl(),
+        annotations.FcaApiFieldInfo(marks=[annotations.FcaApiField.InternalUrl]),
     ]
     other_name_url: Annotated[
         pydantic.HttpUrl,
@@ -128,7 +128,7 @@ class ProductDetails(base.Base):
             validation_alias=pydantic.AliasChoices("other name", "other_name_url"),
             serialization_alias="other_name_url",
         ),
-        annotations.FcaApiUrl(),
+        annotations.FcaApiFieldInfo(marks=[annotations.FcaApiField.InternalUrl]),
     ]
     cis_depositary_url: Annotated[
         pydantic.HttpUrl,
@@ -137,7 +137,7 @@ class ProductDetails(base.Base):
             validation_alias=pydantic.AliasChoices("cis depositary", "cis_depositary_url"),
             serialization_alias="cis_depositary_url",
         ),
-        annotations.FcaApiUrl(),
+        annotations.FcaApiFieldInfo(marks=[annotations.FcaApiField.InternalUrl]),
     ]
 
 
@@ -208,5 +208,5 @@ class SubFundDetails(base.Base):
         pydantic.Field(
             description="URL to the sub-fund details.",
         ),
-        annotations.FcaApiUrl(),
+        annotations.FcaApiFieldInfo(marks=[annotations.FcaApiField.InternalUrl]),
     ]

@@ -3,6 +3,27 @@
     "json": {
       "Data": [
         {
+          "Name": "Fidelity Funds \u2013 Global Equity Income ESG Fund",
+          "Reference Number": "1039409",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1039409"
+        },
+        {
+          "Name": "Fidelity Funds - Absolute Return Global Equity Fund",
+          "Reference Number": "1039309",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1039309"
+        },
+        {
+          "Name": "Skerryvore ICAV \u2013 Global Emerging Markets Equity Fund",
+          "Reference Number": "1010223",
+          "Status": "Approved",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1010223"
+        },
+        {
           "Name": "Global Core Equity Lower Carbon ESG Screened Fund",
           "Reference Number": "1035888",
           "Status": "Recognised",
@@ -120,27 +141,6 @@
           "Status": "Approved",
           "Type of business or Individual": "Collective investment scheme",
           "URL": "https://register.fca.org.uk/services/V0.1/CIS/780242"
-        },
-        {
-          "Name": "MGTS AFH DA Global Emerging Markets Equity Fund",
-          "Reference Number": "785817",
-          "Status": "Approved",
-          "Type of business or Individual": "Collective investment scheme",
-          "URL": "https://register.fca.org.uk/services/V0.1/CIS/785817"
-        },
-        {
-          "Name": "TM Natixis Harris Associates Global Concentrated Equity Fund",
-          "Reference Number": "637603",
-          "Status": "Approved",
-          "Type of business or Individual": "Collective investment scheme",
-          "URL": "https://register.fca.org.uk/services/V0.1/CIS/637603"
-        },
-        {
-          "Name": "UI I - Montrusco Bolton Global Equity Fund",
-          "Reference Number": "1012687",
-          "Status": "Recognised",
-          "Type of business or Individual": "Collective investment scheme",
-          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1012687"
         }
       ],
       "Message": "Ok. Search successful",
@@ -149,7 +149,7 @@
         "Previous": "https://register.fca.org.uk/services/V0.1/Search?q=global equity fund&type=fund&pgnp=24",
         "page": "25",
         "per_page": "20",
-        "total_count": "577"
+        "total_count": "575"
       },
       "Status": "FSR-API-04-01-00"
     }
@@ -157,13 +157,13 @@
   "headers": {
     "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
     "cf-cache-status": "DYNAMIC",
-    "cf-ray": "9be745bd1c9d88c2-LHR",
+    "cf-ray": "9d4751efce5cc0cf-LHR",
     "connection": "keep-alive",
     "content-encoding": "gzip",
     "content-type": "application/json;charset=UTF-8",
-    "date": "Thu, 15 Jan 2026 18:00:24 GMT",
+    "date": "Fri, 27 Feb 2026 11:25:11 GMT",
     "server": "cloudflare",
-    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 18:00:23 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 18:00:23 GMT; Max-Age=31536000; secure",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Sat, 27-Feb-2027 11:25:11 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Sat, 27-Feb-2027 11:25:11 GMT; Max-Age=31536000; secure",
     "strict-transport-security": "max-age=63072000; includeSubDomains",
     "transfer-encoding": "chunked",
     "vary": "Accept-Encoding",

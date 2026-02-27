@@ -4,7 +4,7 @@
       "Data": [
         {
           "Current": {
-            "(59)[FCA CF] Functions requiring qualifications": {
+            "(57)[FCA CF] Functions requiring qualifications": {
               "Effective Date": "08/07/2025",
               "Individual Name": "Karine Sweeney",
               "Name": "[FCA CF] Functions requiring qualifications",
@@ -13,7 +13,7 @@
               "Suspension / Restriction Start Date": "",
               "URL": "https://register.fca.org.uk/services/V0.1/Individuals/SXK02084"
             },
-            "(60)[FCA CF] CASS oversight function": {
+            "(58)[FCA CF] CASS oversight function": {
               "Effective Date": "08/07/2025",
               "Individual Name": "Karine Sweeney",
               "Name": "[FCA CF] CASS oversight function",
@@ -22,7 +22,7 @@
               "Suspension / Restriction Start Date": "",
               "URL": "https://register.fca.org.uk/services/V0.1/Individuals/SXK02084"
             },
-            "(61)SMF9 Chair of the Governing Body": {
+            "(59)SMF9 Chair of the Governing Body": {
               "Effective Date": "11/03/2022",
               "Individual Name": "Clive Peter Adamson",
               "Name": "SMF9 Chair of the Governing Body",
@@ -31,7 +31,7 @@
               "Suspension / Restriction Start Date": "",
               "URL": "https://register.fca.org.uk/services/V0.1/Individuals/CPA01034"
             },
-            "(62)Director of firm who is not a certification employee or a SMF manager": {
+            "(60)Director of firm who is not a certification employee or a SMF manager": {
               "Effective Date": "24/09/2021",
               "Individual Name": "Clive Peter Adamson",
               "Name": "Director of firm who is not a certification employee or a SMF manager",
@@ -40,7 +40,7 @@
               "Suspension / Restriction Start Date": "",
               "URL": "https://register.fca.org.uk/services/V0.1/Individuals/CPA01034"
             },
-            "(63)[FCA CF] Material risk taker": {
+            "(61)[FCA CF] Material risk taker": {
               "Effective Date": "07/01/2026",
               "Individual Name": "Eileen O'Connell",
               "Name": "[FCA CF] Material risk taker",
@@ -48,6 +48,24 @@
               "Suspension / Restriction End Date": "",
               "Suspension / Restriction Start Date": "",
               "URL": "https://register.fca.org.uk/services/V0.1/Individuals/EXO00003"
+            },
+            "(62)SMF3 Executive Director": {
+              "Effective Date": "05/02/2026",
+              "Individual Name": "James McManus",
+              "Name": "SMF3 Executive Director",
+              "Restriction": "",
+              "Suspension / Restriction End Date": "",
+              "Suspension / Restriction Start Date": "",
+              "URL": "https://register.fca.org.uk/services/V0.1/Individuals/JXM03896"
+            },
+            "(63)SMF1 Chief Executive": {
+              "Effective Date": "05/02/2026",
+              "Individual Name": "James McManus",
+              "Name": "SMF1 Chief Executive",
+              "Restriction": "",
+              "Suspension / Restriction End Date": "",
+              "Suspension / Restriction Start Date": "",
+              "URL": "https://register.fca.org.uk/services/V0.1/Individuals/JXM03896"
             },
             "(64)SMF3 Executive Director": {
               "Effective Date": "15/03/2022",
@@ -58,34 +76,7 @@
               "Suspension / Restriction Start Date": "",
               "URL": "https://register.fca.org.uk/services/V0.1/Individuals/MPM01145"
             },
-            "(65)SMF17 Money Laundering Reporting Officer (MLRO)": {
-              "Effective Date": "24/06/2024",
-              "Individual Name": "Joanne Helen Phizacklea",
-              "Name": "SMF17 Money Laundering Reporting Officer (MLRO)",
-              "Restriction": "",
-              "Suspension / Restriction End Date": "",
-              "Suspension / Restriction Start Date": "",
-              "URL": "https://register.fca.org.uk/services/V0.1/Individuals/JXP00417"
-            },
-            "(66)SMF3 Executive Director": {
-              "Effective Date": "09/05/2024",
-              "Individual Name": "Matthew Gatrell",
-              "Name": "SMF3 Executive Director",
-              "Restriction": "",
-              "Suspension / Restriction End Date": "",
-              "Suspension / Restriction Start Date": "",
-              "URL": "https://register.fca.org.uk/services/V0.1/Individuals/MXG02692"
-            },
-            "(67)SMF1 Chief Executive": {
-              "Effective Date": "09/05/2024",
-              "Individual Name": "Matthew Gatrell",
-              "Name": "SMF1 Chief Executive",
-              "Restriction": "",
-              "Suspension / Restriction End Date": "",
-              "Suspension / Restriction Start Date": "",
-              "URL": "https://register.fca.org.uk/services/V0.1/Individuals/MXG02692"
-            },
-            "(68)SMF16 Compliance Oversight": {
+            "(65)SMF16 Compliance Oversight": {
               "Effective Date": "18/06/2024",
               "Individual Name": "Robert George Rule",
               "Name": "SMF16 Compliance Oversight",
@@ -93,90 +84,99 @@
               "Suspension / Restriction End Date": "",
               "Suspension / Restriction Start Date": "",
               "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RXR00422"
+            },
+            "(66)SMF17 Money Laundering Reporting Officer (MLRO)": {
+              "Effective Date": "24/06/2024",
+              "Individual Name": "Joanne Helen Phizacklea",
+              "Name": "SMF17 Money Laundering Reporting Officer (MLRO)",
+              "Restriction": "",
+              "Suspension / Restriction End Date": "",
+              "Suspension / Restriction Start Date": "",
+              "URL": "https://register.fca.org.uk/services/V0.1/Individuals/JXP00417"
             }
           },
           "Previous": {
-            "(131)[FCA CF] Significant management": {
-              "Effective Date": "05/10/2021",
-              "End Date": "09/05/2024",
-              "Individual Name": "Matthew Gatrell",
-              "Name": "[FCA CF] Significant management",
+            "(135)CF10 Compliance Oversight": {
+              "Effective Date": "03/02/2015",
+              "End Date": "16/10/2015",
+              "Individual Name": "Guy Jonathan Barton Jackson",
+              "Name": "CF10 Compliance Oversight",
               "Restriction": "",
               "Suspension / Restriction End Date": "",
               "Suspension / Restriction Start Date": "",
-              "URL": "https://register.fca.org.uk/services/V0.1/Individuals/MXG02692"
-            },
-            "(132)SMF3 Executive Director": {
-              "Effective Date": "09/12/2019",
-              "End Date": "30/04/2022",
-              "Individual Name": "Neil Ross Alexander",
-              "Name": "SMF3 Executive Director",
-              "Restriction": "",
-              "Suspension / Restriction End Date": "",
-              "Suspension / Restriction Start Date": "",
-              "URL": "https://register.fca.org.uk/services/V0.1/Individuals/NRA01042"
-            },
-            "(133)SMF1 Chief Executive": {
-              "Effective Date": "26/03/2020",
-              "End Date": "30/04/2022",
-              "Individual Name": "Neil Ross Alexander",
-              "Name": "SMF1 Chief Executive",
-              "Restriction": "",
-              "Suspension / Restriction End Date": "",
-              "Suspension / Restriction Start Date": "",
-              "URL": "https://register.fca.org.uk/services/V0.1/Individuals/NRA01042"
-            },
-            "(134)CF28 Systems and controls": {
-              "Effective Date": "14/06/2018",
-              "End Date": "08/12/2019",
-              "Individual Name": "Neil Ross Alexander",
-              "Name": "CF28 Systems and controls",
-              "Restriction": "",
-              "Suspension / Restriction End Date": "",
-              "Suspension / Restriction Start Date": "",
-              "URL": "https://register.fca.org.uk/services/V0.1/Individuals/NRA01042"
-            },
-            "(135)CF1 Director": {
-              "Effective Date": "14/06/2018",
-              "End Date": "08/12/2019",
-              "Individual Name": "Neil Ross Alexander",
-              "Name": "CF1 Director",
-              "Restriction": "",
-              "Suspension / Restriction End Date": "",
-              "Suspension / Restriction Start Date": "",
-              "URL": "https://register.fca.org.uk/services/V0.1/Individuals/NRA01042"
+              "URL": "https://register.fca.org.uk/services/V0.1/Individuals/GJJ01008"
             },
             "(136)CF2 Non Executive Director": {
-              "Effective Date": "14/02/2014",
-              "End Date": "08/12/2019",
-              "Individual Name": "Stephen Clark",
+              "Effective Date": "07/07/2014",
+              "End Date": "06/03/2019",
+              "Individual Name": "Timothy Brian Bunting",
               "Name": "CF2 Non Executive Director",
               "Restriction": "",
               "Suspension / Restriction End Date": "",
               "Suspension / Restriction Start Date": "",
-              "URL": "https://register.fca.org.uk/services/V0.1/Individuals/SXC01299"
+              "URL": "https://register.fca.org.uk/services/V0.1/Individuals/TBB01004"
             },
-            "(137)Director of firm who is not a certification employee or a SMF manager": {
-              "Effective Date": "30/04/2020",
-              "End Date": "24/09/2021",
-              "Individual Name": "Stephen Clark",
-              "Name": "Director of firm who is not a certification employee or a SMF manager",
+            "(137)SMF17 Money Laundering Reporting Officer (MLRO)": {
+              "Effective Date": "09/12/2019",
+              "End Date": "24/06/2024",
+              "Individual Name": "Darragh Patrick Geraghty",
+              "Name": "SMF17 Money Laundering Reporting Officer (MLRO)",
               "Restriction": "",
               "Suspension / Restriction End Date": "",
               "Suspension / Restriction Start Date": "",
-              "URL": "https://register.fca.org.uk/services/V0.1/Individuals/SXC01299"
+              "URL": "https://register.fca.org.uk/services/V0.1/Individuals/DPG01071"
             },
-            "(138)[FCA CF] Manager of certification employee": {
-              "Effective Date": "09/08/2022",
-              "End Date": "13/03/2024",
-              "Individual Name": "Alexa Collinson",
+            "(138)SMF16 Compliance Oversight": {
+              "Effective Date": "09/12/2019",
+              "End Date": "18/06/2024",
+              "Individual Name": "Darragh Patrick Geraghty",
+              "Name": "SMF16 Compliance Oversight",
+              "Restriction": "",
+              "Suspension / Restriction End Date": "",
+              "Suspension / Restriction Start Date": "",
+              "URL": "https://register.fca.org.uk/services/V0.1/Individuals/DPG01071"
+            },
+            "(139)CF28 Systems and controls": {
+              "Effective Date": "08/06/2018",
+              "End Date": "08/12/2019",
+              "Individual Name": "Darragh Patrick Geraghty",
+              "Name": "CF28 Systems and controls",
+              "Restriction": "",
+              "Suspension / Restriction End Date": "",
+              "Suspension / Restriction Start Date": "",
+              "URL": "https://register.fca.org.uk/services/V0.1/Individuals/DPG01071"
+            },
+            "(140)CF11 Money Laundering Reporting": {
+              "Effective Date": "08/06/2018",
+              "End Date": "08/12/2019",
+              "Individual Name": "Darragh Patrick Geraghty",
+              "Name": "CF11 Money Laundering Reporting",
+              "Restriction": "",
+              "Suspension / Restriction End Date": "",
+              "Suspension / Restriction Start Date": "",
+              "URL": "https://register.fca.org.uk/services/V0.1/Individuals/DPG01071"
+            },
+            "(141)CF10 Compliance Oversight": {
+              "Effective Date": "08/06/2018",
+              "End Date": "08/12/2019",
+              "Individual Name": "Darragh Patrick Geraghty",
+              "Name": "CF10 Compliance Oversight",
+              "Restriction": "",
+              "Suspension / Restriction End Date": "",
+              "Suspension / Restriction Start Date": "",
+              "URL": "https://register.fca.org.uk/services/V0.1/Individuals/DPG01071"
+            },
+            "(142)[FCA CF] Manager of certification employee": {
+              "Effective Date": "13/01/2025",
+              "End Date": "01/10/2025",
+              "Individual Name": "Melissa Gallagher",
               "Name": "[FCA CF] Manager of certification employee",
               "Restriction": "",
               "Suspension / Restriction End Date": "",
               "Suspension / Restriction Start Date": "",
-              "URL": "https://register.fca.org.uk/services/V0.1/Individuals/AJC34316"
+              "URL": "https://register.fca.org.uk/services/V0.1/Individuals/MXG14592"
             },
-            "(139)CF3 Chief Executive": {
+            "(143)CF3 Chief Executive": {
               "Effective Date": "15/10/2013",
               "End Date": "18/04/2016",
               "Individual Name": "Lee Cowles",
@@ -186,7 +186,7 @@
               "Suspension / Restriction Start Date": "",
               "URL": "https://register.fca.org.uk/services/V0.1/Individuals/LXC01588"
             },
-            "(140)CF1 Director": {
+            "(144)CF1 Director": {
               "Effective Date": "20/02/2013",
               "End Date": "18/04/2016",
               "Individual Name": "Lee Cowles",
@@ -204,7 +204,7 @@
         "Next": "https://register.fca.org.uk/services/V0.1/Firm/552016/CF?pgnp=2",
         "page": "1",
         "per_page": "20",
-        "total_count": "208"
+        "total_count": "210"
       },
       "Status": "FSR-API-02-12-00"
     }
@@ -212,13 +212,13 @@
   "headers": {
     "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
     "cf-cache-status": "DYNAMIC",
-    "cf-ray": "9be74087ff1b4f9c-LHR",
+    "cf-ray": "9d474c658ecf9503-LHR",
     "connection": "keep-alive",
     "content-encoding": "gzip",
     "content-type": "application/json;charset=UTF-8",
-    "date": "Thu, 15 Jan 2026 17:56:51 GMT",
+    "date": "Fri, 27 Feb 2026 11:21:24 GMT",
     "server": "cloudflare",
-    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 17:56:50 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 17:56:50 GMT; Max-Age=31536000; secure",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Sat, 27-Feb-2027 11:21:24 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Sat, 27-Feb-2027 11:21:24 GMT; Max-Age=31536000; secure",
     "strict-transport-security": "max-age=63072000; includeSubDomains",
     "transfer-encoding": "chunked",
     "vary": "Accept-Encoding",

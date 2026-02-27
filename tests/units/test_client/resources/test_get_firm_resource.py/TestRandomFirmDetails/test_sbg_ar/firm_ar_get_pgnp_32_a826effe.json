@@ -5,6 +5,78 @@
         "CurrentAppointedRepresentatives": [
           {
             "EEA Tied Agent": "false",
+            "Effective Date": "29/06/2015",
+            "FRN": "708462",
+            "Name": "John Lees Equity Release & Mortgage Solutions Ltd",
+            "Principal FRN": "454811",
+            "Principal Firm Name": "Stonebridge Mortgage Solutions Ltd",
+            "RecordSubType": "Full",
+            "Tied Agent": "false",
+            "URL": "https://register.fca.org.uk/services/V0.1/Firm/708462",
+            "[NotinUse] Insurance Distribution": "true"
+          },
+          {
+            "EEA Tied Agent": "false",
+            "Effective Date": "09/04/2014",
+            "FRN": "620706",
+            "Name": "John Little",
+            "Principal FRN": "454811",
+            "Principal Firm Name": "Stonebridge Mortgage Solutions Ltd",
+            "RecordSubType": "Full",
+            "Tied Agent": "false",
+            "URL": "https://register.fca.org.uk/services/V0.1/Firm/620706",
+            "[NotinUse] Insurance Distribution": "true"
+          },
+          {
+            "EEA Tied Agent": "false",
+            "Effective Date": "08/11/2021",
+            "FRN": "200202",
+            "Name": "John Reynolds",
+            "Principal FRN": "454811",
+            "Principal Firm Name": "Stonebridge Mortgage Solutions Ltd",
+            "RecordSubType": "Full",
+            "Tied Agent": "false",
+            "URL": "https://register.fca.org.uk/services/V0.1/Firm/200202",
+            "[NotinUse] Insurance Distribution": "true"
+          },
+          {
+            "EEA Tied Agent": "false",
+            "Effective Date": "28/01/2013",
+            "FRN": "595049",
+            "Name": "John Robb Mackenzie",
+            "Principal FRN": "454811",
+            "Principal Firm Name": "Stonebridge Mortgage Solutions Ltd",
+            "RecordSubType": "Full",
+            "Tied Agent": "false",
+            "URL": "https://register.fca.org.uk/services/V0.1/Firm/595049",
+            "[NotinUse] Insurance Distribution": "true"
+          },
+          {
+            "EEA Tied Agent": "false",
+            "Effective Date": "01/08/2013",
+            "FRN": "214956",
+            "Name": "John Rudd",
+            "Principal FRN": "454811",
+            "Principal Firm Name": "Stonebridge Mortgage Solutions Ltd",
+            "RecordSubType": "Full",
+            "Tied Agent": "false",
+            "URL": "https://register.fca.org.uk/services/V0.1/Firm/214956",
+            "[NotinUse] Insurance Distribution": "true"
+          },
+          {
+            "EEA Tied Agent": "false",
+            "Effective Date": "16/03/2022",
+            "FRN": "972187",
+            "Name": "Jonathan Bruce",
+            "Principal FRN": "454811",
+            "Principal Firm Name": "Stonebridge Mortgage Solutions Ltd",
+            "RecordSubType": "Full",
+            "Tied Agent": "false",
+            "URL": "https://register.fca.org.uk/services/V0.1/Firm/972187",
+            "[NotinUse] Insurance Distribution": "true"
+          },
+          {
+            "EEA Tied Agent": "false",
             "Effective Date": "12/06/2024",
             "FRN": "1013673",
             "Name": "Joshua Normington",
@@ -50,81 +122,22 @@
             "Tied Agent": "false",
             "URL": "https://register.fca.org.uk/services/V0.1/Firm/1023008",
             "[NotinUse] Insurance Distribution": "true"
-          },
-          {
-            "EEA Tied Agent": "false",
-            "Effective Date": "16/02/2025",
-            "FRN": "1027333",
-            "Name": "Karen Clewes",
-            "Principal FRN": "454811",
-            "Principal Firm Name": "Stonebridge Mortgage Solutions Ltd",
-            "RecordSubType": "Full",
-            "Tied Agent": "false",
-            "URL": "https://register.fca.org.uk/services/V0.1/Firm/1027333",
-            "[NotinUse] Insurance Distribution": "true"
-          },
-          {
-            "EEA Tied Agent": "false",
-            "Effective Date": "13/01/2017",
-            "FRN": "769346",
-            "Name": "Kartika Harishkumar Shah",
-            "Principal FRN": "454811",
-            "Principal Firm Name": "Stonebridge Mortgage Solutions Ltd",
-            "RecordSubType": "Full",
-            "Tied Agent": "false",
-            "URL": "https://register.fca.org.uk/services/V0.1/Firm/769346",
-            "[NotinUse] Insurance Distribution": "true"
-          },
-          {
-            "EEA Tied Agent": "false",
-            "Effective Date": "23/01/2023",
-            "FRN": "990499",
-            "Name": "Kate Pedley",
-            "Principal FRN": "454811",
-            "Principal Firm Name": "Stonebridge Mortgage Solutions Ltd",
-            "RecordSubType": "Full",
-            "Tied Agent": "false",
-            "URL": "https://register.fca.org.uk/services/V0.1/Firm/990499",
-            "[NotinUse] Insurance Distribution": "true"
-          },
-          {
-            "EEA Tied Agent": "false",
-            "Effective Date": "31/05/2016",
-            "FRN": "748589",
-            "Name": "KB Mortgage Services Ltd",
-            "Principal FRN": "454811",
-            "Principal Firm Name": "Stonebridge Mortgage Solutions Ltd",
-            "RecordSubType": "Full",
-            "Tied Agent": "false",
-            "URL": "https://register.fca.org.uk/services/V0.1/Firm/748589",
-            "[NotinUse] Insurance Distribution": "true"
-          },
-          {
-            "EEA Tied Agent": "false",
-            "Effective Date": "05/07/2017",
-            "FRN": "783508",
-            "Name": "KB Mortgage Solutions Ltd",
-            "Principal FRN": "454811",
-            "Principal Firm Name": "Stonebridge Mortgage Solutions Ltd",
-            "RecordSubType": "Full",
-            "Tied Agent": "false",
-            "URL": "https://register.fca.org.uk/services/V0.1/Firm/783508",
-            "[NotinUse] Insurance Distribution": "true"
-          },
-          {
-            "EEA Tied Agent": "false",
-            "Effective Date": "07/09/2025",
-            "FRN": "1041775",
-            "Name": "Keeley Barber",
-            "Principal FRN": "454811",
-            "Principal Firm Name": "Stonebridge Mortgage Solutions Ltd",
-            "RecordSubType": "Full",
-            "Tied Agent": "false",
-            "URL": "https://register.fca.org.uk/services/V0.1/Firm/1041775",
-            "[NotinUse] Insurance Distribution": "true"
           }
         ],
         "PreviousAppointedRepresentatives": [
+          {
+            "EEA Tied Agent": "false",
+            "Effective Date": "30/06/2020",
+            "FRN": "413260",
+            "Name": "Household Estate Agents Limited",
+            "Principal FRN": "454811",
+            "Principal Firm Name": "Stonebridge Mortgage Solutions Ltd",
+            "RecordSubType": "Full",
+            "Termination Date": "17/05/2022",
+            "Tied Agent": "false",
+            "URL": "https://register.fca.org.uk/services/V0.1/Firm/413260",
+            "[NotinUse] Insurance Distribution": "true"
+          },
           {
             "EEA Tied Agent": "false",
             "Effective Date": "23/11/2012",
@@ -218,19 +231,6 @@
           },
           {
             "EEA Tied Agent": "false",
-            "Effective Date": "20/05/2020",
-            "FRN": "923926",
-            "Name": "Imran Khan",
-            "Principal FRN": "454811",
-            "Principal Firm Name": "Stonebridge Mortgage Solutions Ltd",
-            "RecordSubType": "Full",
-            "Termination Date": "31/03/2021",
-            "Tied Agent": "false",
-            "URL": "https://register.fca.org.uk/services/V0.1/Firm/923926",
-            "[NotinUse] Insurance Distribution": "true"
-          },
-          {
-            "EEA Tied Agent": "false",
             "Effective Date": "03/04/2020",
             "FRN": "923926",
             "Name": "Imran Khan",
@@ -244,15 +244,15 @@
           },
           {
             "EEA Tied Agent": "false",
-            "Effective Date": "04/03/2022",
-            "FRN": "971249",
-            "Name": "In2Equity London Ltd",
+            "Effective Date": "20/05/2020",
+            "FRN": "923926",
+            "Name": "Imran Khan",
             "Principal FRN": "454811",
             "Principal Firm Name": "Stonebridge Mortgage Solutions Ltd",
             "RecordSubType": "Full",
-            "Termination Date": "06/05/2022",
+            "Termination Date": "31/03/2021",
             "Tied Agent": "false",
-            "URL": "https://register.fca.org.uk/services/V0.1/Firm/971249",
+            "URL": "https://register.fca.org.uk/services/V0.1/Firm/923926",
             "[NotinUse] Insurance Distribution": "true"
           }
         ]
@@ -263,7 +263,7 @@
         "Previous": "https://register.fca.org.uk/services/V0.1/Firm/454811/AR?pgnp=31",
         "page": "32",
         "per_page": "10",
-        "total_count": "1531"
+        "total_count": "1544"
       },
       "Status": "FSR-API-05-04-00"
     }
@@ -271,13 +271,13 @@
   "headers": {
     "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
     "cf-cache-status": "DYNAMIC",
-    "cf-ray": "9be741cdcdb4bb05-LHR",
+    "cf-ray": "9d474dbe8d7b0039-LHR",
     "connection": "keep-alive",
     "content-encoding": "gzip",
     "content-type": "application/json;charset=UTF-8",
-    "date": "Thu, 15 Jan 2026 17:57:44 GMT",
+    "date": "Fri, 27 Feb 2026 11:22:20 GMT",
     "server": "cloudflare",
-    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 17:57:42 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 17:57:42 GMT; Max-Age=31536000; secure",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Sat, 27-Feb-2027 11:22:19 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Sat, 27-Feb-2027 11:22:19 GMT; Max-Age=31536000; secure",
     "strict-transport-security": "max-age=63072000; includeSubDomains",
     "transfer-encoding": "chunked",
     "vary": "Accept-Encoding",

@@ -3,6 +3,13 @@
     "json": {
       "Data": [
         {
+          "Name": "UBS (Lux) Global Quality Dividend Equity Fund",
+          "Reference Number": "788289",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/788289"
+        },
+        {
           "Name": "State Street Global Climate Transition Equity Fund",
           "Reference Number": "1013297",
           "Status": "Recognised",
@@ -134,13 +141,6 @@
           "Status": "Terminated",
           "Type of business or Individual": "Collective investment scheme",
           "URL": "https://register.fca.org.uk/services/V0.1/CIS/645024"
-        },
-        {
-          "Name": "SCHRODER INTERNATIONAL SELECTION FUND GLOBAL EQUITY YIELD",
-          "Reference Number": "643278",
-          "Status": "Recognised",
-          "Type of business or Individual": "Collective investment scheme",
-          "URL": "https://register.fca.org.uk/services/V0.1/CIS/643278"
         }
       ],
       "Message": "Ok. Search successful",
@@ -149,7 +149,7 @@
         "Previous": "https://register.fca.org.uk/services/V0.1/Search?q=global equity fund&type=fund&pgnp=22",
         "page": "23",
         "per_page": "20",
-        "total_count": "577"
+        "total_count": "575"
       },
       "Status": "FSR-API-04-01-00"
     }
@@ -157,13 +157,13 @@
   "headers": {
     "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
     "cf-cache-status": "DYNAMIC",
-    "cf-ray": "9be745b80f0488c2-LHR",
+    "cf-ray": "9d4751ea094ac0cf-LHR",
     "connection": "keep-alive",
     "content-encoding": "gzip",
     "content-type": "application/json;charset=UTF-8",
-    "date": "Thu, 15 Jan 2026 18:00:23 GMT",
+    "date": "Fri, 27 Feb 2026 11:25:10 GMT",
     "server": "cloudflare",
-    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 18:00:23 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 18:00:23 GMT; Max-Age=31536000; secure",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Sat, 27-Feb-2027 11:25:10 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Sat, 27-Feb-2027 11:25:10 GMT; Max-Age=31536000; secure",
     "strict-transport-security": "max-age=63072000; includeSubDomains",
     "transfer-encoding": "chunked",
     "vary": "Accept-Encoding",

@@ -3,6 +3,48 @@
     "json": {
       "Data": [
         {
+          "Name": "BNY Mellon Global Equity Income Fund",
+          "Reference Number": "1030218",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1030218"
+        },
+        {
+          "Name": "BNY MELLON LONG-TERM GLOBAL EQUITY FUND",
+          "Reference Number": "1030214",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1030214"
+        },
+        {
+          "Name": "BNY Mellon Sustainable Global Equity Fund",
+          "Reference Number": "1030206",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1030206"
+        },
+        {
+          "Name": "IFSL Pinnacle Global Equity Income Fund",
+          "Reference Number": "1029393",
+          "Status": "Approved",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1029393"
+        },
+        {
+          "Name": "GQG Partners Global Equity Select Fund",
+          "Reference Number": "1029305",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1029305"
+        },
+        {
+          "Name": "Systematic Global Equity High Income Fund",
+          "Reference Number": "1028867",
+          "Status": "Recognised",
+          "Type of business or Individual": "Collective investment scheme",
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/1028867"
+        },
+        {
           "Name": "GLOBAL EMERGING MARKETS EQUITY UNCONSTRAINED FUND",
           "Reference Number": "1028051",
           "Status": "Recognised",
@@ -24,11 +66,11 @@
           "URL": "https://register.fca.org.uk/services/V0.1/CIS/1020899"
         },
         {
-          "Name": "CCLA Better World Global Equity Fund",
-          "Reference Number": "969186",
+          "Name": "Quilter Investors Global Dynamic Equity Fund",
+          "Reference Number": "634584",
           "Status": "Approved",
           "Type of business or Individual": "Collective investment scheme",
-          "URL": "https://register.fca.org.uk/services/V0.1/CIS/969186"
+          "URL": "https://register.fca.org.uk/services/V0.1/CIS/634584"
         },
         {
           "Name": "Liontrust MA Global Equity Income Fund",
@@ -45,25 +87,11 @@
           "URL": "https://register.fca.org.uk/services/V0.1/CIS/786802"
         },
         {
-          "Name": "Quilter Investors Global Dynamic Equity Fund",
-          "Reference Number": "634584",
-          "Status": "Approved",
-          "Type of business or Individual": "Collective investment scheme",
-          "URL": "https://register.fca.org.uk/services/V0.1/CIS/634584"
-        },
-        {
           "Name": "Quilter Investors Global Unconstrained Equity Fund",
           "Reference Number": "634579",
           "Status": "Approved",
           "Type of business or Individual": "Collective investment scheme",
           "URL": "https://register.fca.org.uk/services/V0.1/CIS/634579"
-        },
-        {
-          "Name": "WS Canlife Global Equity Income Fund",
-          "Reference Number": "646377",
-          "Status": "Approved",
-          "Type of business or Individual": "Collective investment scheme",
-          "URL": "https://register.fca.org.uk/services/V0.1/CIS/646377"
         },
         {
           "Name": "FTF ClearBridge Global Equity Income Fund",
@@ -113,34 +141,6 @@
           "Status": "Approved",
           "Type of business or Individual": "Collective investment scheme",
           "URL": "https://register.fca.org.uk/services/V0.1/CIS/797316"
-        },
-        {
-          "Name": "ACS 30:70 Global Equity Tracker Fund",
-          "Reference Number": "786800",
-          "Status": "Approved",
-          "Type of business or Individual": "Collective investment scheme",
-          "URL": "https://register.fca.org.uk/services/V0.1/CIS/786800"
-        },
-        {
-          "Name": "ACS 50:50 Global Equity Tracker Fund",
-          "Reference Number": "786799",
-          "Status": "Approved",
-          "Type of business or Individual": "Collective investment scheme",
-          "URL": "https://register.fca.org.uk/services/V0.1/CIS/786799"
-        },
-        {
-          "Name": "BNY MELLON LONG-TERM GLOBAL EQUITY FUND",
-          "Reference Number": "632599",
-          "Status": "Approved",
-          "Type of business or Individual": "Collective investment scheme",
-          "URL": "https://register.fca.org.uk/services/V0.1/CIS/632599"
-        },
-        {
-          "Name": "BNY Mellon 50/50 Global Equity Fund",
-          "Reference Number": "632585",
-          "Status": "Approved",
-          "Type of business or Individual": "Collective investment scheme",
-          "URL": "https://register.fca.org.uk/services/V0.1/CIS/632585"
         }
       ],
       "Message": "Ok. Search successful",
@@ -149,7 +149,7 @@
         "Previous": "https://register.fca.org.uk/services/V0.1/Search?q=global equity fund&type=fund&pgnp=16",
         "page": "17",
         "per_page": "20",
-        "total_count": "577"
+        "total_count": "575"
       },
       "Status": "FSR-API-04-01-00"
     }
@@ -157,13 +157,13 @@
   "headers": {
     "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
     "cf-cache-status": "DYNAMIC",
-    "cf-ray": "9be745a61d2d88c2-LHR",
+    "cf-ray": "9d4751d8395ec0cf-LHR",
     "connection": "keep-alive",
     "content-encoding": "gzip",
     "content-type": "application/json;charset=UTF-8",
-    "date": "Thu, 15 Jan 2026 18:00:20 GMT",
+    "date": "Fri, 27 Feb 2026 11:25:07 GMT",
     "server": "cloudflare",
-    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 18:00:20 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 18:00:20 GMT; Max-Age=31536000; secure",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Sat, 27-Feb-2027 11:25:07 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Sat, 27-Feb-2027 11:25:07 GMT; Max-Age=31536000; secure",
     "strict-transport-security": "max-age=63072000; includeSubDomains",
     "transfer-encoding": "chunked",
     "vary": "Accept-Encoding",

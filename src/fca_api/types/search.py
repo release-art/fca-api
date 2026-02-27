@@ -102,7 +102,7 @@ class FirmSearchResult(base.Base):
         pydantic.Field(
             description="The URL of the firm's record in the FCA register.",
         ),
-        annotations.FcaApiUrl(),
+        annotations.FcaApiFieldInfo(marks=[annotations.FcaApiField.InternalUrl]),
     ]
     frn: Annotated[
         str,
@@ -179,7 +179,7 @@ class IndividualSearchResult(base.Base):
         pydantic.Field(
             description="The URL of the individual's record in the FCA register.",
         ),
-        annotations.FcaApiUrl(),
+        annotations.FcaApiFieldInfo(marks=[annotations.FcaApiField.InternalUrl]),
     ]
     irn: Annotated[
         str,
@@ -260,7 +260,7 @@ class FundSearchResult(base.Base):
         pydantic.Field(
             description="The URL of the product's record in the FCA register.",
         ),
-        annotations.FcaApiUrl(),
+        annotations.FcaApiFieldInfo(marks=[annotations.FcaApiField.InternalUrl]),
     ]
     prn: Annotated[
         str,

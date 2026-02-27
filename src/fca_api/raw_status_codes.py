@@ -36,7 +36,7 @@ ALL_KNOWN_CODES: tuple[Code, ...] = (
     ),
     Code(
         value="FSR-API-02-01-11",
-        is_error=True,
+        is_error=False,
         description="Firm not found - When SOQL returns no record",
     ),
     Code(
@@ -52,7 +52,7 @@ ALL_KNOWN_CODES: tuple[Code, ...] = (
     ),
     Code(
         value="FSR-API-02-04-11",
-        is_error=True,
+        is_error=False,
         description="Brand Name not found - When SOQL returns no record",
     ),
     Code(
@@ -73,7 +73,7 @@ ALL_KNOWN_CODES: tuple[Code, ...] = (
     ),
     Code(
         value="FSR-API-02-02-11",
-        is_error=True,
+        is_error=False,
         description="Address not found - When SOQL returns no record",
     ),
     Code(
@@ -89,7 +89,7 @@ ALL_KNOWN_CODES: tuple[Code, ...] = (
     ),
     Code(
         value="FSR-API-02-12-11",
-        is_error=True,
+        is_error=False,
         description="ERROR : Control Function not Found - When SOQL returns no record",
     ),
     Code(
@@ -110,7 +110,7 @@ ALL_KNOWN_CODES: tuple[Code, ...] = (
     ),
     Code(
         value="FSR-API-02-05-11",
-        is_error=True,
+        is_error=False,
         description="Individual not found - When SOQL returns no record",
     ),
     Code(
@@ -126,7 +126,7 @@ ALL_KNOWN_CODES: tuple[Code, ...] = (
     ),
     Code(
         value="FSR-API-02-03-11",
-        is_error=True,
+        is_error=False,
         description="Permission not found - When SOQL returns no record",
     ),
     Code(
@@ -152,7 +152,7 @@ ALL_KNOWN_CODES: tuple[Code, ...] = (
     ),
     Code(
         value="FSR-API-02-06-21",
-        is_error=True,
+        is_error=False,
         description="Firm Requirements not found - When SOQL returns no record",
     ),
     # Firm Requirements Investment Types
@@ -163,7 +163,7 @@ ALL_KNOWN_CODES: tuple[Code, ...] = (
     ),
     Code(
         value="FSR-API-02-13-11",
-        is_error=True,
+        is_error=False,
         description="Investment Types not found - When SOQL returns no record",
     ),
     Code(
@@ -179,7 +179,7 @@ ALL_KNOWN_CODES: tuple[Code, ...] = (
     ),
     Code(
         value="FSR-API-02-09-11",
-        is_error=True,
+        is_error=False,
         description="Regulators not found - When SOQL returns no record",
     ),
     Code(
@@ -195,7 +195,7 @@ ALL_KNOWN_CODES: tuple[Code, ...] = (
     ),
     Code(
         value="FSR-API-02-07-11",
-        is_error=True,
+        is_error=False,
         description="Passport not found - When SOQL returns no record",
     ),
     Code(
@@ -211,7 +211,7 @@ ALL_KNOWN_CODES: tuple[Code, ...] = (
     ),
     Code(
         value="FSR-API-02-08-11",
-        is_error=True,
+        is_error=False,
         description="Passport permission not found - When SOQL returns no record",
     ),
     Code(
@@ -227,7 +227,7 @@ ALL_KNOWN_CODES: tuple[Code, ...] = (
     ),
     Code(
         value="FSR-API-02-14-11",
-        is_error=True,
+        is_error=False,
         description="Waiver information not found - When SOQL returns no record",
     ),
     Code(
@@ -243,7 +243,7 @@ ALL_KNOWN_CODES: tuple[Code, ...] = (
     ),
     Code(
         value="FSR-API-02-10-11",
-        is_error=True,
+        is_error=False,
         description="Exclusions information not found - When SOQL returns no record",
     ),
     Code(
@@ -259,7 +259,7 @@ ALL_KNOWN_CODES: tuple[Code, ...] = (
     ),
     Code(
         value="FSR-API-02-11-11",
-        is_error=True,
+        is_error=False,
         description="Disciplinary history information not found - When SOQL returns no record",
     ),
     Code(
@@ -275,7 +275,7 @@ ALL_KNOWN_CODES: tuple[Code, ...] = (
     ),
     Code(
         value="FSR-API-03-01-11",
-        is_error=True,
+        is_error=False,
         description="Individual not found - When SOQL returns no record",
     ),
     Code(
@@ -291,7 +291,7 @@ ALL_KNOWN_CODES: tuple[Code, ...] = (
     ),
     Code(
         value="FSR-API-03-02-11",
-        is_error=True,
+        is_error=False,
         description="Individual Control function not found - When SOQL returns no record",
     ),
     Code(
@@ -307,7 +307,7 @@ ALL_KNOWN_CODES: tuple[Code, ...] = (
     ),
     Code(
         value="FSR-API-03-03-11",
-        is_error=True,
+        is_error=False,
         description="Disciplinary history information not found - When SOQL returns no record",
     ),
     Code(

@@ -3,13 +3,6 @@
     "json": {
       "Data": [
         {
-          "Name": "Robert Rubenstein",
-          "Reference Number": "RXR01835",
-          "Status": "Regulatory approval no longer required",
-          "Type of business or Individual": "Individual",
-          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RXR01835"
-        },
-        {
           "Name": "Robert Charles Whicher",
           "Reference Number": "RCW00027",
           "Status": "Regulatory approval no longer required",
@@ -29,6 +22,13 @@
           "Status": "Active",
           "Type of business or Individual": "Individual",
           "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RXB00615"
+        },
+        {
+          "Name": "Sarbjit Jandoo",
+          "Reference Number": "SXJ00105",
+          "Status": "Active",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/SXJ00105"
         },
         {
           "Name": "Robert Owen Junior Safford",
@@ -94,25 +94,11 @@
           "URL": "https://register.fca.org.uk/services/V0.1/Individuals/BXK00080"
         },
         {
-          "Name": "Robert Paul Brown",
-          "Reference Number": "RPB01124",
-          "Status": "Regulatory approval no longer required",
-          "Type of business or Individual": "Individual",
-          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RPB01124"
-        },
-        {
           "Name": "Robert Button",
           "Reference Number": "RXB02592",
           "Status": "Regulatory approval no longer required",
           "Type of business or Individual": "Individual",
           "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RXB02592"
-        },
-        {
-          "Name": "Robert Keith Middleton",
-          "Reference Number": "RXM02000",
-          "Status": "Regulatory approval no longer required",
-          "Type of business or Individual": "Individual",
-          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RXM02000"
         },
         {
           "Name": "Robert Andrew Marquardt",
@@ -136,11 +122,25 @@
           "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RJB00086"
         },
         {
+          "Name": "Robert Melville Stiddard",
+          "Reference Number": "RMS01122",
+          "Status": "Regulatory approval no longer required",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RMS01122"
+        },
+        {
           "Name": "Robert Logan",
           "Reference Number": "RXL00062",
           "Status": "Regulatory approval no longer required",
           "Type of business or Individual": "Individual",
           "URL": "https://register.fca.org.uk/services/V0.1/Individuals/RXL00062"
+        },
+        {
+          "Name": "William Edward Rendell",
+          "Reference Number": "WER01017",
+          "Status": "Regulatory approval no longer required",
+          "Type of business or Individual": "Individual",
+          "URL": "https://register.fca.org.uk/services/V0.1/Individuals/WER01017"
         }
       ],
       "Message": "Ok. Search successful",
@@ -157,13 +157,13 @@
   "headers": {
     "cache-control": "no-cache,must-revalidate,max-age=0,no-store,private",
     "cf-cache-status": "DYNAMIC",
-    "cf-ray": "9be744b5bae2b16b-LHR",
+    "cf-ray": "9d4750cb3b82eef7-LHR",
     "connection": "keep-alive",
     "content-encoding": "gzip",
     "content-type": "application/json;charset=UTF-8",
-    "date": "Thu, 15 Jan 2026 17:59:42 GMT",
+    "date": "Fri, 27 Feb 2026 11:24:24 GMT",
     "server": "cloudflare",
-    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 17:59:41 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Fri, 15-Jan-2027 17:59:41 GMT; Max-Age=31536000; secure",
+    "set-cookie": "CookieConsentPolicy=0:1; path=/; expires=Sat, 27-Feb-2027 11:24:24 GMT; Max-Age=31536000; secure, LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Sat, 27-Feb-2027 11:24:24 GMT; Max-Age=31536000; secure",
     "strict-transport-security": "max-age=63072000; includeSubDomains",
     "transfer-encoding": "chunked",
     "vary": "Accept-Encoding",
