@@ -140,3 +140,34 @@ class TestStrOrNone:
         # This IS treated as N/A due to case-insensitive matching: "nonE".lower() == "none"
         result = field_parsers.StrOrNone.func("nonE")
         assert result is None, f"Expected None for 'nonE', got {result!r}"
+
+
+class TestFixIncompleteUrl:
+    """Tests for the FixIncompleteUrl validator."""
+
+    def test_empty_string_returns_none(self):
+        assert field_parsers.FixIncompleteUrl.func("") is None
+
+    def test_whitespace_only_returns_none(self):
+        assert field_parsers.FixIncompleteUrl.func("   ") is None
+
+    def test_na_values_return_none(self):
+        for na in ("n/a", "N/A", "na", "NA", "none", "None", "NONE"):
+            assert field_parsers.FixIncompleteUrl.func(na) is None, f"Expected None for {na!r}"
+
+    def test_url_without_protocol_gets_https_prefix(self):
+        assert field_parsers.FixIncompleteUrl.func("www.example.com") == "https://www.example.com"
+
+    def test_url_without_protocol_no_www(self):
+        assert field_parsers.FixIncompleteUrl.func("example.com/path") == "https://example.com/path"
+
+    def test_https_url_unchanged(self):
+        url = "https://register.fca.org.uk/services/V0.1/Firm/123456"
+        assert field_parsers.FixIncompleteUrl.func(url) == url
+
+    def test_http_url_unchanged(self):
+        url = "http://example.com/resource"
+        assert field_parsers.FixIncompleteUrl.func(url) == url
+
+    def test_whitespace_stripped(self):
+        assert field_parsers.FixIncompleteUrl.func("  https://example.com  ") == "https://example.com"
