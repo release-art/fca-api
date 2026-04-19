@@ -1,104 +1,44 @@
-"""Pagination types and utilities for FCA API responses.
+"""Pagination types for FCA API responses.
 
-This module provides the `MultipageList` class and related types for handling
-paginated API responses from the FCA Financial Services Register. The pagination
-system supports:
+Types:
+    NextPageToken: An opaque string cursor passed between calls to page through results.
+    PageTokenSerializer: Protocol for encrypting/decrypting pagination tokens.
+    PaginationInfo: Pagination metadata returned alongside each page of results.
+    MultipageList: A generic value object containing one page of results.
 
-- **Lazy loading**: Pages are fetched only when needed
-- **Async iteration**: Full support for `async for` loops
-- **List-like interface**: Length checking, indexing, and slicing
-- **Automatic metadata**: Page counts and navigation info
-
-The `MultipageList` class is returned by all search methods in the high-level
-client and provides a seamless interface for working with large result sets.
-
-Key Features:
-    - Automatic page fetching on demand
-    - Efficient memory usage (only loaded pages are kept)
-    - Full async iteration support with `async for`
-    - Standard list operations like `len()` and `[index]`
-    - Manual control with `fetch_all_pages()` method
-
-Example:
-    Working with paginated results::
-
-        # Get paginated search results
-        results = await client.search_frn("Barclays")
-
-        # Check total count without loading all pages
-        print(f"Total results: {len(results)}")
-
-        # Iterate through all results (loads pages as needed)
-        async for firm in results:
-            print(f"{firm.name} - {firm.frn}")
-
-        # Access specific items by index
-        if len(results) > 0:
-            first_firm = results[0]  # Loads first page if not cached
-            print(f"First result: {first_firm.name}")
-
-        # Load all pages at once (for bulk processing)
-        await results.fetch_all_pages()
-
-        # Now all data is locally cached
-        for firm in results.local_items():
-            process_firm(firm)
-
-See Also:
-    - `fca_api.async_api.Client`: High-level client that returns MultipageList objects
-    - `fca_api.raw_api.FcaApiResponse`: Raw response wrapper with pagination info
+Internal types (not part of the public API):
+    _PageState: Encodes the FCA API page number into/from a NextPageToken.
+    PaginatedResultInfo: Parses raw FCA API response pagination metadata.
 """
 
-import asyncio
 import dataclasses
-import enum
-import logging
+import json
 import typing
 
-import httpx
 import pydantic
 
-from .. import exc
 from . import settings
 
-logger = logging.getLogger(__name__)
-T = typing.TypeVar("T", bound=pydantic.BaseModel)
+T = typing.TypeVar("T")
+
+
+# ---------------------------------------------------------------------------
+# Internal: raw FCA API pagination metadata (used by async_api to parse responses)
+# ---------------------------------------------------------------------------
 
 
 class PaginatedResultInfo(pydantic.BaseModel):
     """Pagination metadata from FCA API responses.
 
-    This model represents the pagination information returned by the FCA API
-    in the `ResultInfo` section of responses. It provides details about the
-    current page, total results, and navigation URLs.
+    Represents the ``ResultInfo`` section of raw FCA API responses. Used
+    internally by the async client to determine whether further pages exist.
 
     Attributes:
-        next: URL for the next page of results (None if this is the last page)
-        previous: URL for the previous page (None if this is the first page)
-        page: Current page number (1-based)
-        per_page: Number of items per page
-        total_count: Total number of items across all pages
-
-    Properties:
-        total_pages: Calculated total number of pages available
-
-    Example:
-        Access pagination info from a response::
-
-            response = await raw_client.search_frn("test")
-            if response.result_info:
-                info = PaginatedResultInfo.model_validate(response.result_info)
-
-                print(f"Page {info.page} of {info.total_pages}")
-                print(f"{info.per_page} items per page")
-                print(f"{info.total_count} total items")
-
-                if info.next:
-                    print("More pages available")
-
-    Note:
-        The `model_validate` class method handles the case-insensitive field
-        mapping from the API response format.
+        next: URL for the next page (None on the last page).
+        previous: URL for the previous page (None on the first page).
+        page: Current 1-based page number.
+        per_page: Number of items per page.
+        total_count: Total items across all pages (may be approximate).
     """
 
     next: typing.Optional[pydantic.HttpUrl] = None
@@ -109,354 +49,196 @@ class PaginatedResultInfo(pydantic.BaseModel):
 
     @property
     def total_pages(self) -> int:
-        """Calculate the total number of pages.
-
-        Returns:
-            The total number of pages needed to contain all items,
-            calculated from total_count and per_page.
-
-        Example:
-            Calculate remaining pages::
-
-                info = PaginatedResultInfo.model_validate(response.result_info)
-                remaining = info.total_pages - info.page
-                print(f"{remaining} pages remaining")
-        """
+        """Total pages required to hold all items."""
         return (self.total_count + self.per_page - 1) // self.per_page
 
     @classmethod
     def model_validate(cls, data: dict) -> "PaginatedResultInfo":
         return super().model_validate(
-            {key.lower().strip(): value for (key, value) in data.items()}, extra=settings.model_validate_extra
+            {key.lower().strip(): value for (key, value) in data.items()},
+            extra=settings.model_validate_extra,
         )
 
 
-FetchPageRvT = typing.Tuple[
-    typing.Optional[PaginatedResultInfo],
-    typing.Sequence[T],
-]
-
-FetchPageCallableT = typing.Callable[[int], typing.Awaitable[FetchPageRvT[T]]]
+# ---------------------------------------------------------------------------
+# Internal: page state codec
+# ---------------------------------------------------------------------------
 
 
-@enum.unique
-class SpecialResultInfoState(enum.Enum):
-    UNINITIALIZED = enum.auto()
-    FIRST_PAGE_FETCH_FAILED = enum.auto()
-    ALL_PAGES_FETCHED = enum.auto()
-    PAGE_FETCH_FAILED = enum.auto()
+@dataclasses.dataclass(frozen=True)
+class _PageState:
+    """Encodes the next FCA API page number as a portable JSON string.
 
-
-@dataclasses.dataclass(frozen=True, kw_only=True, slots=True)
-class FetchedPageData(typing.Generic[T]):
-    items: typing.Sequence[T]
-    page_info: typing.Optional[PaginatedResultInfo]
-
-
-class MultipageList(typing.Generic[T]):
-    """A list-like container for paginated API responses.
-
-    This class provides a seamless interface for working with paginated data
-    from the FCA API. It behaves like a regular Python list but automatically
-    handles page fetching, caching, and async iteration.
-
-    The class implements lazy loading: pages are only fetched from the API
-    when needed (e.g., when iterating or accessing specific indices). This
-    provides efficient memory usage for large result sets.
-
-    Type Parameters:
-        T: The type of items contained in the list (usually Pydantic models)
-
-    Key Features:
-        - **Lazy page loading**: Pages fetched only when accessed
-        - **Async iteration**: Full support for `async for` loops
-        - **List operations**: `len()`, indexing, and slicing support
-        - **Caching**: Previously fetched pages are cached locally
-        - **Thread-safe**: Uses asyncio locks for concurrent access
-
-    Usage Patterns:
-        Check total count (fetches first page)::
-
-            results = await client.search_frn("test")
-            print(f"Found {len(results)} total results")
-
-        Iterate through all results (fetches pages as needed)::
-
-            async for item in results:
-                print(f"Processing {item.name}")
-
-        Access specific items by index::
-
-            if len(results) > 0:
-                first_item = results[0]  # May trigger page fetch
-                last_item = results[-1]  # May trigger multiple page fetches
-
-        Bulk processing with pre-loading::
-
-            await results.fetch_all_pages()  # Load everything
-            for item in results.local_items():
-                process_item(item)  # No more API calls
-
-    Performance Notes:
-        - First access to `len()` requires fetching the first page
-        - Random access to high indices may require fetching multiple pages
-        - Sequential iteration is most efficient (pages fetched in order)
-        - Use `fetch_all_pages()` for bulk processing scenarios
-
-    Example:
-        Complete usage example::
-
-            # Get search results (no API call yet)
-            results = await client.search_frn("Barclays")
-
-            # Check if any results (triggers first page fetch)
-            if len(results) > 0:
-                print(f"Found {len(results)} firms")
-
-                # Process first few results
-                for i in range(min(5, len(results))):
-                    firm = results[i]
-                    print(f"{i+1}. {firm.name} ({firm.frn})")
-
-                # Iterate through all results efficiently
-                count = 0
-                async for firm in results:
-                    if firm.status == "Authorised":
-                        count += 1
-
-                print(f"Found {count} authorised firms")
-
-    See Also:
-        - `PaginatedResultInfo`: Pagination metadata
-        - `fca_api.async_api.Client`: Returns MultipageList from search methods
+    Not part of the public API — callers only ever see ``NextPageToken`` (str).
+    The FCA API is purely page-number based (``pgnp`` query parameter), so
+    storing the next page number is sufficient to resume any paginated request.
     """
 
-    _pages: typing.List[FetchedPageData[T]]
-    _fetch_page_cb: FetchPageCallableT[T]
-    _lock: asyncio.Lock
-    _result_info: PaginatedResultInfo | SpecialResultInfoState
+    page: int  # 1-based; the next page number to fetch
 
-    def __init__(
-        self,
-        /,
-        fetch_page: FetchPageCallableT[T],
-    ) -> None:
-        """Initialize a new MultipageList.
+    def encode(self) -> str:
+        return json.dumps({"page": self.page})
 
-        Args:
-            fetch_page: Async function that fetches a page of results given
-                a page index. Should return a tuple of (pagination_info, items).
+    @classmethod
+    def decode(cls, token: str) -> "_PageState":
+        data = json.loads(token)
+        return cls(page=int(data["page"]))
 
-        Note:
-            After initialization, call `_async_init()` to fetch the first page
-            and populate metadata. This is done automatically by the high-level
-            client methods.
+    @classmethod
+    def first(cls) -> "_PageState":
+        return cls(page=1)
 
-        Example:
-            Manual MultipageList creation::
 
-                async def fetch_firms(page_idx: int):
-                    response = await raw_client.search_frn("test", page=page_idx)
-                    # Parse and return (info, items)
+# ---------------------------------------------------------------------------
+# Public: pagination token type
+# ---------------------------------------------------------------------------
 
-                results = MultipageList(fetch_page=fetch_firms)
-                await results._async_init()  # Required!
-        """
-        self._pages = []
-        self._lock = asyncio.Lock()
-        self._fetch_page_cb = fetch_page
-        self._result_info = SpecialResultInfoState.UNINITIALIZED
+NextPageToken = typing.Annotated[
+    str,
+    pydantic.Field(
+        description=(
+            "Opaque pagination cursor. Pass this value unchanged to the same endpoint "
+            "to retrieve the next page of results. Treat it as an opaque string — "
+            "do not construct, parse, or modify it."
+        )
+    ),
+]
+"""An opaque string cursor for retrieving the next page of results.
 
-    def _has_next_page(self) -> bool:
-        if self._result_info is SpecialResultInfoState.UNINITIALIZED:
-            return True
-        elif isinstance(self._result_info, SpecialResultInfoState):
-            # Any other special state means that there are no more pages to fetch.
-            return False
-        assert isinstance(self._result_info, PaginatedResultInfo)
-        return (self._result_info.page < self._result_info.total_pages) and self._result_info.next is not None
+Returned in ``PaginationInfo.next_page`` when more results exist. Pass it
+back to the same endpoint method (as the ``next_page`` argument) to fetch
+the next batch.
 
-    async def _async_init(self) -> None:
-        """Initialize the MultipageList by fetching the first page.
+The internal format is an implementation detail and may change. Always treat
+this value as opaque.
+"""
 
-        This method must be called after construction to populate the initial
-        pagination metadata. It fetches the first page to determine total
-        counts, page sizes, and other pagination information.
 
-        Raises:
-            Various exceptions depending on the fetch_page callback behavior
-            (typically HTTP errors, validation errors, etc.)
+# ---------------------------------------------------------------------------
+# Public: token serializer protocol
+# ---------------------------------------------------------------------------
 
-        Note:
-            This method is called automatically by the high-level client methods.
-            Manual callers must ensure this is called before using the list.
 
-        Example:
-            Manual initialization::
+@typing.runtime_checkable
+class PageTokenSerializer(typing.Protocol):
+    """Protocol for encrypting and decrypting pagination tokens.
 
-                results = MultipageList(fetch_page=my_fetch_function)
-                await results._async_init()  # Required before use
-                print(len(results))  # Now safe to call
-        """
-        # Fetch the first page to initialize the result info.
-        await self._fetch_page_to_item_idx(0)
+    Implement this interface to protect ``next_page`` tokens from tampering
+    or inspection when they leave the service boundary (e.g. returned to API
+    callers and submitted back on a subsequent request).
 
-    async def fetch_all_pages(self) -> None:
-        """Fetch all remaining pages from the API.
+    Pass an instance to ``async_api.Client`` at construction time::
 
-        This method loads all pages into local memory, which can be useful
-        for bulk processing scenarios where you need to access the data
-        multiple times or perform operations that require the complete dataset.
+        class HmacSerializer:
+            def serialize(self, token: str) -> str:
+                # sign / encrypt the raw token
+                ...
 
-        After calling this method, all subsequent access to the list items
-        will be served from the local cache without additional API calls.
+            def deserialize(self, token: str) -> str:
+                # verify / decrypt back to the raw token
+                ...
 
-        Example:
-            Bulk processing pattern::
+        client = Client(
+            credentials=("email", "key"),
+            page_token_serializer=HmacSerializer(),
+        )
 
-                results = await client.search_frn("test")
+    When a serializer is configured:
 
-                # Load all data once
-                await results.fetch_all_pages()
+    * Tokens returned by endpoint methods are passed through ``serialize``
+      before being placed in ``PaginationInfo.next_page``.
+    * Tokens received by endpoint methods are passed through ``deserialize``
+      before being decoded internally.
+    """
 
-                # Now process multiple times without API calls
-                authorised = [f for f in results.local_items() if f.status == "Authorised"]
-                unauthorised = [f for f in results.local_items() if f.status != "Authorised"]
+    def serialize(self, token: str) -> str:
+        """Transform a raw pagination token for external use (e.g. encrypt or sign)."""
+        ...
 
-                print(f"Authorised: {len(authorised)}, Unauthorised: {len(unauthorised)}")
+    def deserialize(self, token: str) -> str:
+        """Recover the raw pagination token from an external value (e.g. decrypt or verify)."""
+        ...
 
-        Warning:
-            This method can consume significant memory and time for large result
-            sets. Use judiciously and consider whether streaming with async
-            iteration might be more appropriate.
-        """
-        while self._has_next_page():
-            await self._fetch_page_to_item_idx(self.local_len() + 1)
 
-    async def _fetch_page_to_item_idx(self, desired_item_idx: int) -> typing.Optional[PaginatedResultInfo]:
-        """Fetch a specific page from the API if it is not already cached.
+# ---------------------------------------------------------------------------
+# Public: pagination metadata model
+# ---------------------------------------------------------------------------
 
-        Args:
-            desired_item_idx: The index of the desired item to fetch.
-        """
-        if self.local_len() > desired_item_idx or not self._has_next_page():
-            return None
-        new_page_info = None
-        async with self._lock:
-            # Double-check after acquiring the lock.
-            while self.local_len() <= desired_item_idx and self._has_next_page():
-                if isinstance(self._result_info, SpecialResultInfoState):
-                    last_fetched_page = 0
-                else:
-                    last_fetched_page = self._result_info.page
 
-                try:
-                    (new_page_info, new_items) = await self._fetch_page_cb(last_fetched_page + 1)
-                except (httpx.RequestError, exc.FcaBaseError) as e:
-                    logger.exception(f"Failed to fetch page {last_fetched_page + 1}: {e}")
-                    if last_fetched_page == 0:
-                        self._result_info = SpecialResultInfoState.FIRST_PAGE_FETCH_FAILED
-                    else:
-                        self._result_info = SpecialResultInfoState.PAGE_FETCH_FAILED
-                    return None
-                self._max_fetched_page = last_fetched_page + 1
-                self._pages.append(FetchedPageData(items=new_items, page_info=new_page_info))
-                if new_page_info is None:
-                    if last_fetched_page == 0:
-                        self._result_info = SpecialResultInfoState.FIRST_PAGE_FETCH_FAILED
-                    else:
-                        self._result_info = SpecialResultInfoState.ALL_PAGES_FETCHED
-                else:
-                    assert new_page_info.page == last_fetched_page + 1, (
-                        new_page_info.page,
-                        last_fetched_page + 1,
-                    )
-                    self._result_info = new_page_info
-        return new_page_info
+class PaginationInfo(pydantic.BaseModel):
+    """Pagination state for a result set returned by the FCA API.
 
-    async def __getitem__(self, index: int) -> T:
-        """Get an item by its index, fetching pages as necessary.
+    Returned alongside every page of results from the async client. Use
+    ``next_page`` in a subsequent call to the same endpoint to retrieve
+    the next batch of items.
 
-        Please note: negative indices are not supported.
-        """
-        if index < 0:
-            raise IndexError("Negative indices are not supported.")
-        await self._fetch_page_to_item_idx(index)
-        return self.local_items()[index]
+    Example::
 
-    async def __aiter__(self) -> typing.AsyncIterator[T]:
-        idx = 0
-        for idx in range(len(self)):
-            try:
-                yield await self[idx]
-            except IndexError:
-                # Double check that this is an actual IndexError, or the __len__
-                # has changed due to FCA api inconsistencies.
-                if idx >= len(self):
-                    break
-                else:
-                    raise
+        page = await client.search_frn("Barclays", result_count=25)
 
-    def local_items(self) -> typing.Tuple[T, ...]:
-        """Return the items that have been locally cached without making API calls.
+        while page.pagination.has_next:
+            page = await client.search_frn(
+                "Barclays",
+                next_page=page.pagination.next_page,
+                result_count=25,
+            )
+    """
 
-        Returns:
-            A tuple of locally cached items.
-        """
-        items = []
-        for page in self._pages:
-            items.extend(page.items)
-        return tuple(items)
+    model_config = pydantic.ConfigDict(frozen=True)
 
-    def local_len(self) -> int:
-        """Return the number of items that have been locally cached without making API calls.
+    has_next: bool = pydantic.Field(description="True if more results are available beyond this page.")
+    next_page: typing.Optional[NextPageToken] = pydantic.Field(
+        default=None,
+        description=("Cursor to pass to the same endpoint to fetch the next page. None when has_next is False."),
+    )
+    size: typing.Optional[int] = pydantic.Field(
+        default=None,
+        description=(
+            "Estimated total number of items in the collection as reported by the FCA API. May be approximate."
+        ),
+    )
 
-        Returns:
-            The number of locally cached items.
-        """
-        return sum(len(page.items) for page in self._pages)
 
-    def local_pages(self) -> typing.Tuple[tuple[T, ...], ...]:
-        """Return the pages that have been locally cached without making API calls.
+# ---------------------------------------------------------------------------
+# Public: result page model
+# ---------------------------------------------------------------------------
 
-        Returns:
-            A tuple of locally cached pages, each page is a tuple of items.
-        """
-        return tuple(tuple(page.items) for page in self._pages)
 
-    def __len__(self) -> int:
-        """Return the total number of items reported by the API.
+class MultipageList(pydantic.BaseModel, typing.Generic[T]):
+    """A page of typed results from a paginated FCA API endpoint.
 
-        When not all pages have been fetched this uses the ``total_count``
-        value from the pagination metadata returned by the FCA API, so it
-        should be treated as an estimate. In rare cases where the backend
-        metadata is inconsistent it is still possible to receive an
-        ``IndexError`` when accessing an index that is less than this length.
-        """
-        if self._has_next_page():
-            # while the list was not fully fetched,
-            # return an estimate based on the total_count from result_info
-            out = self._result_info.total_count
-        else:
-            out = self.local_len()
-        return out
+    Contains the fetched data items and the pagination metadata needed to
+    retrieve subsequent pages. Returned by all paginated methods on
+    ``async_api.Client``.
 
-    def __repr__(self) -> str:
-        return f"MultipageList({self._pages})"
+    Type Parameters:
+        T: The type of items in ``data``.
 
-    def model_dump(self, mode: typing.Literal["json", "python"] = "json") -> typing.List[typing.Dict[str, typing.Any]]:
-        """Dump the items in the list to a list of dictionaries.
+    Fetching pages::
 
-        Returns:
-            A list of dictionaries representing the items.
-        """
-        return [item.model_dump(mode=mode) for item in self.local_items()]
+        # First page — default result_count fetches one API page
+        page = await client.search_frn("Barclays")
+        print(f"Got {len(page.data)} of ~{page.pagination.size} total results")
 
-    async def get_all(self) -> typing.Tuple[T, ...]:
-        """Fetch all pages and return all items as a list.
+        # Subsequent pages
+        while page.pagination.has_next:
+            page = await client.search_frn(
+                "Barclays",
+                next_page=page.pagination.next_page,
+                result_count=25,
+            )
+            # process page.data ...
 
-        Returns:
-            A list of all items.
-        """
-        await self.fetch_all_pages()
-        return self.local_items()
+    Fetching a larger batch in one call::
+
+        # Request at least 100 items (may trigger multiple underlying API calls)
+        page = await client.search_frn("Barclays", result_count=100)
+        # page.data has >= 100 items (or all available items if fewer exist)
+    """
+
+    model_config = pydantic.ConfigDict(frozen=True, arbitrary_types_allowed=True)
+
+    data: typing.List[T] = pydantic.Field(description="The result items for this page.")
+    pagination: PaginationInfo = pydantic.Field(
+        description=("Pagination state, including whether more results exist and how to fetch them.")
+    )

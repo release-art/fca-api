@@ -36,9 +36,8 @@ class TestNutmegFirmDetails:
 
     @pytest.mark.asyncio
     async def test_get_individual_controlled_functions(self, test_client: fca_api.async_api.Client, irn: str):
-        out = await test_client.get_individual_controlled_functions(irn)
-        await out.fetch_all_pages()
-        assert out.model_dump(mode="json") == [
+        out = await test_client.get_individual_controlled_functions(irn, result_count=100)
+        assert [item.model_dump(mode="json") for item in out.data] == [
             {
                 "type": "current",
                 "name": "[FCA CF] Client dealing",
@@ -91,18 +90,16 @@ class TestNutmegFirmDetails:
 
     @pytest.mark.asyncio
     async def test_get_individual_controlled_functions_2(self, test_client: fca_api.async_api.Client, irn: str):
-        out = await test_client.get_individual_disciplinary_history(irn)
-        await out.fetch_all_pages()
-        assert len(out) == 0
+        out = await test_client.get_individual_disciplinary_history(irn, result_count=100)
+        assert len(out.data) == 0
 
     @pytest.mark.asyncio
     async def test_get_individual_controlled_functions_3(self, test_client: fca_api.async_api.Client):
         # Neil Dwane - prohibited from performing regulated activities
         #  https://register.fca.org.uk/s/individual?id=003b000000LUiF4AAL
-        out = await test_client.get_individual_disciplinary_history("NPD01015")
-        await out.fetch_all_pages()
-        assert len(out) == 1
-        assert out.model_dump(mode="json") == [
+        out = await test_client.get_individual_disciplinary_history("NPD01015", result_count=100)
+        assert len(out.data) == 1
+        assert [item.model_dump(mode="json") for item in out.data] == [
             {
                 "type_of_action": "prohibition",
                 "enforcement_type": "fsma",

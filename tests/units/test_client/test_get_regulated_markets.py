@@ -5,10 +5,9 @@ import fca_api
 
 @pytest.mark.asyncio
 async def test_get_fund_subfunds(test_client: fca_api.async_api.Client):
-    out = await test_client.get_regulated_markets()
-    await out.fetch_all_pages()
-    assert len(out) == 5
-    assert out.model_dump(mode="json") == [
+    out = await test_client.get_regulated_markets(result_count=100)
+    assert len(out.data) == 5
+    assert [item.model_dump(mode="json") for item in out.data] == [
         {
             "name": "The London Metal Exchange",
             "trading_name": None,

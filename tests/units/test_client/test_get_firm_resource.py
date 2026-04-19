@@ -51,8 +51,8 @@ class TestNutmegFirmDetails:
 
     @pytest.mark.asyncio
     async def test_get_firm_names(self, test_client: fca_api.async_api.Client, frn: str):
-        names = await test_client.get_firm_names(frn)
-        assert names.model_dump(mode="json") == [
+        names = await test_client.get_firm_names(frn, result_count=100)
+        assert [item.model_dump(mode="json") for item in names.data] == [
             {
                 "name": "J.P. Morgan Personal Investing",
                 "type": "current",
@@ -92,8 +92,8 @@ class TestNutmegFirmDetails:
 
     @pytest.mark.asyncio
     async def test_get_firm_addresses(self, test_client: fca_api.async_api.Client, frn: str):
-        addresses = await test_client.get_firm_addresses(frn)
-        assert addresses.model_dump(mode="json") == [
+        addresses = await test_client.get_firm_addresses(frn, result_count=100)
+        assert [item.model_dump(mode="json") for item in addresses.data] == [
             {
                 "type": "principal place of business",
                 "phone_number": "+442035981515",
@@ -123,7 +123,7 @@ class TestNutmegFirmDetails:
     @pytest.mark.asyncio
     async def test_get_firm_cf(self, test_client: fca_api.async_api.Client, frn: str):
         out = await test_client.get_firm_controlled_functions(frn)
-        assert out.model_dump(mode="json") == [
+        assert [item.model_dump(mode="json") for item in out.data] == [
             {
                 "type": "current",
                 "name": "[FCA CF] Functions requiring qualifications",
@@ -348,10 +348,9 @@ class TestNutmegFirmDetails:
 
     @pytest.mark.asyncio
     async def test_get_firm_individuals(self, test_client: fca_api.async_api.Client, frn: str):
-        out = await test_client.get_firm_individuals(frn)
-        await out.fetch_all_pages()
-        assert len(out) >= 119
-        assert out.model_dump(mode="json")[0] == {
+        out = await test_client.get_firm_individuals(frn, result_count=5000)
+        assert len(out.data) >= 119
+        assert out.data[0].model_dump(mode="json") == {
             "irn": "JXP00417",
             "name": "Joanne Helen Phizacklea",
             "status": "approved by regulator",
@@ -360,16 +359,14 @@ class TestNutmegFirmDetails:
 
     @pytest.mark.asyncio
     async def test_get_firm_permissions(self, test_client: fca_api.async_api.Client, frn: str):
-        out = await test_client.get_firm_permissions(frn)
-        await out.fetch_all_pages()
-        assert len(out) >= 10
+        out = await test_client.get_firm_permissions(frn, result_count=5000)
+        assert len(out.data) >= 10
 
     @pytest.mark.asyncio
     async def test_get_firm_requirements(self, test_client: fca_api.async_api.Client, frn: str):
-        out = await test_client.get_firm_requirements(frn)
-        await out.fetch_all_pages()
-        assert len(out) == 1
-        assert out.model_dump(mode="json") == [
+        out = await test_client.get_firm_requirements(frn, result_count=100)
+        assert len(out.data) == 1
+        assert [item.model_dump(mode="json") for item in out.data] == [
             {
                 "reference": "OR-0263614",
                 "effective_date": "2025-01-30T00:00:00",
@@ -383,7 +380,7 @@ class TestNutmegFirmDetails:
                 ),
             }
         ]
-        el_one = await out[0]
+        el_one = out.data[0]
         assert el_one.get_additional_fields() == {
             "financial promotion for other unauthorised clients": (
                 "This firm can: (1) approve its own financial promotions as well as those of members "
@@ -395,10 +392,9 @@ class TestNutmegFirmDetails:
 
     @pytest.mark.asyncio
     async def test_get_firm_requirement_investment_types(self, test_client: fca_api.async_api.Client, frn: str):
-        out = await test_client.get_firm_requirement_investment_types(frn, "OR-0263614")
-        await out.fetch_all_pages()
-        assert len(out) == 8
-        assert out.model_dump(mode="json") == [
+        out = await test_client.get_firm_requirement_investment_types(frn, "OR-0263614", result_count=100)
+        assert len(out.data) == 8
+        assert [item.model_dump(mode="json") for item in out.data] == [
             {"name": "certificates representing certain securities"},
             {"name": "debentures"},
             {"name": "government and public security"},
@@ -411,10 +407,9 @@ class TestNutmegFirmDetails:
 
     @pytest.mark.asyncio
     async def test_get_firm_regulators(self, test_client: fca_api.async_api.Client, frn: str):
-        out = await test_client.get_firm_regulators(frn)
-        await out.fetch_all_pages()
-        assert len(out) == 2
-        assert out.model_dump(mode="json") == [
+        out = await test_client.get_firm_regulators(frn, result_count=100)
+        assert len(out.data) == 2
+        assert [item.model_dump(mode="json") for item in out.data] == [
             {"name": "Financial Conduct Authority", "effective_date": "2013-04-01T00:00:00", "termination_date": None},
             {
                 "name": "Financial Services Authority",
@@ -425,36 +420,31 @@ class TestNutmegFirmDetails:
 
     @pytest.mark.asyncio
     async def test_get_firm_passports(self, test_client: fca_api.async_api.Client, frn: str):
-        out = await test_client.get_firm_passports(frn)
-        await out.fetch_all_pages()
-        assert len(out) == 0
+        out = await test_client.get_firm_passports(frn, result_count=100)
+        assert len(out.data) == 0
 
     @pytest.mark.asyncio
     async def test_get_firm_waivers(self, test_client: fca_api.async_api.Client, frn: str):
-        out = await test_client.get_firm_waivers(frn)
-        await out.fetch_all_pages()
-        assert len(out) == 1
-        assert out.model_dump(mode="json") == [
+        out = await test_client.get_firm_waivers(frn, result_count=100)
+        assert len(out.data) == 1
+        assert [item.model_dump(mode="json") for item in out.data] == [
             {"discretions": None, "discretions_url": None, "rule_article_numbers": ["MIFIDPRU 3.3.3R"]}
         ]
 
     @pytest.mark.asyncio
     async def test_get_firm_exclusions(self, test_client: fca_api.async_api.Client, frn: str):
-        out = await test_client.get_firm_exclusions(frn)
-        await out.fetch_all_pages()
-        assert len(out) == 0
+        out = await test_client.get_firm_exclusions(frn, result_count=100)
+        assert len(out.data) == 0
 
     @pytest.mark.asyncio
     async def test_get_firm_disciplinary_history(self, test_client: fca_api.async_api.Client, frn: str):
-        out = await test_client.get_firm_disciplinary_history(frn)
-        await out.fetch_all_pages()
-        assert len(out) == 0
+        out = await test_client.get_firm_disciplinary_history(frn, result_count=100)
+        assert len(out.data) == 0
 
     @pytest.mark.asyncio
     async def get_firm_appointed_representatives(self, test_client: fca_api.async_api.Client, frn: str):
-        out = await test_client.get_firm_disciplinary_history(frn)
-        await out.fetch_all_pages()
-        assert len(out) == 0
+        out = await test_client.get_firm_disciplinary_history(frn, result_count=100)
+        assert len(out.data) == 0
 
 
 LARGE_BANK_FRNS = [
@@ -467,22 +457,19 @@ LARGE_BANK_FRNS = [
 class TestRandomFirmDetails:
     @pytest.mark.asyncio
     async def test_mortgage_1st_perms(self, test_client: fca_api.async_api.Client):
-        out = await test_client.get_firm_permissions("484231")
-        await out.fetch_all_pages()
-        assert len(out) == 0
+        out = await test_client.get_firm_permissions("484231", result_count=5000)
+        assert len(out.data) == 0
 
     @pytest.mark.asyncio
     async def test_sbg_ar(self, test_client: fca_api.async_api.Client):
-        out = await test_client.get_firm_appointed_representatives("454811")
-        await out.fetch_all_pages()
-        assert len(out) > 1500
+        out = await test_client.get_firm_appointed_representatives("454811", result_count=5000)
+        assert len(out.data) > 1500
 
     @pytest.mark.asyncio
     async def test_barclays_passports(self, test_client: fca_api.async_api.Client):
-        out = await test_client.get_firm_passports("122702")
-        await out.fetch_all_pages()
-        assert len(out) == 1
-        assert out.model_dump(mode="json") == [
+        out = await test_client.get_firm_passports("122702", result_count=100)
+        assert len(out.data) == 1
+        assert [item.model_dump(mode="json") for item in out.data] == [
             {
                 "country": "GIBRALTAR",
                 "direction": "out",
@@ -490,9 +477,8 @@ class TestRandomFirmDetails:
             }
         ]
         # Test fetching the permissions for the passport
-        passport_perm = await test_client.get_firm_passport_permissions("122702", "GIBRALTAR")
-        await passport_perm.fetch_all_pages()
-        assert len(passport_perm) == 3
+        passport_perm = await test_client.get_firm_passport_permissions("122702", "GIBRALTAR", result_count=100)
+        assert len(passport_perm.data) == 3
 
     @pytest.mark.asyncio
     @pytest.mark.parametrize(
@@ -500,10 +486,9 @@ class TestRandomFirmDetails:
         LARGE_BANK_FRNS,
     )
     async def test_get_firm_permissions(self, test_client: fca_api.async_api.Client, frn):
-        """Test that the data is correcly parsed for the large banks"""
-        out = await test_client.get_firm_permissions(frn)
-        await out.fetch_all_pages()
-        assert len(out) > 4
+        """Test that the data is correctly parsed for the large banks"""
+        out = await test_client.get_firm_permissions(frn, result_count=5000)
+        assert len(out.data) > 4
 
     @pytest.mark.asyncio
     @pytest.mark.parametrize(
@@ -511,10 +496,9 @@ class TestRandomFirmDetails:
         LARGE_BANK_FRNS,
     )
     async def test_get_firm_requirements(self, test_client: fca_api.async_api.Client, frn):
-        """Test that the data is correcly parsed for the large banks"""
-        out = await test_client.get_firm_requirements(frn)
-        await out.fetch_all_pages()
-        assert len(out) > 1
+        """Test that the data is correctly parsed for the large banks"""
+        out = await test_client.get_firm_requirements(frn, result_count=5000)
+        assert len(out.data) > 1
 
     @pytest.mark.asyncio
     @pytest.mark.parametrize(
@@ -522,10 +506,9 @@ class TestRandomFirmDetails:
         LARGE_BANK_FRNS,
     )
     async def test_get_firm_passports(self, test_client: fca_api.async_api.Client, frn):
-        """Test that the data is correcly parsed for the large banks"""
-        out = await test_client.get_firm_passports(frn)
-        await out.fetch_all_pages()
-        assert len(out) > 0
+        """Test that the data is correctly parsed for the large banks"""
+        out = await test_client.get_firm_passports(frn, result_count=100)
+        assert len(out.data) > 0
 
     @pytest.mark.asyncio
     @pytest.mark.parametrize(
@@ -533,13 +516,11 @@ class TestRandomFirmDetails:
         LARGE_BANK_FRNS,
     )
     async def test_get_firm_passport_permissions(self, test_client: fca_api.async_api.Client, frn):
-        """Test that the data is correcly parsed for the large banks"""
-        out = await test_client.get_firm_passports(frn)
-        await out.fetch_all_pages()
-        for passport in out.local_items():
-            perm_out = await test_client.get_firm_passport_permissions(frn, passport.country)
-            await perm_out.fetch_all_pages()
-            assert len(perm_out) > 0
+        """Test that the data is correctly parsed for the large banks"""
+        out = await test_client.get_firm_passports(frn, result_count=100)
+        for passport in out.data:
+            perm_out = await test_client.get_firm_passport_permissions(frn, passport.country, result_count=100)
+            assert len(perm_out.data) > 0
 
     @pytest.mark.asyncio
     @pytest.mark.parametrize(
@@ -547,9 +528,8 @@ class TestRandomFirmDetails:
         LARGE_BANK_FRNS,
     )
     async def test_get_firm_waivers(self, test_client: fca_api.async_api.Client, frn: str):
-        out = await test_client.get_firm_waivers(frn)
-        await out.fetch_all_pages()
-        assert len(out) > 1
+        out = await test_client.get_firm_waivers(frn, result_count=5000)
+        assert len(out.data) > 1
 
     @pytest.mark.asyncio
     @pytest.mark.parametrize(
@@ -557,8 +537,7 @@ class TestRandomFirmDetails:
         LARGE_BANK_FRNS,
     )
     async def test_get_firm_exclusions(self, test_client: fca_api.async_api.Client, frn: str):
-        out = await test_client.get_firm_exclusions(frn)
-        await out.fetch_all_pages()
+        out = await test_client.get_firm_exclusions(frn, result_count=5000)
 
     @pytest.mark.asyncio
     @pytest.mark.parametrize(
@@ -566,9 +545,8 @@ class TestRandomFirmDetails:
         LARGE_BANK_FRNS,
     )
     async def test_get_firm_disciplinary_history(self, test_client: fca_api.async_api.Client, frn: str):
-        out = await test_client.get_firm_disciplinary_history(frn)
-        await out.fetch_all_pages()
-        assert len(out) > 1
+        out = await test_client.get_firm_disciplinary_history(frn, result_count=5000)
+        assert len(out.data) > 1
 
     @pytest.mark.asyncio
     @pytest.mark.parametrize(
@@ -576,6 +554,5 @@ class TestRandomFirmDetails:
         LARGE_BANK_FRNS,
     )
     async def test_get_firm_appointed_representatives(self, test_client: fca_api.async_api.Client, frn: str):
-        out = await test_client.get_firm_appointed_representatives(frn)
-        await out.fetch_all_pages()
-        assert len(out) > 1
+        out = await test_client.get_firm_appointed_representatives(frn, result_count=5000)
+        assert len(out.data) > 1
