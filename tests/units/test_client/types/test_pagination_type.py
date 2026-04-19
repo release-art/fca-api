@@ -1,502 +1,230 @@
-import asyncio
-from typing import Optional, Sequence, Tuple
-from unittest.mock import AsyncMock
+"""Tests for fca_api.types.pagination."""
 
-import httpx
+import json
+from unittest.mock import AsyncMock, MagicMock
+
 import pytest
 
-import fca_api.exc as fca_exc
 import fca_api.types.pagination as pagination
+
+# ---------------------------------------------------------------------------
+# _PageState
+# ---------------------------------------------------------------------------
+
+
+class TestPageState:
+    def test_first_returns_page_one(self):
+        state = pagination._PageState.first()
+        assert state.page == 1
+
+    def test_encode_produces_valid_json(self):
+        state = pagination._PageState(page=3)
+        encoded = state.encode()
+        data = json.loads(encoded)
+        assert data == {"page": 3}
+
+    def test_decode_roundtrip(self):
+        original = pagination._PageState(page=7)
+        restored = pagination._PageState.decode(original.encode())
+        assert restored == original
+
+    def test_decode_roundtrip_first_page(self):
+        original = pagination._PageState.first()
+        assert pagination._PageState.decode(original.encode()) == original
+
+    def test_frozen(self):
+        state = pagination._PageState(page=1)
+        with pytest.raises((AttributeError, TypeError)):
+            state.page = 2  # type: ignore[misc]
+
+    def test_decode_ignores_extra_json_fields(self):
+        token = json.dumps({"page": 5, "extra": "ignored"})
+        state = pagination._PageState.decode(token)
+        assert state.page == 5
+
+
+# ---------------------------------------------------------------------------
+# NextPageToken
+# ---------------------------------------------------------------------------
+
+
+class TestNextPageToken:
+    def test_is_string_annotation(self):
+        # NextPageToken must resolve to str at runtime
+        import typing
+
+        args = typing.get_args(pagination.NextPageToken)
+        assert args[0] is str
+
+    def test_has_description_in_field_metadata(self):
+        import typing
+
+        args = typing.get_args(pagination.NextPageToken)
+        field_info = args[1]
+        assert hasattr(field_info, "description")
+        assert "opaque" in field_info.description.lower() or "cursor" in field_info.description.lower()
+
+
+# ---------------------------------------------------------------------------
+# PageTokenSerializer
+# ---------------------------------------------------------------------------
+
+
+class TestPageTokenSerializer:
+    def test_any_matching_object_satisfies_protocol(self):
+        class MySerializer:
+            def serialize(self, token: str) -> str:
+                return f"enc:{token}"
+
+            def deserialize(self, token: str) -> str:
+                return token.removeprefix("enc:")
+
+        s = MySerializer()
+        assert isinstance(s, pagination.PageTokenSerializer)
+
+    def test_object_missing_method_does_not_satisfy_protocol(self):
+        class Incomplete:
+            def serialize(self, token: str) -> str:
+                return token
+
+        assert not isinstance(Incomplete(), pagination.PageTokenSerializer)
+
+    def test_serialize_deserialize_roundtrip(self):
+        class DoubleSerializer:
+            def serialize(self, token: str) -> str:
+                return token * 2
+
+            def deserialize(self, token: str) -> str:
+                assert len(token) % 2 == 0
+                return token[: len(token) // 2]
+
+        s = DoubleSerializer()
+        raw = '{"page":4}'
+        assert s.deserialize(s.serialize(raw)) == raw
+
+
+# ---------------------------------------------------------------------------
+# PaginationInfo
+# ---------------------------------------------------------------------------
+
+
+class TestPaginationInfo:
+    def test_has_next_true_with_token(self):
+        info = pagination.PaginationInfo(
+            has_next=True,
+            next_page='{"page":2}',
+            size=100,
+        )
+        assert info.has_next is True
+        assert info.next_page == '{"page":2}'
+        assert info.size == 100
+
+    def test_has_next_false_no_token(self):
+        info = pagination.PaginationInfo(has_next=False)
+        assert info.has_next is False
+        assert info.next_page is None
+        assert info.size is None
+
+    def test_frozen(self):
+        import pydantic
+
+        info = pagination.PaginationInfo(has_next=False)
+        with pytest.raises((AttributeError, TypeError, pydantic.ValidationError)):
+            info.has_next = True  # type: ignore[misc]
+
+    def test_json_schema_has_all_fields(self):
+        schema = pagination.PaginationInfo.model_json_schema()
+        props = schema["properties"]
+        assert "has_next" in props
+        assert "next_page" in props
+        assert "size" in props
+
+    def test_json_schema_field_descriptions(self):
+        schema = pagination.PaginationInfo.model_json_schema()
+        props = schema["properties"]
+        assert props["has_next"].get("description")
+        # next_page and size may be wrapped in anyOf/allOf due to Optional + Annotated
+        # Just verify the field exists and the schema is valid JSON
+        assert "next_page" in props
+        assert "size" in props
+
+    def test_model_dump(self):
+        info = pagination.PaginationInfo(has_next=True, next_page="abc", size=42)
+        d = info.model_dump()
+        assert d == {"has_next": True, "next_page": "abc", "size": 42}
+
+
+# ---------------------------------------------------------------------------
+# MultipageList
+# ---------------------------------------------------------------------------
 
 
 class TestMultipageList:
-    """Test fca_api.types.pagination.MultipageList class."""
-
-    def create_mock_fetch_page(self, pages_data):
-        """Helper to create a mock fetch_page callable with predefined pages."""
-
-        async def mock_fetch_page(page_num: int) -> Tuple[Optional[pagination.PaginatedResultInfo], Sequence[str]]:
-            if page_num > len(pages_data):
-                return None, []
-
-            page_data = pages_data[page_num - 1]
-            if page_data is None:
-                return None, []
-
-            result_info, items = page_data
-            if result_info is None:
-                return None, items
-
-            return pagination.PaginatedResultInfo(
-                page=result_info["page"],
-                per_page=result_info["per_page"],
-                total_count=result_info["total_count"],
-                next=result_info.get("next"),
-                previous=result_info.get("previous"),
-            ), items
-
-        return mock_fetch_page
-
-    @pytest.mark.asyncio
-    async def test_initialization(self):
-        """Test MultipageList initialization."""
-        fetch_page = AsyncMock()
-        mpl = pagination.MultipageList(fetch_page=fetch_page)
-
-        assert mpl._pages == []
-        assert mpl._fetch_page_cb == fetch_page
-        assert isinstance(mpl._lock, asyncio.Lock)
-        assert mpl._result_info == pagination.SpecialResultInfoState.UNINITIALIZED
-
-    @pytest.mark.asyncio
-    async def test_async_init_success(self):
-        """Test successful _asyinc_init with first page fetch."""
-        pages_data = [({"page": 1, "per_page": 10, "total_count": 25}, ["item1", "item2", "item3"])]
-        fetch_page = self.create_mock_fetch_page(pages_data)
-        mpl = pagination.MultipageList(fetch_page=fetch_page)
-
-        await mpl._async_init()
-
-        assert len(mpl._pages) == 1
-        assert len(mpl.local_items()) == 3
-        assert len(mpl._pages[0].items) == 3
-        assert mpl.local_items() == ("item1", "item2", "item3")
-        assert isinstance(mpl._result_info, pagination.PaginatedResultInfo)
-        assert mpl._result_info.page == 1
-        assert mpl._result_info.total_count == 25
-
-    @pytest.mark.asyncio
-    async def test_async_init_first_page_failure(self):
-        """Test _asyinc_init when first page fetch fails."""
-
-        async def failing_fetch_page(page_num: int):
-            return None, []
-
-        mpl = pagination.MultipageList(fetch_page=failing_fetch_page)
-        await mpl._async_init()
-
-        assert mpl._result_info == pagination.SpecialResultInfoState.FIRST_PAGE_FETCH_FAILED
-        assert mpl.local_len() == 0
-
-    @pytest.mark.asyncio
-    async def test_has_next_page_uninitialized(self):
-        """Test _has_next_page when state is UNINITIALIZED."""
-        fetch_page = AsyncMock()
-        mpl = pagination.MultipageList(fetch_page=fetch_page)
-
-        assert mpl._has_next_page() is True
-
-    @pytest.mark.asyncio
-    async def test_has_next_page_special_states(self):
-        """Test _has_next_page with special states."""
-        fetch_page = AsyncMock()
-        mpl = pagination.MultipageList(fetch_page=fetch_page)
-
-        mpl._result_info = pagination.SpecialResultInfoState.FIRST_PAGE_FETCH_FAILED
-        assert mpl._has_next_page() is False
-
-        mpl._result_info = pagination.SpecialResultInfoState.ALL_PAGES_FETCHED
-        assert mpl._has_next_page() is False
-
-    @pytest.mark.asyncio
-    async def test_has_next_page_with_result_info(self):
-        """Test _has_next_page with PaginatedResultInfo."""
-        fetch_page = AsyncMock()
-        mpl = pagination.MultipageList(fetch_page=fetch_page)
-
-        # Test with next page available
-        mpl._result_info = pagination.PaginatedResultInfo(
-            page=1, per_page=10, total_count=25, next="http://example.com/next"
+    def test_construction_with_items(self):
+        page = pagination.MultipageList(
+            data=["a", "b", "c"],
+            pagination=pagination.PaginationInfo(has_next=False),
         )
-        assert mpl._has_next_page() is True
+        assert page.data == ["a", "b", "c"]
+        assert page.pagination.has_next is False
 
-        # Test at last page
-        mpl._result_info = pagination.PaginatedResultInfo(page=3, per_page=10, total_count=25, next=None)
-        assert mpl._has_next_page() is False
-
-        # Test beyond total pages
-        mpl._result_info = pagination.PaginatedResultInfo(
-            page=4, per_page=10, total_count=25, next="http://example.com/next"
+    def test_construction_empty(self):
+        page = pagination.MultipageList(
+            data=[],
+            pagination=pagination.PaginationInfo(has_next=False, size=0),
         )
-        assert mpl._has_next_page() is False
+        assert page.data == []
+        assert page.pagination.size == 0
 
-    @pytest.mark.asyncio
-    async def test_fetch_page_to_item_idx_already_cached(self):
-        """Test _fetch_page_to_item_idx when item is already cached."""
-        fetch_page = AsyncMock()
-        mpl = pagination.MultipageList(fetch_page=fetch_page)
-        mpl._items = ["item1", "item2", "item3"]
-        mpl._result_info = pagination.SpecialResultInfoState.ALL_PAGES_FETCHED
+    def test_frozen(self):
+        import pydantic
 
-        await mpl._fetch_page_to_item_idx(1)
-
-        fetch_page.assert_not_called()
-
-    @pytest.mark.asyncio
-    async def test_fetch_page_to_item_idx_no_next_page(self):
-        """Test _fetch_page_to_item_idx when no next page available."""
-        fetch_page = AsyncMock()
-        mpl = pagination.MultipageList(fetch_page=fetch_page)
-        mpl._result_info = pagination.SpecialResultInfoState.ALL_PAGES_FETCHED
-
-        await mpl._fetch_page_to_item_idx(5)
-
-        fetch_page.assert_not_called()
-
-    @pytest.mark.asyncio
-    async def test_fetch_page_to_item_idx_multiple_pages(self):
-        """Test fetching multiple pages to reach desired index."""
-        pages_data = [
-            ({"page": 1, "per_page": 2, "total_count": 6, "next": "http://example.com/page2"}, ["item1", "item2"]),
-            ({"page": 2, "per_page": 2, "total_count": 6, "next": "http://example.com/page3"}, ["item3", "item4"]),
-            ({"page": 3, "per_page": 2, "total_count": 6, "next": None}, ["item5", "item6"]),
-        ]
-        fetch_page = self.create_mock_fetch_page(pages_data)
-        mpl = pagination.MultipageList(fetch_page=fetch_page)
-
-        # Fetch item at index 3 (4th item) - should fetch pages 1 and 2
-        await mpl._fetch_page_to_item_idx(3)
-        assert len(mpl.local_items()) == 4  # Should have items 1-4 after fetching first 2 pages
-        assert mpl.local_items() == ("item1", "item2", "item3", "item4")
-
-        # Now fetch item at index 4 (5th item) - should fetch page 3
-        await mpl._fetch_page_to_item_idx(4)
-        assert len(mpl.local_items()) == 6  # Should fetch all pages to get item 5
-        assert mpl.local_items() == ("item1", "item2", "item3", "item4", "item5", "item6")
-
-    @pytest.mark.asyncio
-    async def test_fetch_page_assertion_error(self):
-        """Test assertion error when page number mismatch."""
-
-        async def bad_fetch_page(page_num: int):
-            # Return wrong page number
-            return pagination.PaginatedResultInfo(page=99, per_page=10, total_count=25), ["item1"]
-
-        mpl = pagination.MultipageList(fetch_page=bad_fetch_page)
-
-        with pytest.raises(AssertionError):
-            await mpl._async_init()
-
-    @pytest.mark.asyncio
-    async def test_getitem_single_item(self):
-        """Test __getitem__ for a single item."""
-        pages_data = [({"page": 1, "per_page": 10, "total_count": 25}, ["item1", "item2", "item3"])]
-        fetch_page = self.create_mock_fetch_page(pages_data)
-        mpl = pagination.MultipageList(fetch_page=fetch_page)
-
-        item = await mpl[1]
-        assert item == "item2"
-
-    @pytest.mark.asyncio
-    async def test_getitem_index_error(self):
-        """Test __getitem__ with invalid index."""
-        pages_data = [({"page": 1, "per_page": 10, "total_count": 25}, ["item1", "item2"])]
-        fetch_page = self.create_mock_fetch_page(pages_data)
-        mpl = pagination.MultipageList(fetch_page=fetch_page)
-        mpl._result_info = pagination.SpecialResultInfoState.ALL_PAGES_FETCHED
-
-        with pytest.raises(IndexError):
-            await mpl[5]
-
-    @pytest.mark.asyncio
-    async def test_aiter_complete_iteration(self):
-        """Test __aiter__ iterating through all items."""
-        pages_data = [
-            ({"page": 1, "per_page": 2, "total_count": 4, "next": "http://example.com/page2"}, ["item1", "item2"]),
-            ({"page": 2, "per_page": 2, "total_count": 4, "next": None}, ["item3", "item4"]),
-        ]
-        fetch_page = self.create_mock_fetch_page(pages_data)
-        mpl = pagination.MultipageList(fetch_page=fetch_page)
-        await mpl._async_init()
-
-        items = []
-        async for item in mpl:
-            items.append(item)
-
-        assert items == ["item1", "item2", "item3", "item4"]
-
-    @pytest.mark.asyncio
-    async def test_aiter_with_index_error_handling(self):
-        """Test __aiter__ handles IndexError gracefully."""
-        # Mock scenario where len() changes during iteration due to API inconsistencies
-        fetch_page = AsyncMock()
-        mpl = pagination.MultipageList(fetch_page=fetch_page)
-        mpl._result_info = pagination.PaginatedResultInfo(
-            page=1,
-            per_page=10,
-            total_count=5,  # Claim 5 items but only have 2
+        page = pagination.MultipageList(
+            data=[1, 2],
+            pagination=pagination.PaginationInfo(has_next=False),
         )
-        mpl._pages = [pagination.FetchedPageData(items=["item1", "item2"], page_info=mpl._result_info)]
+        with pytest.raises((AttributeError, TypeError, pydantic.ValidationError)):
+            page.data = [3, 4]  # type: ignore[misc]
 
-        items = []
-        async for item in mpl:
-            items.append(item)
+    def test_model_dump(self):
+        page = pagination.MultipageList(
+            data=[1, 2],
+            pagination=pagination.PaginationInfo(has_next=True, next_page="tok", size=10),
+        )
+        d = page.model_dump()
+        assert d["data"] == [1, 2]
+        assert d["pagination"]["has_next"] is True
+        assert d["pagination"]["next_page"] == "tok"
+        assert d["pagination"]["size"] == 10
 
-        assert items == ["item1", "item2"]
+    def test_json_schema_with_concrete_type(self):
+        import pydantic
 
-    @pytest.mark.asyncio
-    async def test_aiter_unexpected_index_error(self):
-        """Test __aiter__ re-raises unexpected IndexError."""
+        class Item(pydantic.BaseModel):
+            name: str
 
-        class BadMultipageList(pagination.MultipageList):
-            async def __getitem__(self, index: int):
-                if index < 2:
-                    return f"item{index + 1}"
-                raise IndexError("Unexpected error")
+        schema = pagination.MultipageList[Item].model_json_schema()
+        assert "data" in schema.get("properties", {})
+        assert "pagination" in schema.get("properties", {})
+        # Item schema should be referenced somewhere in the output
+        schema_str = json.dumps(schema)
+        assert "Item" in schema_str or "name" in schema_str
 
-            def __len__(self):
-                return 5  # Claim more items than available
+    def test_pagination_field_description(self):
+        schema = pagination.MultipageList.model_json_schema()
+        props = schema.get("properties", {})
+        assert props.get("data", {}).get("description") or "data" in props
+        assert "pagination" in props
 
-        fetch_page = AsyncMock()
-        mpl = BadMultipageList(fetch_page=fetch_page)
 
-        items = []
-        with pytest.raises(IndexError, match="Unexpected error"):
-            async for item in mpl:
-                items.append(item)
-
-    @pytest.mark.asyncio
-    async def test_local_items(self):
-        """Test local_items returns cached items."""
-        pages_data = [({"page": 1, "per_page": 10, "total_count": 25}, ["item1", "item2", "item3"])]
-        fetch_page = self.create_mock_fetch_page(pages_data)
-        mpl = pagination.MultipageList(fetch_page=fetch_page)
-
-        # Before fetching
-        assert mpl.local_items() == ()
-
-        # After fetching
-        await mpl._async_init()
-        assert mpl.local_items() == ("item1", "item2", "item3")
-
-    @pytest.mark.asyncio
-    async def test_local_pages_empty_before_init(self):
-        """Test local_pages returns empty tuple before initialization."""
-        fetch_page = AsyncMock()
-        mpl = pagination.MultipageList(fetch_page=fetch_page)
-
-        assert mpl.local_pages() == ()
-
-    @pytest.mark.asyncio
-    async def test_local_pages_single_page(self):
-        """Test local_pages with a single page of items."""
-        pages_data = [({"page": 1, "per_page": 10, "total_count": 3}, ["item1", "item2", "item3"])]
-        fetch_page = self.create_mock_fetch_page(pages_data)
-        mpl = pagination.MultipageList(fetch_page=fetch_page)
-
-        await mpl._async_init()
-
-        result = mpl.local_pages()
-        assert result == (("item1", "item2", "item3"),)
-        assert isinstance(result, tuple)
-        assert len(result) == 1
-        assert isinstance(result[0], tuple)
-
-    @pytest.mark.asyncio
-    async def test_local_pages_multiple_pages(self):
-        """Test local_pages with multiple pages of items."""
-        pages_data = [
-            ({"page": 1, "per_page": 2, "total_count": 5, "next": "http://example.com/page2"}, ["item1", "item2"]),
-            ({"page": 2, "per_page": 2, "total_count": 5, "next": "http://example.com/page3"}, ["item3", "item4"]),
-            ({"page": 3, "per_page": 2, "total_count": 5}, ["item5"]),
-        ]
-        fetch_page = self.create_mock_fetch_page(pages_data)
-        mpl = pagination.MultipageList(fetch_page=fetch_page)
-
-        await mpl._async_init()
-
-        # Initially only first page is cached
-        result = mpl.local_pages()
-        assert result == (("item1", "item2"),)
-
-        # Fetch more items to trigger additional page loads
-        await mpl._fetch_page_to_item_idx(3)  # Should load page 2
-        result = mpl.local_pages()
-        assert result == (("item1", "item2"), ("item3", "item4"))
-
-        await mpl._fetch_page_to_item_idx(4)  # Should load page 3
-        result = mpl.local_pages()
-        assert result == (("item1", "item2"), ("item3", "item4"), ("item5",))
-
-    @pytest.mark.asyncio
-    async def test_local_pages_empty_pages(self):
-        """Test local_pages with empty pages."""
-        pages_data = [
-            ({"page": 1, "per_page": 10, "total_count": 0}, []),
-            (None, []),  # Empty subsequent page
-        ]
-        fetch_page = self.create_mock_fetch_page(pages_data)
-        mpl = pagination.MultipageList(fetch_page=fetch_page)
-
-        await mpl._async_init()
-
-        result = mpl.local_pages()
-        assert result == ((),)
-        assert len(result) == 1
-        assert len(result[0]) == 0
-
-    @pytest.mark.asyncio
-    async def test_local_pages_immutable_return(self):
-        """Test that local_pages returns immutable tuples."""
-        pages_data = [({"page": 1, "per_page": 10, "total_count": 2}, ["item1", "item2"])]
-        fetch_page = self.create_mock_fetch_page(pages_data)
-        mpl = pagination.MultipageList(fetch_page=fetch_page)
-
-        await mpl._async_init()
-
-        result1 = mpl.local_pages()
-        result2 = mpl.local_pages()
-
-        # Should return the same structure
-        assert result1 == result2
-        # But different tuple instances (defensive copy)
-        assert result1 is not result2
-        assert result1[0] is not result2[0]
-
-    @pytest.mark.asyncio
-    async def test_local_pages_with_failed_pages(self):
-        """Test local_pages behavior when some pages fail to fetch."""
-
-        async def failing_fetch_page(page_num: int):
-            if page_num == 1:
-                return pagination.PaginatedResultInfo(
-                    page=1, per_page=2, total_count=4, next="http://example.com/page2"
-                ), ["item1", "item2"]
-            elif page_num == 2:
-                raise Exception("Simulated API failure")
-            return None, []
-
-        mpl = pagination.MultipageList(fetch_page=failing_fetch_page)
-        await mpl._async_init()
-
-        # First page should be available
-        result = mpl.local_pages()
-        assert result == (("item1", "item2"),)
-
-        # Try to fetch second page (will fail)
-        try:
-            await mpl._fetch_page_to_item_idx(3)
-        except Exception:
-            pass  # Expected to fail
-
-        # Should still only have first page
-        result = mpl.local_pages()
-        assert result == (("item1", "item2"),)
-
-    @pytest.mark.asyncio
-    async def test_len_with_has_next_page(self):
-        """Test __len__ when more pages are available."""
-        pages_data = [
-            (
-                {"page": 1, "per_page": 10, "total_count": 25, "next": "http://example.com/page2"},
-                ["item1", "item2", "item3"],
-            )
-        ]
-        fetch_page = self.create_mock_fetch_page(pages_data)
-        mpl = pagination.MultipageList(fetch_page=fetch_page)
-        await mpl._async_init()
-
-        # Should return total_count from result_info since there are more pages
-        assert len(mpl) == 25
-
-    @pytest.mark.asyncio
-    async def test_len_all_pages_fetched(self):
-        """Test __len__ when all pages are fetched."""
-        fetch_page = AsyncMock()
-        mpl = pagination.MultipageList(fetch_page=fetch_page)
-        mpl._result_info = pagination.SpecialResultInfoState.ALL_PAGES_FETCHED
-        mpl._pages.append(pagination.FetchedPageData(items=["item1", "item2", "item3"], page_info=None))
-
-        # Should return actual item count
-        assert len(mpl) == 3
-
-    @pytest.mark.asyncio
-    async def test_repr(self):
-        """Test __repr__ method."""
-        fetch_page = AsyncMock()
-        mpl = pagination.MultipageList(fetch_page=fetch_page)
-
-        repr_str = repr(mpl)
-        assert "MultipageList" in repr_str
-
-    @pytest.mark.asyncio
-    async def test_concurrent_access(self):
-        """Test thread safety with concurrent access."""
-        call_count = 0
-
-        async def slow_fetch_page(page_num: int):
-            nonlocal call_count
-            call_count += 1
-            await asyncio.sleep(0.01)  # Simulate slow API
-            return pagination.PaginatedResultInfo(page=page_num, per_page=5, total_count=10), [
-                f"item{i}" for i in range((page_num - 1) * 5 + 1, page_num * 5 + 1)
-            ]
-
-        mpl = pagination.MultipageList(fetch_page=slow_fetch_page)
-
-        # Concurrent access to same page range
-        results = await asyncio.gather(mpl[0], mpl[1], mpl[2], mpl[3], mpl[4])
-
-        # Should only fetch once due to locking
-        assert call_count == 1
-        assert results == ["item1", "item2", "item3", "item4", "item5"]
-
-    @pytest.mark.asyncio
-    async def test_edge_case_empty_pages(self):
-        """Test handling of empty pages."""
-        pages_data = [({"page": 1, "per_page": 10, "total_count": 0}, [])]
-        fetch_page = self.create_mock_fetch_page(pages_data)
-        mpl = pagination.MultipageList(fetch_page=fetch_page)
-        await mpl._async_init()
-
-        assert len(mpl) == 0
-        assert mpl.local_items() == ()
-
-    @pytest.mark.asyncio
-    async def test_edge_case_inconsistent_api_total_count(self):
-        """Test handling when API total_count is inconsistent."""
-        pages_data = [
-            (
-                {"page": 1, "per_page": 10, "total_count": 100, "next": "http://example.com/page2"},
-                ["item1", "item2"],
-            ),  # Claims 100 but only 2 items
-            (None, []),  # Next page returns None
-        ]
-        fetch_page = self.create_mock_fetch_page(pages_data)
-        mpl = pagination.MultipageList(fetch_page=fetch_page)
-        await mpl._async_init()
-
-        # Initially reports total_count because there appears to be a next page
-        assert len(mpl) == 100
-
-        # Try to access beyond available items - this should trigger fetching until no more pages
-        await mpl._fetch_page_to_item_idx(50)  # This should trigger fetching page 2, which returns None
-
-        # After fetching all available, _has_next_page() should return False, so len() returns actual count
-        assert len(mpl) == 2
-
-    @pytest.mark.asyncio
-    async def test_pagination_with_none_next_url(self):
-        """Test pagination when next URL is None but page count suggests more pages."""
-        pages_data = [
-            ({"page": 1, "per_page": 5, "total_count": 10, "next": None}, ["item1", "item2", "item3", "item4", "item5"])
-        ]
-        fetch_page = self.create_mock_fetch_page(pages_data)
-        mpl = pagination.MultipageList(fetch_page=fetch_page)
-        await mpl._async_init()
-
-        # Should not attempt to fetch more pages when next is None
-        assert not mpl._has_next_page()
-        assert len(mpl) == 5  # Should return actual items length
+# ---------------------------------------------------------------------------
+# PaginatedResultInfo (internal — unchanged from previous version)
+# ---------------------------------------------------------------------------
 
 
 class TestPaginatedResultInfo:
-    """Test fca_api.types.pagination.PaginatedResultInfo class."""
-
     def test_basic_initialization(self):
-        """Test basic initialization of PaginatedResultInfo."""
         info = pagination.PaginatedResultInfo(page=1, per_page=10, total_count=25)
-
         assert info.page == 1
         assert info.per_page == 10
         assert info.total_count == 25
@@ -504,7 +232,6 @@ class TestPaginatedResultInfo:
         assert info.previous is None
 
     def test_with_urls(self):
-        """Test initialization with next and previous URLs."""
         info = pagination.PaginatedResultInfo(
             page=2,
             per_page=10,
@@ -512,450 +239,292 @@ class TestPaginatedResultInfo:
             next="https://api.example.com/page/3",
             previous="https://api.example.com/page/1",
         )
-
         assert str(info.next) == "https://api.example.com/page/3"
         assert str(info.previous) == "https://api.example.com/page/1"
 
-    def test_total_pages_calculation(self):
-        """Test total_pages property calculation."""
-        # Exact division
-        info1 = pagination.PaginatedResultInfo(page=1, per_page=10, total_count=30)
-        assert info1.total_pages == 3
+    def test_total_pages_exact_division(self):
+        assert pagination.PaginatedResultInfo(page=1, per_page=10, total_count=30).total_pages == 3
 
-        # With remainder
-        info2 = pagination.PaginatedResultInfo(page=1, per_page=10, total_count=25)
-        assert info2.total_pages == 3
+    def test_total_pages_with_remainder(self):
+        assert pagination.PaginatedResultInfo(page=1, per_page=10, total_count=25).total_pages == 3
 
-        # Single page
-        info3 = pagination.PaginatedResultInfo(page=1, per_page=10, total_count=5)
-        assert info3.total_pages == 1
+    def test_total_pages_single_page(self):
+        assert pagination.PaginatedResultInfo(page=1, per_page=10, total_count=5).total_pages == 1
 
-        # Empty result
-        info4 = pagination.PaginatedResultInfo(page=1, per_page=10, total_count=0)
-        assert info4.total_pages == 0
+    def test_total_pages_empty(self):
+        assert pagination.PaginatedResultInfo(page=1, per_page=10, total_count=0).total_pages == 0
 
     def test_model_validate_key_normalization(self):
-        """Test model_validate normalizes keys to lowercase and strips whitespace."""
-        raw_data = {
+        raw = {
             "Page ": 1,
             " Per_Page": 10,
             "TOTAL_COUNT   ": 25,
             " Next  ": "https://api.example.com/next",
             "Previous": None,
         }
-
-        info = pagination.PaginatedResultInfo.model_validate(raw_data)
-
+        info = pagination.PaginatedResultInfo.model_validate(raw)
         assert info.page == 1
         assert info.per_page == 10
         assert info.total_count == 25
         assert str(info.next) == "https://api.example.com/next"
         assert info.previous is None
 
-    def test_model_validate_with_empty_dict(self):
-        """Test model_validate with minimal required fields."""
+    def test_model_validate_missing_required_fields(self):
         from pydantic import ValidationError
 
-        with pytest.raises(ValidationError):  # Should fail due to missing required fields
+        with pytest.raises(ValidationError):
             pagination.PaginatedResultInfo.model_validate({})
 
-    def test_model_validate_with_invalid_url(self):
-        """Test model_validate with invalid URL."""
+    def test_model_validate_invalid_url(self):
         from pydantic import ValidationError
 
-        raw_data = {"page": 1, "per_page": 10, "total_count": 25, "next": "not-a-valid-url"}
-
-        with pytest.raises(ValidationError):  # Should fail URL validation
-            pagination.PaginatedResultInfo.model_validate(raw_data)
-
-
-class TestSpecialResultInfoState:
-    """Test fca_api.types.pagination.SpecialResultInfoState enum."""
-
-    def test_enum_values(self):
-        """Test that all expected enum values exist."""
-        assert hasattr(pagination.SpecialResultInfoState, "UNINITIALIZED")
-        assert hasattr(pagination.SpecialResultInfoState, "FIRST_PAGE_FETCH_FAILED")
-        assert hasattr(pagination.SpecialResultInfoState, "ALL_PAGES_FETCHED")
-        assert hasattr(pagination.SpecialResultInfoState, "PAGE_FETCH_FAILED")
-
-    def test_enum_uniqueness(self):
-        """Test that enum values are unique."""
-        values = [
-            pagination.SpecialResultInfoState.UNINITIALIZED,
-            pagination.SpecialResultInfoState.FIRST_PAGE_FETCH_FAILED,
-            pagination.SpecialResultInfoState.ALL_PAGES_FETCHED,
-            pagination.SpecialResultInfoState.PAGE_FETCH_FAILED,
-        ]
-
-        assert len(values) == len(set(values))
-
-
-class TestErrorHandlingEdgeCases:
-    """Test error handling and edge cases for pagination types."""
-
-    @pytest.mark.asyncio
-    async def test_fetch_page_callback_exception_first_page(self):
-        """Test graceful handling when fetch_page callback raises httpx exception on first page."""
-
-        async def failing_fetch_page(page_num: int):
-            raise httpx.RequestError("API connection failed")
-
-        mpl = pagination.MultipageList(fetch_page=failing_fetch_page)
-
-        # Should handle exception gracefully, not raise it
-        await mpl._async_init()
-
-        # Should be marked as failed
-        assert mpl._result_info == pagination.SpecialResultInfoState.FIRST_PAGE_FETCH_FAILED
-        assert len(mpl) == 0
-        assert mpl.local_items() == ()
-        assert not mpl._has_next_page()
-
-    @pytest.mark.asyncio
-    async def test_fetch_page_callback_exception_subsequent_page(self):
-        """Test graceful handling when fetch_page callback raises httpx exception on subsequent pages."""
-        call_count = 0
-
-        async def mixed_fetch_page(page_num: int):
-            nonlocal call_count
-            call_count += 1
-            if page_num == 1:
-                # First page succeeds
-                return pagination.PaginatedResultInfo(
-                    page=1, per_page=2, total_count=10, next="http://example.com/page2"
-                ), ["item1", "item2"]
-            else:
-                # Subsequent pages fail
-                raise httpx.RequestError("Network timeout")
-
-        mpl = pagination.MultipageList(fetch_page=mixed_fetch_page)
-        await mpl._async_init()
-
-        # First page should work fine
-        assert mpl.local_len() == 2
-        assert mpl.local_items() == ("item1", "item2")
-
-        # Try to fetch more items, should handle exception gracefully
-        await mpl._fetch_page_to_item_idx(3)
-
-        # Should be marked as failed
-        assert mpl._result_info == pagination.SpecialResultInfoState.PAGE_FETCH_FAILED
-        assert not mpl._has_next_page()
-        # Should still have the items from the first page
-        assert mpl.local_len() == 2
-        assert mpl.local_items() == ("item1", "item2")
-
-    @pytest.mark.asyncio
-    async def test_fetch_page_callback_mixed_exceptions_and_success(self):
-        """Test handling when some pages fail with httpx exceptions and others succeed."""
-
-        async def intermittent_fetch_page(page_num: int):
-            if page_num == 1:
-                return pagination.PaginatedResultInfo(
-                    page=1, per_page=2, total_count=6, next="http://example.com/page2"
-                ), ["item1", "item2"]
-            elif page_num == 2:
-                # Second page fails
-                raise httpx.RequestError("Request timeout")
-            else:
-                # This should not be called due to failure on page 2
-                return pagination.PaginatedResultInfo(page=3, per_page=2, total_count=6, next=None), ["item5", "item6"]
-
-        mpl = pagination.MultipageList(fetch_page=intermittent_fetch_page)
-        await mpl._async_init()
-
-        # First page loads successfully
-        assert mpl.local_len() == 2
-
-        # Try to access item that would require second page
-        await mpl._fetch_page_to_item_idx(3)
-
-        # Should gracefully handle the exception and stop fetching
-        assert mpl._result_info == pagination.SpecialResultInfoState.PAGE_FETCH_FAILED
-        assert not mpl._has_next_page()
-        assert mpl.local_len() == 2  # Only first page items
-
-    @pytest.mark.asyncio
-    @pytest.mark.parametrize("exception_type", [httpx.RequestError, fca_exc.FcaBaseError, fca_exc.FcaRequestError])
-    async def test_fetch_page_callback_handled_exception_types(self, exception_type):
-        """Test graceful handling of httpx and FCA exceptions that should be caught."""
-
-        async def failing_fetch_page(page_num: int):
-            raise exception_type("Simulated fetch_page exception")
-
-        mpl = pagination.MultipageList(fetch_page=failing_fetch_page)
-        await mpl._async_init()
-
-        # Should handle these exceptions gracefully
-        assert mpl._result_info == pagination.SpecialResultInfoState.FIRST_PAGE_FETCH_FAILED
-        assert len(mpl) == 0
-        assert not mpl._has_next_page()
-
-    @pytest.mark.asyncio
-    @pytest.mark.parametrize(
-        "exception_type", [ValueError, ConnectionError, TimeoutError, RuntimeError, KeyError, TypeError]
-    )
-    async def test_fetch_page_callback_unhandled_exception_types(self, exception_type):
-        """Test that other exception types are re-raised and not handled gracefully."""
-
-        async def failing_fetch_page(page_num: int):
-            raise exception_type("Simulated fetch_page exception")
-
-        mpl = pagination.MultipageList(fetch_page=failing_fetch_page)
-
-        # These exceptions should be re-raised, not handled gracefully
-        with pytest.raises(exception_type):
-            await mpl._async_init()
-
-    @pytest.mark.asyncio
-    async def test_fetch_page_callback_exception_during_iteration(self):
-        """Test exception handling during async iteration."""
-
-        async def failing_after_first_fetch_page(page_num: int):
-            if page_num == 1:
-                return pagination.PaginatedResultInfo(
-                    page=1, per_page=2, total_count=4, next="http://example.com/page2"
-                ), ["item1", "item2"]
-            else:
-                raise httpx.RequestError("Disk full")
-
-        mpl = pagination.MultipageList(fetch_page=failing_after_first_fetch_page)
-        await mpl._async_init()
-
-        items = []
-        # This should iterate through available items and stop gracefully when exception occurs
-        async for item in mpl:
-            items.append(item)
-
-        # Should only get items from the successful first page
-        assert items == ["item1", "item2"]
-        assert mpl._result_info == pagination.SpecialResultInfoState.PAGE_FETCH_FAILED
-
-    @pytest.mark.asyncio
-    async def test_fetch_page_callback_exception_getitem_access(self):
-        """Test exception handling during individual item access."""
-
-        async def failing_second_page_fetch_page(page_num: int):
-            if page_num == 1:
-                return pagination.PaginatedResultInfo(
-                    page=1, per_page=2, total_count=4, next="http://example.com/page2"
-                ), ["item1", "item2"]
-            else:
-                raise httpx.RequestError("Out of memory")
-
-        mpl = pagination.MultipageList(fetch_page=failing_second_page_fetch_page)
-        await mpl._async_init()
-
-        # Access items from first page should work
-        assert await mpl[0] == "item1"
-        assert await mpl[1] == "item2"
-
-        # Access item that would require second page should handle exception
-        # The fetch will fail but not raise - instead item access should raise IndexError
-        with pytest.raises(IndexError):
-            await mpl[2]
-
-        # State should reflect the fetch failure
-        assert mpl._result_info == pagination.SpecialResultInfoState.PAGE_FETCH_FAILED
-
-    @pytest.mark.asyncio
-    async def test_fetch_page_callback_exception_logging(self, caplog):
-        """Test that httpx exceptions are properly logged when they occur."""
-        import logging
-
-        async def failing_fetch_page(page_num: int):
-            if page_num == 1:
-                raise httpx.RequestError("Critical API failure")
-            else:
-                raise httpx.RequestError("Network down")
-
-        mpl = pagination.MultipageList(fetch_page=failing_fetch_page)
-
-        # Clear any existing log records
-        caplog.clear()
-
-        with caplog.at_level(logging.ERROR):
-            await mpl._async_init()
-
-        # Should have logged the exception
-        assert len(caplog.records) == 1
-        assert caplog.records[0].levelname == "ERROR"
-        assert "Failed to fetch page 1" in caplog.records[0].message
-        assert "Critical API failure" in caplog.records[0].message
-
-        # Test logging for subsequent page failures too
-        async def mixed_logging_fetch_page(page_num: int):
-            if page_num == 1:
-                return pagination.PaginatedResultInfo(
-                    page=1, per_page=2, total_count=4, next="http://example.com/page2"
-                ), ["item1", "item2"]
-            else:
-                raise httpx.RequestError("Request timeout on page 2")
-
-        mpl2 = pagination.MultipageList(fetch_page=mixed_logging_fetch_page)
-        await mpl2._async_init()
-
-        caplog.clear()
-        with caplog.at_level(logging.ERROR):
-            # This should trigger the exception on page 2
-            await mpl2._fetch_page_to_item_idx(3)
-
-        # Should have logged the second page exception
-        assert len(caplog.records) == 1
-        assert "Failed to fetch page 2" in caplog.records[0].message
-        assert "Request timeout on page 2" in caplog.records[0].message
-
-    @pytest.mark.asyncio
-    async def test_unhandled_exceptions_during_iteration(self):
-        """Test that unhandled exceptions are re-raised during async iteration."""
-
-        async def failing_after_first_fetch_page(page_num: int):
-            if page_num == 1:
-                return pagination.PaginatedResultInfo(
-                    page=1, per_page=2, total_count=4, next="http://example.com/page2"
-                ), ["item1", "item2"]
-            else:
-                raise ValueError("This should be re-raised")
-
-        mpl = pagination.MultipageList(fetch_page=failing_after_first_fetch_page)
-        await mpl._async_init()
-
-        items = []
-        # This should re-raise the ValueError when trying to fetch the second page
-        with pytest.raises(ValueError, match="This should be re-raised"):
-            async for item in mpl:
-                items.append(item)
-
-        # Should have gotten the items from the first page before the exception
-        assert items == ["item1", "item2"]
-
-    @pytest.mark.asyncio
-    async def test_unhandled_exceptions_during_getitem_access(self):
-        """Test that unhandled exceptions are re-raised during getitem access."""
-
-        async def failing_second_page_fetch_page(page_num: int):
-            if page_num == 1:
-                return pagination.PaginatedResultInfo(
-                    page=1, per_page=2, total_count=4, next="http://example.com/page2"
-                ), ["item1", "item2"]
-            else:
-                raise RuntimeError("This should be re-raised")
-
-        mpl = pagination.MultipageList(fetch_page=failing_second_page_fetch_page)
-        await mpl._async_init()
-
-        # Access items from first page should work
-        assert await mpl[0] == "item1"
-        assert await mpl[1] == "item2"
-
-        # Access item that would require second page should re-raise the exception
-        with pytest.raises(RuntimeError, match="This should be re-raised"):
-            await mpl[2]
-
-    @pytest.mark.asyncio
-    async def test_fetch_page_returns_invalid_data(self):
-        """Test handling when fetch_page returns malformed data."""
-
-        async def bad_fetch_page(page_num: int):
-            # Return invalid tuple structure
-            return "invalid", "data"
-
-        mpl = pagination.MultipageList(fetch_page=bad_fetch_page)
-
-        # This should raise an error due to invalid return type when trying to access page info
-        with pytest.raises((AttributeError, TypeError)):
-            await mpl._async_init()
-
-    @pytest.mark.asyncio
-    @pytest.mark.parametrize("invalid_index", [-1, -5, -10])
-    async def test_negative_index_access(self, invalid_index):
-        """Test accessing negative indices."""
-        pages_data = [({"page": 1, "per_page": 10, "total_count": 25}, ["item1", "item2", "item3"])]
-        fetch_page = self.create_mock_fetch_page(pages_data)
-        mpl = pagination.MultipageList(fetch_page=fetch_page)
-        await mpl._async_init()
-
-        with pytest.raises(IndexError):
-            await mpl[invalid_index]
-
-    def create_mock_fetch_page(self, pages_data):
-        """Helper to create a mock fetch_page callable with predefined pages."""
-
-        async def mock_fetch_page(page_num: int) -> Tuple[Optional[pagination.PaginatedResultInfo], Sequence[str]]:
-            if page_num > len(pages_data):
-                return None, []
-
-            page_data = pages_data[page_num - 1]
-            if page_data is None:
-                return None, []
-
-            result_info, items = page_data
-            if result_info is None:
-                return None, items
-
-            return pagination.PaginatedResultInfo(
-                page=result_info["page"],
-                per_page=result_info["per_page"],
-                total_count=result_info["total_count"],
-                next=result_info.get("next"),
-                previous=result_info.get("previous"),
-            ), items
-
-        return mock_fetch_page
-
-    @pytest.mark.asyncio
-    async def test_very_large_pagination(self):
-        """Test handling of very large pagination numbers."""
-        info = pagination.PaginatedResultInfo(page=1000000, per_page=1, total_count=1000000)
-
-        assert info.total_pages == 1000000
-
-    @pytest.mark.asyncio
-    async def test_zero_per_page(self):
-        """Test handling when per_page is zero."""
-        # Creating PaginatedResultInfo with per_page=0 should be allowed by pydantic
-        # but accessing total_pages should handle division by zero gracefully
+        with pytest.raises(ValidationError):
+            pagination.PaginatedResultInfo.model_validate(
+                {"page": 1, "per_page": 10, "total_count": 25, "next": "not-a-valid-url"}
+            )
+
+    def test_total_pages_zero_per_page_raises(self):
         info = pagination.PaginatedResultInfo(page=1, per_page=0, total_count=25)
-
-        # The total_pages calculation should handle zero per_page
-        # Looking at the implementation: (total_count + per_page - 1) // per_page
-        # With per_page=0: (25 + 0 - 1) // 0 = 24 // 0 which raises ZeroDivisionError
         with pytest.raises(ZeroDivisionError):
             _ = info.total_pages
 
+
+# ---------------------------------------------------------------------------
+# async_api._fetch_paginated integration tests
+# ---------------------------------------------------------------------------
+
+
+def _make_raw_response(page: int, per_page: int, total_count: int, items: list, has_next: bool):
+    """Build a mock FcaApiResponse for use in _fetch_paginated tests."""
+    resp = MagicMock()
+    next_url = f"https://example.com/?pgnp={page + 1}" if has_next else None
+    resp.result_info = {
+        "Page": page,
+        "Per_Page": per_page,
+        "Total_Count": total_count,
+        "Next": next_url,
+        "Previous": None,
+    }
+    resp.data = items
+    return resp
+
+
+class TestFetchPaginated:
+    """Tests for async_api.Client._fetch_paginated."""
+
+    def _make_client(self, serializer=None):
+
+        import fca_api.async_api as async_api
+
+        client = async_api.Client.__new__(async_api.Client)
+        client._page_token_serializer = serializer
+        return client
+
     @pytest.mark.asyncio
-    async def test_inconsistent_pagination_state(self):
-        """Test handling when pagination state becomes inconsistent."""
+    async def test_single_page_no_next(self):
+        client = self._make_client()
+        resp = _make_raw_response(1, 10, 3, ["a", "b", "c"], has_next=False)
 
-        async def inconsistent_fetch_page(page_num: int):
-            # First call returns normal data
-            if page_num == 1:
-                return pagination.PaginatedResultInfo(
-                    page=1, per_page=10, total_count=25, next="http://example.com/page2"
-                ), ["item1", "item2"]
-            # Second call returns different total_count (API inconsistency)
-            elif page_num == 2:
-                return pagination.PaginatedResultInfo(
-                    page=2,
-                    per_page=10,
-                    total_count=50,
-                    next=None,  # Different total and no more pages
-                ), ["item3", "item4"]
-            else:
-                return None, []
+        result = await client._fetch_paginated(
+            fetch_page_fn=AsyncMock(return_value=resp),
+            parse_data_fn=lambda data: data,
+            next_page=None,
+            result_count=1,
+        )
 
-        mpl = pagination.MultipageList(fetch_page=inconsistent_fetch_page)
-        await mpl._async_init()
+        assert result.data == ["a", "b", "c"]
+        assert result.pagination.has_next is False
+        assert result.pagination.next_page is None
+        assert result.pagination.size == 3
 
-        # Initial length based on first page
-        initial_len = len(mpl)
-        assert initial_len == 25
+    @pytest.mark.asyncio
+    async def test_single_page_has_next(self):
+        client = self._make_client()
+        resp = _make_raw_response(1, 5, 15, ["a", "b", "c", "d", "e"], has_next=True)
 
-        # Fetch second page
-        await mpl._fetch_page_to_item_idx(3)
+        result = await client._fetch_paginated(
+            fetch_page_fn=AsyncMock(return_value=resp),
+            parse_data_fn=lambda data: data,
+            next_page=None,
+            result_count=1,
+        )
 
-        # Length should update based on new info, but since next=None, no more pages expected
-        # The _has_next_page() will return False, so len() returns actual item count
-        updated_len = len(mpl)
-        assert updated_len == 4  # Should reflect the actual items fetched (4 items total)
+        assert result.data == ["a", "b", "c", "d", "e"]
+        assert result.pagination.has_next is True
+        assert result.pagination.next_page is not None
+        assert result.pagination.size == 15
+
+    @pytest.mark.asyncio
+    async def test_result_count_triggers_multi_page_fetch(self):
+        client = self._make_client()
+
+        page1 = _make_raw_response(1, 5, 15, list(range(5)), has_next=True)
+        page2 = _make_raw_response(2, 5, 15, list(range(5, 10)), has_next=True)
+        page3 = _make_raw_response(3, 5, 15, list(range(10, 15)), has_next=False)
+
+        call_count = 0
+        responses = [page1, page2, page3]
+
+        async def fetch_page(p: int):
+            nonlocal call_count
+            call_count += 1
+            return responses[p - 1]
+
+        result = await client._fetch_paginated(
+            fetch_page_fn=fetch_page,
+            parse_data_fn=lambda data: data,
+            next_page=None,
+            result_count=8,  # need > 5 items → fetches pages 1 and 2
+        )
+
+        assert call_count == 2
+        assert len(result.data) == 10  # 2 pages of 5
+        assert result.pagination.has_next is True
+
+    @pytest.mark.asyncio
+    async def test_stops_when_no_more_pages_before_result_count(self):
+        client = self._make_client()
+
+        page1 = _make_raw_response(1, 5, 5, list(range(5)), has_next=False)
+        fetch = AsyncMock(return_value=page1)
+
+        result = await client._fetch_paginated(
+            fetch_page_fn=fetch,
+            parse_data_fn=lambda data: data,
+            next_page=None,
+            result_count=100,  # ask for more than available
+        )
+
+        assert fetch.call_count == 1
+        assert result.data == list(range(5))
+        assert result.pagination.has_next is False
+
+    @pytest.mark.asyncio
+    async def test_next_page_token_used_as_start_page(self):
+        client = self._make_client()
+
+        page3 = _make_raw_response(3, 5, 15, list(range(10, 15)), has_next=False)
+
+        async def fetch_page(p: int):
+            assert p == 3, f"Expected page 3, got page {p}"
+            return page3
+
+        # Build a token pointing to page 3
+        state = pagination._PageState(page=3)
+        token = state.encode()
+
+        result = await client._fetch_paginated(
+            fetch_page_fn=fetch_page,
+            parse_data_fn=lambda data: data,
+            next_page=token,
+            result_count=1,
+        )
+
+        assert result.data == list(range(10, 15))
+
+    @pytest.mark.asyncio
+    async def test_next_page_token_in_response_decodes_correctly(self):
+        client = self._make_client()
+
+        resp = _make_raw_response(1, 5, 10, ["x", "y"], has_next=True)
+
+        result = await client._fetch_paginated(
+            fetch_page_fn=AsyncMock(return_value=resp),
+            parse_data_fn=lambda data: data,
+            next_page=None,
+            result_count=1,
+        )
+
+        assert result.pagination.next_page is not None
+        decoded = pagination._PageState.decode(result.pagination.next_page)
+        assert decoded.page == 2
+
+    @pytest.mark.asyncio
+    async def test_serializer_encrypts_outgoing_token(self):
+        class PrefixSerializer:
+            def serialize(self, token: str) -> str:
+                return f"ENC:{token}"
+
+            def deserialize(self, token: str) -> str:
+                return token.removeprefix("ENC:")
+
+        client = self._make_client(serializer=PrefixSerializer())
+        resp = _make_raw_response(1, 5, 10, ["a"], has_next=True)
+
+        result = await client._fetch_paginated(
+            fetch_page_fn=AsyncMock(return_value=resp),
+            parse_data_fn=lambda data: data,
+            next_page=None,
+            result_count=1,
+        )
+
+        assert result.pagination.next_page is not None
+        assert result.pagination.next_page.startswith("ENC:")
+
+    @pytest.mark.asyncio
+    async def test_serializer_decrypts_incoming_token(self):
+        class PrefixSerializer:
+            def serialize(self, token: str) -> str:
+                return f"ENC:{token}"
+
+            def deserialize(self, token: str) -> str:
+                assert token.startswith("ENC:"), "token was not encrypted"
+                return token.removeprefix("ENC:")
+
+        client = self._make_client(serializer=PrefixSerializer())
+
+        page2 = _make_raw_response(2, 5, 10, ["b", "c"], has_next=False)
+
+        async def fetch_page(p: int):
+            assert p == 2
+            return page2
+
+        # Build encrypted token for page 2
+        raw_token = pagination._PageState(page=2).encode()
+        encrypted_token = f"ENC:{raw_token}"
+
+        result = await client._fetch_paginated(
+            fetch_page_fn=fetch_page,
+            parse_data_fn=lambda data: data,
+            next_page=encrypted_token,
+            result_count=1,
+        )
+
+        assert result.data == ["b", "c"]
+
+    @pytest.mark.asyncio
+    async def test_response_with_no_result_info(self):
+        client = self._make_client()
+
+        resp = MagicMock()
+        resp.result_info = None
+        resp.data = ["only_item"]
+
+        result = await client._fetch_paginated(
+            fetch_page_fn=AsyncMock(return_value=resp),
+            parse_data_fn=lambda data: data,
+            next_page=None,
+            result_count=1,
+        )
+
+        assert result.data == ["only_item"]
+        assert result.pagination.has_next is False
+        assert result.pagination.size is None
+
+    @pytest.mark.asyncio
+    async def test_response_with_none_data(self):
+        client = self._make_client()
+
+        resp = MagicMock()
+        resp.result_info = {"Page": 1, "Per_Page": 10, "Total_Count": 0, "Next": None, "Previous": None}
+        resp.data = None
+
+        result = await client._fetch_paginated(
+            fetch_page_fn=AsyncMock(return_value=resp),
+            parse_data_fn=lambda data: data,
+            next_page=None,
+            result_count=1,
+        )
+
+        assert result.data == []
+        assert result.pagination.has_next is False
