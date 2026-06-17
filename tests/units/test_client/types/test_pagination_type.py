@@ -302,6 +302,83 @@ class TestMultipageList:
         )
         assert a != b
 
+    def test_equality_distinguishes_next_page_token(self):
+        # Two pages with identical data but different pagination tokens are
+        # distinct results — they resume from different cursors.
+        a = pagination.MultipageList(
+            data=[1, 2],
+            pagination=pagination.PaginationInfo(has_next=True, next_page="tok-a", size=10),
+        )
+        b = pagination.MultipageList(
+            data=[1, 2],
+            pagination=pagination.PaginationInfo(has_next=True, next_page="tok-b", size=10),
+        )
+        assert a != b
+
+    def test_equality_with_explicit_distinct_fetcher_closures(self):
+        # Explicitly install two different async closures and confirm the
+        # closures' identity does not leak into equality.
+        async def fetcher_a():
+            return "a"
+
+        async def fetcher_b():
+            return "b"
+
+        p1 = pagination.MultipageList(
+            data=["x"],
+            pagination=pagination.PaginationInfo(has_next=True, next_page="tok", size=2),
+        )
+        p2 = pagination.MultipageList(
+            data=["x"],
+            pagination=pagination.PaginationInfo(has_next=True, next_page="tok", size=2),
+        )
+        p1._fetch_next_page = fetcher_a  # type: ignore[assignment]
+        p2._fetch_next_page = fetcher_b  # type: ignore[assignment]
+        assert p1._fetch_next_page is not p2._fetch_next_page
+        assert p1 == p2
+        assert not (p1 != p2)
+
+    def test_hash_with_explicit_distinct_fetcher_closures(self):
+        # Same public fields, different fetcher closures → equal AND same hash,
+        # so the pair collapses to a single member in a set.
+        async def fetcher_a():
+            return "a"
+
+        async def fetcher_b():
+            return "b"
+
+        p1 = pagination.MultipageList(
+            data=["x", "y"],
+            pagination=pagination.PaginationInfo(has_next=True, next_page="tok", size=4),
+        )
+        p2 = pagination.MultipageList(
+            data=["x", "y"],
+            pagination=pagination.PaginationInfo(has_next=True, next_page="tok", size=4),
+        )
+        p1._fetch_next_page = fetcher_a  # type: ignore[assignment]
+        p2._fetch_next_page = fetcher_b  # type: ignore[assignment]
+        assert hash(p1) == hash(p2)
+        assert len({p1, p2}) == 1
+
+    def test_hash_distinguishes_next_page_token(self):
+        # Different pagination cursors must produce distinct entries when
+        # collected into a set, even with identical data and fetchers.
+        async def fetcher():
+            return "x"
+
+        a = pagination.MultipageList(
+            data=[1, 2],
+            pagination=pagination.PaginationInfo(has_next=True, next_page="tok-a", size=10),
+        )
+        b = pagination.MultipageList(
+            data=[1, 2],
+            pagination=pagination.PaginationInfo(has_next=True, next_page="tok-b", size=10),
+        )
+        a._fetch_next_page = fetcher  # type: ignore[assignment]
+        b._fetch_next_page = fetcher  # type: ignore[assignment]
+        assert hash(a) != hash(b)
+        assert len({a, b}) == 2
+
     def test_pagination_field_description(self):
         schema = pagination.MultipageList.model_json_schema()
         props = schema.get("properties", {})
