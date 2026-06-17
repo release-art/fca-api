@@ -86,3 +86,14 @@ class NoMorePagesError(FcaBaseError):
             while page.pagination.has_next:
                 page = await page.get_next()
     """
+
+
+class DetachedMultipageListError(FcaBaseError):
+    """Raised when ``MultipageList.get_next`` is called on a list with no fetcher.
+
+    A ``MultipageList`` returned by the client carries a bound fetcher for the
+    next page. Instances that were constructed manually, unpickled, or
+    otherwise rehydrated do not have one — calling ``get_next`` on them
+    raises this error. Resume by calling the originating endpoint with
+    ``next_page=self.pagination.next_page`` instead.
+    """

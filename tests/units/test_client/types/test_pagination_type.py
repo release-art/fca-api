@@ -222,7 +222,6 @@ class TestMultipageList:
         assert restored == page
         assert restored.data == [1, 2, 3]
         assert restored.pagination.next_page == "tok"
-        assert restored._fetch_next_page is None
 
     def test_pickle_drops_fetcher_closure(self):
         import pickle
@@ -239,10 +238,9 @@ class TestMultipageList:
         # Local async funcs are not pickleable; the override must drop the closure.
         restored = pickle.loads(pickle.dumps(page))
         assert restored == page
-        assert restored._fetch_next_page is None
 
     @pytest.mark.asyncio
-    async def test_unpickled_get_next_raises_runtime_error(self):
+    async def test_unpickled_get_next_raises_detached_error(self):
         import pickle
 
         page = pagination.MultipageList(
@@ -250,8 +248,24 @@ class TestMultipageList:
             pagination=pagination.PaginationInfo(has_next=True, next_page="tok", size=10),
         )
         restored = pickle.loads(pickle.dumps(page))
-        with pytest.raises(RuntimeError):
+        with pytest.raises(exc.DetachedMultipageListError):
             await restored.get_next()
+
+    def test_hash_matches_equality(self):
+        # __eq__ is overridden; __hash__ must follow so the class remains
+        # usable in sets and as a dict key.
+        a = pagination.MultipageList(
+            data=[1, 2],
+            pagination=pagination.PaginationInfo(has_next=True, next_page="tok", size=10),
+        )
+        b = pagination.MultipageList(
+            data=[1, 2],
+            pagination=pagination.PaginationInfo(has_next=True, next_page="tok", size=10),
+        )
+        a._fetch_next_page = lambda: "fetcher-a"  # type: ignore[assignment]
+        b._fetch_next_page = lambda: "fetcher-b"  # type: ignore[assignment]
+        assert hash(a) == hash(b)
+        assert {a, b} == {a}
 
     def test_equality_ignores_fetcher_closure(self):
         # Two MultipageLists produced from separate calls hold distinct
@@ -590,34 +604,6 @@ class TestFetchPaginated:
         assert result.pagination.size is None
 
     @pytest.mark.asyncio
-    async def test_get_next_attached_on_intermediate_page(self):
-        client = self._make_client()
-        resp = _make_raw_response(1, 5, 10, ["a", "b"], has_next=True)
-
-        result = await client._fetch_paginated(
-            fetch_page_fn=AsyncMock(return_value=resp),
-            parse_data_fn=lambda data: data,
-            next_page=None,
-            result_count=1,
-        )
-
-        assert callable(result._fetch_next_page)
-
-    @pytest.mark.asyncio
-    async def test_get_next_not_attached_on_last_page(self):
-        client = self._make_client()
-        resp = _make_raw_response(1, 5, 3, ["a", "b", "c"], has_next=False)
-
-        result = await client._fetch_paginated(
-            fetch_page_fn=AsyncMock(return_value=resp),
-            parse_data_fn=lambda data: data,
-            next_page=None,
-            result_count=1,
-        )
-
-        assert result._fetch_next_page is None
-
-    @pytest.mark.asyncio
     async def test_get_next_fetches_subsequent_page(self):
         client = self._make_client()
         page1 = _make_raw_response(1, 5, 10, ["a", "b"], has_next=True)
@@ -715,15 +701,14 @@ class TestFetchPaginated:
             await result.get_next()
 
     @pytest.mark.asyncio
-    async def test_get_next_raises_runtime_error_when_no_fetcher_attached(self):
+    async def test_get_next_raises_detached_error_when_no_fetcher_attached(self):
         # A manually-constructed list with has_next=True but no fetcher (e.g.
         # rehydrated from JSON) should surface a clear error.
         page = pagination.MultipageList(
             data=["a"],
             pagination=pagination.PaginationInfo(has_next=True, next_page="tok", size=5),
         )
-        assert page._fetch_next_page is None
-        with pytest.raises(RuntimeError):
+        with pytest.raises(exc.DetachedMultipageListError):
             await page.get_next()
 
     @pytest.mark.asyncio

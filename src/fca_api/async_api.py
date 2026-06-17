@@ -289,14 +289,12 @@ class Client:
             ),
         )
 
-        if has_next and next_page_out is not None:
-            captured_next_page = next_page_out
-
+        if has_next:
             async def _fetch_next() -> types.pagination.MultipageList:
                 return await self._fetch_paginated(
                     fetch_page_fn=fetch_page_fn,
                     parse_data_fn=parse_data_fn,
-                    next_page=captured_next_page,
+                    next_page=result.pagination.next_page,
                     result_count=result_count,
                 )
 
