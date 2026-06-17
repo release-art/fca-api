@@ -280,7 +280,7 @@ class Client:
             next_state = types.pagination._PageState(page=last_info.page + 1)
             next_page_out = self._encode_next_page(next_state)
 
-        return types.pagination.MultipageList(
+        result = types.pagination.MultipageList(
             data=items,
             pagination=types.pagination.PaginationInfo(
                 has_next=has_next,
@@ -288,6 +288,21 @@ class Client:
                 size=last_info.total_count if last_info is not None else None,
             ),
         )
+
+        if has_next and next_page_out is not None:
+            captured_next_page = next_page_out
+
+            async def _fetch_next() -> types.pagination.MultipageList:
+                return await self._fetch_paginated(
+                    fetch_page_fn=fetch_page_fn,
+                    parse_data_fn=parse_data_fn,
+                    next_page=captured_next_page,
+                    result_count=result_count,
+                )
+
+            result._fetch_next_page = _fetch_next
+
+        return result
 
     # ------------------------------------------------------------------
     # Search endpoints

@@ -185,6 +185,7 @@ addopts = """\
     -ra \
     --tb=native \
     --verbosity=3 \
+    --cov-fail-under=100 \
 """
 filterwarnings = [
     "ignore::DeprecationWarning"

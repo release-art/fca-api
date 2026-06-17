@@ -17,6 +17,7 @@ import typing
 
 import pydantic
 
+from .. import exc
 from . import settings
 
 T = typing.TypeVar("T")
@@ -242,3 +243,59 @@ class MultipageList(pydantic.BaseModel, typing.Generic[T]):
     pagination: PaginationInfo = pydantic.Field(
         description=("Pagination state, including whether more results exist and how to fetch them.")
     )
+
+    _fetch_next_page: typing.Optional[typing.Callable[[], typing.Awaitable["MultipageList[T]"]]] = pydantic.PrivateAttr(
+        default=None,
+    )
+    """Bound closure that fetches the next page using the same endpoint and
+    arguments as the call that produced this list. Set by the client when the
+    list is produced; ``None`` on manually-constructed instances.
+    """
+
+    def __getstate__(self) -> dict:
+        # Drop the closure on pickle. After unpickling, ``_fetch_next_page`` is
+        # None and ``get_next()`` raises the manual-construction RuntimeError,
+        # directing the caller back to the originating endpoint.
+        state = super().__getstate__()
+        private = {**state["__pydantic_private__"], "_fetch_next_page": None}
+        return {**state, "__pydantic_private__": private}
+
+    def __eq__(self, other: object) -> bool:
+        # Pydantic v2's default __eq__ compares __pydantic_private__, which would
+        # make two lists with identical data but distinct fetcher closures
+        # compare unequal. Compare only the public fields.
+        if not isinstance(other, MultipageList):
+            return NotImplemented
+        return self.data == other.data and self.pagination == other.pagination
+
+    async def get_next(self) -> "MultipageList[T]":
+        """Fetch the next page from the same endpoint with the same arguments.
+
+        Returns a new ``MultipageList`` carrying the next page of results.
+        The returned list itself has ``get_next`` bound for further iteration.
+
+        Raises:
+            NoMorePagesError: If ``pagination.has_next`` is ``False`` — this
+                list is already the last page.
+            RuntimeError: If this list was constructed manually (e.g. in a
+                test or via deserialization) and has no fetcher attached.
+
+        Example:
+            Walk every page::
+
+                page = await client.search_frn("Barclays")
+                while page.pagination.has_next:
+                    page = await page.get_next()
+                    for firm in page.data:
+                        ...
+        """
+        if not self.pagination.has_next:
+            raise exc.NoMorePagesError("This is the last page; no more results to fetch.")
+        if self._fetch_next_page is None:
+            raise RuntimeError(
+                "MultipageList has no next-page fetcher attached — it was likely "
+                "constructed manually, unpickled, or otherwise rehydrated. Call the "
+                "originating endpoint with `next_page=<token>` instead, where "
+                "`<token>` is `self.pagination.next_page`."
+            )
+        return await self._fetch_next_page()
