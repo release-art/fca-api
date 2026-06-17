@@ -19,16 +19,16 @@ Pagination model::
     # Fetch the first page (one underlying API call by default)
     page = await client.search_frn("Barclays")
 
-    # Iterate through all pages explicitly
+    # Iterate through all pages — let the client re-dispatch via the token
     while True:
         for firm in page.data:
             print(f"{firm.name} (FRN: {firm.frn})")
         if not page.pagination.has_next:
             break
-        page = await client.search_frn(
-            "Barclays",
-            next_page=page.pagination.next_page,
-        )
+        page = await client.next_page(page)
+
+    # ...or call the same endpoint again explicitly:
+    # page = await client.search_frn("Barclays", next_page=page.pagination.next_page)
 
 Example:
     Basic client usage::
@@ -52,7 +52,7 @@ import typing
 
 import httpx
 
-from . import raw_api, types
+from . import exc, raw_api, types
 
 logger = logging.getLogger(__name__)
 
@@ -224,6 +224,8 @@ class Client:
         parse_data_fn: typing.Callable[[typing.Union[list, dict]], list],
         next_page: typing.Optional[types.pagination.NextPageToken],
         result_count: int,
+        endpoint: str,
+        endpoint_args: typing.Dict[str, typing.Any],
     ) -> types.pagination.MultipageList:
         """Fetch one or more API pages and return a single MultipageList.
 
@@ -240,12 +242,17 @@ class Client:
                 the beginning.
             result_count: Minimum number of items to collect. The method
                 always fetches at least one API page regardless of this value.
+            endpoint: Name of the calling ``Client`` method (e.g. ``"search_frn"``).
+                Baked into the outgoing next-page token so ``Client.next_page``
+                can dispatch back to the same endpoint.
+            endpoint_args: Keyword arguments to re-apply when ``Client.next_page``
+                re-invokes the endpoint. Must be JSON-serializable. Should
+                include everything the original call received except ``next_page``.
 
         Returns:
             A MultipageList with the collected items and pagination metadata.
         """
-        page_state = self._decode_next_page(next_page) if next_page is not None else types.pagination._PageState.first()
-        current_page = page_state.page
+        current_page = self._decode_next_page(next_page).page if next_page is not None else 1
         items: list = []
         last_info: typing.Optional[types.pagination.PaginatedResultInfo] = None
         has_next = False
@@ -277,10 +284,14 @@ class Client:
 
         next_page_out: typing.Optional[types.pagination.NextPageToken] = None
         if has_next and last_info is not None:
-            next_state = types.pagination._PageState(page=last_info.page + 1)
+            next_state = types.pagination._PageState(
+                endpoint=endpoint,
+                args=endpoint_args,
+                page=last_info.page + 1,
+            )
             next_page_out = self._encode_next_page(next_state)
 
-        result = types.pagination.MultipageList(
+        return types.pagination.MultipageList(
             data=items,
             pagination=types.pagination.PaginationInfo(
                 has_next=has_next,
@@ -289,18 +300,44 @@ class Client:
             ),
         )
 
-        if has_next:
-            async def _fetch_next() -> types.pagination.MultipageList:
-                return await self._fetch_paginated(
-                    fetch_page_fn=fetch_page_fn,
-                    parse_data_fn=parse_data_fn,
-                    next_page=result.pagination.next_page,
-                    result_count=result_count,
-                )
+    # ------------------------------------------------------------------
+    # Next-page dispatcher
+    # ------------------------------------------------------------------
 
-            result._fetch_next_page = _fetch_next
+    async def next_page(
+        self,
+        page: types.pagination.MultipageList[T],
+    ) -> types.pagination.MultipageList[T]:
+        """Fetch the next page of a previous paginated call.
 
-        return result
+        Decodes the ``next_page`` token carried on ``page.pagination`` and
+        re-invokes the originating endpoint with the same arguments. The
+        endpoint name and arguments are baked into the token at the time
+        the page is produced, so the caller does not need to remember them.
+
+        Args:
+            page: A page previously returned by any paginated ``Client`` method.
+
+        Returns:
+            The next page of results, with the same item type as ``page``.
+
+        Raises:
+            NoMorePagesError: If ``page.pagination.has_next`` is ``False``.
+
+        Example:
+            Walk every page::
+
+                page = await client.search_frn("Barclays")
+                while page.pagination.has_next:
+                    page = await client.next_page(page)
+                    for firm in page.data:
+                        ...
+        """
+        if not page.pagination.has_next or page.pagination.next_page is None:
+            raise exc.NoMorePagesError("This is the last page; no more results to fetch.")
+        state = self._decode_next_page(page.pagination.next_page)
+        method = getattr(self, state.endpoint)
+        return await method(next_page=page.pagination.next_page, **state.args)
 
     # ------------------------------------------------------------------
     # Search endpoints
@@ -341,6 +378,8 @@ class Client:
             parse_data_fn=lambda data: [types.search.FirmSearchResult.model_validate(item) for item in data],
             next_page=next_page,
             result_count=result_count,
+            endpoint="search_frn",
+            endpoint_args={"firm_name": firm_name, "result_count": result_count},
         )
 
     async def search_irn(
@@ -364,6 +403,8 @@ class Client:
             parse_data_fn=lambda data: [types.search.IndividualSearchResult.model_validate(item) for item in data],
             next_page=next_page,
             result_count=result_count,
+            endpoint="search_irn",
+            endpoint_args={"individual_name": individual_name, "result_count": result_count},
         )
 
     async def search_prn(
@@ -387,6 +428,8 @@ class Client:
             parse_data_fn=lambda data: [types.search.FundSearchResult.model_validate(item) for item in data],
             next_page=next_page,
             result_count=result_count,
+            endpoint="search_prn",
+            endpoint_args={"fund_name": fund_name, "result_count": result_count},
         )
 
     # ------------------------------------------------------------------
@@ -449,6 +492,8 @@ class Client:
             parse_data_fn=self._parse_firm_names_pg,
             next_page=next_page,
             result_count=result_count,
+            endpoint="get_firm_names",
+            endpoint_args={"frn": frn, "result_count": result_count},
         )
 
     def _parse_firm_addresses_pg(self, data: list[dict]) -> list[types.firm.FirmAddress]:
@@ -488,6 +533,8 @@ class Client:
             parse_data_fn=self._parse_firm_addresses_pg,
             next_page=next_page,
             result_count=result_count,
+            endpoint="get_firm_addresses",
+            endpoint_args={"frn": frn, "result_count": result_count},
         )
 
     def _parse_firm_controlled_functions_pg(self, data: list[dict]) -> list[types.firm.FirmControlledFunction]:
@@ -533,6 +580,8 @@ class Client:
             parse_data_fn=self._parse_firm_controlled_functions_pg,
             next_page=next_page,
             result_count=result_count,
+            endpoint="get_firm_controlled_functions",
+            endpoint_args={"frn": frn, "result_count": result_count},
         )
 
     async def get_firm_individuals(
@@ -556,6 +605,8 @@ class Client:
             parse_data_fn=lambda data: [types.firm.FirmIndividual.model_validate(item) for item in data],
             next_page=next_page,
             result_count=result_count,
+            endpoint="get_firm_individuals",
+            endpoint_args={"frn": frn, "result_count": result_count},
         )
 
     def _parse_firm_permissions_pg(self, data: dict) -> list[types.firm.FirmPermission]:
@@ -609,6 +660,8 @@ class Client:
             parse_data_fn=self._parse_firm_permissions_pg,
             next_page=next_page,
             result_count=result_count,
+            endpoint="get_firm_permissions",
+            endpoint_args={"frn": frn, "result_count": result_count},
         )
 
     async def get_firm_requirements(
@@ -632,6 +685,8 @@ class Client:
             parse_data_fn=lambda data: [types.firm.FirmRequirement.model_validate(row) for row in data],
             next_page=next_page,
             result_count=result_count,
+            endpoint="get_firm_requirements",
+            endpoint_args={"frn": frn, "result_count": result_count},
         )
 
     async def get_firm_requirement_investment_types(
@@ -657,6 +712,8 @@ class Client:
             parse_data_fn=lambda data: [types.firm.FirmRequirementInvestmentType.model_validate(row) for row in data],
             next_page=next_page,
             result_count=result_count,
+            endpoint="get_firm_requirement_investment_types",
+            endpoint_args={"frn": frn, "req_ref": req_ref, "result_count": result_count},
         )
 
     async def get_firm_regulators(
@@ -680,6 +737,8 @@ class Client:
             parse_data_fn=lambda data: [types.firm.FirmRegulator.model_validate(item) for item in data],
             next_page=next_page,
             result_count=result_count,
+            endpoint="get_firm_regulators",
+            endpoint_args={"frn": frn, "result_count": result_count},
         )
 
     def _parse_firm_passports_pg(self, data: list[dict]) -> list[types.firm.FirmPassport]:
@@ -719,6 +778,8 @@ class Client:
             parse_data_fn=self._parse_firm_passports_pg,
             next_page=next_page,
             result_count=result_count,
+            endpoint="get_firm_passports",
+            endpoint_args={"frn": frn, "result_count": result_count},
         )
 
     async def get_firm_passport_permissions(
@@ -744,6 +805,8 @@ class Client:
             parse_data_fn=lambda data: [types.firm.FirmPassportPermission.model_validate(item) for item in data],
             next_page=next_page,
             result_count=result_count,
+            endpoint="get_firm_passport_permissions",
+            endpoint_args={"frn": frn, "country": country, "result_count": result_count},
         )
 
     async def get_firm_waivers(
@@ -767,6 +830,8 @@ class Client:
             parse_data_fn=lambda data: [types.firm.FirmWaiver.model_validate(item) for item in data],
             next_page=next_page,
             result_count=result_count,
+            endpoint="get_firm_waivers",
+            endpoint_args={"frn": frn, "result_count": result_count},
         )
 
     async def get_firm_exclusions(
@@ -790,6 +855,8 @@ class Client:
             parse_data_fn=lambda data: [types.firm.FirmExclusion.model_validate(item) for item in data],
             next_page=next_page,
             result_count=result_count,
+            endpoint="get_firm_exclusions",
+            endpoint_args={"frn": frn, "result_count": result_count},
         )
 
     async def get_firm_disciplinary_history(
@@ -813,6 +880,8 @@ class Client:
             parse_data_fn=lambda data: [types.firm.FirmDisciplinaryRecord.model_validate(item) for item in data],
             next_page=next_page,
             result_count=result_count,
+            endpoint="get_firm_disciplinary_history",
+            endpoint_args={"frn": frn, "result_count": result_count},
         )
 
     def _parse_firm_appointed_representatives_pg(
@@ -853,6 +922,8 @@ class Client:
             parse_data_fn=self._parse_firm_appointed_representatives_pg,
             next_page=next_page,
             result_count=result_count,
+            endpoint="get_firm_appointed_representatives",
+            endpoint_args={"frn": frn, "result_count": result_count},
         )
 
     # ------------------------------------------------------------------
@@ -925,6 +996,8 @@ class Client:
             parse_data_fn=self._parse_individual_controlled_functions_pg,
             next_page=next_page,
             result_count=result_count,
+            endpoint="get_individual_controlled_functions",
+            endpoint_args={"irn": irn, "result_count": result_count},
         )
 
     async def get_individual_disciplinary_history(
@@ -950,6 +1023,8 @@ class Client:
             ],
             next_page=next_page,
             result_count=result_count,
+            endpoint="get_individual_disciplinary_history",
+            endpoint_args={"irn": irn, "result_count": result_count},
         )
 
     # ------------------------------------------------------------------
@@ -991,6 +1066,8 @@ class Client:
             parse_data_fn=lambda data: [types.products.ProductNameAlias.model_validate(item) for item in data],
             next_page=next_page,
             result_count=result_count,
+            endpoint="get_fund_names",
+            endpoint_args={"prn": prn, "result_count": result_count},
         )
 
     async def get_fund_subfunds(
@@ -1014,6 +1091,8 @@ class Client:
             parse_data_fn=lambda data: [types.products.SubFundDetails.model_validate(item) for item in data],
             next_page=next_page,
             result_count=result_count,
+            endpoint="get_fund_subfunds",
+            endpoint_args={"prn": prn, "result_count": result_count},
         )
 
     # ------------------------------------------------------------------
@@ -1039,4 +1118,6 @@ class Client:
             parse_data_fn=lambda data: [types.markets.RegulatedMarket.model_validate(item) for item in data],
             next_page=next_page,
             result_count=result_count,
+            endpoint="get_regulated_markets",
+            endpoint_args={"result_count": result_count},
         )

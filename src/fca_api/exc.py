@@ -73,10 +73,10 @@ class FcaRequestError(FcaBaseError):
 
 
 class NoMorePagesError(FcaBaseError):
-    """Raised when ``MultipageList.get_next`` is called on the last page.
+    """Raised when ``Client.next_page`` is called on the last page.
 
     Indicates the caller asked for a page beyond the end of the result set.
-    Check ``MultipageList.pagination.has_next`` before calling ``get_next``
+    Check ``MultipageList.pagination.has_next`` before calling ``Client.next_page``
     to avoid this exception.
 
     Example:
@@ -84,16 +84,5 @@ class NoMorePagesError(FcaBaseError):
 
             page = await client.search_frn("Barclays")
             while page.pagination.has_next:
-                page = await page.get_next()
-    """
-
-
-class DetachedMultipageListError(FcaBaseError):
-    """Raised when ``MultipageList.get_next`` is called on a list with no fetcher.
-
-    A ``MultipageList`` returned by the client carries a bound fetcher for the
-    next page. Instances that were constructed manually, unpickled, or
-    otherwise rehydrated do not have one — calling ``get_next`` on them
-    raises this error. Resume by calling the originating endpoint with
-    ``next_page=self.pagination.next_page`` instead.
+                page = await client.next_page(page)
     """
