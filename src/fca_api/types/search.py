@@ -113,38 +113,9 @@ class IndividualSearchResult(base.Base):
 
 
 class FundSearchResult(base.Base):
-    """Search result for a fund or other financial product.
+    """A fund record from a fund-name search.
 
-    Represents a single product found in search results, containing core
-    identification and status information. This is returned by product
-    name searches and provides the essential data needed to identify and
-    access detailed product information.
-
-    Attributes:
-        url: Direct link to the product's page in the FCA register (may be None)
-        prn: The product's unique Product Reference Number (PRN)
-        status: Current regulatory status of the product
-        type: Type of product (for example, "UCITS", "AIF")
-        name: The product's name
-
-    Example:
-        Access product search result data::
-
-            funds = await client.search_prn("Vanguard")
-            if len(funds) > 0:
-                product = funds[0]
-
-                print(f"Found: {product.name}")
-                print(f"PRN: {product.prn}")
-                print(f"Status: {product.status}")
-                print(f"Type: {product.type}")
-
-                if product.url:
-                    print(f"Details: {product.url}")
-
-    Note:
-        The ``prn`` field is the key identifier for retrieving detailed
-        product information using ``client.get_fund()``.
+    Use ``prn`` with :meth:`Client.get_fund` for full details.
     """
 
     url: Annotated[
