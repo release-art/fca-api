@@ -42,7 +42,7 @@ class TestIndividualSearch:
             assert item.name
         # Verify pagination token works for subsequent page
         assert page1.pagination.has_next
-        page2 = await test_client.search_irn("bob", next_page=page1.pagination.next_page)
+        page2 = await test_client.fetch_next_page(page1.pagination.next_page)
         assert len(page2.data) > 0
 
     @pytest.mark.asyncio

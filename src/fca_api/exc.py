@@ -73,16 +73,16 @@ class FcaRequestError(FcaBaseError):
 
 
 class NoMorePagesError(FcaBaseError):
-    """Raised when ``Client.next_page`` is called on the last page.
+    """Raised when ``MultipageList.get_next`` is called on the last page.
 
     Indicates the caller asked for a page beyond the end of the result set.
-    Check ``MultipageList.pagination.has_next`` before calling ``Client.next_page``
-    to avoid this exception.
+    Check ``MultipageList.pagination.has_next`` before calling ``get_next`` to
+    avoid this exception.
 
     Example:
         Iterate safely to exhaustion::
 
             page = await client.search_frn("Barclays")
             while page.pagination.has_next:
-                page = await client.next_page(page)
+                page = await page.get_next()
     """
