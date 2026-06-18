@@ -70,19 +70,3 @@ class FcaRequestError(FcaBaseError):
         This exception is primarily raised by the raw client layer.
         The high-level client may handle some of these errors internally.
     """
-
-
-class NoMorePagesError(FcaBaseError):
-    """Raised when ``MultipageList.get_next`` is called on the last page.
-
-    Indicates the caller asked for a page beyond the end of the result set.
-    Check ``MultipageList.pagination.has_next`` before calling ``get_next`` to
-    avoid this exception.
-
-    Example:
-        Iterate safely to exhaustion::
-
-            page = await client.search_frn("Barclays")
-            while page.pagination.has_next:
-                page = await page.get_next()
-    """

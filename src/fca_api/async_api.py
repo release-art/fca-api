@@ -19,16 +19,13 @@ Pagination model::
     # Fetch the first page (one underlying API call by default)
     page = await client.search_frn("Barclays")
 
-    # Iterate through all pages with the get_next sugar...
+    # Iterate through all pages — resume from the self-contained cursor
     while True:
         for firm in page.data:
             print(f"{firm.name} (FRN: {firm.frn})")
         if not page.pagination.has_next:
             break
-        page = await page.get_next()
-
-    # ...or resume statelessly from the self-contained cursor:
-    # page2 = await client.fetch_next_page(page.pagination.next_page)
+        page = await client.fetch_next_page(page.pagination.next_page)
 
 Example:
     Basic client usage::
@@ -53,7 +50,7 @@ import typing
 
 import httpx
 
-from . import exc, raw_api, types
+from . import raw_api, types
 from ._paginate import current_resume_state, paginated
 
 logger = logging.getLogger(__name__)
@@ -326,7 +323,7 @@ class Client:
             next_page_out = self._encode_next_page(next_state)
 
         return types.pagination.MultipageList(
-            data=items,
+            data=tuple(items),
             pagination=types.pagination.PaginationInfo(
                 has_next=has_next,
                 next_page=next_page_out,
@@ -355,7 +352,7 @@ class Client:
             next_page: A ``pagination.next_page`` token from a prior result.
 
         Returns:
-            The next ``MultipageList``, itself bound for further iteration.
+            The next ``MultipageList``.
 
         Raises:
             ValueError: If the token does not name a known, resumable endpoint —
@@ -411,7 +408,7 @@ class Client:
             print(f"Got {len(page.data)} of ~{page.pagination.size} total")
 
             if page.pagination.has_next:
-                page = await page.get_next()
+                page = await client.fetch_next_page(page.pagination.next_page)
         """
         return await self._fetch_paginated(
             fetch_page_fn=lambda p: self._client.search_frn(firm_name, p),

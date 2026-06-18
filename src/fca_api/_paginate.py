@@ -39,9 +39,8 @@ def current_resume_state() -> _ResumeState:
 def paginated(*, exclude: typing.Collection[str] = ("self",)) -> typing.Callable[[_PaginatedFn], _PaginatedFn]:
     """Decorate an async ``Client`` method that returns a ``MultipageList``.
 
-    * Publishes the endpoint name and arguments on :data:`_resume_ctx` so the
-      fetch helpers can build a replayable ``next_page`` token.
-    * Binds the client to the result so :meth:`MultipageList.get_next` works.
+    Publishes the endpoint name and arguments on :data:`_resume_ctx` so the
+    fetch helpers can build a replayable ``next_page`` token.
 
     Args:
         exclude: Argument names left out of the resume token's ``params``
@@ -60,11 +59,9 @@ def paginated(*, exclude: typing.Collection[str] = ("self",)) -> typing.Callable
             params = {name: value for name, value in bound.arguments.items() if name not in excluded}
             ctx_token = _resume_ctx.set(_ResumeState(endpoint=endpoint, params=params))
             try:
-                result = await func(*args, **kwargs)
+                return await func(*args, **kwargs)
             finally:
                 _resume_ctx.reset(ctx_token)
-            result._client = args[0]  # bind the Client (self) for get_next()
-            return result
 
         return typing.cast(_PaginatedFn, wrapper)
 

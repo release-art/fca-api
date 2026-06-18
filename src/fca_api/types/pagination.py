@@ -4,7 +4,7 @@ Public types:
     NextPageToken: Opaque string cursor passed to ``Client.fetch_next_page``.
     PageTokenSerializer: Protocol for encrypting/decrypting pagination tokens.
     PaginationInfo: Pagination metadata returned alongside each page of results.
-    MultipageList: Generic value object holding one batch of results plus a get_next handle.
+    MultipageList: Generic pure-data value object holding one batch of results.
 
 Internal types (not part of the public API):
     _PageState: Self-contained, restartable pagination cursor encoded as JSON.
@@ -15,7 +15,6 @@ import typing
 
 import pydantic
 
-from .. import exc
 from . import settings
 
 T = typing.TypeVar("T")
@@ -116,8 +115,7 @@ NextPageToken = typing.Annotated[
 """An opaque string cursor for retrieving the next page of results.
 
 Returned in ``PaginationInfo.next_page`` when more results exist. Pass it to
-``Client.fetch_next_page`` to fetch the next batch (or call
-``MultipageList.get_next``, which does this for you).
+``Client.fetch_next_page`` to fetch the next batch.
 
 The internal format is an implementation detail and may change. Always treat
 this value as opaque.
@@ -178,16 +176,15 @@ class PageTokenSerializer(typing.Protocol):
 class PaginationInfo(pydantic.BaseModel):
     """Pagination state for a result set returned by the FCA API.
 
-    Returned alongside every page of results from the async client. Use
-    ``MultipageList.get_next`` (or pass ``next_page`` to
-    ``Client.fetch_next_page``) to retrieve the next page of items.
+    Returned alongside every page of results from the async client. Pass
+    ``next_page`` to :meth:`Client.fetch_next_page` to retrieve the next page.
 
     Example::
 
         page = await client.search_frn("Barclays")
 
         while page.pagination.has_next:
-            page = await page.get_next()
+            page = await client.fetch_next_page(page.pagination.next_page)
     """
 
     model_config = pydantic.ConfigDict(frozen=True)
@@ -206,22 +203,6 @@ class PaginationInfo(pydantic.BaseModel):
 
 
 # ---------------------------------------------------------------------------
-# Internal: client handle used by MultipageList.get_next
-# ---------------------------------------------------------------------------
-
-
-@typing.runtime_checkable
-class _NextPageFetcher(typing.Protocol):
-    """Minimal interface :meth:`MultipageList.get_next` needs from a client.
-
-    ``Client`` satisfies this structurally; kept here to avoid importing the
-    client into the types package.
-    """
-
-    async def fetch_next_page(self, next_page: str) -> typing.Any: ...
-
-
-# ---------------------------------------------------------------------------
 # Public: result page model
 # ---------------------------------------------------------------------------
 
@@ -229,19 +210,17 @@ class _NextPageFetcher(typing.Protocol):
 class MultipageList(pydantic.BaseModel, typing.Generic[T]):
     """A page of typed results from a paginated FCA API endpoint.
 
-    Contains the items collected by one client call — at least ``result_count``
-    items, or all remaining items if fewer exist — plus the pagination metadata
-    needed to retrieve the next batch. Returned by all paginated methods on
-    ``async_api.Client``. ``MultipageList`` itself is a plain value object: it
-    holds the already-fetched ``data`` and a single :meth:`get_next` handle,
-    and does not fetch lazily or merge across calls. Advance with
-    :meth:`get_next` (or by passing ``pagination.next_page`` to
-    :meth:`Client.fetch_next_page`).
+    Pure-data value object: holds the items collected by one client call (at
+    least ``result_count`` items, or all remaining items if fewer exist) plus
+    the pagination metadata needed to retrieve the next batch. Carries no
+    client reference and no behavior — pickle, JSON, deepcopy, and equality
+    all work without surprises. Advance by passing ``pagination.next_page``
+    to :meth:`Client.fetch_next_page`.
 
     Type Parameters:
         T: The type of items in ``data``.
 
-    Walking the whole result set with ``get_next``::
+    Walking the whole result set::
 
         page = await client.search_frn("Barclays")
         while True:
@@ -249,7 +228,7 @@ class MultipageList(pydantic.BaseModel, typing.Generic[T]):
                 ...  # process this batch's items
             if not page.pagination.has_next:
                 break
-            page = await page.get_next()
+            page = await client.fetch_next_page(page.pagination.next_page)
 
     Fetching a larger batch in one call::
 
@@ -263,62 +242,13 @@ class MultipageList(pydantic.BaseModel, typing.Generic[T]):
         page = await client.search_frn("Barclays")
         token = page.pagination.next_page  # opaque, restartable cursor
 
-        # ... later, in a new process with only `token` ...
+        # ... later, in a new process with only `token` in hand ...
         page2 = await client.fetch_next_page(token)
     """
 
-    model_config = pydantic.ConfigDict(frozen=True, arbitrary_types_allowed=True)
+    model_config = pydantic.ConfigDict(frozen=True)
 
-    data: typing.List[T] = pydantic.Field(description="The result items for this page.")
+    data: typing.Tuple[T, ...] = pydantic.Field(description="The result items for this page. Immutable.")
     pagination: PaginationInfo = pydantic.Field(
         description="Pagination state, including whether more results exist and how to fetch them."
     )
-
-    _client: typing.Optional[_NextPageFetcher] = pydantic.PrivateAttr(default=None)
-    """Client used to fetch the next batch via the self-contained ``next_page``
-    token. Set by the client when the list is produced; ``None`` on
-    manually-constructed or deserialized instances. Bind one with
-    :meth:`with_client` to re-enable :meth:`get_next` on a reconstructed list.
-    """
-
-    def with_client(self, client: _NextPageFetcher) -> "MultipageList[T]":
-        """Bind a client so :meth:`get_next` works on this (e.g. deserialized) list.
-
-        Returns ``self`` for chaining. The token itself is self-contained, so
-        the bound client only supplies the HTTP session — any ``Client`` will do.
-        """
-        self._client = client
-        return self
-
-    async def get_next(self) -> "MultipageList[T]":
-        """Fetch the next batch from the same endpoint with the same arguments.
-
-        Convenience wrapper over :meth:`Client.fetch_next_page` using this
-        list's self-contained ``pagination.next_page`` token. The returned
-        ``MultipageList`` is itself bound for further iteration.
-
-        Raises:
-            NoMorePagesError: If ``pagination.has_next`` is ``False`` — this
-                list is already the last batch.
-            RuntimeError: If no client is bound (e.g. a manually-constructed or
-                deserialized list). Either call ``client.fetch_next_page(token)``
-                directly, or bind one first via :meth:`with_client`.
-
-        Example:
-            Walk every batch::
-
-                page = await client.search_frn("Barclays")
-                while page.pagination.has_next:
-                    page = await page.get_next()
-                    for firm in page.data:
-                        ...
-        """
-        if not self.pagination.has_next:
-            raise exc.NoMorePagesError("This is the last page; no more results to fetch.")
-        if self._client is None or self.pagination.next_page is None:
-            raise RuntimeError(
-                "MultipageList has no client bound — it was likely constructed manually "
-                "or deserialized. Call `client.fetch_next_page(pagination.next_page)` "
-                "directly, or bind a client with `.with_client(client)` first."
-            )
-        return await self._client.fetch_next_page(self.pagination.next_page)

@@ -7,37 +7,35 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.3.0] - 2026-06-17
 
-Pagination is restructured around self-contained, restartable cursors —
-aligning with the design landed in `ch-api`. The `next_page` token now embeds
-the originating endpoint and its arguments, so a fresh process can fetch the
-next batch with only the token. Designed for stateless services and AI-agent
-tools that return one page plus an opaque cursor and resume on a later,
-independent request.
+Pagination is restructured around self-contained, restartable cursors. The
+`next_page` token now embeds the originating endpoint and its arguments, so a
+fresh process can fetch the next batch with only the token — designed for
+stateless services and AI-agent tools that return one page plus an opaque
+cursor and resume on a later, independent request.
 
 ### Added
 - `Client.fetch_next_page(token)` — resume any paginated request from a
   self-contained `next_page` cursor. Validates the token against a
-  `_RESUMABLE_ENDPOINTS` allowlist before dispatching, so malformed or
-  tampered tokens cannot call arbitrary client methods.
-- `MultipageList.get_next()` — sugar over `Client.fetch_next_page(token)`
-  using the page's own cursor. Available whenever the page was produced by a
-  `Client` call (the client is bound on the result automatically).
-- `MultipageList.with_client(client)` — rebind a client to a deserialized or
-  manually-constructed page so `get_next()` works on it.
+  `_RESUMABLE_ENDPOINTS` allowlist before dispatching, so a malformed token
+  cannot dispatch to an arbitrary client method.
 
 ### Changed
 - **Breaking:** paginated endpoint methods no longer accept a `next_page`
-  parameter. Resume is now done exclusively via `Client.fetch_next_page(token)`
-  or `MultipageList.get_next()`. Migration::
+  parameter. Resume goes through `Client.fetch_next_page(token)`. Migration::
 
       # before
       page2 = await client.search_frn("Barclays", next_page=page1.pagination.next_page)
 
       # after
       page2 = await client.fetch_next_page(page1.pagination.next_page)
-      # or
-      page2 = await page1.get_next()
 
+- **Breaking:** `MultipageList.data` is now a `tuple` rather than a `list`.
+  Iteration and indexing are unchanged; `.append`/`.extend`/`__setitem__` are
+  no longer available. Reflects that `data` is a snapshot and must not be
+  mutated after leaving the client.
+- `MultipageList` is now a pure-data value object — no client reference, no
+  behavior. Pickle, JSON, deepcopy, and equality all work without special
+  handling. Advance pagination via `Client.fetch_next_page(page.pagination.next_page)`.
 - The `next_page` token format now embeds the endpoint name and bound kwargs
   in addition to the page number. Tokens remain opaque to callers, but
   cursors issued by 1.2.x are not decodable by 1.3.0 (and vice versa) —
