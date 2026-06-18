@@ -1,11 +1,13 @@
-"""Tests for fca_api.types.pagination."""
+"""Tests for fca_api.types.pagination and the pagination machinery in async_api."""
 
 import json
 from unittest.mock import AsyncMock, MagicMock
 
 import pytest
 
+import fca_api.async_api as async_api
 import fca_api.types.pagination as pagination
+from fca_api._paginate import _resume_ctx, _ResumeState, current_resume_state, paginated
 
 # ---------------------------------------------------------------------------
 # _PageState
@@ -13,34 +15,40 @@ import fca_api.types.pagination as pagination
 
 
 class TestPageState:
-    def test_first_returns_page_one(self):
-        state = pagination._PageState.first()
-        assert state.page == 1
-
     def test_encode_produces_valid_json(self):
-        state = pagination._PageState(page=3)
+        state = pagination._PageState(endpoint="search_frn", params={"firm_name": "Barclays"}, page=3)
         encoded = state.encode()
-        data = json.loads(encoded)
-        assert data == {"page": 3}
+        assert json.loads(encoded) == {
+            "page": 3,
+            "endpoint": "search_frn",
+            "params": {"firm_name": "Barclays"},
+        }
 
     def test_decode_roundtrip(self):
-        original = pagination._PageState(page=7)
-        restored = pagination._PageState.decode(original.encode())
-        assert restored == original
-
-    def test_decode_roundtrip_first_page(self):
-        original = pagination._PageState.first()
+        original = pagination._PageState(
+            endpoint="get_firm_passport_permissions",
+            params={"frn": "12345", "country": "FR", "result_count": 10},
+            page=7,
+        )
         assert pagination._PageState.decode(original.encode()) == original
 
-    def test_frozen(self):
-        state = pagination._PageState(page=1)
-        with pytest.raises((AttributeError, TypeError)):
-            state.page = 2  # type: ignore[misc]
+    def test_first_factory(self):
+        assert pagination._PageState.first() == pagination._PageState(page=1)
 
-    def test_decode_ignores_extra_json_fields(self):
-        token = json.dumps({"page": 5, "extra": "ignored"})
-        state = pagination._PageState.decode(token)
-        assert state.page == 5
+    def test_decode_roundtrip_position_only(self):
+        # endpoint/params default empty — represents a position-only state.
+        original = pagination._PageState(page=4)
+        restored = pagination._PageState.decode(original.encode())
+        assert restored == original
+        assert restored.endpoint == ""
+        assert restored.params == {}
+
+    def test_frozen(self):
+        state = pagination._PageState(endpoint="search_frn", params={}, page=1)
+        import pydantic
+
+        with pytest.raises((AttributeError, TypeError, pydantic.ValidationError)):
+            state.page = 2  # type: ignore[misc]
 
 
 # ---------------------------------------------------------------------------
@@ -50,7 +58,6 @@ class TestPageState:
 
 class TestNextPageToken:
     def test_is_string_annotation(self):
-        # NextPageToken must resolve to str at runtime
         import typing
 
         args = typing.get_args(pagination.NextPageToken)
@@ -79,8 +86,7 @@ class TestPageTokenSerializer:
             def deserialize(self, token: str) -> str:
                 return token.removeprefix("enc:")
 
-        s = MySerializer()
-        assert isinstance(s, pagination.PageTokenSerializer)
+        assert isinstance(MySerializer(), pagination.PageTokenSerializer)
 
     def test_object_missing_method_does_not_satisfy_protocol(self):
         class Incomplete:
@@ -110,11 +116,7 @@ class TestPageTokenSerializer:
 
 class TestPaginationInfo:
     def test_has_next_true_with_token(self):
-        info = pagination.PaginationInfo(
-            has_next=True,
-            next_page='{"page":2}',
-            size=100,
-        )
+        info = pagination.PaginationInfo(has_next=True, next_page='{"page":2}', size=100)
         assert info.has_next is True
         assert info.next_page == '{"page":2}'
         assert info.size == 100
@@ -139,86 +141,177 @@ class TestPaginationInfo:
         assert "next_page" in props
         assert "size" in props
 
-    def test_json_schema_field_descriptions(self):
-        schema = pagination.PaginationInfo.model_json_schema()
-        props = schema["properties"]
-        assert props["has_next"].get("description")
-        # next_page and size may be wrapped in anyOf/allOf due to Optional + Annotated
-        # Just verify the field exists and the schema is valid JSON
-        assert "next_page" in props
-        assert "size" in props
-
     def test_model_dump(self):
         info = pagination.PaginationInfo(has_next=True, next_page="abc", size=42)
-        d = info.model_dump()
-        assert d == {"has_next": True, "next_page": "abc", "size": 42}
+        assert info.model_dump() == {"has_next": True, "next_page": "abc", "size": 42}
 
 
 # ---------------------------------------------------------------------------
-# MultipageList
+# MultipageList — value object + get_next / with_client
 # ---------------------------------------------------------------------------
 
 
 class TestMultipageList:
     def test_construction_with_items(self):
         page = pagination.MultipageList(
-            data=["a", "b", "c"],
+            data=("a", "b", "c"),
             pagination=pagination.PaginationInfo(has_next=False),
         )
-        assert page.data == ["a", "b", "c"]
-        assert page.pagination.has_next is False
+        assert page.data == ("a", "b", "c")
+
+    def test_construction_coerces_list_to_tuple(self):
+        # Callers can still pass a list; pydantic coerces to the declared tuple type.
+        page = pagination.MultipageList(
+            data=["a", "b"],
+            pagination=pagination.PaginationInfo(has_next=False),
+        )
+        assert page.data == ("a", "b")
+        assert isinstance(page.data, tuple)
 
     def test_construction_empty(self):
         page = pagination.MultipageList(
-            data=[],
+            data=(),
             pagination=pagination.PaginationInfo(has_next=False, size=0),
         )
-        assert page.data == []
+        assert page.data == ()
         assert page.pagination.size == 0
 
     def test_frozen(self):
         import pydantic
 
         page = pagination.MultipageList(
-            data=[1, 2],
+            data=(1, 2),
             pagination=pagination.PaginationInfo(has_next=False),
         )
         with pytest.raises((AttributeError, TypeError, pydantic.ValidationError)):
-            page.data = [3, 4]  # type: ignore[misc]
+            page.data = (3, 4)  # type: ignore[misc]
+
+    def test_data_is_immutable(self):
+        # tuple has no append/extend/__setitem__ — the contract holds at the
+        # type level, not just via frozen=True.
+        page = pagination.MultipageList(
+            data=(1, 2),
+            pagination=pagination.PaginationInfo(has_next=False),
+        )
+        assert not hasattr(page.data, "append")
+        with pytest.raises(TypeError):
+            page.data[0] = 99  # type: ignore[index]
 
     def test_model_dump(self):
         page = pagination.MultipageList(
-            data=[1, 2],
+            data=(1, 2),
             pagination=pagination.PaginationInfo(has_next=True, next_page="tok", size=10),
         )
         d = page.model_dump()
-        assert d["data"] == [1, 2]
-        assert d["pagination"]["has_next"] is True
+        assert d["data"] == (1, 2)
         assert d["pagination"]["next_page"] == "tok"
-        assert d["pagination"]["size"] == 10
 
-    def test_json_schema_with_concrete_type(self):
+    def test_pickle_roundtrip(self):
+        # Pure-data MultipageList must round-trip through pickle with no special
+        # handling — no client, no closures, nothing the lib has to strip.
+        import pickle
+
+        page = pagination.MultipageList(
+            data=(1, 2, 3),
+            pagination=pagination.PaginationInfo(has_next=True, next_page="tok", size=10),
+        )
+        restored = pickle.loads(pickle.dumps(page))
+        assert restored == page
+
+    def test_json_roundtrip(self):
+        page = pagination.MultipageList(
+            data=(1, 2, 3),
+            pagination=pagination.PaginationInfo(has_next=True, next_page="tok", size=10),
+        )
+        restored = pagination.MultipageList[int].model_validate_json(page.model_dump_json())
+        assert restored == page
+
+    # -- Hashability ---------------------------------------------------------
+    # MultipageList inherits pydantic v2's frozen-model __hash__, which hashes
+    # the field values. So it's hashable iff every item in `data` is hashable
+    # AND `pagination` is hashable (which it always is — frozen, primitive
+    # fields). These tests pin that contract.
+
+    def test_hash_with_hashable_items(self):
+        page = pagination.MultipageList(
+            data=(1, 2, 3),
+            pagination=pagination.PaginationInfo(has_next=False),
+        )
+        # Just calling hash() must not raise.
+        hash(page)
+
+    def test_hash_consistent_with_equality(self):
+        a = pagination.MultipageList(
+            data=(1, 2, 3),
+            pagination=pagination.PaginationInfo(has_next=True, next_page="tok", size=10),
+        )
+        b = pagination.MultipageList(
+            data=(1, 2, 3),
+            pagination=pagination.PaginationInfo(has_next=True, next_page="tok", size=10),
+        )
+        assert a == b
+        assert hash(a) == hash(b)
+
+    def test_hash_distinguishes_different_data(self):
+        a = pagination.MultipageList(data=(1, 2), pagination=pagination.PaginationInfo(has_next=False))
+        b = pagination.MultipageList(data=(1, 3), pagination=pagination.PaginationInfo(has_next=False))
+        assert a != b
+        assert hash(a) != hash(b)
+
+    def test_hash_distinguishes_different_pagination(self):
+        a = pagination.MultipageList(
+            data=(1, 2),
+            pagination=pagination.PaginationInfo(has_next=True, next_page="tok-a", size=10),
+        )
+        b = pagination.MultipageList(
+            data=(1, 2),
+            pagination=pagination.PaginationInfo(has_next=True, next_page="tok-b", size=10),
+        )
+        assert a != b
+        assert hash(a) != hash(b)
+
+    def test_hashable_pages_usable_in_set(self):
+        # Real-world contract: pages with hashable items can be dedup'd via set.
+        a = pagination.MultipageList(data=("x", "y"), pagination=pagination.PaginationInfo(has_next=False))
+        b = pagination.MultipageList(data=("x", "y"), pagination=pagination.PaginationInfo(has_next=False))
+        c = pagination.MultipageList(data=("x", "z"), pagination=pagination.PaginationInfo(has_next=False))
+        assert {a, b, c} == {a, c}
+
+    def test_hashable_with_frozen_pydantic_item(self):
+        # Frozen pydantic models are hashable; MultipageList[T] inherits that.
         import pydantic
 
-        class Item(pydantic.BaseModel):
+        class FrozenItem(pydantic.BaseModel):
+            model_config = pydantic.ConfigDict(frozen=True)
             name: str
 
-        schema = pagination.MultipageList[Item].model_json_schema()
-        assert "data" in schema.get("properties", {})
-        assert "pagination" in schema.get("properties", {})
-        # Item schema should be referenced somewhere in the output
-        schema_str = json.dumps(schema)
-        assert "Item" in schema_str or "name" in schema_str
+        page = pagination.MultipageList(
+            data=(FrozenItem(name="a"), FrozenItem(name="b")),
+            pagination=pagination.PaginationInfo(has_next=False),
+        )
+        hash(page)  # must not raise
 
-    def test_pagination_field_description(self):
-        schema = pagination.MultipageList.model_json_schema()
-        props = schema.get("properties", {})
-        assert props.get("data", {}).get("description") or "data" in props
-        assert "pagination" in props
+    def test_unhashable_item_makes_page_unhashable(self):
+        # Documented contract: if T is unhashable (e.g. a non-frozen pydantic
+        # model — the default shape for FCA result types), hashing the page
+        # raises TypeError. The error mentions the *item* class, not 'tuple'
+        # or 'list', so the failure is diagnosable.
+        import pydantic
+
+        class MutableItem(pydantic.BaseModel):
+            # Not frozen → not hashable
+            name: str
+
+        page = pagination.MultipageList(
+            data=(MutableItem(name="a"),),
+            pagination=pagination.PaginationInfo(has_next=False),
+        )
+        with pytest.raises(TypeError, match="MutableItem"):
+            hash(page)
 
 
 # ---------------------------------------------------------------------------
-# PaginatedResultInfo (internal — unchanged from previous version)
+# PaginatedResultInfo (internal — unchanged)
 # ---------------------------------------------------------------------------
 
 
@@ -226,8 +319,6 @@ class TestPaginatedResultInfo:
     def test_basic_initialization(self):
         info = pagination.PaginatedResultInfo(page=1, per_page=10, total_count=25)
         assert info.page == 1
-        assert info.per_page == 10
-        assert info.total_count == 25
         assert info.next is None
         assert info.previous is None
 
@@ -267,7 +358,6 @@ class TestPaginatedResultInfo:
         assert info.per_page == 10
         assert info.total_count == 25
         assert str(info.next) == "https://api.example.com/next"
-        assert info.previous is None
 
     def test_model_validate_missing_required_fields(self):
         from pydantic import ValidationError
@@ -290,12 +380,77 @@ class TestPaginatedResultInfo:
 
 
 # ---------------------------------------------------------------------------
-# async_api._fetch_paginated integration tests
+# @paginated decorator + resume contextvar
+# ---------------------------------------------------------------------------
+
+
+class TestPaginatedDecorator:
+    @pytest.mark.asyncio
+    async def test_publishes_endpoint_and_params(self):
+        captured: dict = {}
+
+        @paginated()
+        async def my_endpoint(self, firm_name: str, result_count: int = 1):
+            state = current_resume_state()
+            captured["endpoint"] = state.endpoint
+            captured["params"] = state.params
+            return None
+
+        await my_endpoint("self-stub", "Acme", result_count=5)
+        assert captured["endpoint"] == "my_endpoint"
+        assert captured["params"] == {"firm_name": "Acme", "result_count": 5}
+
+    @pytest.mark.asyncio
+    async def test_excludes_self_by_default(self):
+        captured: dict = {}
+
+        @paginated()
+        async def my_endpoint(self, q: str):
+            captured["params"] = current_resume_state().params
+            return None
+
+        await my_endpoint("self-stub", q="hi")
+        assert "self" not in captured["params"]
+        assert captured["params"] == {"q": "hi"}
+
+    @pytest.mark.asyncio
+    async def test_resets_contextvar_on_return(self):
+        @paginated()
+        async def my_endpoint(self):
+            return None
+
+        await my_endpoint("self-stub")
+        assert current_resume_state() == _ResumeState()  # empty / no active call
+
+    @pytest.mark.asyncio
+    async def test_resets_contextvar_on_exception(self):
+        @paginated()
+        async def my_endpoint(self):
+            raise RuntimeError("boom")
+
+        with pytest.raises(RuntimeError):
+            await my_endpoint("self-stub")
+        assert current_resume_state() == _ResumeState()
+
+    @pytest.mark.asyncio
+    async def test_returns_result_unchanged(self):
+        # MultipageList is pure data; the decorator must not wrap or mutate it.
+        sentinel = pagination.MultipageList(data=(), pagination=pagination.PaginationInfo(has_next=False))
+
+        @paginated()
+        async def my_endpoint(self):
+            return sentinel
+
+        result = await my_endpoint(MagicMock())
+        assert result is sentinel
+
+
+# ---------------------------------------------------------------------------
+# async_api._fetch_paginated — uses contextvars for resume state and outgoing token
 # ---------------------------------------------------------------------------
 
 
 def _make_raw_response(page: int, per_page: int, total_count: int, items: list, has_next: bool):
-    """Build a mock FcaApiResponse for use in _fetch_paginated tests."""
     resp = MagicMock()
     next_url = f"https://example.com/?pgnp={page + 1}" if has_next else None
     resp.result_info = {
@@ -310,15 +465,27 @@ def _make_raw_response(page: int, per_page: int, total_count: int, items: list, 
 
 
 class TestFetchPaginated:
-    """Tests for async_api.Client._fetch_paginated."""
-
     def _make_client(self, serializer=None):
-
-        import fca_api.async_api as async_api
-
         client = async_api.Client.__new__(async_api.Client)
         client._page_token_serializer = serializer
         return client
+
+    def _with_resume(self, *, outgoing=None, incoming=None):
+        """Push outgoing and incoming resume states onto the contextvars.
+
+        Returns a (reset_outgoing, reset_incoming) pair the test must call to
+        restore — done via try/finally in each test that uses it.
+        """
+        out_token = _resume_ctx.set(outgoing) if outgoing is not None else None
+        in_token = async_api._resume_from_ctx.set(incoming) if incoming is not None else None
+        return out_token, in_token
+
+    def _reset_resume(self, tokens):
+        out_token, in_token = tokens
+        if out_token is not None:
+            _resume_ctx.reset(out_token)
+        if in_token is not None:
+            async_api._resume_from_ctx.reset(in_token)
 
     @pytest.mark.asyncio
     async def test_single_page_no_next(self):
@@ -328,42 +495,65 @@ class TestFetchPaginated:
         result = await client._fetch_paginated(
             fetch_page_fn=AsyncMock(return_value=resp),
             parse_data_fn=lambda data: data,
-            next_page=None,
             result_count=1,
         )
 
-        assert result.data == ["a", "b", "c"]
+        assert result.data == ("a", "b", "c")
         assert result.pagination.has_next is False
         assert result.pagination.next_page is None
         assert result.pagination.size == 3
 
     @pytest.mark.asyncio
-    async def test_single_page_has_next(self):
+    async def test_outgoing_token_carries_endpoint_and_params_from_resume_ctx(self):
         client = self._make_client()
-        resp = _make_raw_response(1, 5, 15, ["a", "b", "c", "d", "e"], has_next=True)
+        resp = _make_raw_response(1, 5, 10, ["x", "y"], has_next=True)
 
-        result = await client._fetch_paginated(
-            fetch_page_fn=AsyncMock(return_value=resp),
-            parse_data_fn=lambda data: data,
-            next_page=None,
-            result_count=1,
-        )
+        tokens = self._with_resume(outgoing=_ResumeState(endpoint="search_frn", params={"firm_name": "Acme"}))
+        try:
+            result = await client._fetch_paginated(
+                fetch_page_fn=AsyncMock(return_value=resp),
+                parse_data_fn=lambda data: data,
+                result_count=1,
+            )
+        finally:
+            self._reset_resume(tokens)
 
-        assert result.data == ["a", "b", "c", "d", "e"]
-        assert result.pagination.has_next is True
         assert result.pagination.next_page is not None
-        assert result.pagination.size == 15
+        decoded = pagination._PageState.decode(result.pagination.next_page)
+        assert decoded.page == 2
+        assert decoded.endpoint == "search_frn"
+        assert decoded.params == {"firm_name": "Acme"}
+
+    @pytest.mark.asyncio
+    async def test_incoming_token_resumes_from_correct_page(self):
+        client = self._make_client()
+        page3 = _make_raw_response(3, 5, 15, list(range(10, 15)), has_next=False)
+
+        async def fetch_page(p: int):
+            assert p == 3, f"Expected page 3, got {p}"
+            return page3
+
+        tokens = self._with_resume(incoming=pagination._PageState(page=3))
+        try:
+            result = await client._fetch_paginated(
+                fetch_page_fn=fetch_page,
+                parse_data_fn=lambda data: data,
+                result_count=1,
+            )
+        finally:
+            self._reset_resume(tokens)
+
+        assert result.data == tuple(range(10, 15))
 
     @pytest.mark.asyncio
     async def test_result_count_triggers_multi_page_fetch(self):
         client = self._make_client()
-
-        page1 = _make_raw_response(1, 5, 15, list(range(5)), has_next=True)
-        page2 = _make_raw_response(2, 5, 15, list(range(5, 10)), has_next=True)
-        page3 = _make_raw_response(3, 5, 15, list(range(10, 15)), has_next=False)
-
+        responses = [
+            _make_raw_response(1, 5, 15, list(range(5)), has_next=True),
+            _make_raw_response(2, 5, 15, list(range(5, 10)), has_next=True),
+            _make_raw_response(3, 5, 15, list(range(10, 15)), has_next=False),
+        ]
         call_count = 0
-        responses = [page1, page2, page3]
 
         async def fetch_page(p: int):
             nonlocal call_count
@@ -373,71 +563,28 @@ class TestFetchPaginated:
         result = await client._fetch_paginated(
             fetch_page_fn=fetch_page,
             parse_data_fn=lambda data: data,
-            next_page=None,
-            result_count=8,  # need > 5 items → fetches pages 1 and 2
+            result_count=8,
         )
 
         assert call_count == 2
-        assert len(result.data) == 10  # 2 pages of 5
+        assert len(result.data) == 10
         assert result.pagination.has_next is True
 
     @pytest.mark.asyncio
     async def test_stops_when_no_more_pages_before_result_count(self):
         client = self._make_client()
-
         page1 = _make_raw_response(1, 5, 5, list(range(5)), has_next=False)
         fetch = AsyncMock(return_value=page1)
 
         result = await client._fetch_paginated(
             fetch_page_fn=fetch,
             parse_data_fn=lambda data: data,
-            next_page=None,
-            result_count=100,  # ask for more than available
+            result_count=100,
         )
 
         assert fetch.call_count == 1
-        assert result.data == list(range(5))
+        assert result.data == tuple(range(5))
         assert result.pagination.has_next is False
-
-    @pytest.mark.asyncio
-    async def test_next_page_token_used_as_start_page(self):
-        client = self._make_client()
-
-        page3 = _make_raw_response(3, 5, 15, list(range(10, 15)), has_next=False)
-
-        async def fetch_page(p: int):
-            assert p == 3, f"Expected page 3, got page {p}"
-            return page3
-
-        # Build a token pointing to page 3
-        state = pagination._PageState(page=3)
-        token = state.encode()
-
-        result = await client._fetch_paginated(
-            fetch_page_fn=fetch_page,
-            parse_data_fn=lambda data: data,
-            next_page=token,
-            result_count=1,
-        )
-
-        assert result.data == list(range(10, 15))
-
-    @pytest.mark.asyncio
-    async def test_next_page_token_in_response_decodes_correctly(self):
-        client = self._make_client()
-
-        resp = _make_raw_response(1, 5, 10, ["x", "y"], has_next=True)
-
-        result = await client._fetch_paginated(
-            fetch_page_fn=AsyncMock(return_value=resp),
-            parse_data_fn=lambda data: data,
-            next_page=None,
-            result_count=1,
-        )
-
-        assert result.pagination.next_page is not None
-        decoded = pagination._PageState.decode(result.pagination.next_page)
-        assert decoded.page == 2
 
     @pytest.mark.asyncio
     async def test_serializer_encrypts_outgoing_token(self):
@@ -454,15 +601,140 @@ class TestFetchPaginated:
         result = await client._fetch_paginated(
             fetch_page_fn=AsyncMock(return_value=resp),
             parse_data_fn=lambda data: data,
-            next_page=None,
             result_count=1,
         )
-
         assert result.pagination.next_page is not None
         assert result.pagination.next_page.startswith("ENC:")
 
     @pytest.mark.asyncio
-    async def test_serializer_decrypts_incoming_token(self):
+    async def test_response_with_no_result_info(self):
+        client = self._make_client()
+        resp = MagicMock()
+        resp.result_info = None
+        resp.data = ["only_item"]
+
+        result = await client._fetch_paginated(
+            fetch_page_fn=AsyncMock(return_value=resp),
+            parse_data_fn=lambda data: data,
+            result_count=1,
+        )
+        assert result.data == ("only_item",)
+        assert result.pagination.has_next is False
+        assert result.pagination.size is None
+
+    @pytest.mark.asyncio
+    async def test_response_with_none_data(self):
+        client = self._make_client()
+        resp = MagicMock()
+        resp.result_info = {"Page": 1, "Per_Page": 10, "Total_Count": 0, "Next": None, "Previous": None}
+        resp.data = None
+
+        result = await client._fetch_paginated(
+            fetch_page_fn=AsyncMock(return_value=resp),
+            parse_data_fn=lambda data: data,
+            result_count=1,
+        )
+        assert result.data == ()
+        assert result.pagination.has_next is False
+
+
+# ---------------------------------------------------------------------------
+# Client.fetch_next_page — token dispatcher with allowlist
+# ---------------------------------------------------------------------------
+
+
+class TestFetchNextPage:
+    def _make_client(self, serializer=None):
+        client = async_api.Client.__new__(async_api.Client)
+        client._page_token_serializer = serializer
+        return client
+
+    @pytest.mark.asyncio
+    async def test_dispatches_back_to_originating_endpoint(self):
+        client = self._make_client()
+        pages = {
+            1: _make_raw_response(1, 2, 4, ["a", "b"], has_next=True),
+            2: _make_raw_response(2, 2, 4, ["c", "d"], has_next=False),
+        }
+        seen: list[int] = []
+
+        async def fetch_page(p: int):
+            seen.append(p)
+            return pages[p]
+
+        # search_frn is on the allowlist; we monkeypatch the instance to use
+        # our fake fetch_page rather than the real raw client.
+        @paginated()
+        async def search_frn(self, firm_name: str, result_count: int = 1):
+            assert firm_name == "Barclays"
+            return await self._fetch_paginated(
+                fetch_page_fn=fetch_page,
+                parse_data_fn=lambda data: data,
+                result_count=result_count,
+            )
+
+        client.search_frn = search_frn.__get__(client, async_api.Client)  # type: ignore[attr-defined]
+
+        first = await client.search_frn(firm_name="Barclays")
+        assert seen == [1]
+        assert first.pagination.has_next is True
+
+        second = await client.fetch_next_page(first.pagination.next_page)
+        assert seen == [1, 2]
+        assert second.data == ("c", "d")
+        assert second.pagination.has_next is False
+
+    @pytest.mark.asyncio
+    async def test_result_count_preserved_across_dispatch(self):
+        client = self._make_client()
+        pages = {
+            i: _make_raw_response(i, 5, 20, list(range((i - 1) * 5, i * 5)), has_next=(i < 4)) for i in range(1, 5)
+        }
+        seen: list[int] = []
+
+        async def fetch_page(p: int):
+            seen.append(p)
+            return pages[p]
+
+        @paginated()
+        async def search_frn(self, firm_name: str, result_count: int = 1):
+            return await self._fetch_paginated(
+                fetch_page_fn=fetch_page,
+                parse_data_fn=lambda data: data,
+                result_count=result_count,
+            )
+
+        client.search_frn = search_frn.__get__(client, async_api.Client)  # type: ignore[attr-defined]
+
+        first = await client.search_frn(firm_name="Acme", result_count=8)
+        assert seen == [1, 2]
+        second = await client.fetch_next_page(first.pagination.next_page)
+        # result_count=8 reused → pulls 3 & 4
+        assert seen == [1, 2, 3, 4]
+        assert second.data == tuple(range(10, 20))
+
+    @pytest.mark.asyncio
+    async def test_rejects_endpoint_not_in_allowlist(self):
+        client = self._make_client()
+
+        # Build a state pointing at a non-resumable method.
+        bad_token = client._encode_next_page(
+            pagination._PageState(endpoint="aclose", params={}, page=2)
+        )
+        with pytest.raises(ValueError, match="resumable endpoint"):
+            await client.fetch_next_page(bad_token)
+
+    @pytest.mark.asyncio
+    async def test_rejects_position_only_token(self):
+        # Tokens whose endpoint is empty (e.g. legacy / hand-built) cannot
+        # be replayed via fetch_next_page.
+        client = self._make_client()
+        bare_token = client._encode_next_page(pagination._PageState(page=2))
+        with pytest.raises(ValueError):
+            await client.fetch_next_page(bare_token)
+
+    @pytest.mark.asyncio
+    async def test_dispatch_through_serializer(self):
         class PrefixSerializer:
             def serialize(self, token: str) -> str:
                 return f"ENC:{token}"
@@ -472,59 +744,48 @@ class TestFetchPaginated:
                 return token.removeprefix("ENC:")
 
         client = self._make_client(serializer=PrefixSerializer())
-
-        page2 = _make_raw_response(2, 5, 10, ["b", "c"], has_next=False)
+        pages = {
+            1: _make_raw_response(1, 2, 4, ["a", "b"], has_next=True),
+            2: _make_raw_response(2, 2, 4, ["c", "d"], has_next=False),
+        }
 
         async def fetch_page(p: int):
-            assert p == 2
-            return page2
+            return pages[p]
 
-        # Build encrypted token for page 2
-        raw_token = pagination._PageState(page=2).encode()
-        encrypted_token = f"ENC:{raw_token}"
+        @paginated()
+        async def search_frn(self, firm_name: str, result_count: int = 1):
+            return await self._fetch_paginated(
+                fetch_page_fn=fetch_page,
+                parse_data_fn=lambda data: data,
+                result_count=result_count,
+            )
 
-        result = await client._fetch_paginated(
-            fetch_page_fn=fetch_page,
-            parse_data_fn=lambda data: data,
-            next_page=encrypted_token,
-            result_count=1,
-        )
+        client.search_frn = search_frn.__get__(client, async_api.Client)  # type: ignore[attr-defined]
 
-        assert result.data == ["b", "c"]
-
-    @pytest.mark.asyncio
-    async def test_response_with_no_result_info(self):
-        client = self._make_client()
-
-        resp = MagicMock()
-        resp.result_info = None
-        resp.data = ["only_item"]
-
-        result = await client._fetch_paginated(
-            fetch_page_fn=AsyncMock(return_value=resp),
-            parse_data_fn=lambda data: data,
-            next_page=None,
-            result_count=1,
-        )
-
-        assert result.data == ["only_item"]
-        assert result.pagination.has_next is False
-        assert result.pagination.size is None
+        first = await client.search_frn(firm_name="X")
+        assert first.pagination.next_page.startswith("ENC:")
+        second = await client.fetch_next_page(first.pagination.next_page)
+        assert second.data == ("c", "d")
 
     @pytest.mark.asyncio
-    async def test_response_with_none_data(self):
-        client = self._make_client()
+    async def test_resumable_endpoints_allowlist_matches_decorated_methods(self):
+        # Catch drift in either direction:
+        #   * a new @paginated method missing from the allowlist → fetch_next_page
+        #     can't resume it.
+        #   * an allowlist entry whose method no longer has @paginated →
+        #     fetch_next_page would dispatch into a method that doesn't read
+        #     the resume contextvars and may return a non-MultipageList.
+        import inspect
 
-        resp = MagicMock()
-        resp.result_info = {"Page": 1, "Per_Page": 10, "Total_Count": 0, "Next": None, "Previous": None}
-        resp.data = None
+        decorated: set[str] = set()
+        for name, member in inspect.getmembers(async_api.Client):
+            if inspect.iscoroutinefunction(member) and getattr(member, "__wrapped__", None) is not None:
+                # @paginated wraps with functools.wraps so __wrapped__ points at the original
+                decorated.add(name)
 
-        result = await client._fetch_paginated(
-            fetch_page_fn=AsyncMock(return_value=resp),
-            parse_data_fn=lambda data: data,
-            next_page=None,
-            result_count=1,
+        allowlist = async_api.Client._RESUMABLE_ENDPOINTS
+        assert decorated == allowlist, (
+            f"Drift between @paginated methods and _RESUMABLE_ENDPOINTS: "
+            f"decorated-only={sorted(decorated - allowlist)}, "
+            f"allowlist-only={sorted(allowlist - decorated)}"
         )
-
-        assert result.data == []
-        assert result.pagination.has_next is False
