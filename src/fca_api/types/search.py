@@ -1,53 +1,8 @@
-"""Search result types for FCA API responses.
+"""Search result models for firms, individuals, and funds.
 
-This module defines Pydantic models for the different types of search results
-returned by the FCA Financial Services Register API. These models provide
-type-safe access to search result data with automatic validation.
-
-Classes:
-    - `FirmSearchResult`: Results from firm name searches
-    - `IndividualSearchResult`: Results from individual name searches
-    - `FundSearchResult`: Results from fund/product name searches
-
-Each search result type contains core identification fields (reference numbers,
-names, status) plus type-specific additional information.
-
-Example:
-    Working with search results::
-
-        # Firm search results
-        firms = await client.search_frn("Barclays")
-        async for firm in firms:
-            print(f"FRN: {firm.frn}")
-            print(f"Name: {firm.name}")
-            print(f"Status: {firm.status}")
-            print(f"Type: {firm.type}")
-            if firm.url:
-                print(f"Details: {firm.url}")
-
-        # Individual search results
-        individuals = await client.search_irn("John Smith")
-        async for person in individuals:
-            print(f"IRN: {person.irn}")
-            print(f"Name: {person.name}")
-            print(f"Status: {person.status}")
-
-        # Fund search results
-        funds = await client.search_prn("Vanguard")
-        async for fund in funds:
-            print(f"PRN: {fund.prn}")
-            print(f"Name: {fund.name}")
-            print(f"Status: {fund.status}")
-
-Note:
-    Search results provide summary information. Use the reference numbers
-    (FRN, IRN, PRN) with the detailed get methods to retrieve complete
-    information about specific entities.
-
-See Also:
-    - `fca_api.async_api.Client.search_frn`: Search for firms
-    - `fca_api.async_api.Client.search_irn`: Search for individuals
-    - `fca_api.async_api.Client.search_prn`: Search for funds
+Returned from :meth:`Client.search_frn`, :meth:`Client.search_irn`, and
+:meth:`Client.search_prn`. Pass the reference number (FRN/IRN/PRN) to the
+corresponding ``get_*`` method for full details.
 """
 
 from typing import Annotated
@@ -58,43 +13,9 @@ from . import annotations, base
 
 
 class FirmSearchResult(base.Base):
-    """Search result for a firm from the FCA Financial Services Register.
+    """A firm record from a firm-name search.
 
-    Represents a single firm found in search results, containing core
-    identification and status information. This is returned by firm
-    name searches and provides the essential data needed to identify
-    and access detailed firm information.
-
-    Attributes:
-        url: Direct link to the firm's page in the FCA register (may be None)
-        frn: The firm's unique Financial Reference Number (6-7 digits)
-        status: Current regulatory status (e.g., "Authorised", "Cancelled")
-        type: Type of business or organization (e.g., "Limited Company")
-        name: The firm's registered name
-        address: The firm's registered address (may be None)
-
-    Example:
-        Access firm search result data::
-
-            firms = await client.search_frn("Barclays Bank")
-            if len(firms) > 0:
-                firm = firms[0]
-
-                print(f"Found: {firm.name}")
-                print(f"FRN: {firm.frn}")
-                print(f"Status: {firm.status}")
-                print(f"Type: {firm.type}")
-
-                if firm.address:
-                    print(f"Address: {firm.address}")
-
-                # Get detailed information
-                details = await client.get_firm(firm.frn)
-
-    Note:
-        The `url` field may be None for some results. The `frn` field
-        is the key identifier for retrieving detailed firm information
-        using `client.get_firm()`.
+    Use ``frn`` with :meth:`Client.get_firm` for full firm details.
     """
 
     url: Annotated[
@@ -140,38 +61,9 @@ class FirmSearchResult(base.Base):
 
 
 class IndividualSearchResult(base.Base):
-    """Search result for an individual from the FCA register.
+    """An individual record from an individual-name search.
 
-    Represents a single individual found in search results, containing core
-    identification and status information. This is returned by individual
-    name searches and provides the essential data needed to identify and
-    access detailed individual information.
-
-    Attributes:
-        url: Direct link to the individual's page in the FCA register (may be None)
-        irn: The individual's unique Individual Reference Number (IRN)
-        name: The individual's full name as shown in the register
-        status: Current regulatory status of the individual
-        type: Type of individual entry (for example, "approved person")
-
-    Example:
-        Access individual search result data::
-
-            individuals = await client.search_irn("Jane Smith")
-            if len(individuals) > 0:
-                person = individuals[0]
-
-                print(f"Found: {person.name}")
-                print(f"IRN: {person.irn}")
-                print(f"Status: {person.status}")
-                print(f"Type: {person.type}")
-
-                if person.url:
-                    print(f"Details: {person.url}")
-
-    Note:
-        The ``irn`` field is the key identifier for retrieving detailed
-        individual information using ``client.get_individual()``.
+    Use ``irn`` with :meth:`Client.get_individual` for full details.
     """
 
     url: Annotated[
