@@ -1,45 +1,8 @@
 """High-level Financial Services Register API client.
 
-This module provides the main user-facing interface for interacting with the
-FCA Financial Services Register API. It wraps the low-level raw client to provide:
-
-- **Automatic data validation** using Pydantic models
-- **Explicit cursor-based pagination** — each call returns a page of results and
-  an opaque ``next_page`` token you pass back to retrieve the next batch
-- **Type safety** with comprehensive type hints
-- **Error handling** with meaningful exceptions
-- **Optional token encryption** via a pluggable ``PageTokenSerializer``
-
-The `Client` class is the primary entry point for most users, offering methods
-for searching firms, individuals, and funds, as well as retrieving detailed
-information about specific entities.
-
-Pagination model::
-
-    # Fetch the first page (one underlying API call by default)
-    page = await client.search_frn("Barclays")
-
-    # Iterate through all pages — resume from the self-contained cursor
-    while True:
-        for firm in page.data:
-            print(f"{firm.name} (FRN: {firm.frn})")
-        if not page.pagination.has_next:
-            break
-        page = await client.fetch_next_page(page.pagination.next_page)
-
-Example:
-    Basic client usage::
-
-        import fca_api.async_api
-
-        async with fca_api.async_api.Client(
-            credentials=("email@example.com", "api_key")
-        ) as client:
-            # Search for firms by name
-            page = await client.search_frn("revolution")
-
-            for firm in page.data:
-                print(f"{firm.name} (FRN: {firm.frn})")
+Wraps the raw HTTP client to provide Pydantic-typed responses, cursor-based
+pagination, and an optional :class:`~fca_api.types.pagination.PageTokenSerializer`
+hook for signing or encrypting pagination tokens. See :class:`Client`.
 """
 
 import contextvars
@@ -59,8 +22,8 @@ T = typing.TypeVar("T")
 BaseSubclassT = typing.TypeVar("BaseSubclassT", bound=types.base.Base)
 
 
-#: Task-local incoming-resume position, set by :meth:`Client.fetch_next_page` and
-#: read by :meth:`Client._fetch_paginated`. ``None`` for a fresh (non-resumed) call.
+#: Resume position published by :meth:`Client.fetch_next_page` for
+#: :meth:`Client._fetch_paginated` to read. ``None`` on a fresh call.
 _resume_from_ctx: contextvars.ContextVar[typing.Optional[types.pagination._PageState]] = contextvars.ContextVar(
     "fca_api_resume_from_ctx", default=None
 )
@@ -69,53 +32,17 @@ _resume_from_ctx: contextvars.ContextVar[typing.Optional[types.pagination._PageS
 class Client:
     """High-level Financial Services Register API client.
 
-    This client wraps the low-level raw client to provide data validation,
-    type safety, and cursor-based pagination for the FCA Financial Services
-    Register API.
+    Each paginated endpoint returns a :class:`~fca_api.types.pagination.MultipageList`
+    holding one batch and a ``pagination.next_page`` cursor. Advance with
+    :meth:`fetch_next_page`, or pass ``result_count=N`` to collect at least
+    ``N`` items in a single call.
 
-    Pagination works as follows:
+    Example::
 
-    * Every paginated endpoint accepts an optional ``result_count`` minimum.
-      Omit it for a single API page of results.
-    * The returned ``MultipageList.pagination`` structure contains ``has_next``
-      and a self-contained ``next_page`` token. Call ``page.get_next()`` (sugar)
-      or pass the token to ``Client.fetch_next_page(token)`` to advance.
-    * Pass ``result_count=N`` to have the client transparently issue multiple
-      underlying API calls until at least ``N`` items are collected.
-
-    Optional token encryption::
-
-        client = Client(
-            credentials=("email", "key"),
-            page_token_serializer=my_serializer,  # implements PageTokenSerializer
-        )
-
-    When configured, ``next_page`` values returned to callers are passed through
-    ``serializer.serialize()``, and values received from callers are passed
-    through ``serializer.deserialize()`` before internal decoding.
-
-    Attributes:
-        raw_client: Access to the underlying raw API client.
-        api_version: The API version being used.
-
-    Example:
-        Using as an async context manager::
-
-            async with Client(
-                credentials=("email@example.com", "api_key")
-            ) as client:
-                page = await client.search_frn("barclays")
-                for firm in page.data:
-                    print(firm.name)
-
-        Manual session management::
-
-            client = Client(credentials=("email@example.com", "api_key"))
-            try:
-                page = await client.search_frn("barclays")
-                # Process page.data...
-            finally:
-                await client.aclose()
+        async with Client(credentials=("email@example.com", "api_key")) as client:
+            page = await client.search_frn("barclays")
+            for firm in page.data:
+                print(firm.name)
     """
 
     _client: raw_api.RawClient
@@ -123,10 +50,8 @@ class Client:
     _ctx_enter_count: int
     _page_token_serializer: typing.Optional[types.pagination.PageTokenSerializer]
 
-    #: Paginated methods that :meth:`fetch_next_page` may re-dispatch to. A
-    #: self-contained ``next_page`` token names the method that produced it; this
-    #: allowlist ensures a tampered or malformed token can only ever resume a real
-    #: paginated endpoint, never an arbitrary client method.
+    #: Paginated methods :meth:`fetch_next_page` may dispatch to. A tampered
+    #: or malformed token cannot reach arbitrary attributes.
     _RESUMABLE_ENDPOINTS: typing.ClassVar[frozenset[str]] = frozenset(
         {
             "search_frn",
@@ -163,45 +88,16 @@ class Client:
         api_limiter: typing.Optional[raw_api.LimiterContextT] = None,
         page_token_serializer: typing.Optional[types.pagination.PageTokenSerializer] = None,
     ) -> None:
-        """Initialize the high-level FCA API client.
+        """Initialize the client.
 
         Args:
-            credentials: Authentication credentials. Either:
-                - Tuple of (email, api_key) for automatic session creation
-                - Pre-configured httpx.AsyncClient with auth headers set
-            api_limiter: Optional async context manager for rate limiting.
-                Should be a callable returning an async context manager.
-            page_token_serializer: Optional serializer for encrypting and
-                decrypting pagination tokens. When provided, ``next_page``
-                tokens returned to callers are encrypted via
-                ``serializer.serialize()``, and tokens received from callers
-                are decrypted via ``serializer.deserialize()`` before use.
-
-        Example:
-            With email/key tuple::
-
-                client = Client(
-                    credentials=("your.email@example.com", "your_api_key")
-                )
-
-            With pre-configured session::
-
-                session = httpx.AsyncClient(headers={
-                    "X-AUTH-EMAIL": "your.email@example.com",
-                    "X-AUTH-KEY": "your_api_key"
-                })
-                client = Client(credentials=session)
-
-            With rate limiting and token encryption::
-
-                from asyncio_throttle import Throttler
-                throttler = Throttler(rate_limit=10)
-
-                client = Client(
-                    credentials=("email", "key"),
-                    api_limiter=throttler,
-                    page_token_serializer=MyHmacSerializer(),
-                )
+            credentials: ``(email, api_key)`` tuple, or a pre-configured
+                ``httpx.AsyncClient`` with auth headers set.
+            api_limiter: Optional zero-arg callable returning an async context
+                manager; entered around each HTTP request.
+            page_token_serializer: Optional hook to sign/encrypt pagination
+                tokens — outgoing tokens pass through ``serialize`` and
+                incoming tokens through ``deserialize``.
         """
         self._client = raw_api.RawClient(credentials=credentials, api_limiter=api_limiter)
         self._lock = threading.Lock()
@@ -262,24 +158,12 @@ class Client:
         parse_data_fn: typing.Callable[[typing.Union[list, dict]], list],
         result_count: int,
     ) -> types.pagination.MultipageList:
-        """Fetch one or more API pages and return a single MultipageList.
+        """Fetch pages until ``result_count`` items are collected or none remain.
 
-        Fetches pages starting from the position published on
-        :data:`_resume_from_ctx` (or page 1 if absent) until at least
-        ``result_count`` items are collected or there are no more pages. The
-        outgoing token embeds the endpoint name and bound arguments published
-        by the surrounding :func:`paginated` decorator on :data:`_resume_ctx`.
-
-        Args:
-            fetch_page_fn: Callable that fetches a raw API response for a
-                given 1-based page number.
-            parse_data_fn: Callable that converts the raw API data payload
-                (list or dict) into a list of typed model instances.
-            result_count: Minimum number of items to collect. The method
-                always fetches at least one API page regardless of this value.
-
-        Returns:
-            A MultipageList with the collected items and pagination metadata.
+        Starts from the resume position on :data:`_resume_from_ctx` (or page 1)
+        and stamps the outgoing cursor with the endpoint and arguments
+        published by the surrounding :func:`paginated` decorator. Always
+        fetches at least one page.
         """
         resume = current_resume_state()
         page_state = _resume_from_ctx.get() or types.pagination._PageState.first()
@@ -339,32 +223,16 @@ class Client:
         self,
         next_page: types.pagination.NextPageToken,
     ) -> types.pagination.MultipageList:
-        """Resume a paginated request from a self-contained ``next_page`` token.
+        """Fetch the next page given a ``pagination.next_page`` token.
 
-        The token (taken from ``MultipageList.pagination.next_page``) embeds the
-        originating endpoint and its arguments, so a fresh process can fetch the
-        next batch with only the token — there is no need to walk the page chain
-        or reconstruct the original query. This is the building block for stateless
-        services such as an AI-agent tool that returns one page plus an opaque
-        cursor, then resumes on a later, independent request.
-
-        Args:
-            next_page: A ``pagination.next_page`` token from a prior result.
-
-        Returns:
-            The next ``MultipageList``.
+        The token embeds the originating endpoint and arguments, so resuming
+        needs only the token — no need to retain the original query. Suitable
+        for stateless services that hand the cursor to a caller and resume on
+        a later request.
 
         Raises:
-            ValueError: If the token does not name a known, resumable endpoint —
-                e.g. a position-only token, or a malformed / tampered value.
-
-        Example::
-
-            page = await client.search_frn("Barclays")
-            token = page.pagination.next_page  # hand this to the caller
-
-            # ... later, in a new request with only `token` in hand ...
-            page2 = await client.fetch_next_page(token)
+            ValueError: If the token does not name a resumable endpoint
+                (position-only, malformed, or tampered).
         """
         state = self._decode_next_page(next_page)
         if state.endpoint not in self._RESUMABLE_ENDPOINTS:
@@ -373,8 +241,6 @@ class Client:
                 "it may be position-only, malformed, or tampered."
             )
         method = getattr(self, state.endpoint)
-        # Publish the resume position for _fetch_paginated; the endpoint is called
-        # fresh (no next_page parameter) with the token's captured arguments.
         ctx_token = _resume_from_ctx.set(state)
         try:
             return await method(**state.params)
@@ -391,24 +257,12 @@ class Client:
         firm_name: str,
         result_count: int = 1,
     ) -> types.pagination.MultipageList[types.search.FirmSearchResult]:
-        """Search for firms by name.
+        """Search for firms by name (partial match, case-insensitive).
 
         Args:
-            firm_name: Firm name to search for (partial matches, case-insensitive).
-            result_count: Minimum number of results to return. The client will
-                issue multiple underlying API calls if needed. Defaults to 1
-                (one API page).
-
-        Returns:
-            A page of firm search results with pagination metadata.
-
-        Example::
-
-            page = await client.search_frn("Barclays", result_count=50)
-            print(f"Got {len(page.data)} of ~{page.pagination.size} total")
-
-            if page.pagination.has_next:
-                page = await client.fetch_next_page(page.pagination.next_page)
+            firm_name: Firm name (or substring) to search for.
+            result_count: Minimum items to collect; the client issues multiple
+                API calls if needed. Defaults to 1 (one API page).
         """
         return await self._fetch_paginated(
             fetch_page_fn=lambda p: self._client.search_frn(firm_name, p),

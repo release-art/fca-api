@@ -12,7 +12,7 @@ In most cases you should use :py:class:`fca_api.async_api.Client`. The raw clien
 High-level async client
 =======================
 
-The recommended entry point is :py:class:`fca_api.async_api.Client`. It is designed to be used as an async context manager and requires your FCA API username (signup email) and API key:
+The recommended entry point is :py:class:`fca_api.async_api.Client`. Use it as an async context manager with your FCA API username (signup email) and API key:
 
 .. code:: python
 
@@ -24,15 +24,19 @@ The recommended entry point is :py:class:`fca_api.async_api.Client`. It is desig
       async with Client(
          credentials=("<signup email>", "<API key>"),
       ) as client:
-         firms = await client.search_frn("revolution")
-         async for firm in firms:
+         page = await client.search_frn("revolution")
+         for firm in page.data:
             print(f"{firm.name} (FRN: {firm.frn})")
+         while page.pagination.has_next:
+            page = await client.fetch_next_page(page.pagination.next_page)
+            for firm in page.data:
+               print(f"{firm.name} (FRN: {firm.frn})")
 
 
    if __name__ == "__main__":
       asyncio.run(main())
 
-The high-level client returns rich Pydantic models defined in :mod:`fca_api.types` and uses :class:`fca_api.types.pagination.MultipageList` for all paginated results. See :doc:`../sources/api-reference` for the full API surface.
+Paginated endpoints return :class:`fca_api.types.pagination.MultipageList`; advance through pages with :meth:`Client.fetch_next_page` using ``page.pagination.next_page``. See :doc:`../sources/api-reference` for the full API surface.
 
 Low-level raw client
 ====================
@@ -140,44 +144,17 @@ The response data as stored in the :py:attr:`~fca_api.api.FinancialServicesRegis
 Regulated Markets
 -----------------
 
-The high-level async client implements a `regulated markets <https://www.handbook.fca.org.uk/handbook/glossary/G978.html?date=2007-01-20>`_ search helper via :py:meth:`fca_api.async_api.Client.get_regulated_markets`:
+Regulated markets are exposed via :py:meth:`fca_api.async_api.Client.get_regulated_markets`:
 
 .. code:: python
 
-   >>> markets = await client.get_regulated_markets()
-   >>> len(markets)
-   5
-
-   [{'Name': 'The London Metal Exchange',
-     'TradingName': '',
-     'Type of business or Individual': 'Exchange - RM',
-     'Reference Number': '',
-     'Status': '',
-     'FirmURL': 'https://register.fca.org.uk/services/V0.1/Firm/'},
-    {'Name': 'ICE Futures Europe',
-     'TradingName': '',
-     'Type of business or Individual': 'Exchange - RM',
-     'Reference Number': '',
-     'Status': '',
-     'FirmURL': 'https://register.fca.org.uk/services/V0.1/Firm/'},
-    {'Name': 'London Stock Exchange',
-     'TradingName': '',
-     'Type of business or Individual': 'Exchange - RM',
-     'Reference Number': '',
-     'Status': '',
-     'FirmURL': 'https://register.fca.org.uk/services/V0.1/Firm/'},
-    {'Name': 'Aquis Stock Exchange Limited',
-     'TradingName': 'ICAP Securities & Derivatives Exchange Limited',
-     'Type of business or Individual': 'Exchange - RM',
-     'Reference Number': '',
-     'Status': '',
-     'FirmURL': 'https://register.fca.org.uk/services/V0.1/Firm/'},
-    {'Name': 'Cboe Europe Equities Regulated Market',
-     'TradingName': '',
-     'Type of business or Individual': 'Exchange - RM',
-     'Reference Number': '',
-     'Status': '',
-     'FirmURL': 'https://register.fca.org.uk/services/V0.1/Firm/'}]
+   >>> page = await client.get_regulated_markets()
+   >>> [m.name for m in page.data]
+   ['The London Metal Exchange',
+    'ICE Futures Europe',
+    'London Stock Exchange',
+    'Aquis Stock Exchange Limited',
+    'Cboe Europe Equities Regulated Market']
 
 .. _usage.searching-ref-numbers:
 
@@ -190,94 +167,19 @@ Generally, firm reference numbers (FRN), individual reference numbers (IRN), and
 * :py:meth:`fca_api.async_api.Client.search_irn()` - case-insensitive search for IRNs.
 * :py:meth:`fca_api.async_api.Client.search_prn()` - case-insensitive search for PRNs.
 
-These high-level methods return :class:`fca_api.types.pagination.MultipageList` instances containing typed search result models from :mod:`fca_api.types.search`. On network or API errors they raise exceptions from :mod:`fca_api.exc` (for example :class:`fca_api.exc.FcaRequestError`).
+These methods return :class:`fca_api.types.pagination.MultipageList` instances containing typed search result models from :mod:`fca_api.types.search`. On network or API errors they raise exceptions from :mod:`fca_api.exc` (for example :class:`fca_api.exc.FcaRequestError`).
 
-FRNs, IRNs, and PRNs are associated with unique firms, individuals, and funds, respectively, in the Register, whether current or past. The more precise the name substring the more likely is an exact, unique result. Some examples are given below for each type of search, starting with FRNs:
-
-.. code:: python
-
-   >>> await client.search_frn('hiscox insurance company limited')
-   '113849'
-
-Imprecise or inadequality specified names in the search can produce non-unique matches, in which all matching records are returned in a JSON array, for example:
+FRNs, IRNs, and PRNs uniquely identify firms, individuals, and funds in the Register (current or past). The more precise the name substring, the more likely a single match. Example:
 
 .. code:: python
 
-   >>> await client.search_frn('hiscox')
-   [{'URL': 'https://register.fca.org.uk/services/V0.1/Firm/812274',
-     'Status': 'No longer authorised',
-     'Reference Number': '812274',
-     'Type of business or Individual': 'Firm',
-     'Name': 'HISCOX ASSURE'},
-    ...
-    ...
-    {'URL': 'https://register.fca.org.uk/services/V0.1/Firm/732312',
-     'Status': 'Authorised',
-     'Reference Number': '732312',
-     'Type of business or Individual': 'Firm',
-     'Name': 'Hiscox MGA Ltd (Postcode: EC2N 4BQ)'}
-   ]
+   >>> page = await client.search_frn('hiscox')
+   >>> [(f.name, f.frn) for f in page.data]
+   [('HISCOX ASSURE', '812274'),
+    ('Hiscox MGA Ltd (Postcode: EC2N 4BQ)', '732312'),
+    ...]
 
-Searches for non-existent firms will trigger an exception from :mod:`fca_api.exc` indicating that no data was found in the Register for the given name:
-
-.. code:: python
-
-   >>> await client.search_frn('a nonexistent firm')
-   Traceback (most recent call last):
-   ...
-   fca_api.api.FinancialServicesRegisterApiResponseException: No data found in FSR API response. Please check the search parameters and try again.
-
-A few examples are given below of IRN searches.
-
-.. code:: python
-
-   >>> await client.search_irn('mark carney')
-   'MXC29012'
-   #
-   >>> await client.search_irn('mark c')
-   [{'URL': 'https://register.fca.org.uk/services/V0.1/Individuals/MWC01033',
-     'Status': 'Active',
-     'Reference Number': 'MWC01033',
-     'Type of business or Individual': 'Individual',
-     'Name': 'Mark William Cowell'},
-    ...
-    ...
-    {'URL': 'https://register.fca.org.uk/services/V0.1/Individuals/RMG01106',
-     'Status': 'Active',
-     'Reference Number': 'RMG01106',
-     'Type of business or Individual': 'Individual',
-     'Name': 'Richard Mark Greenfield'}]
-   #
-   >>> await client.search_irn('a nonexistent individual')
-   Traceback (most recent call last):
-   ...
-   fca_api.api.FinancialServicesRegisterApiResponseException: No data found in FSR API response. Please check the search parameters and try again.
-
-A few examples are given below of PRN searches.
-
-.. code:: python
-
-   >>> await client.search_prn('jupiter asia pacific income')
-   '635641'
-   #
-   >>> await client.search_prn('jupiter asia')
-   [{'URL': 'https://register.fca.org.uk/services/V0.1/CIS/718428',
-     'Status': 'Authorised',
-     'Reference Number': '718428',
-     'Type of business or Individual': 'Collective investment scheme',
-     'Name': 'Jupiter Asian Income Fund'},
-    ...
-    ...
-    {'URL': 'https://register.fca.org.uk/services/V0.1/CIS/140620',
-     'Status': 'Terminated',
-     'Reference Number': '140620',
-     'Type of business or Individual': 'Collective investment scheme',
-     'Name': 'JUPITER ASIAN FUND'}]
-   #
-   >>> client.search_prn('a nonexistent fund')
-   Traceback (most recent call last):
-   ...
-   fca_api.api.FinancialServicesRegisterApiResponseException: No data found in FSR API response. Please check the search parameters and try again.
+To get more than one API page in a single call, pass ``result_count``; to walk all matches, follow ``page.pagination.next_page`` via :meth:`Client.fetch_next_page`.
 
 .. _usage.firms:
 

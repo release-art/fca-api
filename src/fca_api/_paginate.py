@@ -1,7 +1,4 @@
-"""The ``@paginated`` decorator and the task-local channel it feeds.
-
-Internal; not part of the public API.
-"""
+"""Internal: ``@paginated`` decorator and the task-local resume channel."""
 
 import contextvars
 import dataclasses
@@ -16,7 +13,7 @@ _PaginatedFn = typing.TypeVar("_PaginatedFn", bound=typing.Callable[..., typing.
 class _ResumeState:
     """Endpoint name and call arguments of the active ``@paginated`` call.
 
-    The fetch helpers read it to build the ``next_page`` token; an empty
+    Fetch helpers read it to stamp the outgoing ``next_page`` token; an empty
     ``endpoint`` means no paginated call is active.
     """
 
@@ -24,27 +21,26 @@ class _ResumeState:
     params: typing.Dict[str, typing.Any] = dataclasses.field(default_factory=dict)
 
 
-#: Task-local channel from :func:`paginated` to the fetch helpers. Task-local so
-#: concurrent paginated calls on one client don't clash.
+#: Task-local so concurrent paginated calls on one client don't clash.
 _resume_ctx: contextvars.ContextVar[typing.Optional[_ResumeState]] = contextvars.ContextVar(
     "fca_api_resume_ctx", default=None
 )
 
 
 def current_resume_state() -> _ResumeState:
-    """The active ``@paginated`` call's :class:`_ResumeState`, or an empty one."""
+    """Active call's :class:`_ResumeState`, or an empty one."""
     return _resume_ctx.get() or _ResumeState()
 
 
 def paginated(*, exclude: typing.Collection[str] = ("self",)) -> typing.Callable[[_PaginatedFn], _PaginatedFn]:
-    """Decorate an async ``Client`` method that returns a ``MultipageList``.
+    """Mark an async ``Client`` method as returning a ``MultipageList``.
 
-    Publishes the endpoint name and arguments on :data:`_resume_ctx` so the
-    fetch helpers can build a replayable ``next_page`` token.
+    Publishes the endpoint name and bound arguments on :data:`_resume_ctx`
+    for the fetch helpers to stamp into the ``next_page`` token.
 
     Args:
-        exclude: Argument names left out of the resume token's ``params``
-            (cursor position is tracked separately). Defaults to ``self``.
+        exclude: Argument names omitted from the token's ``params`` (cursor
+            position is tracked separately). Defaults to ``self``.
     """
     excluded = set(exclude)
 

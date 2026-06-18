@@ -1,14 +1,14 @@
 """Pagination types for FCA API responses.
 
-Public types:
-    NextPageToken: Opaque string cursor passed to ``Client.fetch_next_page``.
-    PageTokenSerializer: Protocol for encrypting/decrypting pagination tokens.
-    PaginationInfo: Pagination metadata returned alongside each page of results.
-    MultipageList: Generic pure-data value object holding one batch of results.
+Public:
+    NextPageToken — opaque cursor passed to ``Client.fetch_next_page``.
+    PageTokenSerializer — optional hook for signing/encrypting tokens.
+    PaginationInfo — pagination metadata returned with each page.
+    MultipageList — one page of typed results.
 
-Internal types (not part of the public API):
-    _PageState: Self-contained, restartable pagination cursor encoded as JSON.
-    PaginatedResultInfo: Parses raw FCA API response pagination metadata.
+Internal:
+    _PageState — JSON-encoded cursor (endpoint + arguments + page number).
+    PaginatedResultInfo — parses the ``ResultInfo`` block from raw responses.
 """
 
 import typing
@@ -26,16 +26,13 @@ T = typing.TypeVar("T")
 
 
 class PaginatedResultInfo(pydantic.BaseModel):
-    """Pagination metadata from FCA API responses.
-
-    Represents the ``ResultInfo`` section of raw FCA API responses. Used
-    internally by the async client to determine whether further pages exist.
+    """Parsed ``ResultInfo`` block from a raw FCA API response.
 
     Attributes:
-        next: URL for the next page (None on the last page).
-        previous: URL for the previous page (None on the first page).
+        next: URL of the next page (None on the last page).
+        previous: URL of the previous page (None on the first page).
         page: Current 1-based page number.
-        per_page: Number of items per page.
+        per_page: Items per page.
         total_count: Total items across all pages (may be approximate).
     """
 
@@ -64,22 +61,13 @@ class PaginatedResultInfo(pydantic.BaseModel):
 
 
 class _PageState(pydantic.BaseModel, frozen=True):
-    """A self-contained, restartable pagination cursor encoded as JSON.
+    """Internal cursor backing :data:`NextPageToken`.
 
-    Not part of the public API — callers only ever see ``NextPageToken`` (str).
-
-    The state captures everything needed to resume a paginated request from a
-    fresh process with no in-memory context:
-
-    * ``endpoint`` — the name of the ``Client`` method that produced the page
-      (used to re-dispatch on resume; validated against an allowlist).
-    * ``params`` — the originating call's keyword arguments (query, filters,
-      ``result_count``, path parameters, …), as JSON-safe values.
-    * ``page`` — the 1-based FCA API page number to fetch next.
-
-    A position-only state (``endpoint``/``params`` empty) is still valid: the
-    originating endpoint resumes from the position, but cannot be replayed
-    blindly via :meth:`Client.fetch_next_page`.
+    Encodes everything needed to resume a paginated request from a fresh
+    process: the originating ``Client`` method name, its JSON-safe keyword
+    arguments, and the 1-based page number to fetch next. A state with empty
+    ``endpoint``/``params`` carries position only and cannot be dispatched via
+    :meth:`Client.fetch_next_page`.
     """
 
     page: int = 1
@@ -106,20 +94,12 @@ NextPageToken = typing.Annotated[
     str,
     pydantic.Field(
         description=(
-            "Opaque pagination cursor. Pass this value unchanged to "
-            "``Client.fetch_next_page`` to retrieve the next page of results. Treat "
-            "it as an opaque string — do not construct, parse, or modify it."
+            "Opaque pagination cursor. Pass unchanged to ``Client.fetch_next_page`` "
+            "to retrieve the next page; do not construct, parse, or modify it."
         )
     ),
 ]
-"""An opaque string cursor for retrieving the next page of results.
-
-Returned in ``PaginationInfo.next_page`` when more results exist. Pass it to
-``Client.fetch_next_page`` to fetch the next batch.
-
-The internal format is an implementation detail and may change. Always treat
-this value as opaque.
-"""
+"""Opaque cursor for the next page. Format is internal and may change."""
 
 
 # ---------------------------------------------------------------------------
@@ -129,42 +109,28 @@ this value as opaque.
 
 @typing.runtime_checkable
 class PageTokenSerializer(typing.Protocol):
-    """Protocol for encrypting and decrypting pagination tokens.
+    """Optional hook for signing or encrypting ``next_page`` tokens.
 
-    Implement this interface to protect ``next_page`` tokens from tampering
-    or inspection when they leave the service boundary (e.g. returned to API
-    callers and submitted back on a subsequent request).
+    Implement to protect tokens crossing a trust boundary (e.g. returned to an
+    external caller and resubmitted later). When a serializer is configured on
+    the ``Client``, outgoing tokens pass through :meth:`serialize` and incoming
+    tokens through :meth:`deserialize`.
 
-    Pass an instance to ``async_api.Client`` at construction time::
+    Example::
 
         class HmacSerializer:
-            def serialize(self, token: str) -> str:
-                # sign / encrypt the raw token
-                ...
+            def serialize(self, token: str) -> str: ...
+            def deserialize(self, token: str) -> str: ...
 
-            def deserialize(self, token: str) -> str:
-                # verify / decrypt back to the raw token
-                ...
-
-        client = Client(
-            credentials=("email", "key"),
-            page_token_serializer=HmacSerializer(),
-        )
-
-    When a serializer is configured:
-
-    * Tokens returned by endpoint methods are passed through ``serialize``
-      before being placed in ``PaginationInfo.next_page``.
-    * Tokens received by endpoint methods are passed through ``deserialize``
-      before being decoded internally.
+        client = Client(credentials=("email", "key"), page_token_serializer=HmacSerializer())
     """
 
     def serialize(self, token: str) -> str:
-        """Transform a raw pagination token for external use (e.g. encrypt or sign)."""
+        """Transform a raw token for external use (e.g. sign or encrypt)."""
         ...
 
     def deserialize(self, token: str) -> str:
-        """Recover the raw pagination token from an external value (e.g. decrypt or verify)."""
+        """Recover the raw token from its external form (e.g. verify or decrypt)."""
         ...
 
 
@@ -174,14 +140,9 @@ class PageTokenSerializer(typing.Protocol):
 
 
 class PaginationInfo(pydantic.BaseModel):
-    """Pagination state for a result set returned by the FCA API.
+    """Pagination state attached to every paginated result.
 
-    Returned alongside every page of results from the async client. Pass
-    ``next_page`` to :meth:`Client.fetch_next_page` to retrieve the next page.
-
-    Example::
-
-        page = await client.search_frn("Barclays")
+    Pass ``next_page`` to :meth:`Client.fetch_next_page` to advance::
 
         while page.pagination.has_next:
             page = await client.fetch_next_page(page.pagination.next_page)
@@ -208,42 +169,24 @@ class PaginationInfo(pydantic.BaseModel):
 
 
 class MultipageList(pydantic.BaseModel, typing.Generic[T]):
-    """A page of typed results from a paginated FCA API endpoint.
-
-    Pure-data value object: holds the items collected by one client call (at
-    least ``result_count`` items, or all remaining items if fewer exist) plus
-    the pagination metadata needed to retrieve the next batch. Carries no
-    client reference and no behavior — pickle, JSON, deepcopy, and equality
-    all work without surprises. Advance by passing ``pagination.next_page``
-    to :meth:`Client.fetch_next_page`.
+    """One page of typed results plus pagination state.
 
     Type Parameters:
-        T: The type of items in ``data``.
+        T: Type of items in ``data``.
 
-    Walking the whole result set::
+    Walk the full result set::
 
         page = await client.search_frn("Barclays")
         while True:
             for firm in page.data:
-                ...  # process this batch's items
+                ...
             if not page.pagination.has_next:
                 break
             page = await client.fetch_next_page(page.pagination.next_page)
 
-    Fetching a larger batch in one call::
+    Collect at least N items in one call (may issue several requests)::
 
-        # Collect at least 100 items (may issue several underlying requests)
         page = await client.search_frn("Barclays", result_count=100)
-        # page.data has >= 100 items (or all available if fewer exist)
-
-    Resuming statelessly from a self-contained token (e.g. a fresh request in an
-    async server or agent tool — only the token is needed, not the query)::
-
-        page = await client.search_frn("Barclays")
-        token = page.pagination.next_page  # opaque, restartable cursor
-
-        # ... later, in a new process with only `token` in hand ...
-        page2 = await client.fetch_next_page(token)
     """
 
     model_config = pydantic.ConfigDict(frozen=True)
